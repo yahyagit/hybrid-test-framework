@@ -1,20 +1,14 @@
 package com.atanas.kanchev.testframework.selenium.tests;
 
-import com.atanas.kanchev.testframework.selenium.context.AbstractContext;
-import com.atanas.kanchev.testframework.selenium.context.WebContext;
 import com.atanas.kanchev.testframework.selenium.handlers.IWebHandler;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.addContext;
 
 /**
  * Created by atanas on 24/03/2016.
@@ -27,10 +21,14 @@ public class IWebHandlerTest implements IWebHandler {
 
     @Before
     public void setUp() throws Exception {
-        WebDriver driver = new FirefoxDriver();
-        AbstractContext context = new WebContext();
-        ((WebContext) context).setDriver(driver);
-        addContext(context);
+
+//        DriverFactory driverFactory = new DriverFactory();
+//        driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
+//
+//        AbstractContext context = new WebContext();
+//        ((WebContext) context).setDriver(driverFactory.getDriver());
+//        context.addContext(context);
+
         try {
             url = new URL("https://www.google.co.uk/");
         } catch (MalformedURLException e) {
