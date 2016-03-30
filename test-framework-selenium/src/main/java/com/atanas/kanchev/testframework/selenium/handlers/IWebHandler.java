@@ -1,6 +1,10 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
+import com.atanas.kanchev.testframework.core.CustomExceptions;
+import com.atanas.kanchev.testframework.selenium.context.AbstractContext;
 import com.atanas.kanchev.testframework.selenium.context.WebContext;
+import com.atanas.kanchev.testframework.selenium.driverfactory.BrowserConfig;
+import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -25,8 +29,22 @@ public interface IWebHandler extends IBaseHandler {
 
         if (url == null)
             throw new NullArgumentException("Null method argument");
-        else
+        else {
+
+            try {
+                getCurrentContext();
+            } catch (CustomExceptions.Common.NullArgumentException e) {
+                DriverFactory driverFactory = new DriverFactory();
+                driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
+                AbstractContext context = new WebContext();
+                ((WebContext) context).setDriver(driverFactory.getDriver());
+                context.addContext(context);
+                ((WebContext) getCurrentContext()).getDriver().navigate().to(url);
+            }
+
             ((WebContext) getCurrentContext()).getDriver().navigate().to(url);
+        }
+
 
         return this;
     }
