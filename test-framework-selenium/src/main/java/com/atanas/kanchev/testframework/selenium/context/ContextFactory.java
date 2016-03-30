@@ -12,9 +12,9 @@ public class ContextFactory {
 
     private static AbstractContext currentContext;
 
-    private static Map<String, AbstractContext> contextMap = new LinkedHashMap<>();
+    private static final Map<String, AbstractContext> contextMap = new LinkedHashMap<>();
 
-    public static void addContext(AbstractContext context) {
+    public void addContext(AbstractContext context) {
         contextMap.put("context" + contextMap.size(), context);
         currentContext = context;
     }
