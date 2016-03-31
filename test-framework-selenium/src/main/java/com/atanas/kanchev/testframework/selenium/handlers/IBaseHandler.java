@@ -15,7 +15,7 @@ interface IBaseHandler {
         ContextFactory.tearDownContext();
     }
 
-    static WebContext getCurrentWebContext() throws NullArgumentException {
+    default WebContext getWebContext() {
         return ((WebContext) getCurrentContext());
     }
 
@@ -26,5 +26,27 @@ interface IBaseHandler {
             e.printStackTrace();
         }
 
+    }
+
+    default IBaseHandler setImplicitlyWait(long wait) {
+        getWebContext().setImplicitlyWait(wait);
+        return this;
+    }
+
+    default IBaseHandler setPageLoadTimeout(long timeout) {
+        getWebContext().setPageLoadTimeout(timeout);
+        return this;
+    }
+
+    /**
+     * Refresh page
+     *
+     * @return this
+     */
+    default IBaseHandler refresh() throws NullArgumentException {
+
+        ((WebContext) getCurrentContext()).getDriver().navigate().refresh();
+
+        return this;
     }
 }
