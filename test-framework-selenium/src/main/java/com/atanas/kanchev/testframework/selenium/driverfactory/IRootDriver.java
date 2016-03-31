@@ -11,7 +11,7 @@ import java.util.Properties;
 /**
  * Root Driver Interface
  */
-interface IRootDriver {
+public interface IRootDriver {
 
     // the logger
     Logger logger = LoggerFactory.getLogger(IRootDriver.class);
