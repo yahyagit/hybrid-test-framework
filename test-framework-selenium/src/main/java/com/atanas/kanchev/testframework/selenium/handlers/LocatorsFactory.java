@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
-import static com.atanas.kanchev.testframework.selenium.handlers.IWait.getWebContext;
 
 /**
  * Locators Factory
@@ -282,6 +281,10 @@ public enum LocatorsFactory implements IElementLocatorFactory, IWaitFactory {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(LocatorsFactory.class);
+
+    static WebContext getWebContext() {
+        return ((WebContext) getCurrentContext());
+    }
 
     private static WebElement findElement(LocatorsFactory locType, String loc) {
         WebElement e;

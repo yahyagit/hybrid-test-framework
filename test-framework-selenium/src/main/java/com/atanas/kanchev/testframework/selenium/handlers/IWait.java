@@ -1,6 +1,5 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
-import com.atanas.kanchev.testframework.selenium.context.WebContext;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -10,19 +9,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
-
 /**
  * WebDriver Wait Interface
  */
-interface IWait extends IWebHandler {
+public interface IWait extends INavigate {
 
     // the logger
     Logger logger = LoggerFactory.getLogger(IWait.class);
-
-    static WebContext getWebContext() {
-        return ((WebContext) getCurrentContext());
-    }
 
     default IWait presenseOfElement(LocatorsFactory locatorType, String locator, long wait) {
 

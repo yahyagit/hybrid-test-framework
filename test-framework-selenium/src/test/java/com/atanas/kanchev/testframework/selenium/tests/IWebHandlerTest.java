@@ -1,5 +1,7 @@
 package com.atanas.kanchev.testframework.selenium.tests;
 
+import com.atanas.kanchev.testframework.selenium.driverfactory.BrowserConfig;
+import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import com.atanas.kanchev.testframework.selenium.handlers.IWebHandler;
 import com.atanas.kanchev.testframework.selenium.handlers.LocatorsFactory;
 import org.junit.After;
@@ -46,44 +48,58 @@ public class IWebHandlerTest implements IWebHandler {
 
     @Test
     public void goToURLTest() throws Exception {
-        goToURL(url);
+        goTo().getURL(url);
     }
 
     @Test
     public void refreshTest() throws Exception {
-        goToURL(url);
+        goTo().getURL(url);
         refresh();
     }
 
     @Test
     public void methodChainingTest() throws Exception {
-        goToURL(url).refresh();
+        goTo().getURL(url).refresh();
     }
 
     @Test
     public void loc() throws Exception {
-        goToURL(url).findElementBy(LocatorsFactory.XPATH, "//*[@id=\"tsf\"]/div[2]/div[3]/center/input[1]");
+        goTo().getURL(url).findElementBy(LocatorsFactory.XPATH, "//*[@id=\"tsf\"]/div[2]/div[3]/center/input[1]");
     }
 
     @Test
     public void locs() throws Exception {
-        goToURL(url).findElementsBy(LocatorsFactory.TAG_NAME, "tr");
+        goTo().getURL(url).findElementsBy(LocatorsFactory.TAG_NAME, "tr");
+    }
+
+    @Test
+    public void multiple() throws Exception {
+        goTo().getURL(url);
+        goTo().getURL(new URL("HTTPS://BBC.CO.UK"));
     }
 
 
     @Test
     public void findElementByNameTest() throws Exception {
-        goToURL(url)
+        goTo().getURL(url)
                 .findElementBy(LocatorsFactory.XPATH, "w");
     }
 
     @Test
     public void waitingTest() throws Exception {
 
-        goToURL(url)
-                .findElementBy(LocatorsFactory.NAME, "x")
-                .waitFor()
+        goTo().getURL(url)
+                .findElementBy(LocatorsFactory.NAME, "x");
+        waitFor()
                 .presenseOfElement(LocatorsFactory.NAME, "lst-ib", 5L);
 
+    }
+
+    @Test
+    public void driver() throws Exception {
+        DriverFactory driverFactory = setup().getDriverFactory();
+        driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
+        setup().configureContext(driverFactory);
+        goTo().getURL(url);
     }
 }
