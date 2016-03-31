@@ -121,6 +121,16 @@ public interface IWebHandler extends IBaseHandler {
         return this;
     }
 
+    default IWebHandler setImplicitlyWait(long wait) {
+        getWebContext().setImplicitlyWait(wait);
+        return this;
+    }
+
+    default IWebHandler setPageLoadTimeout(long timeout) {
+        getWebContext().setPageLoadTimeout(timeout);
+        return this;
+    }
+
     /**
      * Refresh page
      *

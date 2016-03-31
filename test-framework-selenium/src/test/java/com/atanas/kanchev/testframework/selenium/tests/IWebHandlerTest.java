@@ -79,11 +79,11 @@ public class IWebHandlerTest implements IWebHandler {
 
     @Test
     public void waitingTest() throws Exception {
-//
-//        goToURL(url)
-//                .findElementBy(LocatorsFactory.NAME, "x")
-//                .waitFor()
-//                .presenceOfElementLocatedBy("lst-ib");
+
+        goToURL(url)
+                .findElementBy(LocatorsFactory.NAME, "x")
+                .waitFor()
+                .presenseOfElement(LocatorsFactory.NAME, "lst-ib", 5L);
 
     }
 }
