@@ -18,7 +18,7 @@ public final class CustomExceptions {
             }
         }
 
-        public static class IllegalArgumentException extends Exception {
+        public static class IllegalArgumentException extends RuntimeException {
 
             public IllegalArgumentException() {
                 super("Illegal Argument Exception");
