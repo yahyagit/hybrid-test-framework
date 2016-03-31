@@ -125,11 +125,12 @@ interface IWebDriver extends IRootDriver {
     default WebDriver configureTimeouts(final WebDriver driver, long implicitlyWait, long pageLoadTimeout) {
 
         if (driver == null) throw new NullPointerException("Null argument is not permitted");
-        else if (implicitlyWait != 0) {
+        if (implicitlyWait != 0) {
             logger.debug("Setting implicitly wait to: " + implicitlyWait + " s.");
             driver.manage().timeouts().implicitlyWait(implicitlyWait, TimeUnit.SECONDS);
-        } else if (pageLoadTimeout != 0) {
-            logger.debug("Setting page load timeout to: " + implicitlyWait + " s.");
+        }
+        if (pageLoadTimeout != 0) {
+            logger.debug("Setting page load timeout to: " + pageLoadTimeout + " s.");
             driver.manage().timeouts().pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS);
         }
 
