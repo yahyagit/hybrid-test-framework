@@ -18,4 +18,13 @@ interface IBaseHandler {
     static WebContext getCurrentWebContext() throws NullArgumentException {
         return ((WebContext) getCurrentContext());
     }
+
+    default void sleep(long mils) {
+        try {
+            Thread.sleep(mils);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
