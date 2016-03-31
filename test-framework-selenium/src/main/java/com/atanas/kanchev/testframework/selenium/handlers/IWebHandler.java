@@ -17,12 +17,27 @@ import static com.atanas.kanchev.testframework.core.CustomExceptions.Common.Null
 import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
 
 /**
- * Created by atanas on 24/03/2016.
+ * Web Handler Interface
  */
 public interface IWebHandler extends IBaseHandler {
 
     // the logger
     Logger logger = LoggerFactory.getLogger(IWebHandler.class);
+
+    static WebContext getWebContext() {
+        return ((WebContext) getCurrentContext());
+    }
+
+    default IWebHandler goToRootElement() {
+
+        try {
+            getWebContext().setCurrentElement(getWebContext().getDriver().findElement(By.xpath("/html/body")));
+        } catch (NoSuchElementException nsee) {
+            logger.error("Unable to return to Root Element - Body");
+        }
+
+        return this;
+    }
 
     /**
      * Got to URL
@@ -44,7 +59,7 @@ public interface IWebHandler extends IBaseHandler {
                 AbstractContext context = new WebContext();
                 ((WebContext) context).setDriver(driverFactory.getDriver());
                 context.addContext(context);
-                ((WebContext) getCurrentContext()).getDriver().navigate().to(url);
+
             }
 
             ((WebContext) getCurrentContext()).getDriver().navigate().to(url);
@@ -57,6 +72,38 @@ public interface IWebHandler extends IBaseHandler {
     ////////////////////////
     // ELEMENT NAVIGATION //
     ////////////////////////
+
+    /**
+     * Go to WebElement
+     *
+     * @param locatorType LocatorsFactory
+     * @param locator     String
+     * @return this
+     */
+    default IWebHandler findElementBy(LocatorsFactory locatorType, String locator) {
+        if (locatorType == null || locator == null)
+            throw new CustomExceptions.Common.NullArgumentException();
+        else
+            ((WebContext) getCurrentContext()).setCurrentElement(locatorType.locateElement(locatorType, locator));
+        return this;
+    }
+
+    /**
+     * Find elements by
+     *
+     * @param locatorType LocatorsFactory
+     * @param locator     locator
+     * @return this
+     */
+    default IWebHandler findElementsBy(LocatorsFactory locatorType, String locator) {
+
+        if (locatorType == null || locator == null)
+            throw new CustomExceptions.Common.NullArgumentException();
+        else
+            ((WebContext) getCurrentContext()).setWebElementsList(locatorType.locateElements(locatorType, locator));
+        return this;
+
+    }
 
     /**
      * Go to element using WebElement instance
@@ -75,65 +122,6 @@ public interface IWebHandler extends IBaseHandler {
     }
 
     /**
-     * Find element by ID
-     *
-     * @param id String
-     * @return this
-     */
-    default IWebHandler findElementByID(final String id) {
-
-        if (id == null)
-            throw new CustomExceptions.Common.NullArgumentException("Null method argument: ID");
-        else
-            try {
-                ((WebContext) getCurrentContext()).setCurrentElement(((WebContext) getCurrentContext()).getDriver().findElement(By.id(id)));
-            } catch (NoSuchElementException e) {
-                logger.error("Unable to find element by id: " + id);
-            }
-        return this;
-    }
-
-    /**
-     * Find elements by ID
-     *
-     * @param id String
-     * @return this
-     */
-    default IWebHandler findElementsByID(final String id) {
-
-        if (id == null)
-            throw new CustomExceptions.Common.NullArgumentException("Null method argument: ID");
-        else
-            try {
-                ((WebContext) getCurrentContext()).setWebElementsList(((WebContext) getCurrentContext()).getDriver().findElements(By.id(id)));
-            } catch (NoSuchElementException e) {
-                logger.error("Unable to find elements by id: " + id);
-            }
-        return this;
-    }
-
-    /**
-     * Find element by name
-     *
-     * @param name String
-     * @return this
-     */
-    default IWebHandler findElementByName(final String name) {
-
-        if (name == null)
-            throw new CustomExceptions.Common.NullArgumentException("Null method argument:  name");
-        else
-            try {
-                ((WebContext) getCurrentContext()).setCurrentElement(((WebContext) getCurrentContext()).getDriver().findElement(By.name(name)));
-            } catch (NoSuchElementException e) {
-                logger.error("Unable to find elements by : " + name);
-            }
-
-        return this;
-    }
-
-
-    /**
      * Refresh page
      *
      * @return this
@@ -144,4 +132,16 @@ public interface IWebHandler extends IBaseHandler {
 
         return this;
     }
+
+    default Wait waitFor() {
+        return new Wait();
+    }
+
+
+    class Wait implements IWait {
+
+    }
+
+
 }
+
