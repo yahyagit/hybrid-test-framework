@@ -7,7 +7,7 @@ public final class CustomExceptions {
 
     public static class Common {
 
-        public static class NullArgumentException extends Exception {
+        public static class NullArgumentException extends RuntimeException {
 
             public NullArgumentException(String message) {
                 super(message);
