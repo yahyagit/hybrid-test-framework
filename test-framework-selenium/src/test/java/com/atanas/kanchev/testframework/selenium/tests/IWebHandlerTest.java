@@ -1,6 +1,7 @@
 package com.atanas.kanchev.testframework.selenium.tests;
 
 import com.atanas.kanchev.testframework.selenium.handlers.IWebHandler;
+import com.atanas.kanchev.testframework.selenium.handlers.LocatorsFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,10 +60,30 @@ public class IWebHandlerTest implements IWebHandler {
         goToURL(url).refresh();
     }
 
+    @Test
+    public void loc() throws Exception {
+        goToURL(url).findElementBy(LocatorsFactory.XPATH, "//*[@id=\"tsf\"]/div[2]/div[3]/center/input[1]");
+    }
+
+    @Test
+    public void locs() throws Exception {
+        goToURL(url).findElementsBy(LocatorsFactory.TAG_NAME, "tr");
+    }
+
 
     @Test
     public void findElementByNameTest() throws Exception {
         goToURL(url)
-                .findElementByName("w");
+                .findElementBy(LocatorsFactory.XPATH, "w");
+    }
+
+    @Test
+    public void waitingTest() throws Exception {
+//
+//        goToURL(url)
+//                .findElementBy(LocatorsFactory.NAME, "x")
+//                .waitFor()
+//                .presenceOfElementLocatedBy("lst-ib");
+
     }
 }
