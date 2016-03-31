@@ -1,5 +1,8 @@
 package com.atanas.kanchev.testframework.selenium.driverfactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,8 +13,11 @@ import java.util.Properties;
  */
 interface IRootDriver {
 
-    int DEFAULT_IMPLICITLY_WAIT = 5;
-    int DEFAULT_PAGE_TIMEOUT = 30;
+    // the logger
+    Logger logger = LoggerFactory.getLogger(IRootDriver.class);
+
+    long DEFAULT_IMPLICITLY_WAIT = 5L;
+    long DEFAULT_PAGE_TIMEOUT = 30L;
 
     String OS = System.getProperties().getProperty("os.name");
     String ARCHITECTURE = System.getProperties().getProperty("os.arch");
@@ -37,7 +43,7 @@ interface IRootDriver {
             } else
                 throw new FileNotFoundException("selenium.properties file not found in path " + SELENIUM_PROPS_FILE_PATH);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Error while reading file: " + e.getMessage());
         }
 
         return SELENIUM_PROPERTIES;
