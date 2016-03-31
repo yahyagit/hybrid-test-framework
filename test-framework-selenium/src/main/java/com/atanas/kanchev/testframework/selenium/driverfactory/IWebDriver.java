@@ -13,15 +13,17 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.concurrent.TimeUnit;
 
 /**
- * Created by atanas on 24/03/2016.
+ * WebDriver Interface
  */
-public interface IWebDriver extends IRootDriver {
+interface IWebDriver extends IRootDriver {
 
+    // the logger
     Logger logger = LoggerFactory.getLogger(IWebDriver.class);
 
-    // JVM args - chrome & IE binaries version
+    // JVM args - chrome binary version
     String JVM_CHROME_BINARY_VERSION = "";
 
     ////////////////////////
@@ -113,6 +115,32 @@ public interface IWebDriver extends IRootDriver {
     }
 
     /**
+     * Configure Selenium WebDriver timeouts
+     *
+     * @param driver          WebDriver instance
+     * @param implicitlyWait  implicitly wait in sec
+     * @param pageLoadTimeout pageLoad timeout in sec
+     * @return configured WebDriver instance
+     */
+    default WebDriver configureTimeouts(final WebDriver driver, long implicitlyWait, long pageLoadTimeout) {
+
+        if (driver == null) throw new NullPointerException("Null argument is not permitted");
+        else if (implicitlyWait != 0) {
+            logger.debug("Setting implicitly wait to: " + implicitlyWait + " s.");
+            driver.manage().timeouts().implicitlyWait(implicitlyWait, TimeUnit.SECONDS);
+        } else if (pageLoadTimeout != 0) {
+            logger.debug("Setting page load timeout to: " + implicitlyWait + " s.");
+            driver.manage().timeouts().pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS);
+        }
+
+        return driver;
+    }
+
+    /////////////////////
+    // STATIC MEMBERS //
+    ////////////////////
+
+    /**
      * Get endpoint execution IP address
      *
      * @return String IP
@@ -190,4 +218,5 @@ public interface IWebDriver extends IRootDriver {
         }
 
     }
+
 }

@@ -8,6 +8,8 @@ import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 
@@ -15,20 +17,38 @@ import static com.atanas.kanchev.testframework.core.CustomExceptions.Common.Null
 import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
 
 /**
- * Created by atanas on 24/03/2016.
+ * Web Handler Interface
  */
 public interface IWebHandler extends IBaseHandler {
+
+    // the logger
+    Logger logger = LoggerFactory.getLogger(IWebHandler.class);
+
+    static WebContext getWebContext() {
+        return ((WebContext) getCurrentContext());
+    }
+
+    default IWebHandler goToRootElement() {
+
+        try {
+            getWebContext().setCurrentElement(getWebContext().getDriver().findElement(By.xpath("/html/body")));
+        } catch (NoSuchElementException nsee) {
+            logger.error("Unable to return to Root Element - Body");
+        }
+
+        return this;
+    }
 
     /**
      * Got to URL
      *
-     * @param url valid URL address
+     * @param url valid URL instance
      * @return this
      */
-    default IWebHandler goToURL(final URL url) throws NullArgumentException {
+    default IWebHandler goToURL(final URL url) {
 
         if (url == null)
-            throw new NullArgumentException("Null method argument");
+            throw new CustomExceptions.Common.NullArgumentException("Null method argument: URL");
         else {
 
             try {
@@ -39,7 +59,7 @@ public interface IWebHandler extends IBaseHandler {
                 AbstractContext context = new WebContext();
                 ((WebContext) context).setDriver(driverFactory.getDriver());
                 context.addContext(context);
-                ((WebContext) getCurrentContext()).getDriver().navigate().to(url);
+
             }
 
             ((WebContext) getCurrentContext()).getDriver().navigate().to(url);
@@ -54,82 +74,62 @@ public interface IWebHandler extends IBaseHandler {
     ////////////////////////
 
     /**
-     * Go to element using WebElement
+     * Go to WebElement
+     *
+     * @param locatorType LocatorsFactory
+     * @param locator     String
+     * @return this
+     */
+    default IWebHandler findElementBy(LocatorsFactory locatorType, String locator) {
+        if (locatorType == null || locator == null)
+            throw new CustomExceptions.Common.NullArgumentException();
+        else
+            ((WebContext) getCurrentContext()).setCurrentElement(locatorType.locateElement(locatorType, locator));
+        return this;
+    }
+
+    /**
+     * Find elements by
+     *
+     * @param locatorType LocatorsFactory
+     * @param locator     locator
+     * @return this
+     */
+    default IWebHandler findElementsBy(LocatorsFactory locatorType, String locator) {
+
+        if (locatorType == null || locator == null)
+            throw new CustomExceptions.Common.NullArgumentException();
+        else
+            ((WebContext) getCurrentContext()).setWebElementsList(locatorType.locateElements(locatorType, locator));
+        return this;
+
+    }
+
+    /**
+     * Go to element using WebElement instance
      *
      * @param element WebElement
      * @return this
      */
-    default IWebHandler goToWebElement(final WebElement element) throws NullArgumentException {
+    default IWebHandler goToWebElement(final WebElement element) {
 
         if (element == null)
-            throw new NullArgumentException("Null method argument ");
+            throw new CustomExceptions.Common.NullArgumentException("Null method argument: WebElement element");
         else
             ((WebContext) getCurrentContext()).setCurrentElement(element);
 
         return this;
     }
 
-    /**
-     * Find element by ID
-     *
-     * @param id String
-     * @return this
-     * @throws NullArgumentException
-     */
-    default IWebHandler findElementByID(final String id) throws NullArgumentException {
-
-        if (id == null)
-            throw new NullArgumentException("Null method argument ");
-        else
-            try {
-                ((WebContext) getCurrentContext()).setCurrentElement(((WebContext) getCurrentContext()).getDriver().findElement(By.id(id)));
-            } catch (NoSuchElementException e) {
-                e.printStackTrace();
-            }
+    default IWebHandler setImplicitlyWait(long wait) {
+        getWebContext().setImplicitlyWait(wait);
         return this;
     }
 
-    /**
-     * Find elements by ID
-     *
-     * @param id String
-     * @return this
-     * @throws NullArgumentException
-     */
-    default IWebHandler findElementsByID(final String id) throws NullArgumentException {
-
-        if (id == null)
-            throw new NullArgumentException("Null method argument ");
-        else
-            try {
-                ((WebContext) getCurrentContext()).setWebElementsList(((WebContext) getCurrentContext()).getDriver().findElements(By.id(id)));
-            } catch (NoSuchElementException e) {
-                e.printStackTrace();
-            }
+    default IWebHandler setPageLoadTimeout(long timeout) {
+        getWebContext().setPageLoadTimeout(timeout);
         return this;
     }
-
-    /**
-     * Find element by name
-     *
-     * @param name String
-     * @return this
-     * @throws NullArgumentException
-     */
-    default IWebHandler findElementByName(final String name) throws NullArgumentException {
-
-        if (name == null)
-            throw new NullArgumentException("Null method argument ");
-        else
-            try {
-                ((WebContext) getCurrentContext()).setCurrentElement(((WebContext) getCurrentContext()).getDriver().findElement(By.name(name)));
-            } catch (NoSuchElementException e) {
-                e.printStackTrace();
-            }
-
-        return this;
-    }
-
 
     /**
      * Refresh page
@@ -142,4 +142,16 @@ public interface IWebHandler extends IBaseHandler {
 
         return this;
     }
+
+    default Wait waitFor() {
+        return new Wait();
+    }
+
+
+    class Wait implements IWait {
+
+    }
+
+
 }
+
