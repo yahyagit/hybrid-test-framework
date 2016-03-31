@@ -1,12 +1,13 @@
 package com.atanas.kanchev.testframework.selenium.context;
 
+import com.atanas.kanchev.testframework.core.CustomExceptions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
 /**
- * Created by atanas on 24/03/2016.
+ * Web Context
  */
 public final class WebContext extends AbstractContext<WebDriver> {
 
@@ -20,16 +21,31 @@ public final class WebContext extends AbstractContext<WebDriver> {
     // Getters //
     /////////////
 
+    /**
+     * Get WebDriver instance
+     *
+     * @return refrence to com.atanas.kanchev.testframework.selenium.context.AbstractContext#driver
+     */
     public WebDriver getDriver() {
 
         if (super.driver == null) throw new RuntimeException("Null driver");
         else return super.driver;
     }
 
+    /**
+     * Get current WebElement
+     *
+     * @return reference to com.atanas.kanchev.testframework.selenium.context.WebContext#currentElement
+     */
     public WebElement getCurrentElement() {
         return currentElement;
     }
 
+    /**
+     * Get current WebElement list
+     *
+     * @return reference to com.atanas.kanchev.testframework.selenium.context.WebContext#webElementsList
+     */
     public List<WebElement> getWebElementsList() {
         return webElementsList;
     }
@@ -38,16 +54,42 @@ public final class WebContext extends AbstractContext<WebDriver> {
     // Setters //
     /////////////
 
+    /**
+     * Set the com.atanas.kanchev.testframework.selenium.context.AbstractContext#driver
+     *
+     * @param driver instance of WebDriver
+     */
     public void setDriver(WebDriver driver) {
-        super.driver = driver;
+        if (driver != null)
+            super.driver = driver;
+        else
+            throw new CustomExceptions.Common.NullArgumentException("Null driver instance passed as method argument");
     }
 
+    /**
+     * Set the current WebElement com.atanas.kanchev.testframework.selenium.context.WebContext#currentElement
+     *
+     * @param currentElement instance of WebElement
+     */
     public void setCurrentElement(WebElement currentElement) {
-        this.currentElement = currentElement;
+        if (currentElement != null)
+            this.currentElement = currentElement;
+        else
+            throw new CustomExceptions.Common.NullArgumentException("Null WebElement instance passed as method argument");
+
     }
 
+    /**
+     * Set the current WebElement List com.atanas.kanchev.testframework.selenium.context.WebContext#webElementsList
+     *
+     * @param webElementsList instance of List<WebElement>
+     */
     public void setWebElementsList(List<WebElement> webElementsList) {
-        this.webElementsList = webElementsList;
+        if (webElementsList != null)
+            this.webElementsList = webElementsList;
+        else
+            throw new CustomExceptions.Common.NullArgumentException("Null WebElement instance passed as method argument");
+
     }
 
     @Override

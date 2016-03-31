@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Created by atanas on 24/03/2016.
+ * Root Driver Interface
  */
-public interface IRootDriver {
+interface IRootDriver {
 
     int DEFAULT_IMPLICITLY_WAIT = 5;
     int DEFAULT_PAGE_TIMEOUT = 30;
@@ -22,6 +22,11 @@ public interface IRootDriver {
 
     String SELENIUM_PROPS_FILE_PATH = "./src/test/resources/selenium/selenium.properties";
 
+    /**
+     * Method that gives access to the Selenium properties file
+     *
+     * @return instance of Properties
+     */
     static Properties getSeleniumPropFile() {
 
         Properties SELENIUM_PROPERTIES = new Properties();

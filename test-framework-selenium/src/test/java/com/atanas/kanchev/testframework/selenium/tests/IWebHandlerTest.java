@@ -26,7 +26,7 @@ public class IWebHandlerTest implements IWebHandler {
 //        driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
 //
 //        AbstractContext context = new WebContext();
-//        ((WebContext) context).setDriver(driverFactory.getDriver());
+//        ((WebContext) context).setDriver(driverFactory.getWebDriverDriver());
 //        context.addContext(context);
 
         try {

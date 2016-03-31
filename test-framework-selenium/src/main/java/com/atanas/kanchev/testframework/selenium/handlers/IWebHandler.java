@@ -8,6 +8,8 @@ import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 
@@ -19,16 +21,19 @@ import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.g
  */
 public interface IWebHandler extends IBaseHandler {
 
+    // the logger
+    Logger logger = LoggerFactory.getLogger(IWebHandler.class);
+
     /**
      * Got to URL
      *
-     * @param url valid URL address
+     * @param url valid URL instance
      * @return this
      */
-    default IWebHandler goToURL(final URL url) throws NullArgumentException {
+    default IWebHandler goToURL(final URL url) {
 
         if (url == null)
-            throw new NullArgumentException("Null method argument");
+            throw new CustomExceptions.Common.NullArgumentException("Null method argument: URL");
         else {
 
             try {
@@ -54,15 +59,15 @@ public interface IWebHandler extends IBaseHandler {
     ////////////////////////
 
     /**
-     * Go to element using WebElement
+     * Go to element using WebElement instance
      *
      * @param element WebElement
      * @return this
      */
-    default IWebHandler goToWebElement(final WebElement element) throws NullArgumentException {
+    default IWebHandler goToWebElement(final WebElement element) {
 
         if (element == null)
-            throw new NullArgumentException("Null method argument ");
+            throw new CustomExceptions.Common.NullArgumentException("Null method argument: WebElement element");
         else
             ((WebContext) getCurrentContext()).setCurrentElement(element);
 
@@ -74,17 +79,16 @@ public interface IWebHandler extends IBaseHandler {
      *
      * @param id String
      * @return this
-     * @throws NullArgumentException
      */
-    default IWebHandler findElementByID(final String id) throws NullArgumentException {
+    default IWebHandler findElementByID(final String id) {
 
         if (id == null)
-            throw new NullArgumentException("Null method argument ");
+            throw new CustomExceptions.Common.NullArgumentException("Null method argument: ID");
         else
             try {
                 ((WebContext) getCurrentContext()).setCurrentElement(((WebContext) getCurrentContext()).getDriver().findElement(By.id(id)));
             } catch (NoSuchElementException e) {
-                e.printStackTrace();
+                logger.error("Unable to find element by id: " + id);
             }
         return this;
     }
@@ -94,17 +98,16 @@ public interface IWebHandler extends IBaseHandler {
      *
      * @param id String
      * @return this
-     * @throws NullArgumentException
      */
-    default IWebHandler findElementsByID(final String id) throws NullArgumentException {
+    default IWebHandler findElementsByID(final String id) {
 
         if (id == null)
-            throw new NullArgumentException("Null method argument ");
+            throw new CustomExceptions.Common.NullArgumentException("Null method argument: ID");
         else
             try {
                 ((WebContext) getCurrentContext()).setWebElementsList(((WebContext) getCurrentContext()).getDriver().findElements(By.id(id)));
             } catch (NoSuchElementException e) {
-                e.printStackTrace();
+                logger.error("Unable to find elements by id: " + id);
             }
         return this;
     }
@@ -114,17 +117,16 @@ public interface IWebHandler extends IBaseHandler {
      *
      * @param name String
      * @return this
-     * @throws NullArgumentException
      */
-    default IWebHandler findElementByName(final String name) throws NullArgumentException {
+    default IWebHandler findElementByName(final String name) {
 
         if (name == null)
-            throw new NullArgumentException("Null method argument ");
+            throw new CustomExceptions.Common.NullArgumentException("Null method argument:  name");
         else
             try {
                 ((WebContext) getCurrentContext()).setCurrentElement(((WebContext) getCurrentContext()).getDriver().findElement(By.name(name)));
             } catch (NoSuchElementException e) {
-                e.printStackTrace();
+                logger.error("Unable to find elements by : " + name);
             }
 
         return this;

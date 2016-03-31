@@ -6,29 +6,54 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Created by atanas on 24/03/2016.
+ * Context Factory
  */
-public class ContextFactory {
+public abstract class ContextFactory {
 
+    // Current context
     private static AbstractContext currentContext;
 
+    // Context map
     private static final Map<String, AbstractContext> contextMap = new LinkedHashMap<>();
 
+    /**
+     * Add context to com.atanas.kanchev.testframework.selenium.context.ContextFactory#contextMap
+     *
+     * @param context instance of AbstractContext
+     */
     public void addContext(AbstractContext context) {
-        contextMap.put("context" + contextMap.size(), context);
+        contextMap.put(context.getContextName() + contextMap.size(), context);
         currentContext = context;
     }
 
+    /**
+     * Switch context by name
+     * Sets the com.atanas.kanchev.testframework.selenium.context.ContextFactory#currentContext
+     *
+     * @param name String
+     * @return instance of the current context
+     */
     public static AbstractContext switchContext(String name) {
         AbstractContext context = contextMap.get(name);
         currentContext = context;
         return context;
     }
 
-    static Map<String, AbstractContext> getContextMap() {
+    /**
+     * Get the contents map
+     *
+     * @return reference of com.atanas.kanchev.testframework.selenium.context.ContextFactory#contextMap
+     */
+    protected static Map<String, AbstractContext> getContextMap() {
         return contextMap;
     }
 
+    /**
+     * Get current context
+     *
+     * @return reference to com.atanas.kanchev.testframework.selenium.context.ContextFactory#currentContext
+     * @throws CustomExceptions.Common.NullArgumentException
+     */
     public static AbstractContext getCurrentContext() throws CustomExceptions.Common.NullArgumentException {
 
         if (currentContext == null)
@@ -37,6 +62,9 @@ public class ContextFactory {
             return currentContext;
     }
 
+    /**
+     * Tear down all active contexts stored in com.atanas.kanchev.testframework.selenium.context.ContextFactory#contextMap
+     */
     public static void tearDownContext() {
 
         for (AbstractContext context : contextMap.values()) {

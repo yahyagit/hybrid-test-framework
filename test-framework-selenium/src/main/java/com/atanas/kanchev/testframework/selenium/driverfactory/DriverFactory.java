@@ -6,9 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by atanas on 24/03/2016.
+ * Driver Factory
  */
-public class DriverFactory implements IWebDriver, IDesiredCapabilities {
+public final class DriverFactory implements IWebDriver, IDesiredCapabilities {
 
     private static final Logger logger = LoggerFactory.getLogger(DriverFactory.class);
 
@@ -48,7 +48,7 @@ public class DriverFactory implements IWebDriver, IDesiredCapabilities {
 
         DesiredCapabilities desiredCapabilities = selectedBrowser.getDesiredCapabilities();
 
-        return selectedBrowser.getWebDriverObject(desiredCapabilities);
+        return configureTimeouts(selectedBrowser.getWebDriverObject(desiredCapabilities), DEFAULT_IMPLICITLY_WAIT, DEFAULT_PAGE_TIMEOUT);
     }
 
 
@@ -61,8 +61,8 @@ public class DriverFactory implements IWebDriver, IDesiredCapabilities {
 //        sessionName = name;
 //    }
 
-//    public WebDriver getDriver() {
-//        return driverThread.get().getDriver();
+//    public WebDriver getWebDriverDriver() {
+//        return driverThread.get().getWebDriverDriver();
 //    }
 
 //    private class WebDriverThread {
@@ -77,7 +77,7 @@ public class DriverFactory implements IWebDriver, IDesiredCapabilities {
 //            selectedBrowser = JVMArgs.getBrowserType();
 //        }
 //
-//        WebDriver getDriver() {
+//        WebDriver getWebDriverDriver() {
 //
 //            DesiredCapabilities desiredCapabilities = selectedBrowser.getDesiredCapabilities();
 //
