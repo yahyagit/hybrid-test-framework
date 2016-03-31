@@ -1,6 +1,7 @@
 package com.atanas.kanchev.testframework.selenium.context;
 
 import com.atanas.kanchev.testframework.core.CustomExceptions;
+import com.atanas.kanchev.testframework.selenium.driverfactory.IRootDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -17,7 +18,17 @@ public final class WebContext extends AbstractContext<WebDriver> {
     // Current WebElement pointer
     private List<WebElement> webElementsList;
 
-    //////////////
+    // Waits
+    private long implicitlyWait;
+    private long pageLoadTimeout;
+
+    public WebContext() {
+        this.implicitlyWait = IRootDriver.DEFAULT_IMPLICITLY_WAIT;
+        this.pageLoadTimeout = IRootDriver.DEFAULT_PAGE_TIMEOUT;
+    }
+
+
+//////////////
     // Getters //
     /////////////
 
@@ -48,6 +59,24 @@ public final class WebContext extends AbstractContext<WebDriver> {
      */
     public List<WebElement> getWebElementsList() {
         return webElementsList;
+    }
+
+    /**
+     * Get Implicitly Wait
+     *
+     * @return value of com.atanas.kanchev.testframework.selenium.context.WebContext#implicitlyWait
+     */
+    public long getImplicitlyWait() {
+        return implicitlyWait;
+    }
+
+    /**
+     * Get Page Timeout
+     *
+     * @return value of com.atanas.kanchev.testframework.selenium.context.WebContext#pageLoadTimeout
+     */
+    public long getPageLoadTimeout() {
+        return pageLoadTimeout;
     }
 
     //////////////
@@ -90,6 +119,24 @@ public final class WebContext extends AbstractContext<WebDriver> {
         else
             throw new CustomExceptions.Common.NullArgumentException("Null WebElement instance passed as method argument");
 
+    }
+
+    /**
+     * Set Implicitly Wait com.atanas.kanchev.testframework.selenium.context.WebContext#implicitlyWait
+     *
+     * @param implicitlyWait long
+     */
+    public void setImplicitlyWait(long implicitlyWait) {
+        this.implicitlyWait = implicitlyWait;
+    }
+
+    /**
+     * Set Page Load Timeout com.atanas.kanchev.testframework.selenium.context.WebContext#pageLoadTimeout
+     *
+     * @param pageLoadTimeout long
+     */
+    public void setPageLoadTimeout(long pageLoadTimeout) {
+        this.pageLoadTimeout = pageLoadTimeout;
     }
 
     @Override
