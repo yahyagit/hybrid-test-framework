@@ -52,9 +52,8 @@ public abstract class ContextFactory {
      * Get current context
      *
      * @return reference to com.atanas.kanchev.testframework.selenium.context.ContextFactory#currentContext
-     * @throws CustomExceptions.Common.NullArgumentException
      */
-    public static AbstractContext getCurrentContext() throws CustomExceptions.Common.NullArgumentException {
+    public static AbstractContext getCurrentContext() {
 
         if (currentContext == null)
             throw new CustomExceptions.Common.NullArgumentException("The current context is null");
@@ -73,6 +72,7 @@ public abstract class ContextFactory {
             }
         }
         contextMap.clear();
+        currentContext = null;
 
     }
 }
