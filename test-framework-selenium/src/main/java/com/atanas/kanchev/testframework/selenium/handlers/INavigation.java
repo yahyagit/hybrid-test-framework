@@ -11,21 +11,20 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
 
 /**
- * Created by atanaskanchev on 31/03/2016.
+ * Navigate Interface
  */
-public interface INavigate extends IWebHandler{
+public interface INavigation extends IWebHandler {
 
     // the logger
-    Logger logger = LoggerFactory.getLogger(INavigate.class);
+    Logger logger = LoggerFactory.getLogger(INavigation.class);
 
-
-
-    default INavigate goToRootElement() {
+    default INavigation goToRootElement() {
 
         try {
             getWebContext().setCurrentElement(getWebContext().getDriver().findElement(By.xpath("/html/body")));
@@ -37,12 +36,17 @@ public interface INavigate extends IWebHandler{
     }
 
     /**
-     * Got to URL
+     * Load a new web page in the current browser window. This is done using an HTTP GET operation,
+     * and the method will block until the load is complete. This will follow redirects issued
+     * either by the server or as a meta-redirect from within the returned HTML. Should a
+     * meta-redirect "rest" for any duration of time, it is best to wait until this timeout is over,
+     * since should the underlying page change whilst your test is executing the results of future
+     * calls against this interface will be against the freshly loaded page.
      *
      * @param url valid URL instance
      * @return this
      */
-    default INavigate getURL(final URL url) {
+    default INavigation getURL(final URL url) {
 
         if (url == null)
             throw new CustomExceptions.Common.NullArgumentException("Null method argument: URL");
@@ -62,10 +66,28 @@ public interface INavigate extends IWebHandler{
             ((WebContext) getCurrentContext()).getDriver().navigate().to(url);
         }
 
-
         return this;
     }
 
+    /**
+     * Overloaded version of {@link INavigation#getURL(java.net.URL))} that makes it easy to pass in a String URL.
+     *
+     * @param url The URL to load. It is best to use a fully qualified URL
+     * @return this
+     */
+    default INavigation getURL(final String url) {
+
+        URL address = null;
+        try {
+            address = new URL(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        getURL(address);
+
+        return this;
+    }
     ////////////////////////
     // ELEMENT NAVIGATION //
     ////////////////////////
@@ -77,7 +99,7 @@ public interface INavigate extends IWebHandler{
      * @param locator     String
      * @return this
      */
-    default INavigate findElementBy(LocatorsFactory locatorType, String locator) {
+    default INavigation findElementBy(LocatorsFactory locatorType, String locator) {
         if (locatorType == null || locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
@@ -92,7 +114,7 @@ public interface INavigate extends IWebHandler{
      * @param locator     locator
      * @return this
      */
-    default INavigate findElementsBy(LocatorsFactory locatorType, String locator) {
+    default INavigation findElementsBy(LocatorsFactory locatorType, String locator) {
 
         if (locatorType == null || locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
@@ -108,13 +130,48 @@ public interface INavigate extends IWebHandler{
      * @param element WebElement
      * @return this
      */
-    default INavigate goToWebElement(final WebElement element) {
+    default INavigation goToWebElement(final WebElement element) {
 
         if (element == null)
             throw new CustomExceptions.Common.NullArgumentException("Null method argument: WebElement element");
         else
             ((WebContext) getCurrentContext()).setCurrentElement(element);
 
+        return this;
+    }
+
+    ////////////////////////
+    // BROWSER NAVIGATION //
+    ////////////////////////
+
+    /**
+     * Move back a single "item" in the browser's history.
+     *
+     * @return this
+     */
+    default INavigation goBack() {
+        ((WebContext) getCurrentContext()).getDriver().navigate().back();
+        return this;
+    }
+
+    /**
+     * Move a single "item" forward in the browser's history. Does nothing if we are on the latest
+     * page viewed.
+     *
+     * @return this
+     */
+    default INavigation goForward() {
+        ((WebContext) getCurrentContext()).getDriver().navigate().forward();
+        return this;
+    }
+
+    /**
+     * Refresh the current page
+     *
+     * @return this
+     */
+    default INavigation refresh() {
+        ((WebContext) getCurrentContext()).getDriver().navigate().refresh();
         return this;
     }
 }

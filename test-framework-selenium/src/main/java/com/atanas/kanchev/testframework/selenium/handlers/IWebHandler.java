@@ -22,10 +22,10 @@ public interface IWebHandler extends IBaseHandler {
     }
 
 
-    class Wait implements IWait, INavigate {
+    class Wait implements IWait, INavigation {
     }
 
-    class GoTo implements INavigate {
+    class GoTo implements INavigation {
     }
 
     class Driver implements IDriver {

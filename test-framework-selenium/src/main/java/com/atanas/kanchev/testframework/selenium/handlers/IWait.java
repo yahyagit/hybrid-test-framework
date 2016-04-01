@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * WebDriver Wait Interface
  */
-public interface IWait extends INavigate {
+public interface IWait extends INavigation {
 
     // the logger
     Logger logger = LoggerFactory.getLogger(IWait.class);
