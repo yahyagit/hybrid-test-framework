@@ -17,7 +17,7 @@ public interface IWait extends INavigate {
     // the logger
     Logger logger = LoggerFactory.getLogger(IWait.class);
 
-    default IWait presenseOfElement(LocatorsFactory locatorType, String locator, long wait) {
+    default IWait presenceOfElement(LocatorsFactory locatorType, String locator, long wait) {
 
         locatorType.presenceOfElement(locatorType, locator, wait);
 
