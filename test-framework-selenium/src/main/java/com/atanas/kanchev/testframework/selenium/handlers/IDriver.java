@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by atanaskanchev on 31/03/2016.
  */
-public interface IDriver {
+public interface IDriver extends IWebHandler{
 
     // the logger
     Logger logger = LoggerFactory.getLogger(IDriver.class);
