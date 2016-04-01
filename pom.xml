@@ -12,6 +12,7 @@
     <modules>
         <module>test-framework-core</module>
         <module>test-framework-selenium</module>
+        <module>test-framework-data-services</module>
     </modules>
 
     <properties>
@@ -21,6 +22,7 @@
         <log4j.version>1.2.17</log4j.version>
         <logback.version>1.1.6</logback.version>
         <slf4j.version>1.7.19</slf4j.version>
+        <json.version>20160212</json.version>
     </properties>
 
     <build>
@@ -72,6 +74,11 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>${json.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
