@@ -18,7 +18,7 @@ import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.g
 /**
  * Created by atanaskanchev on 31/03/2016.
  */
-public interface INavigate extends IBaseHandler{
+public interface INavigate extends IWebHandler{
 
     // the logger
     Logger logger = LoggerFactory.getLogger(INavigate.class);
