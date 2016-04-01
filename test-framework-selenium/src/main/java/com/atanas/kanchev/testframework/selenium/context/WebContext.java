@@ -28,7 +28,7 @@ public final class WebContext extends AbstractContext<WebDriver> {
     }
 
 
-//////////////
+    //////////////
     // Getters //
     /////////////
 
@@ -46,10 +46,11 @@ public final class WebContext extends AbstractContext<WebDriver> {
     /**
      * Get current WebElement
      *
-     * @return reference to com.atanas.kanchev.testframework.selenium.context.WebContext#currentElement
+     * @return reference to {@link WebContext#currentElement}
      */
     public WebElement getCurrentElement() {
-        return currentElement;
+        if (this.currentElement == null) throw new CustomExceptions.Common.NullReferenceException();
+        else return currentElement;
     }
 
     /**

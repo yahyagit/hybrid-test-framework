@@ -5,6 +5,7 @@ import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import com.atanas.kanchev.testframework.selenium.handlers.IWebHandler;
 import com.atanas.kanchev.testframework.selenium.handlers.LocatorsFactory;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -91,7 +92,17 @@ public class IWebHandlerTest implements IWebHandler {
         goTo().getURL(url)
                 .findElementBy(LocatorsFactory.NAME, "x");
         waitFor()
-                .presenseOfElement(LocatorsFactory.NAME, "lst-ib", 5L);
+                .presenceOfElement(LocatorsFactory.NAME, "lst-ib", 5L);
+
+    }
+
+    @Test
+    public void probeEl() throws Exception {
+
+
+        Assert.assertTrue(goTo().getURL(url)
+                .findElementBy(LocatorsFactory.XPATH, "//*[@id=\"tsf\"]/div[2]/div[3]/center/input[1]").probe().isOfTagType("input"));
+
 
     }
 
