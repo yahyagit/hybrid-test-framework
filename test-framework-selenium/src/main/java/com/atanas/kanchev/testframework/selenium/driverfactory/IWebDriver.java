@@ -33,10 +33,10 @@ interface IWebDriver extends IRootDriver {
     // SELENIUM BINARIES //
     ///////////////////////
     String BIN_ROOT = "src/test/resources/selenium/";
-    String CHROME_BIN_WIN_X86_PATH = BIN_ROOT.concat("win/chrome/x86");
-    String CHROME_BIN_LINUX_X64_PATH = BIN_ROOT.concat("linux/chrome/x64");
-    String CHROME_BIN_LINUX_X86_PATH = BIN_ROOT.concat("linux/chrome/x86");
-    String CHROME_BIN_MAC_X86_PATH = BIN_ROOT.concat("mac/chrome/x86");
+    String CHROME_BIN_WIN_X86_PATH = BIN_ROOT.concat("win/chrome/x86/");
+    String CHROME_BIN_LINUX_X64_PATH = BIN_ROOT.concat("linux/chrome/x64/");
+    String CHROME_BIN_LINUX_X86_PATH = BIN_ROOT.concat("linux/chrome/x86/");
+    String CHROME_BIN_MAC_X86_PATH = BIN_ROOT.concat("mac/chrome/x86/");
 
     // Prop file keys
     String CHROME_BIN_PROP_KEY = "chrome.bin.version";
