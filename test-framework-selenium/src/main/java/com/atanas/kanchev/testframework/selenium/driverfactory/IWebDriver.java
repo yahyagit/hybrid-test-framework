@@ -1,5 +1,6 @@
 package com.atanas.kanchev.testframework.selenium.driverfactory;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
@@ -16,7 +17,9 @@ import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * WebDriver Interface
+ * WebDriver Configuration Interface
+ *
+ * @author Atanas Kanchev
  */
 interface IWebDriver extends IRootDriver {
 
@@ -24,7 +27,7 @@ interface IWebDriver extends IRootDriver {
     Logger logger = LoggerFactory.getLogger(IWebDriver.class);
 
     // JVM args - chrome binary version
-    String JVM_CHROME_BINARY_VERSION = "";
+    String JVM_CHROME_BINARY_VERSION = JVMArgsFactory.getChromeBinaryVersion();
 
     ////////////////////////
     // SELENIUM BINARIES //
@@ -47,7 +50,7 @@ interface IWebDriver extends IRootDriver {
     /**
      * Get default FirefoxDriver
      *
-     * @return new FirefoxDriver()
+     * @return new instance of {@link org.openqa.selenium.firefox.FirefoxDriver#FirefoxDriver()}
      */
     default WebDriver getFirefoxDriver() {
         return new FirefoxDriver();
@@ -57,7 +60,7 @@ interface IWebDriver extends IRootDriver {
      * Get FirefoxDriver using pre-configured DesiredCapabilities
      *
      * @param capabilities DesiredCapabilities
-     * @return new FirefoxDriver(capabilities)
+     * @return new instance of {@link org.openqa.selenium.firefox.FirefoxDriver#FirefoxDriver()}
      */
     default WebDriver getFirefoxDriver(DesiredCapabilities capabilities) {
         return new FirefoxDriver(capabilities);
@@ -67,7 +70,7 @@ interface IWebDriver extends IRootDriver {
      * Get FirefoxDriver using pre-configured FirefoxProfile
      *
      * @param profile FirefoxProfile
-     * @return new FirefoxDriver(profile)
+     * @return new instance of {@link org.openqa.selenium.firefox.FirefoxDriver#FirefoxDriver()}
      */
     default WebDriver getFirefoxDriver(FirefoxProfile profile) {
         return new FirefoxDriver(profile);
@@ -78,7 +81,7 @@ interface IWebDriver extends IRootDriver {
      *
      * @param service      ChromeDriverService
      * @param capabilities DesiredCapabilities
-     * @return ChromeDriver(service, capabilities)
+     * @return {@link ChromeDriver#ChromeDriver(ChromeDriverService, Capabilities)}
      */
     default WebDriver getChromeDriver(ChromeDriverService service, DesiredCapabilities capabilities) {
         return new ChromeDriver(service, capabilities);
@@ -88,7 +91,7 @@ interface IWebDriver extends IRootDriver {
      * Get ChromeDriver using default ChromeDriverService and pre-configured DesiredCapabilities
      *
      * @param capabilities DesiredCapabilities
-     * @return new ChromeDriver(service, capabilities)
+     * @return new instance of {@link ChromeDriver#ChromeDriver(ChromeDriverService, Capabilities)}
      */
     default WebDriver getChromeDriver(DesiredCapabilities capabilities) {
 
@@ -104,7 +107,7 @@ interface IWebDriver extends IRootDriver {
      * Get SafariDriver using pre-configured DesiredCapabilities
      *
      * @param capabilities DesiredCapabilities
-     * @return new SafariDriver(capabilities)
+     * @return new instance of {@link SafariDriver#SafariDriver(org.openqa.selenium.Capabilities)}
      */
     default WebDriver getSafariDriver(DesiredCapabilities capabilities) {
 
@@ -137,29 +140,15 @@ interface IWebDriver extends IRootDriver {
         return driver;
     }
 
-    /////////////////////
-    // STATIC MEMBERS //
-    ////////////////////
-
     /**
-     * Get endpoint execution IP address
+     * Configure Chrome Binary system property </br>
+     * The binary version to be used is controlled in two ways:</br>
+     * - using the value of {@link IWebDriver#CHROME_BIN_PROP_KEY} in {@link IRootDriver#SELENIUM_PROPS_FILE_PATH}
+     * - using the value of JVM argument {@link IWebDriver#JVM_CHROME_BINARY_VERSION}
+     * If no JVM argument is specified the selenium properties file setup will be used
      *
-     * @return String IP
+     * @return the configured path to the chrome binary based on the current system architecture and OS
      */
-    static String getExecutionIP() {
-
-        String ip = null;
-
-        try {
-            InetAddress IP = InetAddress.getLocalHost();
-            ip = IP.getHostAddress();
-        } catch (UnknownHostException e) {
-            logger.error(e.getMessage());
-        }
-
-        return ip;
-    }
-
     default String setChromeBinProperty() {
 
         String version;
@@ -169,7 +158,6 @@ interface IWebDriver extends IRootDriver {
         } else {
             logger.debug("Using selenium.properties file to configure chrome binary version");
             version = IRootDriver.getSeleniumPropFile().getProperty(CHROME_BIN_PROP_KEY);
-            System.out.println(IRootDriver.getSeleniumPropFile().stringPropertyNames());
             if (version == null)
                 throw new NullPointerException("Missing property " + CHROME_BIN_PROP_KEY + " in selenium.properties file");
         }
@@ -201,8 +189,31 @@ interface IWebDriver extends IRootDriver {
         return path;
     }
 
+    /////////////////////
+    // STATIC MEMBERS //
+    ////////////////////
+
     /**
-     * Set WebDriverFactory System property
+     * Get endpoint execution IP address
+     *
+     * @return String IP
+     */
+    static String getExecutionIP() {
+
+        String ip = null;
+
+        try {
+            InetAddress IP = InetAddress.getLocalHost();
+            ip = IP.getHostAddress();
+        } catch (UnknownHostException e) {
+            logger.error(e.getMessage());
+        }
+
+        return ip;
+    }
+
+    /**
+     * Set WebDriver System property
      *
      * @param propName  name
      * @param propValue value
