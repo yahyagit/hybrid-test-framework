@@ -4,11 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by atanas on 24/03/2016.
+ * JVM Arguments Factory
+ *
+ * @author Atanas Kanchev
  */
-public class JVMArgs {
+public class JVMArgsFactory {
 
-    private static final Logger logger = LoggerFactory.getLogger(JVMArgs.class);
+    private static final Logger logger = LoggerFactory.getLogger(JVMArgsFactory.class);
 
     private static final BrowserConfig defaultBrowser = BrowserConfig.FIREFOX;
 
@@ -31,7 +33,6 @@ public class JVMArgs {
 
     // Binary versions
     private static final String CHROME_BINARY_VERSION = ArgsEnum.getJMVArg(ArgsEnum.CHROME_BINARY_VERSION);
-    private static final String IE_BINARY_VERSION = ArgsEnum.getJMVArg(ArgsEnum.IE_BINARY_VERSION);
 
     //////////////
     // GETTERS //
@@ -89,10 +90,6 @@ public class JVMArgs {
         return CHROME_BINARY_VERSION;
     }
 
-    public static String getIeBinaryVersion() {
-        return IE_BINARY_VERSION;
-    }
-
     public static void setJVMArgument(ArgsEnum argument, final String value) {
         ArgsEnum.setJMVArg(argument, value);
     }
@@ -120,8 +117,7 @@ public class JVMArgs {
         USER_AGENT("user.agent"),
 
         // Binary versions
-        CHROME_BINARY_VERSION("chrome.bin.version"),
-        IE_BINARY_VERSION("ie.bin.version");
+        CHROME_BINARY_VERSION("chrome.bin.version");
 
         // Proxy
         //TODO add the proxy stuff
@@ -139,7 +135,7 @@ public class JVMArgs {
         /**
          * Get JVM argument
          *
-         * @param arg JVMArgs enum
+         * @param arg JVMArgsFactory enum
          * @return String
          */
         private static String getJMVArg(ArgsEnum arg) {
@@ -149,12 +145,12 @@ public class JVMArgs {
         /**
          * Set JVM argument
          *
-         * @param arg   JVMArgs enum
+         * @param arg   JVMArgsFactory enum
          * @param value String
          */
         private static void setJMVArg(ArgsEnum arg, String value) {
             System.setProperty(arg.getName(), value);
         }
 
-    }
+        }
 }
