@@ -13,7 +13,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by atanas on 24/03/2016.
+ * Desired capabilities interface
+ *
+ * Configure instance of {@link  org.openqa.selenium.remote.DesiredCapabilities}
+ *
+ * Supports Chrome, Firefox and Safari capabilities setup
  */
 public interface IDesiredCapabilities {
 
@@ -43,7 +47,11 @@ public interface IDesiredCapabilities {
      * @return configured DesiredCapabilities instance
      */
     default DesiredCapabilities getDefaultFirefoxCaps() {
-        return DesiredCapabilities.firefox();
+
+        DesiredCapabilities caps = DesiredCapabilities.firefox();
+        logger.debug("Configured default Firefox DesiredCapabilities: " + caps.toString());
+
+        return caps;
     }
 
     /**
