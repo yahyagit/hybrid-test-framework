@@ -4,8 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 /**
@@ -37,11 +39,14 @@ public interface IRootDriver {
 
         Properties SELENIUM_PROPERTIES = new Properties();
 
+        Path seleniumPropsFilePath = Paths.get(SELENIUM_PROPS_FILE_PATH);
+
+        if (Files.notExists(seleniumPropsFilePath))
+            throw new RuntimeException("selenium.properties file not found in path " + seleniumPropsFilePath);
+
+
         try (FileInputStream inputStream = new FileInputStream(SELENIUM_PROPS_FILE_PATH)) {
-            if (inputStream.available() > 0) {
-                SELENIUM_PROPERTIES.load(inputStream);
-            } else
-                throw new FileNotFoundException("selenium.properties file not found in path " + SELENIUM_PROPS_FILE_PATH);
+            SELENIUM_PROPERTIES.load(inputStream);
         } catch (IOException e) {
             logger.error("Error while reading file: " + e.getMessage());
         }
