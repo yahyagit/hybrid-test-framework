@@ -11,12 +11,11 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
-import static com.atanas.kanchev.testframework.selenium.driverfactory.IRootDriver.*;
+import static com.atanas.kanchev.testframework.selenium.driverfactory.IRootDriver.OS;
 
 /**
  * WebDriver Configuration Interface
@@ -27,23 +26,6 @@ interface IWebDriver  {
 
     // the logger
     Logger logger = LoggerFactory.getLogger(IWebDriver.class);
-
-    // JVM args - chrome binary version
-    String JVM_CHROME_BINARY_VERSION = JVMArgsFactory.getChromeBinaryVersion();
-
-    ////////////////////////
-    // SELENIUM BINARIES //
-    ///////////////////////
-    String BIN_ROOT = "src/test/resources/selenium/";
-    String CHROME_BIN_WIN_X86_PATH = BIN_ROOT.concat("win/chrome/x86/");
-    String CHROME_BIN_LINUX_X64_PATH = BIN_ROOT.concat("linux/chrome/x64/");
-    String CHROME_BIN_LINUX_X86_PATH = BIN_ROOT.concat("linux/chrome/x86/");
-    String CHROME_BIN_MAC_X86_PATH = BIN_ROOT.concat("mac/chrome/x86/");
-
-    // Prop file keys
-    String CHROME_BIN_PROP_KEY = "chrome.bin.version";
-    // Selenium System property names
-    String CHROME_BIN_SYS_PROP_NAME = "webdriver.chrome.driver";
 
     //////////////////////
     // DEFAULT METHODS //
@@ -97,15 +79,7 @@ interface IWebDriver  {
      */
     default WebDriver getChromeDriver(DesiredCapabilities capabilities) {
 
-        BinariesResolver binariesResolver = new BinariesResolver();
-        binariesResolver.getChromeBinaries(setChromeBinProperty());
-
-        ChromeDriverService.Builder builder = new ChromeDriverService.Builder();
-        builder.usingDriverExecutable(new File(setChromeBinProperty()));
-        builder.withSilent(true);
-        ChromeDriverService service = builder.build();
-
-        return new ChromeDriver(service, capabilities);
+        return new ChromeDriver(new BinariesResolver().getChromeBinaries(), capabilities);
     }
 
     /**
@@ -145,54 +119,6 @@ interface IWebDriver  {
         return driver;
     }
 
-    /**
-     * Configure Chrome Binary system property </br>
-     * The binary version to be used is controlled in two ways:</br>
-     * - using the value of {@link IWebDriver#CHROME_BIN_PROP_KEY} in {@link IRootDriver#SELENIUM_PROPS_FILE_PATH}
-     * - using the value of JVM argument {@link IWebDriver#JVM_CHROME_BINARY_VERSION}
-     * If no JVM argument is specified the selenium properties file setup will be used
-     *
-     * @return the configured path to the chrome binary based on the current system architecture and OS
-     */
-    default String setChromeBinProperty() {
-
-        String version;
-        if (JVM_CHROME_BINARY_VERSION != null) {
-            logger.debug("Using JVM arg to configure Chrome binary version");
-            version = JVM_CHROME_BINARY_VERSION;
-        } else {
-            logger.debug("Using selenium.properties file to configure chrome binary version");
-            version = IRootDriver.getSeleniumPropFile().getProperty(CHROME_BIN_PROP_KEY);
-            if (version == null)
-                throw new NullPointerException("Missing property " + CHROME_BIN_PROP_KEY + " in selenium.properties file");
-        }
-
-        String path;
-        if (ARCHITECTURE.equals("x86_64") || ARCHITECTURE.equals("amd64")) {
-            if (OS.toLowerCase().contains("windows"))  // Set x64 ChromeDriver on Windows
-                path = CHROME_BIN_WIN_X86_PATH + version + "/chromedriver.exe";
-            else if (OS.toLowerCase().contains("linux"))  // Set x64 ChromeDriver on Linux
-                path = CHROME_BIN_LINUX_X64_PATH + version + "/chromedriver";
-            else if (OS.toLowerCase().contains("mac")) // Set x64 ChromeDriver on mac
-                path = CHROME_BIN_MAC_X86_PATH + version + "/chromedriver";
-            else
-                throw new RuntimeException("Unable to set chrome binary path: Unsupported OS" + OS);
-
-        } else {// The current system architecture is x86
-            if (OS.toLowerCase().contains("windows"))  // Set x86 ChromeDriver on Windows
-                path = CHROME_BIN_WIN_X86_PATH + version + "/chromedriver.exe";
-            else if (OS.toLowerCase().contains("mac"))  // Set x86 ChromeDriver on Mac
-                path = CHROME_BIN_MAC_X86_PATH + version + "/chromedriver";
-            else if (OS.toLowerCase().contains("linux"))  // Set x86 ChromeDriver on Linux
-                path = CHROME_BIN_LINUX_X86_PATH + version + "/chromedriver";
-            else
-                throw new RuntimeException("Unable to set chrome binary path: Unsupported OS " + OS);
-        }
-
-        setWebDriverSystemProperty(CHROME_BIN_SYS_PROP_NAME, path);
-
-        return path;
-    }
 
     /////////////////////
     // STATIC MEMBERS //
@@ -217,23 +143,5 @@ interface IWebDriver  {
         return ip;
     }
 
-    /**
-     * Set WebDriver System property
-     *
-     * @param propName  name
-     * @param propValue value
-     */
-    static void setWebDriverSystemProperty(final String propName, final String propValue) {
-
-        if (propName == null || propValue == null)
-            throw new NullPointerException("Null argument is not permitted");
-        else if (propName.isEmpty() || propValue.isEmpty())
-            throw new IllegalArgumentException("Empty argument is not permitted");
-        else {
-            logger.debug("Configuring System property: " + propName + " with value: " + propValue);
-            System.setProperty(propName, propValue);
-        }
-
-    }
 
 }
