@@ -54,7 +54,7 @@ public class IWebHandlerTest implements IWebHandler {
 
     @Test
     public void refreshTest() throws Exception {
-        goTo().getURL(url);
+        goTo().getURL(url).
         refresh();
     }
 

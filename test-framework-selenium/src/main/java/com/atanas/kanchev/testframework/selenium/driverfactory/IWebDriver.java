@@ -16,12 +16,14 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
+import static com.atanas.kanchev.testframework.selenium.driverfactory.IRootDriver.*;
+
 /**
  * WebDriver Configuration Interface
  *
  * @author Atanas Kanchev
  */
-interface IWebDriver extends IRootDriver {
+interface IWebDriver  {
 
     // the logger
     Logger logger = LoggerFactory.getLogger(IWebDriver.class);
@@ -94,6 +96,9 @@ interface IWebDriver extends IRootDriver {
      * @return new instance of {@link ChromeDriver#ChromeDriver(ChromeDriverService, Capabilities)}
      */
     default WebDriver getChromeDriver(DesiredCapabilities capabilities) {
+
+        BinariesResolver binariesResolver = new BinariesResolver();
+        binariesResolver.getChromeBinaries(setChromeBinProperty());
 
         ChromeDriverService.Builder builder = new ChromeDriverService.Builder();
         builder.usingDriverExecutable(new File(setChromeBinProperty()));

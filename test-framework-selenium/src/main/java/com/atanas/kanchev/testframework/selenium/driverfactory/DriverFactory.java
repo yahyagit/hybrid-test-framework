@@ -1,9 +1,11 @@
 package com.atanas.kanchev.testframework.selenium.driverfactory;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.atanas.kanchev.testframework.selenium.driverfactory.IRootDriver.DEFAULT_IMPLICITLY_WAIT;
+import static com.atanas.kanchev.testframework.selenium.driverfactory.IRootDriver.DEFAULT_PAGE_TIMEOUT;
 
 /**
  * Driver Factory
@@ -23,32 +25,11 @@ public final class DriverFactory implements IWebDriver, IDesiredCapabilities {
     }
 
     public DriverFactory() {
-        selectedBrowser = JVMArgs.getBrowserType();
+        selectedBrowser = JVMArgsFactory.getBrowserType();
     }
 
-    //    private static Map<String, WebDriverThread> driverThreadPool = Collections.synchronizedMap(new LinkedHashMap<>());
-//    private static ThreadLocal<WebDriverThread> driverThread = new ThreadLocal<WebDriverThread>() {
-//        @Override
-//        protected WebDriverThread initialValue() {
-//
-//            WebDriverThread webDriverThread = new WebDriverThread();
-//
-//            if (sessionName != null)
-//                driverThreadPool.put(sessionName, webDriverThread);
-//            else
-//                driverThreadPool.put("default", webDriverThread);
-//            logger.debug("INITIAL VALUE!");
-//            return webDriverThread;
-//        }
-//    };
-
-//    private static String sessionName;
-
     public WebDriver getDriver() {
-
-        DesiredCapabilities desiredCapabilities = selectedBrowser.getDesiredCapabilities();
-
-        return configureTimeouts(selectedBrowser.getWebDriverObject(desiredCapabilities), DEFAULT_IMPLICITLY_WAIT, DEFAULT_PAGE_TIMEOUT);
+        return configureTimeouts(selectedBrowser.getWebDriverObject(selectedBrowser.getDesiredCapabilities()), DEFAULT_IMPLICITLY_WAIT, DEFAULT_PAGE_TIMEOUT);
     }
 
 
@@ -74,7 +55,7 @@ public final class DriverFactory implements IWebDriver, IDesiredCapabilities {
 //        }
 //
 //        WebDriverThread() {
-//            selectedBrowser = JVMArgs.getBrowserType();
+//            selectedBrowser = JVMArgsFactory.getBrowserType();
 //        }
 //
 //        WebDriver getWebDriverDriver() {
