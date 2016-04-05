@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.core;
+package com.atanas.kanchev.testframework.core.exceptions;
 
 /**
  * Created by atanas on 24/03/2016.
