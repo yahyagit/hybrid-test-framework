@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
-import com.atanas.kanchev.testframework.core.CustomExceptions;
+import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.selenium.context.WebContext;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;

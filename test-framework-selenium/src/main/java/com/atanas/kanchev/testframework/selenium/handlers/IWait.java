@@ -9,10 +9,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.atanas.kanchev.testframework.selenium.handlers.LocatorsFactory.getWebContext;
+
 /**
  * WebDriver Wait Interface
  */
-public interface IWait extends INavigation {
+interface IWait extends INavigator, IWrapper {
 
     // the logger
     Logger logger = LoggerFactory.getLogger(IWait.class);
@@ -73,7 +75,7 @@ public interface IWait extends INavigation {
     default IWait staleElementByCss(final String cssSelector) {
         try {
             logger.debug("Trying to find element: " + cssSelector + " within waitForStale Method");
-            findElementBy(LocatorsFactory.CSS_SELECTOR, cssSelector);
+            find().elementBy(LocatorsFactory.CSS_SELECTOR, cssSelector);
         } catch (StaleElementReferenceException e) {
             logger.debug("Element By CSS: " + cssSelector + " Triggered Stale Element Reference");
             sleep(2000);
@@ -81,7 +83,7 @@ public interface IWait extends INavigation {
             logger.debug("Element By CSS: " + cssSelector + " was not found");
             sleep(2000);
         }
-        goToRootElement();
+        find().rootElement();
 
         return this;
     }

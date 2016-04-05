@@ -1,13 +1,10 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
-import com.atanas.kanchev.testframework.core.CustomExceptions;
+import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.selenium.context.AbstractContext;
 import com.atanas.kanchev.testframework.selenium.context.WebContext;
 import com.atanas.kanchev.testframework.selenium.driverfactory.BrowserConfig;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,23 +14,12 @@ import java.net.URL;
 import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
 
 /**
- * Navigate Interface
+ * Navigator Interface
  */
-public interface INavigation extends IWebHandler {
+public interface INavigator extends IWrapper {
 
     // the logger
-    Logger logger = LoggerFactory.getLogger(INavigation.class);
-
-    default INavigation goToRootElement() {
-
-        try {
-            getWebContext().setCurrentElement(getWebContext().getDriver().findElement(By.xpath("/html/body")));
-        } catch (NoSuchElementException nsee) {
-            logger.error("Unable to return to Root Element - Body");
-        }
-
-        return this;
-    }
+    Logger logger = LoggerFactory.getLogger(INavigator.class);
 
     /**
      * Load a new web page in the current browser window. This is done using an HTTP GET operation,
@@ -46,7 +32,7 @@ public interface INavigation extends IWebHandler {
      * @param url valid URL instance
      * @return this
      */
-    default INavigation getURL(final URL url) {
+    default INavigator page(final URL url) {
 
         if (url == null)
             throw new CustomExceptions.Common.NullArgumentException("Null method argument: URL");
@@ -70,12 +56,12 @@ public interface INavigation extends IWebHandler {
     }
 
     /**
-     * Overloaded version of {@link INavigation#getURL(java.net.URL))} that makes it easy to pass in a String URL.
+     * Overloaded version of {@link INavigator#page(java.net.URL))} that makes it easy to pass in a String URL.
      *
      * @param url The URL to load. It is best to use a fully qualified URL
      * @return this
      */
-    default INavigation getURL(final String url) {
+    default INavigator page(final String url) {
 
         URL address = null;
         try {
@@ -84,72 +70,17 @@ public interface INavigation extends IWebHandler {
             e.printStackTrace();
         }
 
-        getURL(address);
+        page(address);
 
         return this;
     }
-    ////////////////////////
-    // ELEMENT NAVIGATION //
-    ////////////////////////
-
-    /**
-     * Go to WebElement
-     *
-     * @param locatorType LocatorsFactory
-     * @param locator     String
-     * @return this
-     */
-    default INavigation findElementBy(LocatorsFactory locatorType, String locator) {
-        if (locatorType == null || locator == null)
-            throw new CustomExceptions.Common.NullArgumentException();
-        else
-            ((WebContext) getCurrentContext()).setCurrentElement(locatorType.locateElement(locatorType, locator));
-        return this;
-    }
-
-    /**
-     * Find elements by
-     *
-     * @param locatorType LocatorsFactory
-     * @param locator     locator
-     * @return this
-     */
-    default INavigation findElementsBy(LocatorsFactory locatorType, String locator) {
-
-        if (locatorType == null || locator == null)
-            throw new CustomExceptions.Common.NullArgumentException();
-        else
-            ((WebContext) getCurrentContext()).setWebElementsList(locatorType.locateElements(locatorType, locator));
-        return this;
-
-    }
-
-    /**
-     * Go to element using WebElement instance
-     *
-     * @param element WebElement
-     * @return this
-     */
-    default INavigation goToWebElement(final WebElement element) {
-
-        if (element == null)
-            throw new CustomExceptions.Common.NullArgumentException("Null method argument: WebElement element");
-        else
-            ((WebContext) getCurrentContext()).setCurrentElement(element);
-
-        return this;
-    }
-
-    ////////////////////////
-    // BROWSER NAVIGATION //
-    ////////////////////////
 
     /**
      * Move back a single "item" in the browser's history.
      *
      * @return this
      */
-    default INavigation goBack() {
+    default INavigator back() {
         ((WebContext) getCurrentContext()).getDriver().navigate().back();
         return this;
     }
@@ -160,7 +91,7 @@ public interface INavigation extends IWebHandler {
      *
      * @return this
      */
-    default INavigation goForward() {
+    default INavigator forward() {
         ((WebContext) getCurrentContext()).getDriver().navigate().forward();
         return this;
     }
@@ -170,7 +101,7 @@ public interface INavigation extends IWebHandler {
      *
      * @return this
      */
-    default INavigation refresh() {
+    default INavigator refresh() {
         ((WebContext) getCurrentContext()).getDriver().navigate().refresh();
         return this;
     }

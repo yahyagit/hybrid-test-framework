@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
-import com.atanas.kanchev.testframework.core.CustomExceptions;
+import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.selenium.context.WebContext;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.Color;
@@ -9,19 +9,19 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
 import static com.atanas.kanchev.testframework.selenium.handlers.CommonPageDefinitions.COLOR.*;
 import static com.atanas.kanchev.testframework.selenium.handlers.CommonPageDefinitions.CSS.*;
+import static com.atanas.kanchev.testframework.selenium.handlers.LocatorsFactory.getWebContext;
 
 /**
  * Probe Current WebElement Interface
  *
  * @author Atanas Ksnchev
  */
-interface IProbeElement extends IWebHandler {
+interface IProbe extends IWrapper {
 
     // the logger
-    Logger logger = LoggerFactory.getLogger(IProbeElement.class);
+    Logger logger = LoggerFactory.getLogger(IProbe.class);
 
     /**
      * Go to WebElement
@@ -48,7 +48,7 @@ interface IProbeElement extends IWebHandler {
     }
 
     /**
-     * Find elements by
+     * Finder elements by
      *
      * @param locatorType LocatorsFactory
      * @param locator     locator
@@ -80,7 +80,7 @@ interface IProbeElement extends IWebHandler {
      * @return {@code true} if the current WebElement has any text
      */
     default boolean hasAnyText() {
-        return !((WebContext) getCurrentContext()).getCurrentElement().getText().isEmpty();
+        return !getWebContext().getCurrentElement().getText().isEmpty();
     }
 
     /**
@@ -98,7 +98,7 @@ interface IProbeElement extends IWebHandler {
      */
     default boolean hasText(boolean caseSensitive, boolean preciseMatch, String... textElements) {
 
-        String elText = ((WebContext) getCurrentContext()).getCurrentElement().getText();
+        String elText = getWebContext().getCurrentElement().getText();
 
         boolean matchFound = false;
 
@@ -157,7 +157,7 @@ interface IProbeElement extends IWebHandler {
         String attrValue;
 
         try {
-            attrValue = ((WebContext) getCurrentContext()).getCurrentElement().getAttribute(attributeName);
+            attrValue = getWebContext().getCurrentElement().getAttribute(attributeName);
         } catch (NullPointerException npe) {
             logger.error("The current element doesn't have a child attribute: " + attributeName);
             throw new CustomExceptions.Common.IllegalArgumentException();
@@ -186,7 +186,7 @@ interface IProbeElement extends IWebHandler {
      * @return {@code true}, if element of specified tag type
      */
     default boolean isOfTagType(String tag) {
-        return ((WebContext) getCurrentContext()).getCurrentElement().getTagName().equals(tag);
+        return getWebContext().getCurrentElement().getTagName().equals(tag);
     }
 
     /**
@@ -195,7 +195,7 @@ interface IProbeElement extends IWebHandler {
      * @return {@code true} if element is enabled
      */
     default boolean isEnabled() {
-        return ((WebContext) getCurrentContext()).getCurrentElement().isEnabled();
+        return getWebContext().getCurrentElement().isEnabled();
     }
 
     /**
@@ -204,7 +204,7 @@ interface IProbeElement extends IWebHandler {
      * @return {@code true} if element is selected
      */
     default boolean isSelected() {
-        return ((WebContext) getCurrentContext()).getCurrentElement().isSelected();
+        return getWebContext().getCurrentElement().isSelected();
     }
 
     /**
@@ -213,7 +213,7 @@ interface IProbeElement extends IWebHandler {
      * @return {@code true} if element is active
      */
     default boolean isActive() {
-        return ((WebContext) getCurrentContext()).getCurrentElement().getAttribute("class").contains("active");
+        return getWebContext().getCurrentElement().getAttribute("class").contains("active");
     }
 
     /**
@@ -262,7 +262,7 @@ interface IProbeElement extends IWebHandler {
             // fromString() will accept all formats
             testRepetitions = 0;
             while (!expectedColour.equals(actualColour)) {
-                actualColour = Color.fromString(((WebContext) getCurrentContext()).getCurrentElement().getCssValue(attr));
+                actualColour = Color.fromString(getWebContext().getCurrentElement().getCssValue(attr));
                 try {
                     Thread.sleep(500);
                     logger.debug("Hex Value" + actualColour.asHex());
@@ -305,15 +305,14 @@ interface IProbeElement extends IWebHandler {
 
         switch (css) {
             case CSS_BACKGROUND_COLOUR:
-                Color backgroundColor = Color.fromString(((WebContext) getCurrentContext()).getCurrentElement().getCssValue(CSS_BACKGROUND_COLOUR.name()));
+                Color backgroundColor = Color.fromString(getWebContext().getCurrentElement().getCssValue(CSS_BACKGROUND_COLOUR.name()));
                 return expColor.equals(backgroundColor);
             case CSS_TEXT_COLOUR:
-                Color textColor = Color.fromString(((WebContext) getCurrentContext()).getCurrentElement().getCssValue(CSS_TEXT_COLOUR.name()));
+                Color textColor = Color.fromString(getWebContext().getCurrentElement().getCssValue(CSS_TEXT_COLOUR.name()));
                 return expColor.equals(textColor);
         }
 
         return false;
     }
-
 
 }

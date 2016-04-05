@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.selenium.context;
 
-import com.atanas.kanchev.testframework.core.CustomExceptions;
+import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.selenium.driverfactory.IRootDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
