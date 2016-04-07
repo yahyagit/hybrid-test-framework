@@ -1,13 +1,16 @@
 package com.atanas.kanchev.testframework.selenium.driverfactory;
 
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -15,8 +18,7 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+import java.util.Enumeration;
 
 /**
  * Selenium ChromeDriver binaries resolver
@@ -172,49 +174,70 @@ final class BinariesResolver implements IRootDriver {
         }
     }
 
-    File extractFileFromArchive(final String zipFilePath, final String extractToFilePath) {
+    /**
+     * Unzip a downloaded zip file (this will implicitly overwrite any existing files)
+     *
+     * @param downloadedCompressedFile The downloaded zip file
+     * @param extractedToFilePath      Path to extracted file
+     * @param possibleFilenames        Names of the files we want to extract
+     * @return boolean
+     * @throws IOException
+     */
 
-        File newFile = null;
-        try {
-            //get the zip file content
-            ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFilePath));
-            //get the zipped file list entry
-            ZipEntry ze = zis.getNextEntry();
-            byte[] buffer = new byte[1024];
-
-            while (ze != null) {
-
-                String fileName = ze.getName();
-                newFile = new File(extractToFilePath + File.separator + fileName);
-
-                logger.debug("Unzipping to: " + newFile.getAbsoluteFile());
-
-                //create all non exists folders
-                //else you will hit FileNotFoundException for compressed folder
-                new File(newFile.getParent()).mkdirs();
-
-                FileOutputStream fos = new FileOutputStream(newFile);
-
-                int len;
-                while ((len = zis.read(buffer)) > 0) {
-                    fos.write(buffer, 0, len);
-                }
-
-                fos.close();
-                ze = zis.getNextEntry();
+    protected File unzipFile(File downloadedCompressedFile, String extractedToFilePath, String fileName) throws IOException {
+        logger.debug("Attempting to extract binary from .zip file...");
+        try (ZipFile zip = new ZipFile(downloadedCompressedFile)) {
+            Enumeration<ZipArchiveEntry> zipFile = zip.getEntries();
+            while (zipFile.hasMoreElements()) {
+                ZipArchiveEntry zipFileEntry = zipFile.nextElement();
+                return copyFileToDisk(zip.getInputStream(zipFileEntry), extractedToFilePath, fileName);
             }
 
-            zis.closeEntry();
-            zis.close();
-
-            logger.debug("Unzipping completed");
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
 
-        return newFile;
+        return null;
+    }
 
+    /**
+     * Copy a file from an inputsteam to disk
+     *
+     * @param inputStream     A valid iput stream to read
+     * @param pathToExtractTo Path of the file we want to create
+     * @param filename        Filename of the file we want to create
+     * @return Absolute path of the newly created file (Or existing file if overwriteFilesThatExist is set to false)
+     * @throws IOException
+     */
+    protected File copyFileToDisk(InputStream inputStream, String pathToExtractTo, String filename) throws IOException {
+//        if (!overwriteFilesThatExist) {
+        File[] existingFiles = new File(pathToExtractTo).listFiles();
+        if (null != existingFiles && existingFiles.length > 0) {
+            for (File existingFile : existingFiles) {
+                String existingFilename = existingFile.getName();
+                if (existingFilename.equals(filename)) {
+                    logger.info("Binary '" + existingFilename + "' Exists: true");
+                    logger.info("Using existing '" + existingFilename + "'binary.");
+                    return existingFile;
+                }
+            }
+        }
+//        }
+
+        File outputFile = new File(pathToExtractTo, filename);
+        try {
+            if (!outputFile.exists() && !outputFile.getParentFile().mkdirs() && !outputFile.createNewFile()) {
+                throw new IOException("Unable to create " + outputFile.getAbsolutePath());
+            }
+            logger.debug("Extracting binary '" + filename + "'...");
+            FileUtils.copyInputStreamToFile(inputStream, outputFile);
+            logger.debug("Binary copied to " + outputFile.getAbsolutePath());
+            if (!outputFile.setExecutable(true) && !outputFile.canExecute()) {
+                logger.warn("Unable to set executable flag (+x) on " + filename);
+            }
+        } finally {
+            inputStream.close();
+        }
+
+        return outputFile;
     }
 
     ChromeDriverService configureChromeDriverService() {
@@ -222,7 +245,7 @@ final class BinariesResolver implements IRootDriver {
         logger.debug("Configuring chromedriver binaries");
 
         ChromeDriverService.Builder builder = new ChromeDriverService.Builder();
-        File file;
+        File file = null;
         if (Files.exists(Paths.get(path + File.separator + binaryFileName))) {
             file = new File(path + File.separator + binaryFileName);
             logger.debug("Using driver executable " + file.getAbsolutePath());
@@ -234,7 +257,11 @@ final class BinariesResolver implements IRootDriver {
                 builder.usingDriverExecutable(file);
             } else {
                 download();
-                file = extractFileFromArchive(LOCAL_TMP_DOWNLOAD_PATH.concat(archiveFileName), path);
+                try {
+                    file = unzipFile(new File(LOCAL_TMP_DOWNLOAD_PATH.concat("/").concat(archiveFileName)), path, binaryFileName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 builder.usingDriverExecutable(file);
             }
         }

@@ -79,7 +79,7 @@ interface IWebDriver  {
      */
     default WebDriver getChromeDriver(DesiredCapabilities capabilities) {
 
-        return new ChromeDriver(new BinariesResolver().getChromeBinaries(), capabilities);
+        return new ChromeDriver(new BinariesResolver().configureChromeDriverService(), capabilities);
     }
 
     /**
