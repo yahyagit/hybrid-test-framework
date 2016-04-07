@@ -38,11 +38,12 @@ final class BinariesResolver implements IRootDriver {
     // Remote URI
     private final String downloadUri;
     private final String downloadVersion;
-    private final String downloadFileName;
 
+    private final String path;
+    private final String binaryFileName;
+    private final String archiveFileName;
     // Local URI
     private final static String LOCAL_TMP_DOWNLOAD_PATH = "./target/selenium/";
-    private final String targetExtrPath;
 
     // Target extraction path
     private static final String BIN_ROOT = "src/test/resources/selenium/";
@@ -50,9 +51,6 @@ final class BinariesResolver implements IRootDriver {
     private static final String CHROME_BIN_LINUX_X64_PATH = BIN_ROOT.concat("linux/chrome/x64/");
     private static final String CHROME_BIN_LINUX_X86_PATH = BIN_ROOT.concat("linux/chrome/x86/");
     private static final String CHROME_BIN_MAC_X86_PATH = BIN_ROOT.concat("mac/chrome/x86/");
-
-    // Selenium System property names
-    private static final String CHROME_BIN_SYS_PROP_NAME = "webdriver.chrome.driver";
 
     /**
      * Constructor
@@ -70,10 +68,11 @@ final class BinariesResolver implements IRootDriver {
                 throw new NullPointerException("Missing property " + "chrome.bin.version" + " in selenium.properties file");
         }
 
-        downloadUri = ROOT_DOWNLOAD_URI_PROP.concat(downloadVersion).concat("/");
+        this.downloadUri = ROOT_DOWNLOAD_URI_PROP.concat(downloadVersion).concat("/");
         String[] arr = getBinPathAndFileName();
-        targetExtrPath = arr[0];
-        downloadFileName = arr[1];
+        this.path = arr[0];
+        this.binaryFileName = arr[1];
+        this.archiveFileName = arr[2];
     }
 
     /**
@@ -87,83 +86,70 @@ final class BinariesResolver implements IRootDriver {
      */
     private String[] getBinPathAndFileName() {
 
-
         // configure the target path for the extracted binary and its file name based on current OS architecture
-        String targetExtrPath;
+        String path;
+        String binaryFileName;
         String prefix = "chromedriver_";
-        String fileName;
+        String archiveFileName;
         if (ARCHITECTURE.equals("x86_64") || ARCHITECTURE.equals("amd64")) {
             if (OS.toLowerCase().contains("windows"))  // Set x64 ChromeDriver on Windows
             {
-                targetExtrPath = CHROME_BIN_WIN_X86_PATH + downloadVersion;
-                fileName = prefix + "win32.zip";
+                path = CHROME_BIN_WIN_X86_PATH + downloadVersion;
+                archiveFileName = prefix + "win32.zip";
             } else if (OS.toLowerCase().contains("linux"))  // Set x64 ChromeDriver on Linux
             {
-                targetExtrPath = CHROME_BIN_LINUX_X64_PATH + downloadVersion;
-                fileName = prefix + "linux64.zip";
+                path = CHROME_BIN_LINUX_X64_PATH + downloadVersion;
+                archiveFileName = prefix + "linux64.zip";
             } else if (OS.toLowerCase().contains("mac")) // Set x64 ChromeDriver on mac
             {
-                targetExtrPath = CHROME_BIN_MAC_X86_PATH + downloadVersion;
-                fileName = prefix + "mac32.zip";
+                path = CHROME_BIN_MAC_X86_PATH + downloadVersion;
+                archiveFileName = prefix + "mac32.zip";
             } else
                 throw new RuntimeException("Unable to set chrome binary path: Unsupported OS" + OS);
+
+            binaryFileName = "chromedriver.exe";
 
         } else {// The current system architecture is x86
             if (OS.toLowerCase().contains("windows"))  // Set x86 ChromeDriver on Windows
             {
-                targetExtrPath = CHROME_BIN_WIN_X86_PATH + downloadVersion;
-                fileName = prefix + "win32.zip";
+                path = CHROME_BIN_WIN_X86_PATH + downloadVersion;
+                archiveFileName = prefix + "win32.zip";
             } else if (OS.toLowerCase().contains("mac"))  // Set x86 ChromeDriver on Mac
             {
-                targetExtrPath = CHROME_BIN_MAC_X86_PATH + downloadVersion;
-                fileName = prefix + "mac32.zip";
+                path = CHROME_BIN_MAC_X86_PATH + downloadVersion;
+                archiveFileName = prefix + "mac32.zip";
             } else if (OS.toLowerCase().contains("linux"))  // Set x86 ChromeDriver on Linux
             {
-                targetExtrPath = CHROME_BIN_LINUX_X86_PATH + downloadVersion;
-                fileName = prefix + "linux32.zip";
+                path = CHROME_BIN_LINUX_X86_PATH + downloadVersion;
+                archiveFileName = prefix + "linux32.zip";
             } else
                 throw new RuntimeException("Unable to set chrome binary path: Unsupported OS " + OS);
+
+            binaryFileName = "chromedriver";
         }
 
-        logger.debug("File name " + fileName);
-        logger.debug("File extraction path " + targetExtrPath);
-
-        return new String[]{targetExtrPath, fileName};
+        return new String[]{path, binaryFileName, archiveFileName};
     }
-
-
 
     private boolean isExtractionDirExisting() {
-        Path path = Paths.get(targetExtrPath);
-        logger.debug("Checking if the target extraction dir exists in path: " + path);
-        return Files.exists(path);
+        Path extractionDirPath = Paths.get(path);
+        logger.debug("Checking if the target extraction dir exists in path: " + extractionDirPath);
+        return Files.exists(extractionDirPath);
 
     }
 
-    /**
-     * Set WebDriver System property
-     *
-     * @param propName  name
-     * @param propValue value
-     */
-    private void setWebDriverSystemProperty(final String propName, final String propValue) {
-
-        if (propName == null || propValue == null)
-            throw new NullPointerException("Null argument is not permitted");
-        else if (propName.isEmpty() || propValue.isEmpty())
-            throw new IllegalArgumentException("Empty argument is not permitted");
-        else {
-            logger.debug("Configuring System property: " + propName + " with value: " + propValue);
-            System.setProperty(propName, propValue);
-        }
-
+    private File getExtractedBinaryFile() {
+        logger.debug("Checking if the target extraction dir exists in path: " + path);
+        return new File(path + File.separator + binaryFileName);
     }
 
     void download() {
 
-        logger.debug("Checking if tmp download folder exists in path " + LOCAL_TMP_DOWNLOAD_PATH);
-        if (Files.notExists(Paths.get(LOCAL_TMP_DOWNLOAD_PATH))) {
-            logger.debug("The folder doesn't exist, creating " + LOCAL_TMP_DOWNLOAD_PATH);
+        Path extractionPath = Paths.get(LOCAL_TMP_DOWNLOAD_PATH);
+
+        logger.debug("Checking if tmp download folder exists in path " + path);
+        if (Files.notExists(extractionPath)) {
+            logger.debug("The folder doesn't exist, creating " + extractionPath);
             try {
                 Files.createDirectory(Paths.get(LOCAL_TMP_DOWNLOAD_PATH));
             } catch (IOException e) {
@@ -171,20 +157,21 @@ final class BinariesResolver implements IRootDriver {
             }
         }
 
-        logger.debug("Target download folder exists, checking for existing file " + downloadFileName);
-        if (Files.exists(Paths.get(LOCAL_TMP_DOWNLOAD_PATH.concat(downloadFileName))))
-            logger.debug("Binary already exists in path " + LOCAL_TMP_DOWNLOAD_PATH + " , skipping download");
+        logger.debug("Target download folder exists, checking for existing file " + archiveFileName);
+        Path archiveFilePath = Paths.get(extractionPath + archiveFileName);
+        if (Files.exists(archiveFilePath))
+            logger.debug("Binary already exists in path " + archiveFilePath + " , skipping download");
         else {
 
             URL url = null;
             try {
-                url = new URL(downloadUri.concat(downloadFileName));
+                url = new URL(downloadUri.concat(archiveFileName));
                 logger.debug("Configured download URL " + url);
             } catch (MalformedURLException e) {
                 logger.error("Malformed URL Exception ", e);
             }
             try (ReadableByteChannel rbc = Channels.newChannel(url.openStream())) {
-                FileOutputStream fos = new FileOutputStream(LOCAL_TMP_DOWNLOAD_PATH.concat(downloadFileName));
+                FileOutputStream fos = new FileOutputStream(LOCAL_TMP_DOWNLOAD_PATH.concat(archiveFileName));
                 logger.debug("Downloading file " + url);
                 fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
                 fos.close();
@@ -197,7 +184,7 @@ final class BinariesResolver implements IRootDriver {
         }
     }
 
-    File extract(final String zipFilePath, final String extractPath) {
+    File extractFileFromArchive(final String zipFilePath, final String extractToFilePath) {
 
         File newFile = null;
         try {
@@ -210,7 +197,7 @@ final class BinariesResolver implements IRootDriver {
             while (ze != null) {
 
                 String fileName = ze.getName();
-                newFile = new File(extractPath + File.separator + fileName);
+                newFile = new File(extractToFilePath + File.separator + fileName);
 
                 logger.debug("Unzipping file: " + newFile.getAbsoluteFile());
 
@@ -247,25 +234,31 @@ final class BinariesResolver implements IRootDriver {
         logger.debug("Configuring chromedriver binaries");
 
         ChromeDriverService.Builder builder = new ChromeDriverService.Builder();
+        File file = getExtractedBinaryFile();
 
-        File file = null;
-        if (isExtractionDirExisting()) {
-            logger.debug("The chromedriver binary already exists");
-            builder.usingDriverExecutable(file);
-        } else {
-            download();
-            file = extract(LOCAL_TMP_DOWNLOAD_PATH.concat(downloadFileName), targetExtrPath);
-            builder.usingDriverExecutable(file);
+        if (file != null) {
+            if (isExtractionDirExisting()) {
+                logger.debug("The chromedriver binary already exists");
+                builder.usingDriverExecutable(file);
+            } else {
+                if (isExtractionDirExisting()) {
+                    logger.debug("The chromedriver binary already exists");
+                    builder.usingDriverExecutable(file);
+                }
+                download();
+                file = extractFileFromArchive(LOCAL_TMP_DOWNLOAD_PATH.concat(archiveFileName), path);
+                builder.usingDriverExecutable(file);
 
+            }
         }
 
-
-
         builder.withSilent(true);
-        ChromeDriverService service = builder.build();
+        return builder.build();
 
-        return service;
+    }
 
+    class ChromeBinariesResolver {
 
     }
 }
+
