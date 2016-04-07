@@ -131,36 +131,24 @@ final class BinariesResolver implements IRootDriver {
         return new String[]{path, binaryFileName, archiveFileName};
     }
 
-    private boolean isExtractionDirExisting() {
-        Path extractionDirPath = Paths.get(path);
-        logger.debug("Checking if the target extraction dir exists in path: " + extractionDirPath);
-        return Files.exists(extractionDirPath);
-
-    }
-
-    private File getExtractedBinaryFile() {
-        logger.debug("Checking if the target extraction dir exists in path: " + path);
-        return new File(path + File.separator + binaryFileName);
-    }
-
     void download() {
 
-        Path extractionPath = Paths.get(LOCAL_TMP_DOWNLOAD_PATH);
-
-        logger.debug("Checking if tmp download folder exists in path " + path);
-        if (Files.notExists(extractionPath)) {
-            logger.debug("The folder doesn't exist, creating " + extractionPath);
+        Path tmpDownloadFolder = Paths.get(LOCAL_TMP_DOWNLOAD_PATH);
+        logger.debug("Checking if tmp download folder exists in path " + tmpDownloadFolder);
+        if (Files.notExists(tmpDownloadFolder)) {
+            logger.debug("The tmp folder doesn't exist, creating " + tmpDownloadFolder);
             try {
                 Files.createDirectory(Paths.get(LOCAL_TMP_DOWNLOAD_PATH));
+                logger.debug("Tmp folder successfully created");
             } catch (IOException e) {
-                logger.error("Unable to create folder ", e);
+                logger.error("Unable to create tmp folder ", e);
             }
         }
 
-        logger.debug("Target download folder exists, checking for existing file " + archiveFileName);
-        Path archiveFilePath = Paths.get(extractionPath + archiveFileName);
+        Path archiveFilePath = Paths.get(tmpDownloadFolder + "/" + archiveFileName);
+        logger.debug("Checking for existing archive file in path " + archiveFilePath);
         if (Files.exists(archiveFilePath))
-            logger.debug("Binary already exists in path " + archiveFilePath + " , skipping download");
+            logger.debug("Archive already exists in path " + archiveFilePath + ", skipping download");
         else {
 
             URL url = null;
@@ -199,7 +187,7 @@ final class BinariesResolver implements IRootDriver {
                 String fileName = ze.getName();
                 newFile = new File(extractToFilePath + File.separator + fileName);
 
-                logger.debug("Unzipping file: " + newFile.getAbsoluteFile());
+                logger.debug("Unzipping to: " + newFile.getAbsoluteFile());
 
                 //create all non exists folders
                 //else you will hit FileNotFoundException for compressed folder
@@ -229,26 +217,25 @@ final class BinariesResolver implements IRootDriver {
 
     }
 
-    ChromeDriverService getChromeBinaries() {
+    ChromeDriverService configureChromeDriverService() {
 
         logger.debug("Configuring chromedriver binaries");
 
         ChromeDriverService.Builder builder = new ChromeDriverService.Builder();
-        File file = getExtractedBinaryFile();
-
-        if (file != null) {
-            if (isExtractionDirExisting()) {
-                logger.debug("The chromedriver binary already exists");
+        File file;
+        if (Files.exists(Paths.get(path + File.separator + binaryFileName))) {
+            file = new File(path + File.separator + binaryFileName);
+            logger.debug("Using driver executable " + file.getAbsolutePath());
+            builder.usingDriverExecutable(file);
+        } else {
+            if (Files.exists(Paths.get(path))) {
+                file = new File(path.concat("/").concat(archiveFileName));
+                logger.debug("Using extracted file " + file.getAbsolutePath());
                 builder.usingDriverExecutable(file);
             } else {
-                if (isExtractionDirExisting()) {
-                    logger.debug("The chromedriver binary already exists");
-                    builder.usingDriverExecutable(file);
-                }
                 download();
                 file = extractFileFromArchive(LOCAL_TMP_DOWNLOAD_PATH.concat(archiveFileName), path);
                 builder.usingDriverExecutable(file);
-
             }
         }
 
@@ -258,7 +245,6 @@ final class BinariesResolver implements IRootDriver {
     }
 
     class ChromeBinariesResolver {
-
     }
 }
 
