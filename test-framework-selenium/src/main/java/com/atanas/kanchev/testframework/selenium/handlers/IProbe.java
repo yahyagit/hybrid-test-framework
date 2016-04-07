@@ -80,7 +80,7 @@ interface IProbe extends IWrapper {
      * @return {@code true} if the current WebElement has any text
      */
     default boolean hasAnyText() {
-        return !getWebContext().getCurrentElement().getText().isEmpty();
+        return getWebContext().getCurrentElement() != null && !getWebContext().getCurrentElement().getText().isEmpty();
     }
 
     /**
@@ -186,7 +186,7 @@ interface IProbe extends IWrapper {
      * @return {@code true}, if element of specified tag type
      */
     default boolean isOfTagType(String tag) {
-        return getWebContext().getCurrentElement().getTagName().equals(tag);
+        return getWebContext().getCurrentElement() != null && getWebContext().getCurrentElement().getTagName().equals(tag);
     }
 
     /**
@@ -195,7 +195,7 @@ interface IProbe extends IWrapper {
      * @return {@code true} if element is enabled
      */
     default boolean isEnabled() {
-        return getWebContext().getCurrentElement().isEnabled();
+        return getWebContext().getCurrentElement() != null && getWebContext().getCurrentElement().isEnabled();
     }
 
     /**
@@ -204,7 +204,7 @@ interface IProbe extends IWrapper {
      * @return {@code true} if element is selected
      */
     default boolean isSelected() {
-        return getWebContext().getCurrentElement().isSelected();
+        return getWebContext().getCurrentElement() != null && getWebContext().getCurrentElement().isSelected();
     }
 
     /**
@@ -213,7 +213,16 @@ interface IProbe extends IWrapper {
      * @return {@code true} if element is active
      */
     default boolean isActive() {
-        return getWebContext().getCurrentElement().getAttribute("class").contains("active");
+        return getWebContext().getCurrentElement() != null && getWebContext().getCurrentElement().getAttribute("class").contains("active");
+    }
+
+    /**
+     * Check if {@link WebContext#currentElement} is displayed.
+     *
+     * @return {@code true} if element is displayed
+     */
+    default boolean isDisplayed() {
+        return getWebContext().getCurrentElement() != null && getWebContext().getCurrentElement().isDisplayed();
     }
 
     /**
