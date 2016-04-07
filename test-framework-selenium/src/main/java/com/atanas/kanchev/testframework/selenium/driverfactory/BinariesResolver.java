@@ -1,6 +1,5 @@
 package com.atanas.kanchev.testframework.selenium.driverfactory;
 
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.chrome.ChromeDriverService;
@@ -18,7 +17,7 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Enumeration;
+import java.util.NoSuchElementException;
 
 /**
  * Selenium ChromeDriver binaries resolver
@@ -133,7 +132,7 @@ final class BinariesResolver implements IRootDriver {
         return new String[]{path, binaryFileName, archiveFileName};
     }
 
-    void download() {
+    private void download() {
 
         Path tmpDownloadFolder = Paths.get(LOCAL_TMP_DOWNLOAD_PATH);
         logger.debug("Checking if tmp download folder exists in path " + tmpDownloadFolder);
@@ -177,25 +176,21 @@ final class BinariesResolver implements IRootDriver {
     /**
      * Unzip a downloaded zip file (this will implicitly overwrite any existing files)
      *
-     * @param downloadedCompressedFile The downloaded zip file
-     * @param extractedToFilePath      Path to extracted file
-     * @param possibleFilenames        Names of the files we want to extract
+     * @param archiveFile              The downloaded zip file
+     * @param targetFileExtractionPath Path to extracted file
      * @return boolean
      * @throws IOException
      */
-
-    protected File unzipFile(File downloadedCompressedFile, String extractedToFilePath, String fileName) throws IOException {
-        logger.debug("Attempting to extract binary from .zip file...");
-        try (ZipFile zip = new ZipFile(downloadedCompressedFile)) {
-            Enumeration<ZipArchiveEntry> zipFile = zip.getEntries();
-            while (zipFile.hasMoreElements()) {
-                ZipArchiveEntry zipFileEntry = zipFile.nextElement();
-                return copyFileToDisk(zip.getInputStream(zipFileEntry), extractedToFilePath, fileName);
+    private File unzipFile(File archiveFile, String targetFileExtractionPath, String fileName) throws IOException {
+        logger.debug("Extracting binary from the archive file...");
+        try (ZipFile zip = new ZipFile(archiveFile)) {
+            try {
+                zip.getEntries().nextElement();
+                return copyFileToDisk(zip.getInputStream(zip.getEntries().nextElement()), targetFileExtractionPath, fileName);
+            } catch (NoSuchElementException nsee) {
+                throw new NoSuchElementException("The archive file doesn't contain any files");
             }
-
         }
-
-        return null;
     }
 
     /**
@@ -207,7 +202,7 @@ final class BinariesResolver implements IRootDriver {
      * @return Absolute path of the newly created file (Or existing file if overwriteFilesThatExist is set to false)
      * @throws IOException
      */
-    protected File copyFileToDisk(InputStream inputStream, String pathToExtractTo, String filename) throws IOException {
+    private File copyFileToDisk(InputStream inputStream, String pathToExtractTo, String filename) throws IOException {
 //        if (!overwriteFilesThatExist) {
         File[] existingFiles = new File(pathToExtractTo).listFiles();
         if (null != existingFiles && existingFiles.length > 0) {
