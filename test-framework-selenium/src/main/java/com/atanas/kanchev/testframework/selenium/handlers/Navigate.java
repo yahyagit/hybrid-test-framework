@@ -14,12 +14,16 @@ import java.net.URL;
 import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
 
 /**
- * Navigator Interface
+ * Nav Interface
  */
-public interface INavigator extends IWrapper {
+abstract class Navigate {
 
     // the logger
-    Logger logger = LoggerFactory.getLogger(INavigator.class);
+    private static final Logger logger = LoggerFactory.getLogger(Navigate.class);
+
+    public Navigate(final String url) {
+        getPage(url);
+    }
 
     /**
      * Load a new web page in the current browser window. This is done using an HTTP GET operation,
@@ -32,12 +36,17 @@ public interface INavigator extends IWrapper {
      * @param url valid URL instance
      * @return this
      */
-    default INavigator page(final URL url) {
+    private Navigate getPage(final String url) {
 
         if (url == null)
             throw new CustomExceptions.Common.NullArgumentException("Null method argument: URL");
         else {
-
+            URL address = null;
+            try {
+                address = new URL(url);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
             try {
                 getCurrentContext();
             } catch (CustomExceptions.Common.NullArgumentException e) {
@@ -46,41 +55,40 @@ public interface INavigator extends IWrapper {
                 AbstractContext context = new WebContext();
                 ((WebContext) context).setDriver(driverFactory.getDriver());
                 context.addContext(context);
-
             }
 
-            ((WebContext) getCurrentContext()).getDriver().navigate().to(url);
+            ((WebContext) getCurrentContext()).getDriver().navigate().to(address);
         }
 
         return this;
     }
 
-    /**
-     * Overloaded version of {@link INavigator#page(java.net.URL))} that makes it easy to pass in a String URL.
-     *
-     * @param url The URL to load. It is best to use a fully qualified URL
-     * @return this
-     */
-    default INavigator page(final String url) {
-
-        URL address = null;
-        try {
-            address = new URL(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        page(address);
-
-        return this;
-    }
+//    /**
+//     * Overloaded version of {@link Navigate#page(java.net.URL))} that makes it easy to pass in a String URL.
+//     *
+//     * @param url The URL to load. It is best to use a fully qualified URL
+//     * @return this
+//     */
+//    public Navigate page(final String url) {
+//
+//        URL address = null;
+//        try {
+//            address = new URL(url);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        page(address);
+//
+//        return this;
+//    }
 
     /**
      * Move back a single "item" in the browser's history.
      *
      * @return this
      */
-    default INavigator back() {
+    public Navigate back() {
         ((WebContext) getCurrentContext()).getDriver().navigate().back();
         return this;
     }
@@ -91,7 +99,7 @@ public interface INavigator extends IWrapper {
      *
      * @return this
      */
-    default INavigator forward() {
+    public Navigate forward() {
         ((WebContext) getCurrentContext()).getDriver().navigate().forward();
         return this;
     }
@@ -101,7 +109,7 @@ public interface INavigator extends IWrapper {
      *
      * @return this
      */
-    default INavigator refresh() {
+    public Navigate refresh() {
         ((WebContext) getCurrentContext()).getDriver().navigate().refresh();
         return this;
     }

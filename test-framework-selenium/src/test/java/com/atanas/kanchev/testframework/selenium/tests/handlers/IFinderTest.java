@@ -48,7 +48,7 @@ public class IFinderTest implements IWrapper {
     @Test
     public void test() throws Exception {
 
-        goTo().page("https://bbc.co.uk").probe().waitFor().elementToBeClickable(Locator.ID , "orb-modules", 5);
+        goTo("https://bbc.co.uk").waitFor().elementToBeClickable(Locator.ID, "orb-modules", 5);
 
     }
 }

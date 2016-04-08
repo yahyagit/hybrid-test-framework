@@ -14,7 +14,7 @@ import static com.atanas.kanchev.testframework.selenium.handlers.Locator.getWebC
 /**
  * WebDriver Wait Interface
  */
-interface IWait extends INavigator, IWrapper {
+interface IWait extends IWrapper {
 
     // the logger
     Logger logger = LoggerFactory.getLogger(IWait.class);

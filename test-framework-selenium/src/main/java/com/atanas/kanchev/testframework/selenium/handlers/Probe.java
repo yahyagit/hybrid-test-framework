@@ -14,77 +14,65 @@ import static com.atanas.kanchev.testframework.selenium.handlers.CommonPageDefin
 import static com.atanas.kanchev.testframework.selenium.handlers.Locator.getWebContext;
 
 /**
- * Probe Current WebElement Interface
+ * Prober Current WebElement Interface
  *
  * @author Atanas Ksnchev
  */
-interface IProbe extends IWrapper {
+abstract class Probe {
 
     // the logger
-    Logger logger = LoggerFactory.getLogger(IProbe.class);
+    private static final Logger logger = LoggerFactory.getLogger(Probe.class);
+
+    private final Locator locator;
+    private final String value;
 
     /**
-     * Go to WebElement
+     * Constructor
      *
-     * @param locatorType Locator
-     * @param locator     String
-     * @return boolean boolean
+     * @param value Locator type
+     * @param value Locator value
      */
-    default boolean probeElement(Locator locatorType, String locator) {
+    public Probe(Locator locator, String value) {
+        this.locator = locator;
+        this.value = value;
+    }
 
-        if (locatorType == null || locator == null)
+    /**
+     * Check if WebElement exists based on Locator {@link Probe#locator} and {@link Probe#value}
+     *
+     * @return true if element is found in DOM
+     */
+    public boolean exist() {
+
+        if (locator == null || value == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else {
             try {
-                logger.debug("Locating element by " + locatorType + " locator: " + locator);
-                locatorType.locateElement(locatorType, locator);
+                logger.debug("Locating element by " + locator + " value: " + value);
+                getWebContext().setCurrentElement(locator.locateElement(locator, value));
             } catch (NoSuchElementException e) {
-                logger.error("Unable to locate element by " + locatorType + " locator: " + locator, e);
+                logger.error("Unable to locate element by " + locator + " value: " + value, e);
                 return false;
             }
         }
 
         return true;
+
     }
 
     /**
-     * Finder elements by
-     *
-     * @param locatorType Locator
-     * @param locator     locator
-     * @return this boolean
-     */
-    default boolean probeElements(Locator locatorType, String locator) {
-
-        if (locatorType == null || locator == null)
-            throw new CustomExceptions.Common.NullArgumentException();
-        else {
-            try {
-                logger.debug("Locating elements by " + locatorType + " locator: " + locator);
-                locatorType.locateElements(locatorType, locator);
-            } catch (NoSuchElementException e) {
-                logger.error("Unable to locate elements by " + locatorType + " locator: " + locator, e);
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-
-    /**
-     * Probe if {@link WebContext#currentElement} has any text i.e. </br>
+     * Prober if {@link WebContext#currentElement} has any text i.e. </br>
      * {@code <div>Text</div>} match will return <b>true</b>.
      * The text to be found can be anywhere in the element text string
      *
      * @return {@code true} if the current WebElement has any text
      */
-    default boolean hasAnyText() {
+    public boolean hasAnyText() {
         return !getWebContext().getCurrentElement().getText().isEmpty();
     }
 
     /**
-     * Probe if {@link WebContext#currentElement} has partial text match e.g.
+     * Prober if {@link WebContext#currentElement} has partial text match e.g.
      * {@code hasPartialText("hello");} matching against {@code <div>hello there<\div>}
      * will return <b>true</b> The text to be found can be a subset of
      * element text string </br> The method can also be used for multiple String elements
@@ -96,7 +84,7 @@ interface IProbe extends IWrapper {
      * @param textElements  the text elements
      * @return {@code true} if the current WebElement contains the text
      */
-    default boolean hasText(boolean caseSensitive, boolean preciseMatch, String... textElements) {
+    public boolean hasText(boolean caseSensitive, boolean preciseMatch, String... textElements) {
 
         String elText = getWebContext().getCurrentElement().getText();
 
@@ -152,7 +140,7 @@ interface IProbe extends IWrapper {
      * @param attributeText the attribute text to check
      * @return {@code true} if identifier is present and its value matches @param attributeText
      */
-    default boolean hasAttribute(boolean preciseMatch, String attributeName, String attributeText) {
+    public boolean hasAttribute(boolean preciseMatch, String attributeName, String attributeText) {
 
         String attrValue;
 
@@ -185,7 +173,7 @@ interface IProbe extends IWrapper {
      * @param tag the tag name to check
      * @return {@code true}, if element of specified tag type
      */
-    default boolean isOfTagType(String tag) {
+    public boolean isOfTagType(String tag) {
         return getWebContext().getCurrentElement().getTagName().equals(tag);
     }
 
@@ -194,7 +182,7 @@ interface IProbe extends IWrapper {
      *
      * @return {@code true} if element is enabled
      */
-    default boolean isEnabled() {
+    public boolean isEnabled() {
         return getWebContext().getCurrentElement().isEnabled();
     }
 
@@ -203,7 +191,7 @@ interface IProbe extends IWrapper {
      *
      * @return {@code true} if element is selected
      */
-    default boolean isSelected() {
+    public boolean isSelected() {
         return getWebContext().getCurrentElement().isSelected();
     }
 
@@ -212,7 +200,7 @@ interface IProbe extends IWrapper {
      *
      * @return {@code true} if element is active
      */
-    default boolean isActive() {
+    public boolean isActive() {
         return getWebContext().getCurrentElement().getAttribute("class").contains("active");
     }
 
@@ -222,7 +210,7 @@ interface IProbe extends IWrapper {
      * @param expectedColorHexCode
      * @return {@code true} if element has border color
      */
-    default boolean hasBorderColour(String expectedColorHexCode) {
+    public boolean hasBorderColour(String expectedColorHexCode) {
 
         boolean hasColour = true;
         Color expectedColour;
@@ -292,7 +280,7 @@ interface IProbe extends IWrapper {
      * @param expectedColorHexCode HEX color code
      * @return {@code true} if the color matches
      */
-    default boolean hasColour(CommonPageDefinitions.CSS css, String expectedColorHexCode) {
+    public boolean hasColour(CommonPageDefinitions.CSS css, String expectedColorHexCode) {
 
         Color expColor;
 
