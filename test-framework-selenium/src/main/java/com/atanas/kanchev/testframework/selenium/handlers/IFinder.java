@@ -10,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
-import static com.atanas.kanchev.testframework.selenium.handlers.LocatorsFactory.XPATH;
-import static com.atanas.kanchev.testframework.selenium.handlers.LocatorsFactory.getWebContext;
+import static com.atanas.kanchev.testframework.selenium.handlers.Locator.XPATH;
+import static com.atanas.kanchev.testframework.selenium.handlers.Locator.getWebContext;
 
 /**
  * @author Atanas Ksnchev
@@ -40,11 +40,11 @@ public interface IFinder extends IWrapper{
     /**
      * Go to WebElement
      *
-     * @param locatorType LocatorsFactory
+     * @param locatorType Locator
      * @param locator     String
      * @return this
      */
-    default IFinder elementBy(LocatorsFactory locatorType, String locator) {
+    default IFinder elementBy(Locator locatorType, String locator) {
         if (locatorType == null || locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
@@ -55,11 +55,11 @@ public interface IFinder extends IWrapper{
     /**
      * Finder elements by
      *
-     * @param locatorType LocatorsFactory
+     * @param locatorType Locator
      * @param locator     locator
      * @return this
      */
-    default IFinder elementsBy(LocatorsFactory locatorType, String locator) {
+    default IFinder elementsBy(Locator locatorType, String locator) {
 
         if (locatorType == null || locator == null)
             throw new CustomExceptions.Common.NullArgumentException();

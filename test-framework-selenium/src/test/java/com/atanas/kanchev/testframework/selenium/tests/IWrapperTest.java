@@ -3,7 +3,7 @@ package com.atanas.kanchev.testframework.selenium.tests;
 import com.atanas.kanchev.testframework.selenium.driverfactory.BrowserConfig;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import com.atanas.kanchev.testframework.selenium.handlers.IWrapper;
-import com.atanas.kanchev.testframework.selenium.handlers.LocatorsFactory;
+import com.atanas.kanchev.testframework.selenium.handlers.Locator;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -65,12 +65,12 @@ public class IWrapperTest implements IWrapper {
 
     @Test
     public void loc() throws Exception {
-        goTo().page(url).find().elementBy(LocatorsFactory.XPATH, "//*[@id=\"tsf\"]/div[2]/div[3]/center/input[1]");
+        goTo().page(url).find().elementBy(Locator.XPATH, "//*[@id=\"tsf\"]/div[2]/div[3]/center/input[1]");
     }
 
     @Test
     public void locs() throws Exception {
-        goTo().page(url).find().elementBy(LocatorsFactory.TAG_NAME, "tr");
+        goTo().page(url).find().elementBy(Locator.TAG_NAME, "tr");
     }
 
     @Test
@@ -83,16 +83,16 @@ public class IWrapperTest implements IWrapper {
     @Test
     public void findElementByNameTest() throws Exception {
         goTo().page(url).
-                find().elementBy(LocatorsFactory.XPATH, "w");
+                find().elementBy(Locator.XPATH, "w");
     }
 
     @Test
     public void waitingTest() throws Exception {
 
         goTo().page(url)
-        .find().elementBy(LocatorsFactory.NAME, "x");
+        .find().elementBy(Locator.NAME, "x");
         waitFor()
-                .presenceOfElement(LocatorsFactory.NAME, "lst-ib", 5L);
+                .presenceOfElement(Locator.NAME, "lst-ib", 5L);
 
     }
 
@@ -100,7 +100,7 @@ public class IWrapperTest implements IWrapper {
     public void probeEl() throws Exception {
 
 
-        Assert.assertTrue(goTo().page(url).find().elementBy(LocatorsFactory.XPATH, "//*[@id=\"tsf\"]/div[2]/div[3]/center/input[1]").probe().isOfTagType("input"));
+        Assert.assertTrue(goTo().page(url).find().elementBy(Locator.XPATH, "//*[@id=\"tsf\"]/div[2]/div[3]/center/input[1]").probe().isOfTagType("input"));
 
 
     }

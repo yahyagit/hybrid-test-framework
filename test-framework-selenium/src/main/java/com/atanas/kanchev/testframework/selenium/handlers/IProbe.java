@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 import static com.atanas.kanchev.testframework.selenium.handlers.CommonPageDefinitions.COLOR.*;
 import static com.atanas.kanchev.testframework.selenium.handlers.CommonPageDefinitions.CSS.*;
-import static com.atanas.kanchev.testframework.selenium.handlers.LocatorsFactory.getWebContext;
+import static com.atanas.kanchev.testframework.selenium.handlers.Locator.getWebContext;
 
 /**
  * Probe Current WebElement Interface
@@ -26,11 +26,11 @@ interface IProbe extends IWrapper {
     /**
      * Go to WebElement
      *
-     * @param locatorType LocatorsFactory
+     * @param locatorType Locator
      * @param locator     String
      * @return boolean boolean
      */
-    default boolean probeElement(LocatorsFactory locatorType, String locator) {
+    default boolean probeElement(Locator locatorType, String locator) {
 
         if (locatorType == null || locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
@@ -50,11 +50,11 @@ interface IProbe extends IWrapper {
     /**
      * Finder elements by
      *
-     * @param locatorType LocatorsFactory
+     * @param locatorType Locator
      * @param locator     locator
      * @return this boolean
      */
-    default boolean probeElements(LocatorsFactory locatorType, String locator) {
+    default boolean probeElements(Locator locatorType, String locator) {
 
         if (locatorType == null || locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
