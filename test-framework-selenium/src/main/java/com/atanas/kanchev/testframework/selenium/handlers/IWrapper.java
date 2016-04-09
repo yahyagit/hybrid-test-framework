@@ -9,8 +9,8 @@ public interface IWrapper extends IBaseHandler {
         return new Wait();
     }
 
-    default Navigator goTo() {
-        return new Navigator();
+    default Nav goTo(final String url) {
+        return new Nav(url);
     }
 
     default Finder find() {
@@ -21,8 +21,8 @@ public interface IWrapper extends IBaseHandler {
         return new Driver();
     }
 
-    default Probe probe() {
-        return new Probe();
+    default Prober probe(Locator locator, String value) {
+        return new Prober(locator, value);
     }
 
     default Context context() {
@@ -30,10 +30,13 @@ public interface IWrapper extends IBaseHandler {
     }
 
 
-    class Wait implements IWait, INavigator {
+    class Wait implements IWait {
     }
 
-    class Navigator implements INavigator {
+    class Nav extends Navigate implements IWrapper {
+        public Nav(String url) {
+            super(url);
+        }
     }
 
     class Finder implements IFinder {
@@ -42,7 +45,16 @@ public interface IWrapper extends IBaseHandler {
     class Driver implements IDriver {
     }
 
-    class Probe implements IProbe {
+    class Prober extends Probe {
+        /**
+         * Constructor
+         *
+         * @param locator
+         * @param value   Locator type
+         */
+        Prober(Locator locator, String value) {
+            super(locator, value);
+        }
     }
 
     class Context implements IContext {

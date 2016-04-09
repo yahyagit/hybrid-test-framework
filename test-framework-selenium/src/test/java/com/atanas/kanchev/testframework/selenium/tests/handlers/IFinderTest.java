@@ -2,7 +2,7 @@ package com.atanas.kanchev.testframework.selenium.tests.handlers;
 
 import com.atanas.kanchev.testframework.selenium.handlers.IFinder;
 import com.atanas.kanchev.testframework.selenium.handlers.IWrapper;
-import com.atanas.kanchev.testframework.selenium.handlers.LocatorsFactory;
+import com.atanas.kanchev.testframework.selenium.handlers.Locator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +41,14 @@ public class IFinderTest implements IWrapper {
     @Test
     public void elementByTest() throws Exception {
 
-        ifind.elementBy(LocatorsFactory.XPATH, "//");
+        ifind.elementBy(Locator.XPATH, "//");
+
+    }
+
+    @Test
+    public void test() throws Exception {
+
+        goTo("https://bbc.co.uk").waitFor().elementToBeClickable(Locator.ID, "orb-modules", 5);
 
     }
 }
