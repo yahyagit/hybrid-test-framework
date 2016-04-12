@@ -12,6 +12,8 @@ import java.util.List;
  */
 public final class WebContext extends AbstractContext<WebDriver> {
 
+    private static final String CONTEXT_NAME = "webContext";
+
     // Current WebElement pointer
     private WebElement currentElement;
 
@@ -23,6 +25,7 @@ public final class WebContext extends AbstractContext<WebDriver> {
     private long pageLoadTimeout;
 
     public WebContext() {
+        super(CONTEXT_NAME);
         this.implicitlyWait = IRootDriver.DEFAULT_IMPLICITLY_WAIT;
         this.pageLoadTimeout = IRootDriver.DEFAULT_PAGE_TIMEOUT;
     }
@@ -31,17 +34,6 @@ public final class WebContext extends AbstractContext<WebDriver> {
     //////////////
     // Getters //
     /////////////
-
-    /**
-     * Get WebDriver instance
-     *
-     * @return refrence to com.atanas.kanchev.testframework.selenium.context.AbstractContext#driver
-     */
-    public WebDriver getDriver() {
-
-        if (super.driver == null) throw new RuntimeException("Null driver");
-        else return super.driver;
-    }
 
     /**
      * Get current WebElement
@@ -83,18 +75,6 @@ public final class WebContext extends AbstractContext<WebDriver> {
     //////////////
     // Setters //
     /////////////
-
-    /**
-     * Set the com.atanas.kanchev.testframework.selenium.context.AbstractContext#driver
-     *
-     * @param driver instance of WebDriver
-     */
-    public void setDriver(WebDriver driver) {
-        if (driver != null)
-            super.driver = driver;
-        else
-            throw new CustomExceptions.Common.NullArgumentException("Null driver instance passed as method argument");
-    }
 
     /**
      * Set the current WebElement com.atanas.kanchev.testframework.selenium.context.WebContext#currentElement
