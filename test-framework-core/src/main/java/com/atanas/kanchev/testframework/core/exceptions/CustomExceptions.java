@@ -84,4 +84,60 @@ public final class CustomExceptions {
     }
 
 
+    /**
+     * Custom exceptions
+     */
+    public static class PropertiesExceptions {
+
+        /**
+         * Custom exception - prop file not found
+         */
+        public static class PropFileNotFoundException extends RuntimeException {
+
+            public PropFileNotFoundException(String message) {
+                super(message);
+            }
+        }
+
+        /**
+         * Custom exception - null argument
+         */
+        public static class NullArgumentException extends RuntimeException {
+
+            public NullArgumentException(String message) {
+                super(message);
+            }
+        }
+
+        /**
+         * Custom exception - empty argument
+         */
+        public static class EmptyArgumentException extends RuntimeException {
+
+            public EmptyArgumentException(String message) {
+                super(message);
+            }
+        }
+
+        /**
+         * Custom exception - null value
+         */
+        public static class EmptyValueException extends RuntimeException {
+
+            public EmptyValueException(String message) {
+                super(message);
+            }
+        }
+
+        /**
+         * Custom exception - empty key
+         */
+        public static class InvalidKeyException extends RuntimeException {
+
+            public InvalidKeyException(String message) {
+                super(message);
+            }
+        }
+
+    }
 }
