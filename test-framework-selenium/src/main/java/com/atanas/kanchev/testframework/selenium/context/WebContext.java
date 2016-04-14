@@ -4,6 +4,8 @@ import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.selenium.driverfactory.IRootDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -12,7 +14,8 @@ import java.util.List;
  */
 public final class WebContext extends AbstractContext<WebDriver> {
 
-    private static final String CONTEXT_NAME = "webContext";
+    // the logger
+    private static final Logger logger = LoggerFactory.getLogger(WebContext.class);
 
     // Current WebElement pointer
     private WebElement currentElement;
@@ -25,11 +28,10 @@ public final class WebContext extends AbstractContext<WebDriver> {
     private long pageLoadTimeout;
 
     public WebContext() {
-        super(CONTEXT_NAME);
+        super("webContext_");
         this.implicitlyWait = IRootDriver.DEFAULT_IMPLICITLY_WAIT;
         this.pageLoadTimeout = IRootDriver.DEFAULT_PAGE_TIMEOUT;
     }
-
 
     //////////////
     // Getters //
@@ -41,23 +43,30 @@ public final class WebContext extends AbstractContext<WebDriver> {
      * @return reference to {@link WebContext#currentElement}
      */
     public WebElement getCurrentElement() {
-        if (this.currentElement == null) throw new CustomExceptions.Common.NullReferenceException();
-        else return currentElement;
+
+        if (this.currentElement == null)
+            throw new CustomExceptions.Common.NullReferenceException("Null WebContext#currentElement");
+        else
+            return currentElement;
     }
 
     /**
      * Get current WebElement list
      *
-     * @return reference to com.atanas.kanchev.testframework.selenium.context.WebContext#webElementsList
+     * @return reference to {@link  WebContext#webElementsList}
      */
     public List<WebElement> getWebElementsList() {
-        return webElementsList;
+
+        if (this.webElementsList == null)
+            throw new CustomExceptions.Common.NullReferenceException("Null WebContext#webElementsList");
+        else
+            return webElementsList;
     }
 
     /**
      * Get Implicitly Wait
      *
-     * @return value of com.atanas.kanchev.testframework.selenium.context.WebContext#implicitlyWait
+     * @return value of {@link WebContext#implicitlyWait}
      */
     public long getImplicitlyWait() {
         return implicitlyWait;
@@ -66,7 +75,7 @@ public final class WebContext extends AbstractContext<WebDriver> {
     /**
      * Get Page Timeout
      *
-     * @return value of com.atanas.kanchev.testframework.selenium.context.WebContext#pageLoadTimeout
+     * @return value of {@link WebContext#pageLoadTimeout}
      */
     public long getPageLoadTimeout() {
         return pageLoadTimeout;
@@ -77,7 +86,7 @@ public final class WebContext extends AbstractContext<WebDriver> {
     /////////////
 
     /**
-     * Set the current WebElement com.atanas.kanchev.testframework.selenium.context.WebContext#currentElement
+     * Set the current WebElement {@link WebContext#currentElement}
      *
      * @param currentElement instance of WebElement
      */
@@ -90,7 +99,7 @@ public final class WebContext extends AbstractContext<WebDriver> {
     }
 
     /**
-     * Set the current WebElement List com.atanas.kanchev.testframework.selenium.context.WebContext#webElementsList
+     * Set the current WebElement List {@link WebContext#webElementsList}
      *
      * @param webElementsList instance of List<WebElement>
      */
@@ -103,7 +112,7 @@ public final class WebContext extends AbstractContext<WebDriver> {
     }
 
     /**
-     * Set Implicitly Wait com.atanas.kanchev.testframework.selenium.context.WebContext#implicitlyWait
+     * Set Implicitly Wait {@link WebContext#implicitlyWait}
      *
      * @param implicitlyWait long
      */
@@ -112,7 +121,7 @@ public final class WebContext extends AbstractContext<WebDriver> {
     }
 
     /**
-     * Set Page Load Timeout com.atanas.kanchev.testframework.selenium.context.WebContext#pageLoadTimeout
+     * Set Page Load Timeout {@link WebContext#pageLoadTimeout}
      *
      * @param pageLoadTimeout long
      */

@@ -1,16 +1,27 @@
 package com.atanas.kanchev.testframework.selenium.context;
 
 import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.math.BigInteger;
+import java.security.SecureRandom;
 
 /**
  * Abstract Context
  *
+ * @param <T>
  * @author Atanas Kanchev
  */
 public abstract class AbstractContext<T> extends ContextFactory {
 
-    private final String contextName;
+    // the logger
+    private static final Logger logger = LoggerFactory.getLogger(AbstractContext.class);
 
+    // the context name
+    private String contextName;
+
+    // the driver object
     private T driver;
 
     /**
@@ -20,15 +31,15 @@ public abstract class AbstractContext<T> extends ContextFactory {
      * @param contextName String
      */
     public AbstractContext(String contextName) {
-        this.contextName = contextName;
+        this.contextName = contextName + new BigInteger(130, new SecureRandom()).toString(32);
     }
 
     /**
      * Constructor
-     * Set default value for {@link AbstractContext#contextName}
+     * Sets random value for {@link AbstractContext#contextName}
      */
     public AbstractContext() {
-        this.contextName = "context";
+        this.contextName = new BigInteger(130, new SecureRandom()).toString(32);
     }
 
     /**
@@ -38,7 +49,7 @@ public abstract class AbstractContext<T> extends ContextFactory {
      */
     public T getDriver() {
         if (this.driver == null)
-            throw new RuntimeException("Null driver");
+            throw new CustomExceptions.Common.NullReferenceException("Null driver object AbstractContext#driver");
         else
             return this.driver;
     }
@@ -60,8 +71,30 @@ public abstract class AbstractContext<T> extends ContextFactory {
      *
      * @return the value of {@link AbstractContext#contextName}
      */
-    protected String getContextName() {
+    public String getContextName() {
+        logger.debug("Current context " + contextName);
         return contextName;
     }
 
+    /**
+     * Get reference to the current context object
+     *
+     * @return this
+     */
+    public AbstractContext getContext() {
+        return this;
+    }
+
+    /**
+     * Set the value of {@link AbstractContext#contextName}
+     *
+     * @param contextName String
+     */
+    public void setContextName(String contextName) {
+        if (contextName == null)
+            throw new CustomExceptions.Common.NullArgumentException("Null argument contextName");
+        if (contextName.isEmpty())
+            throw new CustomExceptions.Common.EmptyArgumentException("Empty argument contextName");
+        this.contextName = contextName;
+    }
 }
