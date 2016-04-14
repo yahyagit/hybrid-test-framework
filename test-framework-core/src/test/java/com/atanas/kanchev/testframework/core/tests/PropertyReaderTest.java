@@ -35,12 +35,12 @@ public class PropertyReaderTest {
             assertEquals(new PropertyReader().getProperty(VALID_KEY), VALID_VALUE);
         }
 
-        @Test(expected = CustomExceptions.PropertiesExceptions.NullArgumentException.class)
+        @Test(expected = CustomExceptions.Common.NullArgumentException.class)
         public void getPropertyWithNullArgument() throws Exception {
             assertNull(new PropertyReader().getProperty(null));
         }
 
-        @Test(expected = CustomExceptions.PropertiesExceptions.EmptyArgumentException.class)
+        @Test(expected = CustomExceptions.Common.EmptyArgumentException.class)
         public void getPropertyWithEmptyArgument() throws Exception {
             assertNull(new PropertyReader().getProperty(""));
         }
@@ -65,17 +65,17 @@ public class PropertyReaderTest {
         }
 
 
-        @Test(expected = CustomExceptions.PropertiesExceptions.NullArgumentException.class)
+        @Test(expected = CustomExceptions.Common.NullArgumentException.class)
         public void getValidPropertyNullFileRef() throws Exception {
             assertEquals(new PropertyReader(null).getProperty(VALID_KEY), VALID_VALUE);
         }
 
-        @Test(expected = CustomExceptions.PropertiesExceptions.NullArgumentException.class)
+        @Test(expected = CustomExceptions.Common.NullArgumentException.class)
         public void getPropertyWithNullArgument() throws Exception {
             assertNull(new PropertyReader(CUSTOM_PROP_FILE_NAME).getProperty(null));
         }
 
-        @Test(expected = CustomExceptions.PropertiesExceptions.EmptyArgumentException.class)
+        @Test(expected = CustomExceptions.Common.EmptyArgumentException.class)
         public void getPropertyWithEmptyArgument() throws Exception {
             assertNull(new PropertyReader(CUSTOM_PROP_FILE_NAME).getProperty(""));
         }

@@ -75,6 +75,16 @@ public final class CustomExceptions {
                 super(message);
             }
         }
+
+        /**
+         * Custom exception - empty argument
+         */
+        public static class EmptyArgumentException extends RuntimeException {
+
+            public EmptyArgumentException(String message) {
+                super(message);
+            }
+        }
     }
 
     /**
@@ -95,26 +105,6 @@ public final class CustomExceptions {
         public static class PropFileNotFoundException extends RuntimeException {
 
             public PropFileNotFoundException(String message) {
-                super(message);
-            }
-        }
-
-        /**
-         * Custom exception - null argument
-         */
-        public static class NullArgumentException extends RuntimeException {
-
-            public NullArgumentException(String message) {
-                super(message);
-            }
-        }
-
-        /**
-         * Custom exception - empty argument
-         */
-        public static class EmptyArgumentException extends RuntimeException {
-
-            public EmptyArgumentException(String message) {
                 super(message);
             }
         }

@@ -1,5 +1,6 @@
 package com.atanas.kanchev.testframework.core.properties;
 
+import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +36,7 @@ public final class PropertyReader {
 
         if (environment != null) {
             if (environment.isEmpty())
-                throw new EmptyArgumentException("Empty JVM arg " + ENV_JVM_ARG);
+                throw new CustomExceptions.Common.EmptyArgumentException("Empty JVM arg " + ENV_JVM_ARG);
             else {
                 propFilePath = ENV_PROP_FILE_ROOT + environment.toLowerCase().trim() + ENV_PROP_FILE_SUFFIX;
                 if (isPropFileThere(propFilePath)) {
@@ -43,13 +44,13 @@ public final class PropertyReader {
                     loadPropFile(propFilePath);
                 } else throw new PropFileNotFoundException("Property file doesn't exist in path " + propFilePath);
             }
-        } else throw new NullArgumentException("Null JVM argument \"env\"");
+        } else throw new CustomExceptions.Common.NullArgumentException("Null JVM argument \"env\"");
     }
 
     public PropertyReader(final String propertyFileName) {
 
-        if (propertyFileName == null) throw new NullArgumentException("Null argument propertyFileName");
-        if (propertyFileName.isEmpty()) throw new EmptyArgumentException("Empty argument propertyFileName");
+        if (propertyFileName == null) throw new CustomExceptions.Common.NullArgumentException("Null argument propertyFileName");
+        if (propertyFileName.isEmpty()) throw new CustomExceptions.Common.EmptyArgumentException("Empty argument propertyFileName");
 
         propFile = new Properties();
         propFilePath = ENV_PROP_FILE_ROOT + propertyFileName;
@@ -103,9 +104,9 @@ public final class PropertyReader {
         String key, value;
 
         if (propKey == null)
-            throw new NullArgumentException("Null argument: property key");
+            throw new CustomExceptions.Common.NullArgumentException("Null argument: property key");
         else if (propKey.isEmpty())
-            throw new EmptyArgumentException("Empty argument: property key");
+            throw new CustomExceptions.Common.EmptyArgumentException("Empty argument: property key");
         else
             key = propKey;
 
