@@ -4,13 +4,14 @@ import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.selenium.context.WebContext;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * Locators Factory
@@ -384,34 +385,37 @@ public enum Locator implements IElementLocatorFactory, IWaitFactory {
 
     private static boolean isElementPresent(Locator locType, String loc, long wait) {
 
-        WebDriverWait webDriverWait = new WebDriverWait(getWebContext().getDriver(), wait);
+        FluentWait<WebDriver> fluentWait = new FluentWait<>(getWebContext().getDriver())
+                .withTimeout(wait, SECONDS)
+                .pollingEvery(5, SECONDS)
+                .ignoring(NoSuchElementException.class);
 
         try {
 
             switch (locType) {
                 case CLASS_NAME:
-                    webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.className(loc)));
+                    fluentWait.until(ExpectedConditions.presenceOfElementLocated(By.className(loc)));
                     break;
                 case CSS_SELECTOR:
-                    webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(loc)));
+                    fluentWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(loc)));
                     break;
                 case ID:
-                    webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.id(loc)));
+                    fluentWait.until(ExpectedConditions.presenceOfElementLocated(By.id(loc)));
                     break;
                 case LINK_TEXT:
-                    webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.linkText(loc)));
+                    fluentWait.until(ExpectedConditions.presenceOfElementLocated(By.linkText(loc)));
                     break;
                 case NAME:
-                    webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.name(loc)));
+                    fluentWait.until(ExpectedConditions.presenceOfElementLocated(By.name(loc)));
                     break;
                 case PARTIAL_LINK_TEXT:
-                    webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(loc)));
+                    fluentWait.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(loc)));
                     break;
                 case TAG_NAME:
-                    webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.tagName(loc)));
+                    fluentWait.until(ExpectedConditions.presenceOfElementLocated(By.tagName(loc)));
                     break;
                 case XPATH:
-                    webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(loc)));
+                    fluentWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(loc)));
                     break;
             }
 
@@ -428,46 +432,49 @@ public enum Locator implements IElementLocatorFactory, IWaitFactory {
 
     private static boolean isElementVisible(Locator locType, String loc, boolean visibility, long wait) {
 
-        WebDriverWait webDriverWait = new WebDriverWait(getWebContext().getDriver(), wait);
+        FluentWait<WebDriver> fluentWait = new FluentWait<>(getWebContext().getDriver())
+                .withTimeout(wait, SECONDS)
+                .pollingEvery(5, SECONDS)
+                .ignoring(NoSuchElementException.class);
 
         try {
 
             switch (locType) {
                 case CLASS_NAME:
                     if (visibility)
-                        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.className(loc)));
-                    else webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.className(loc)));
+                        fluentWait.until(ExpectedConditions.visibilityOfElementLocated(By.className(loc)));
+                    else fluentWait.until(ExpectedConditions.invisibilityOfElementLocated(By.className(loc)));
                     break;
                 case CSS_SELECTOR:
                     if (visibility)
-                        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(loc)));
-                    else webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.className(loc)));
+                        fluentWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(loc)));
+                    else fluentWait.until(ExpectedConditions.invisibilityOfElementLocated(By.className(loc)));
                     break;
                 case ID:
-                    if (visibility) webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id(loc)));
-                    else webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id(loc)));
+                    if (visibility) fluentWait.until(ExpectedConditions.visibilityOfElementLocated(By.id(loc)));
+                    else fluentWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id(loc)));
                     break;
                 case LINK_TEXT:
                     if (visibility)
-                        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(loc)));
-                    else webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText(loc)));
+                        fluentWait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(loc)));
+                    else fluentWait.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText(loc)));
                     break;
                 case NAME:
-                    if (visibility) webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.name(loc)));
-                    else webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.name(loc)));
+                    if (visibility) fluentWait.until(ExpectedConditions.visibilityOfElementLocated(By.name(loc)));
+                    else fluentWait.until(ExpectedConditions.invisibilityOfElementLocated(By.name(loc)));
                     break;
                 case PARTIAL_LINK_TEXT:
                     if (visibility)
-                        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText(loc)));
-                    else webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.partialLinkText(loc)));
+                        fluentWait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText(loc)));
+                    else fluentWait.until(ExpectedConditions.invisibilityOfElementLocated(By.partialLinkText(loc)));
                     break;
                 case TAG_NAME:
-                    if (visibility) webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName(loc)));
-                    else webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.tagName(loc)));
+                    if (visibility) fluentWait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName(loc)));
+                    else fluentWait.until(ExpectedConditions.invisibilityOfElementLocated(By.tagName(loc)));
                     break;
                 case XPATH:
-                    if (visibility) webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(loc)));
-                    else webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(loc)));
+                    if (visibility) fluentWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(loc)));
+                    else fluentWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(loc)));
                     break;
             }
 
@@ -484,34 +491,37 @@ public enum Locator implements IElementLocatorFactory, IWaitFactory {
 
     private static boolean isElementClickable(Locator locType, String loc, long wait) {
 
-        WebDriverWait webDriverWait = new WebDriverWait(getWebContext().getDriver(), wait);
+        FluentWait<WebDriver> fluentWait = new FluentWait<>(getWebContext().getDriver())
+                .withTimeout(wait, SECONDS)
+                .pollingEvery(5, SECONDS)
+                .ignoring(NoSuchElementException.class);
 
         try {
 
             switch (locType) {
                 case CLASS_NAME:
-                    webDriverWait.until(ExpectedConditions.elementToBeClickable(By.className(loc)));
+                    fluentWait.until(ExpectedConditions.elementToBeClickable(By.className(loc)));
                     break;
                 case CSS_SELECTOR:
-                    webDriverWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(loc)));
+                    fluentWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(loc)));
                     break;
                 case ID:
-                    webDriverWait.until(ExpectedConditions.elementToBeClickable(By.id(loc)));
+                    fluentWait.until(ExpectedConditions.elementToBeClickable(By.id(loc)));
                     break;
                 case LINK_TEXT:
-                    webDriverWait.until(ExpectedConditions.elementToBeClickable(By.linkText(loc)));
+                    fluentWait.until(ExpectedConditions.elementToBeClickable(By.linkText(loc)));
                     break;
                 case NAME:
-                    webDriverWait.until(ExpectedConditions.elementToBeClickable(By.name(loc)));
+                    fluentWait.until(ExpectedConditions.elementToBeClickable(By.name(loc)));
                     break;
                 case PARTIAL_LINK_TEXT:
-                    webDriverWait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText(loc)));
+                    fluentWait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText(loc)));
                     break;
                 case TAG_NAME:
-                    webDriverWait.until(ExpectedConditions.elementToBeClickable(By.tagName(loc)));
+                    fluentWait.until(ExpectedConditions.elementToBeClickable(By.tagName(loc)));
                     break;
                 case XPATH:
-                    webDriverWait.until(ExpectedConditions.elementToBeClickable(By.xpath(loc)));
+                    fluentWait.until(ExpectedConditions.elementToBeClickable(By.xpath(loc)));
                     break;
             }
 
