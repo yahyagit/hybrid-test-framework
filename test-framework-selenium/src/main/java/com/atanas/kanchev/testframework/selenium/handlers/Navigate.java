@@ -53,7 +53,7 @@ abstract class Navigate {
                 DriverFactory driverFactory = new DriverFactory();
                 driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
                 AbstractContext context = new WebContext();
-                ((WebContext) context).setDriver(driverFactory.getDriver());
+                ((WebContext) context).setDriver(driverFactory.getRemoteWebDriver());
                 context.addContext(context);
             }
 
@@ -62,26 +62,6 @@ abstract class Navigate {
 
         return this;
     }
-
-//    /**
-//     * Overloaded version of {@link Navigate#page(java.net.URL))} that makes it easy to pass in a String URL.
-//     *
-//     * @param url The URL to load. It is best to use a fully qualified URL
-//     * @return this
-//     */
-//    public Navigate page(final String url) {
-//
-//        URL address = null;
-//        try {
-//            address = new URL(url);
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        page(address);
-//
-//        return this;
-//    }
 
     /**
      * Move back a single "item" in the browser's history.

@@ -1,5 +1,6 @@
 package com.atanas.kanchev.testframework.selenium.driverfactory;
 
+import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -106,7 +107,7 @@ interface IWebDriver  {
      */
     default WebDriver configureTimeouts(final WebDriver driver, long implicitlyWait, long pageLoadTimeout) {
 
-        if (driver == null) throw new NullPointerException("Null argument is not permitted");
+        if (driver == null) throw new CustomExceptions.Common.NullArgumentException("Null argument is not permitted");
         if (implicitlyWait != 0) {
             logger.debug("Setting implicitly wait to: " + implicitlyWait + " s.");
             driver.manage().timeouts().implicitlyWait(implicitlyWait, TimeUnit.SECONDS);

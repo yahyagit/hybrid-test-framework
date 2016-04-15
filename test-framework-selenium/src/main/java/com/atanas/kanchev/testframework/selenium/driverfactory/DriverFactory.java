@@ -1,21 +1,24 @@
 package com.atanas.kanchev.testframework.selenium.driverfactory;
 
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.atanas.kanchev.testframework.selenium.driverfactory.IRootDriver.DEFAULT_IMPLICITLY_WAIT;
-import static com.atanas.kanchev.testframework.selenium.driverfactory.IRootDriver.DEFAULT_PAGE_TIMEOUT;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Driver Factory
  */
-public final class DriverFactory implements IWebDriver, IDesiredCapabilities {
+public final class DriverFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(DriverFactory.class);
 
-    public void setSelectedBrowser(BrowserConfig selectedBrowser) {
+    public DriverFactory setSelectedBrowser(BrowserConfig selectedBrowser) {
         this.selectedBrowser = selectedBrowser;
+        return this;
     }
 
     private BrowserConfig selectedBrowser;
@@ -28,44 +31,21 @@ public final class DriverFactory implements IWebDriver, IDesiredCapabilities {
         selectedBrowser = JVMArgsFactory.getBrowserType();
     }
 
-    public WebDriver getDriver() {
-        return configureTimeouts(selectedBrowser.getWebDriverObject(selectedBrowser.getDesiredCapabilities()), DEFAULT_IMPLICITLY_WAIT, DEFAULT_PAGE_TIMEOUT);
+    public WebDriver getWebDriverDriver() {
+        return selectedBrowser.getWebDriverObject(selectedBrowser.getDesiredCapabilities());
     }
 
+    public RemoteWebDriver getRemoteWebDriver() {
+        URL url = null;
+        try {
+            url = new URL("http://10.1.29.8:4444//wd/hub");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
-    //////////////
-    // SETTERS //
-    /////////////
+        return (RemoteWebDriver) selectedBrowser.getRemoteWebDriverObject(url, "46", Platform.WINDOWS);
+    }
 
-//    public void setSessionName(String name) {
-//        logger.debug("Setting session name to: " + name);
-//        sessionName = name;
-//    }
-
-//    public WebDriver getWebDriverDriver() {
-//        return driverThread.get().getWebDriverDriver();
-//    }
-
-//    private class WebDriverThread {
-//
-//        private final BrowserConfig selectedBrowser;
-//
-//        WebDriverThread(BrowserConfig selectedBrowser) {
-//            this.selectedBrowser = selectedBrowser;
-//        }
-//
-//        WebDriverThread() {
-//            selectedBrowser = JVMArgsFactory.getBrowserType();
-//        }
-//
-//        WebDriver getWebDriverDriver() {
-//
-//            DesiredCapabilities desiredCapabilities = selectedBrowser.getDesiredCapabilities();
-//
-//            return selectedBrowser.getWebDriverObject(desiredCapabilities);
-//        }
-//
-//    }
 }
 
 

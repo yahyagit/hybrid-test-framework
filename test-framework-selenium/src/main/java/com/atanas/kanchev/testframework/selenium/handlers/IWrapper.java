@@ -29,12 +29,11 @@ public interface IWrapper extends IBaseHandler {
         return new Context();
     }
 
-
     class Wait implements IWait {
     }
 
     class Nav extends Navigate implements IWrapper {
-        public Nav(String url) {
+        Nav(String url) {
             super(url);
         }
     }

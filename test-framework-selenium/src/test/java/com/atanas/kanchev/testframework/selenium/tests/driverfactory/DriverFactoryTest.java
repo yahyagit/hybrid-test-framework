@@ -15,7 +15,7 @@ public class DriverFactoryTest {
 
         DriverFactory driverFactory = new DriverFactory();
         driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
-        driverFactory.getDriver();
+        driverFactory.getWebDriverDriver();
 
 
     }

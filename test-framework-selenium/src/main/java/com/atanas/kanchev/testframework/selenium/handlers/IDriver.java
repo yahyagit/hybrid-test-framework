@@ -24,7 +24,7 @@ interface IDriver {
 
     default void configureContext(DriverFactory driverFactory) {
         AbstractContext context = new WebContext();
-        ((WebContext) context).setDriver(driverFactory.getDriver());
+        ((WebContext) context).setDriver(driverFactory.getWebDriverDriver());
         context.addContext(context);
     }
 

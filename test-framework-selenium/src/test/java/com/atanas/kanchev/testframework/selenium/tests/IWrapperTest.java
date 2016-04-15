@@ -10,6 +10,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
 /**
  * Created by atanas on 24/03/2016.
  */
@@ -89,5 +92,21 @@ public class IWrapperTest implements IWrapper {
         driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
         setup().configureContext(driverFactory);
         goTo(url);
+    }
+
+    @Test
+    public void prop() throws Exception {
+//        System.setProperty("env", "dev");
+//        System.out.println(new PropertyReader().getValidProperty("url"));
+       // System.out.println(new PropertyReader("dev.env.properties").getProperty("url"));
+        System.out.println(new BigInteger(130, new SecureRandom()).toString(32));
+
+    }
+
+    @Test
+    public void conf() throws Exception {
+        setup().getDriverFactory().setSelectedBrowser(BrowserConfig.CHROME).getWebDriverDriver();
+        setup().getDriverFactory().setSelectedBrowser(BrowserConfig.FIREFOX).getWebDriverDriver();
+
     }
 }
