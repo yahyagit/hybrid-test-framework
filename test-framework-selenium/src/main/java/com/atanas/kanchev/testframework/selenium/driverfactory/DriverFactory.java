@@ -16,11 +16,6 @@ public final class DriverFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(DriverFactory.class);
 
-    public DriverFactory setSelectedBrowser(BrowserConfig selectedBrowser) {
-        this.selectedBrowser = selectedBrowser;
-        return this;
-    }
-
     private BrowserConfig selectedBrowser;
 
     public DriverFactory(BrowserConfig selectedBrowser) {
@@ -44,6 +39,15 @@ public final class DriverFactory {
         }
 
         return (RemoteWebDriver) selectedBrowser.getRemoteWebDriverObject(url, "46", Platform.WINDOWS);
+    }
+
+    public DriverFactory setSelectedBrowser(BrowserConfig selectedBrowser) {
+        this.selectedBrowser = selectedBrowser;
+        return this;
+    }
+
+    public BrowserConfig conf() {
+        return this.selectedBrowser;
     }
 
 }

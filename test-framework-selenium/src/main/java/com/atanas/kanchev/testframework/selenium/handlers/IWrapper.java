@@ -41,7 +41,7 @@ public interface IWrapper extends IBaseHandler {
     class Finder implements IFinder {
     }
 
-    class Driver implements IDriver {
+    class Driver extends IDriver {
     }
 
     class Prober extends Probe {

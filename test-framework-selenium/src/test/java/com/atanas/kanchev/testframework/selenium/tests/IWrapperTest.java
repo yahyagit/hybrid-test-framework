@@ -88,7 +88,7 @@ public class IWrapperTest implements IWrapper {
 
     @Test
     public void driver() throws Exception {
-        DriverFactory driverFactory = setup().getDriverFactory();
+        DriverFactory driverFactory = setup().configureBrowser();
         driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
         setup().configureContext(driverFactory);
         goTo(url);
@@ -105,8 +105,7 @@ public class IWrapperTest implements IWrapper {
 
     @Test
     public void conf() throws Exception {
-        setup().getDriverFactory().setSelectedBrowser(BrowserConfig.CHROME).getWebDriverDriver();
-        setup().getDriverFactory().setSelectedBrowser(BrowserConfig.FIREFOX).getWebDriverDriver();
+
 
     }
 }
