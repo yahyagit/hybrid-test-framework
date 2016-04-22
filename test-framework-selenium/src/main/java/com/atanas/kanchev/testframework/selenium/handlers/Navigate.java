@@ -53,7 +53,7 @@ abstract class Navigate {
                 DriverFactory driverFactory = new DriverFactory();
                 driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
                 AbstractContext context = new WebContext();
-                ((WebContext) context).setDriver(driverFactory.getRemoteWebDriver());
+                ((WebContext) context).setDriver(driverFactory.getWebDriverDriver());
                 context.addContext(context);
             }
 

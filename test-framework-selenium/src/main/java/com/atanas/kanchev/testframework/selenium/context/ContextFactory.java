@@ -82,9 +82,22 @@ public abstract class ContextFactory {
      * Tear down all active contexts stored in {@link ContextFactory#contextMap}
      */
     public static void tearDownContext() {
+        AbstractContext ac = null;
+        for (AbstractContext c : contextMap.values()) {
+            if (c instanceof WebContext) {
+                ac = c.getContext();
+                ((WebContext) c).getDriver().quit();
+
+            }
+            contextMap.remove(c);
+
+            if (currentContext == c)
+                currentContext = null;
+        }
 
 
     }
+
 
     /**
      * Tear down a context stored in {@link ContextFactory#contextMap}
