@@ -1,6 +1,5 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
-import com.atanas.kanchev.testframework.selenium.context.WebContext;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -10,42 +9,38 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
+import static com.atanas.kanchev.testframework.selenium.handlers.Locator.getWebContext;
 
 /**
  * WebDriver Wait Interface
  */
-interface IWait extends IWebHandler {
+interface IWait extends IWrapper {
 
     // the logger
     Logger logger = LoggerFactory.getLogger(IWait.class);
 
-    static WebContext getWebContext() {
-        return ((WebContext) getCurrentContext());
-    }
-
-    default IWait presenseOfElement(LocatorsFactory locatorType, String locator, long wait) {
+    default IWait presenceOfElement(Locator locatorType, String locator, long wait) {
 
         locatorType.presenceOfElement(locatorType, locator, wait);
 
         return this;
     }
 
-    default IWait visibilityOfElement(LocatorsFactory locatorType, String locator, long wait) {
+    default IWait visibilityOfElement(Locator locatorType, String locator, long wait) {
 
         locatorType.visibilityOfElement(locatorType, locator, wait);
 
         return this;
     }
 
-    default IWait invisibilityOfElement(LocatorsFactory locatorType, String locator, long wait) {
+    default IWait invisibilityOfElement(Locator locatorType, String locator, long wait) {
 
         locatorType.invisibilityOfElement(locatorType, locator, wait);
 
         return this;
     }
 
-    default IWait elementToBeClickable(LocatorsFactory locatorType, String locator, long wait) {
+    default IWait elementToBeClickable(Locator locatorType, String locator, long wait) {
 
         locatorType.elementToBeClickable(locatorType, locator, wait);
 
@@ -80,7 +75,7 @@ interface IWait extends IWebHandler {
     default IWait staleElementByCss(final String cssSelector) {
         try {
             logger.debug("Trying to find element: " + cssSelector + " within waitForStale Method");
-            findElementBy(LocatorsFactory.CSS_SELECTOR, cssSelector);
+            find().elementBy(Locator.CSS_SELECTOR, cssSelector);
         } catch (StaleElementReferenceException e) {
             logger.debug("Element By CSS: " + cssSelector + " Triggered Stale Element Reference");
             sleep(2000);
@@ -88,7 +83,7 @@ interface IWait extends IWebHandler {
             logger.debug("Element By CSS: " + cssSelector + " was not found");
             sleep(2000);
         }
-        goToRootElement();
+        find().rootElement();
 
         return this;
     }
