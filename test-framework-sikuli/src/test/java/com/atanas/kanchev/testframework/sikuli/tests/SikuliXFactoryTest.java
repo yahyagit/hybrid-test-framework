@@ -17,7 +17,7 @@ public class SikuliXFactoryTest implements IWrapper {
     @Before
     public void setUp() throws Exception {
         goTo("https://www.google.co.uk");
-        sikuliXFactory = new SikuliXFactory();
+        sikuliXFactory = new SikuliXFactory("search-field.png");
     }
 
     @After
@@ -27,12 +27,13 @@ public class SikuliXFactoryTest implements IWrapper {
 
     @Test
     public void click() throws Exception {
-
+        sikuliXFactory.click();
     }
 
     @Test
     public void click1() throws Exception {
-
+        sikuliXFactory.click(SikuliXFactory.Directions.LEFT);
+        sikuliXFactory.click(SikuliXFactory.Directions.RIGHT);
     }
 
     @Test

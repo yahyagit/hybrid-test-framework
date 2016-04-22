@@ -37,14 +37,18 @@ public final class SikuliXFactory {
     /**
      * Constructor
      */
-    public SikuliXFactory() {
+    public SikuliXFactory(final String imageFilePath) {
         try {
+            File file = new ImageFinder(imageFilePath).getFile();
+            this.imageFilePath = file.getAbsolutePath();
             Settings.ActionLogs = false;
             this.screen = new Screen();
             this.screen.setAutoWaitTimeout(5);
             logger.debug("Using screen ID: " + screen.getID());
         } catch (NoClassDefFoundError | ExceptionInInitializerError e) {
             logger.error("No Screen(s) present, image based commands will not work!", e);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -79,6 +83,7 @@ public final class SikuliXFactory {
             case LEFT:
                 try {
                     screen.find(imageFilePath).left(10).click();
+                    logger.debug("Successfully clicked");
                 } catch (FindFailed findFailed) {
                     logger.error("Unable to find image: " + findFailed);
                     return false;
@@ -87,6 +92,7 @@ public final class SikuliXFactory {
             case RIGHT:
                 try {
                     screen.find(imageFilePath).right(10).click();
+                    logger.debug("Successfully clicked");
                 } catch (FindFailed findFailed) {
                     logger.error("Unable to find image: " + findFailed);
                     return false;
@@ -129,6 +135,7 @@ public final class SikuliXFactory {
             case LEFT:
                 try {
                     screen.find(imageFilePath).left(10).click();
+                    logger.debug("Successfully double clicked");
                 } catch (FindFailed findFailed) {
                     logger.error("Unable to find image: " + findFailed);
                     return false;
@@ -137,6 +144,7 @@ public final class SikuliXFactory {
             case RIGHT:
                 try {
                     screen.find(imageFilePath).right(10).click();
+                    logger.debug("Successfully double clicked");
                 } catch (FindFailed findFailed) {
                     logger.error("Unable to find image: " + findFailed);
                     return false;
