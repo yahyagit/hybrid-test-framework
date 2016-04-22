@@ -88,22 +88,6 @@ public final class SikuliFactory {
         return this;
     }
 
-//    /**
-//     * From the current screen double-click the image defined in the filepath
-//     *
-//     * @param imageFilePath Can be an individual file or a directory of images
-//     * @return true if element exists and is clicked
-//     * @author Iain Macdonald
-//     */
-//    public boolean findImageDoubleClick(String imageFilePath) {
-//        try {
-//            screen.doubleClick(imageFilePath);
-//        } catch (FindFailed e) {
-//            return false;
-//        }
-//        return true;
-//    }
-
     /**
      * From the current screen find and image click and type a string param
      *
@@ -122,54 +106,6 @@ public final class SikuliFactory {
         }
         return isPossibleToType;
     }
-
-//    /**
-//     * From the current screen Navigate to an image by filepath
-//     *
-//     * @param imageFilePath Can be an individual file or a directory of images
-//     * @return true if element appears
-//     * @author Ben Kirby
-//     */
-//    public boolean findImage(String imageFilePath) {
-//
-//        try {
-//            screen.hover(imageFilePath);
-//
-//        } catch (FindFailed e) {
-//            return false;
-//        }
-//        return true;
-//    }
-
-//    /**
-//     * From the current screen wait for an image to be present
-//     *
-//     * @author Ben Kirby
-//     *
-//     * @param imageFilePath
-//     *            Can be an individual file or a directory of images
-//     * @return true if element appears
-//     */
-//    public boolean waitForImage(String... imageFilePath){
-//        int waitTime = 0;
-//        boolean found = false;
-//        String context = driver.getContext();
-//        switchToContextNativeApp(driver);
-//        waitForImage = true;
-//        while (waitTime < appiumImageWaitTime && !found) {
-//            if (findImageAppium(driver, imagePath)) {
-//                found = true;
-//                logger.debug("Image found: " + imagePath);
-//                break;
-//            } else {
-//                wait(1000);
-//                waitTime++;
-//            }
-//        }
-//        switchToContext(driver, context);
-//        waitForImage = false;
-//        return found;
-//    }
 
     /**
      * From the current screen get the Image to the Right
@@ -380,81 +316,6 @@ public final class SikuliFactory {
         }
         return true;
     }
-
-//    /**
-//     * From the current screen an image is checked against the Abbyy API for its
-//     * Text Value This is Matched against the string param
-//     *
-//     * @author Iain Macdonald
-//     *
-//     * @param imageFilePath
-//     *            Can be an individual file or a directory of images
-//     * @param text
-//     *            Text to enter in the
-//     * @return true if element text matches
-//     */
-//    public boolean findPartialTextInImage(String imageFilePath, String text) throws Exception{
-//        if (new File(imageFilePath).listFiles() != null) {
-//            return searchDirectory(imageFilePath, "findPartialTextInImage", text);
-//        }
-//        AbbyyImageParser abbyy = new AbbyyImageParser();
-//        abbyy.setImgDir(imageFilePath);
-//        String value = "";
-//        try {
-//            value = abbyy.performRecognition();
-//        } catch (Exception e) {
-//
-//            logger.debug("Unable To Process Image");
-//        }
-//
-//        logger.debug("Fount Text in Image: " + value);
-//
-//        if (value.contains(text)) {
-//            logger.debug("Text on Image: " + value + " matches the input: " + text);
-//            return true;
-//        } else {
-//            logger.debug("Text on Image: " + value + " does not match the input: " + text);
-//            return false;
-//        }
-//
-//    }
-
-//    /**
-//     * From the current screen an image is checked against the Abbyy API for its
-//     * Text Value This is Matched against the string param
-//     *
-//     * @author Iain Macdonald
-//     *
-//     * @param imageFilePath
-//     *           Can be an individual file or a directory of images
-//     * @param text
-//     *            Text to enter in the
-//     * @return true if element text matches
-//     */
-//    public boolean findPreciseTextInImage(String imageFilePath, String text) throws Exception{
-//        if (new File(imageFilePath).listFiles() != null) {
-//            return searchDirectory(imageFilePath, "findPreciseTextInImage", text);
-//        }
-//        AbbyyImageParser abbyy = new AbbyyImageParser();
-//        abbyy.setImgDir(imageFilePath);
-//        String value = "";
-//        try {
-//            value = abbyy.performRecognition();
-//        } catch (Exception e) {
-//
-//            logger.debug("Unable To Process Image");
-//        }
-//
-//        logger.debug("Fount Text in Image: " + value);
-//
-//        if (value.equals(text)) {
-//            logger.debug("Text on Image: " + value + " matches the input: " + text);
-//            return true;
-//        } else {
-//            logger.debug("Text on Image: " + value + " does not match the input: " + text);
-//            return false;
-//        }
-//    }
 
     /**
      * From the current screen create a swipe/click and drag motion relative
