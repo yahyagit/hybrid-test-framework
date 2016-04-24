@@ -2,24 +2,17 @@ package com.atanas.kanchev.testframework.sikuli;
 
 import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import org.sikuli.basics.Settings;
-import org.sikuli.script.FindFailed;
-import org.sikuli.script.Key;
-import org.sikuli.script.Region;
-import org.sikuli.script.Screen;
+import org.sikuli.script.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
- * SukuliX Implementation Factory
+ * SukuliX Implementation
  *
  * @author Atanas Ksnchev
  */
@@ -34,6 +27,9 @@ public final class SikuliXFactory {
     // the source image file path
     private String imageFilePath;
 
+    //holds the result of the find operation
+    private Match match;
+
     /**
      * Constructor
      */
@@ -45,120 +41,17 @@ public final class SikuliXFactory {
             this.screen = new Screen();
             this.screen.setAutoWaitTimeout(5);
             logger.debug("Using screen ID: " + screen.getID());
+            findImage(imageFilePath);
         } catch (NoClassDefFoundError | ExceptionInInitializerError e) {
             logger.error("No Screen(s) present, image based commands will not work!", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Unable to find image file");
         }
     }
 
     /**
-     * Left click at the given target location {@link Region#click()}
-     *
-     * @return boolean result isPossibleToClick
-     */
-    public boolean click() {
-
-        boolean isPossibleToClick = false;
-
-        if (screen.click() == 1) {
-            isPossibleToClick = true;
-            logger.debug("Successfully clicked");
-        } else {
-            logger.error("Unable to perform click");
-        }
-
-        return isPossibleToClick;
-    }
-
-    /**
-     * From the current screen navigate to image and click according to {@param directions}
-     *
-     * @param directions Directions
-     * @return boolean result
-     */
-    public boolean click(Directions directions) {
-
-        switch (directions) {
-            case LEFT:
-                try {
-                    screen.find(imageFilePath).left(10).click();
-                    logger.debug("Successfully clicked");
-                } catch (FindFailed findFailed) {
-                    logger.error("Unable to find image: " + findFailed);
-                    return false;
-                }
-                break;
-            case RIGHT:
-                try {
-                    screen.find(imageFilePath).right(10).click();
-                    logger.debug("Successfully clicked");
-                } catch (FindFailed findFailed) {
-                    logger.error("Unable to find image: " + findFailed);
-                    return false;
-                }
-                break;
-            default:
-                throw new CustomExceptions.Common.IllegalArgumentException("Not supported directions" + directions);
-        }
-
-        return true;
-    }
-
-    /**
-     * Double click at the given target location {@link Region#doubleClick()}
-     *
-     * @return boolean result isPossibleToClick
-     */
-    public boolean doubleClick() {
-
-        boolean isPossibleToClick = false;
-
-        if (screen.doubleClick() == 1) {
-            isPossibleToClick = true;
-            logger.debug("Successfully double clicked");
-        } else {
-            logger.error("Unable to perform double click");
-        }
-
-        return isPossibleToClick;
-    }
-
-    /**
-     * From the current screen double click on image according to {@param directions}
-     *
-     * @param direction Directions
-     * @return boolean result isPossibleToClick
-     */
-    public boolean doubleClick(Directions direction) {
-        switch (direction) {
-            case LEFT:
-                try {
-                    screen.find(imageFilePath).left(10).click();
-                    logger.debug("Successfully double clicked");
-                } catch (FindFailed findFailed) {
-                    logger.error("Unable to find image: " + findFailed);
-                    return false;
-                }
-                break;
-            case RIGHT:
-                try {
-                    screen.find(imageFilePath).right(10).click();
-                    logger.debug("Successfully double clicked");
-                } catch (FindFailed findFailed) {
-                    logger.error("Unable to find image: " + findFailed);
-                    return false;
-                }
-                break;
-            default:
-                throw new CustomExceptions.Common.IllegalArgumentException("Not supported directions" + direction);
-        }
-        return true;
-    }
-
-    /**
-     * From the current screen find the image defined in the filepath
-     * Move the mouse pointer to the given target location
+     * From the current screen find the image defined in the {@param imageFileName}
+     * Hover the mouse pointer to the matched image location on the screen
      *
      * @param imageFileName The image file name
      * @return this
@@ -169,13 +62,14 @@ public final class SikuliXFactory {
             File file = new ImageFinder(imageFileName).getFile();
             imageFilePath = file.getAbsolutePath();
             try {
-                screen.hover(imageFilePath);
-                logger.debug("Match found for image " + imageFileName);
+                match = screen.find(imageFilePath);
+                match.hover();
+                logger.debug("Match found for image " + imageFileName + " in location " + match.getTarget());
             } catch (FindFailed ffe) {
                 logger.error("Unable find a match for image", ffe);
             }
         } catch (FileNotFoundException fnfe) {
-            logger.error("File Not Found Exception ", fnfe);
+            logger.error("Image file Not Found Exception ", fnfe);
         } catch (IOException ioe) {
             logger.error("Unable to read file ", ioe);
         }
@@ -183,23 +77,120 @@ public final class SikuliXFactory {
         return this;
     }
 
+
     /**
-     * From the current screen type in a string param {@link Region#type(java.lang.Object, java.lang.String, int)}
+     * Left click at the region's last successful match
+     * Click center if no lastMatch
      *
-     * @param text Text to enter in the
-     * @return true if isPossibleToType
+     * @return this
      */
-    public boolean inputText(String text) {
+    public SikuliXFactory click() {
 
-        boolean isPossibleToType = false;
-
-        try {
-            int i = screen.type(imageFilePath, text, 0);
-            if (i == 1) isPossibleToType = true;
-        } catch (FindFailed e) {
-            logger.error("Unable to type in ", e);
+        if (screen.click() == 1) {
+            logger.debug("Successfully clicked");
+        } else {
+            logger.error("Unable to perform single click");
+            throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform single click");
         }
-        return isPossibleToType;
+
+        return this;
+    }
+
+    /**
+     * From the current screen navigate to image and click according to {@param directions}
+     *
+     * @param direction the direction to click on, ex Directions.LEFT
+     * @param px        the pixels to click on
+     * @return this
+     */
+    public SikuliXFactory click(final Directions direction, final int px) {
+
+        switch (direction) {
+            case ABOVE:
+                if (match.above(px).click() == 1) logger.debug("Successfully clicked " + px + " " + direction);
+                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                break;
+            case LEFT:
+                if (match.left(px).click() == 1) logger.debug("Successfully clicked " + px + " " + direction);
+                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                break;
+            case CENTER:
+                try {
+                    match.getCenter().click();
+                    logger.debug("Successfully clicked " + px + " " + direction);
+                } catch (Exception e) {
+                    throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                }
+                break;
+            case RIGHT:
+                if (match.right(px).click() == 1) logger.debug("Successfully clicked " + px + " " + direction);
+                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                break;
+            case BELOW:
+                if (match.below(px).click() == 1) logger.debug("Successfully clicked " + px + " " + direction);
+                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                break;
+            default:
+                throw new CustomExceptions.Common.IllegalArgumentException("Not supported direction: " + direction);
+        }
+
+        return this;
+    }
+
+    /**
+     * Double click at the given target location {@link Region#doubleClick()}
+     *
+     * @return this
+     */
+    public SikuliXFactory doubleClick() {
+
+        if (screen.doubleClick() == 1) {
+            logger.debug("Successfully clicked");
+        } else {
+            logger.error("Unable to perform double click");
+            throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform double click");
+        }
+        return this;
+    }
+
+    /**
+     * From the current screen double click on image according to {@param directions}
+     *
+     * @param direction Directions
+     * @param px        the pixels to click on
+     * @return this
+     */
+    public SikuliXFactory doubleClick(final Directions direction, final int px) {
+
+        switch (direction) {
+            case ABOVE:
+                if (match.above(px).doubleClick() == 1)
+                    logger.debug("Successfully clicked " + px + " " + direction);
+                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                break;
+            case LEFT:
+                if (match.left(px).doubleClick() == 1)
+                    logger.debug("Successfully clicked " + px + " " + direction);
+                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                break;
+            case CENTER:
+                if (match.doubleClick() == 1) logger.debug("Successfully clicked " + px + " " + direction);
+                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                break;
+            case RIGHT:
+                if (match.right(px).doubleClick() == 1)
+                    logger.debug("Successfully clicked " + px + " " + direction);
+                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                break;
+            case BELOW:
+                if (match.below(px).doubleClick() == 1)
+                    logger.debug("Successfully clicked " + px + " " + direction);
+                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                break;
+            default:
+                throw new CustomExceptions.Common.IllegalArgumentException("Not supported direction: " + direction);
+        }
+        return this;
     }
 
     /**
@@ -212,119 +203,103 @@ public final class SikuliXFactory {
      */
     public SikuliXFactory captureImage(final String imageName, final int pixelSize, final Directions direction) {
 
-        BufferedImage image;
+        BufferedImage image = null;
 
-        switch (direction) {
-            case ABOVE:
-                try {
-                    image = screen.capture(screen.find(imageFilePath).right(pixelSize)).getImage();
-                    saveImage(image, imageName);
-                } catch (FindFailed findFailed) {
-                    logger.error("Unable to find image: " + findFailed);
-                }
-                break;
-            case BELOW:
-                try {
-                    image = screen.capture(screen.find(imageFilePath).below(pixelSize)).getImage();
-                    saveImage(image, imageName);
-                } catch (FindFailed findFailed) {
-                    logger.error("Unable to find image: " + findFailed);
-                }
-                break;
-            case LEFT:
-                try {
-                    image = screen.capture(screen.find(imageFilePath).left(pixelSize)).getImage();
-                    saveImage(image, imageName);
-                } catch (FindFailed findFailed) {
-                    logger.error("Unable to find image: " + findFailed);
-                }
-                break;
-            case RIGHT:
-                try {
-                    image = screen.capture(screen.find(imageFilePath).right(pixelSize)).getImage();
-                    saveImage(image, imageName);
-                } catch (FindFailed findFailed) {
-                    logger.error("Unable to find image: " + findFailed);
-                }
-                break;
-            default:
-                throw new CustomExceptions.Common.IllegalArgumentException("Unsupported direction");
-
+        try {
+            switch (direction) {
+                case ABOVE:
+                    image = screen.capture(match.right(pixelSize)).getImage();
+                    break;
+                case BELOW:
+                    image = screen.capture(match.below(pixelSize)).getImage();
+                    break;
+                case CENTER:
+                    image = screen.capture(match).getImage();
+                case LEFT:
+                    image = screen.capture(match.left(pixelSize)).getImage();
+                    break;
+                case RIGHT:
+                    image = screen.capture(match.right(pixelSize)).getImage();
+                    break;
+                default:
+                    throw new CustomExceptions.Common.IllegalArgumentException("Unsupported direction");
+            }
+        } catch (Exception e) {
+            logger.error("Unable to capture image ", e);
+        } finally {
+            if (image != null) ImageFinder.saveImage(image, imageName);
         }
 
         return this;
     }
 
     /**
-     * From the current screen navigate to image and type text
+     * From the current screen type in a string param {@link Region#type(java.lang.Object, java.lang.String, int)}
+     *
+     * @param text Text to enter in the
+     * @return this
+     */
+
+    public SikuliXFactory type(String text) {
+
+        try {
+            if (screen.type(match, text, 0) == 1)
+                logger.debug("Successfully typed " + text);
+        } catch (FindFailed findFailed) {
+            logger.error("Unable to type in ", findFailed);
+        }
+
+
+        return this;
+    }
+
+
+    /**
+     * Type in text in the current {@link SikuliXFactory#match}
      *
      * @param text      value to be typed in
      * @param direction relative to the current position
-     * @return boolean result
+     * @return this
      */
-    public boolean type(String text, final Directions direction) {
+    public SikuliXFactory type(final String text, final Directions direction) {
 
         switch (direction) {
             case RIGHT:
-                try {
-                    screen.find(imageFilePath).right(50).type(text);
-                } catch (FindFailed findFailed) {
-                    logger.error("Unable to find image: " + findFailed);
-                    return false;
-                }
+                match.right(50).type(text);
                 break;
             case LEFT:
-                try {
-                    screen.find(imageFilePath).left(50).type(text);
-                } catch (FindFailed findFailed) {
-                    logger.error("Unable to find image: " + findFailed);
-                    return false;
-                }
+                match.left(50).type(text);
                 break;
             case CENTER:
-                try {
-                    screen.type(screen.find(imageFilePath).getCenter(), text);
-                } catch (FindFailed findFailed) {
-                    logger.error("Unable to find image: " + findFailed);
-                    return false;
-                }
+                match.type(text);
                 break;
             case BELOW:
-                try {
-                    screen.find(imageFilePath).below(50).type(text);
-                } catch (FindFailed findFailed) {
-                    logger.error("Unable to find image: " + findFailed);
-                    return false;
-                }
+                match.below(50).type(text);
                 break;
             case ABOVE:
-                try {
-                    screen.find(imageFilePath).above(50).type(text);
-                } catch (FindFailed findFailed) {
-                    logger.error("Unable to find image: " + findFailed);
-                    return false;
-                }
+                match.above(50).type(text);
                 break;
 
         }
-        return true;
+        return this;
     }
 
     /**
      * From the current screen create a swipe/click and drag motion relative
      * from Img1 to Img2
+     * Drag from a position and drop to another using left mouse button
      *
      * @param startPointImagePath
      * @param endPointImagePath
-     * @return true if element exists and is clicked
+     * @return this
      */
-    public boolean swipeBetweenImages(String startPointImagePath, String endPointImagePath) {
+    public SikuliXFactory swipeBetweenImages(String startPointImagePath, String endPointImagePath) {
         try {
             screen.dragDrop(startPointImagePath, endPointImagePath);
         } catch (FindFailed findFailed) {
-            logger.error("Unable to find image: " + findFailed);
+            logger.error("Unable to swipe: " + findFailed);
         }
-        return true;
+        return this;
     }
 
     /**
@@ -335,7 +310,7 @@ public final class SikuliXFactory {
      * @param direction  direction of swipes
      * @return imageFound
      */
-    public boolean findImageByScrolling(final String imagePath, final int iterations, final Directions direction) {
+    public SikuliXFactory findImageByScrolling(final String imagePath, final int iterations, final Directions direction) {
 
         screen.setAutoWaitTimeout(2.5);
         int i = 0;
@@ -377,7 +352,7 @@ public final class SikuliXFactory {
         if (!imageFound) {
             logger.error("Image not found via scrolling within timeout limit");
         }
-        return imageFound;
+        return this;
     }
 
     /**
@@ -389,52 +364,34 @@ public final class SikuliXFactory {
      * @param specialKey - to be used with the Key class {@link Key}
      * @return true if button is pressed
      */
-    boolean press(String specialKey) {
-        int result = screen.type(specialKey);
-        return result == 1;
+    public SikuliXFactory sendKey(final Key specialKey) {
+
+        if (screen.type(String.valueOf(specialKey)) == 1) {
+            logger.debug("Special key successfully sent");
+        } else {
+            logger.error("Unable to send special key " + specialKey);
+            throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to send special key " + specialKey);
+        }
+
+        return this;
     }
 
     /**
-     * @param minSimilarity
+     * Set Minimum Similarity For Image
+     *
+     * @param minSimilarity double
      * @return true if value is set with no errors
      */
-    boolean setMinimumSimilarityForImage(double minSimilarity) {
+    public SikuliXFactory setMinimumSimilarityForImage(final double minSimilarity) {
         if (minSimilarity > 1.0 || minSimilarity < 0) {
             logger.error("The value entered for minSimilarity is invalid, enter a value between 0 & 1");
-            return false;
-        }
-        Settings.MinSimilarity = minSimilarity;
-        logger.debug("MinSimilarity value set to " + Settings.MinSimilarity);
-        return true;
-    }
-
-    private static void saveImage(BufferedImage image, String imageName) {
-
-        String path = "./target/sikuli-screenshots/";
-
-        Path tmpDownloadFolder = Paths.get(path);
-        logger.debug("Checking if sikulix screenshots folder exists in path " + tmpDownloadFolder);
-        if (Files.notExists(tmpDownloadFolder)) {
-            logger.debug("The folder doesn't exist, creating " + tmpDownloadFolder);
-            try {
-                Files.createDirectory(Paths.get(path));
-                logger.debug("Tmp folder successfully created");
-            } catch (IOException e) {
-                logger.error("Unable to create folder ", e);
-            }
+            throw new CustomExceptions.Common.IllegalArgumentException("The value entered for minSimilarity is invalid, enter a value between 0 & 1");
+        } else {
+            Settings.MinSimilarity = minSimilarity;
+            logger.debug("MinSimilarity value set to " + Settings.MinSimilarity);
         }
 
-        Path imageFilePath = Paths.get(tmpDownloadFolder + "/" + imageName + ".png");
-        logger.debug("Checking for existing image file in path " + imageFilePath);
-        if (Files.exists(imageFilePath))
-            imageFilePath = Paths.get(tmpDownloadFolder + "/" + imageName + System.currentTimeMillis() + ".png");
-
-        logger.debug("Saving image to: " + imageFilePath);
-        try {
-            ImageIO.write(image, "png", new File(imageFilePath.toString()));
-        } catch (IOException e) {
-            logger.error("Unable to save image: " + e);
-        }
+        return this;
     }
 
     public enum Directions {
@@ -443,7 +400,6 @@ public final class SikuliXFactory {
         CENTER,
         ABOVE,
         BELOW
-
     }
 
 }
