@@ -3,6 +3,8 @@ package com.atanas.kanchev.testframework.sikuli;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -73,6 +75,35 @@ public final class ImageFinder extends SimpleFileVisitor<Path> {
         }
 
         return file;
+    }
+
+    static void saveImage(BufferedImage image, String imageName) {
+
+        String path = "./target/sikuli-screenshots/";
+
+        Path tmpDownloadFolder = Paths.get(path);
+        logger.debug("Checking if sikulix screenshots folder exists in path " + tmpDownloadFolder);
+        if (Files.notExists(tmpDownloadFolder)) {
+            logger.debug("The folder doesn't exist, creating " + tmpDownloadFolder);
+            try {
+                Files.createDirectory(Paths.get(path));
+                logger.debug("Tmp folder successfully created");
+            } catch (IOException e) {
+                logger.error("Unable to create folder ", e);
+            }
+        }
+
+        Path imageFilePath = Paths.get(tmpDownloadFolder + "/" + imageName + ".png");
+        logger.debug("Checking for existing image file in path " + imageFilePath);
+        if (Files.exists(imageFilePath))
+            imageFilePath = Paths.get(tmpDownloadFolder + "/" + imageName + System.currentTimeMillis() + ".png");
+
+        logger.debug("Saving image to: " + imageFilePath);
+        try {
+            ImageIO.write(image, "png", new File(imageFilePath.toString()));
+        } catch (IOException e) {
+            logger.error("Unable to save image: " + e);
+        }
     }
 
 }

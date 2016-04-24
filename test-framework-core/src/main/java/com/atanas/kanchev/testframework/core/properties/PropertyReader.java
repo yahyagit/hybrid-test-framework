@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-import static com.atanas.kanchev.testframework.core.exceptions.CustomExceptions.PropertiesExceptions.*;
+import static com.atanas.kanchev.testframework.core.exceptions.CustomExceptions.Properties.*;
 
 /**
  * Property Reader

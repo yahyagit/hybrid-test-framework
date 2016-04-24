@@ -45,12 +45,12 @@ public class PropertyReaderTest {
             assertNull(new PropertyReader().getProperty(""));
         }
 
-        @Test(expected = CustomExceptions.PropertiesExceptions.InvalidKeyException.class)
+        @Test(expected = CustomExceptions.Properties.InvalidKeyException.class)
         public void getPropertyWithInvalidKey() throws Exception {
             assertNull(new PropertyReader().getProperty(INVALID_KEY));
         }
 
-        @Test(expected = CustomExceptions.PropertiesExceptions.EmptyValueException.class)
+        @Test(expected = CustomExceptions.Properties.EmptyValueException.class)
         public void getPropertyWithEmptyValue() throws Exception {
             assertNull(new PropertyReader().getProperty(KEY_WITH_EMPTY_VALUE));
         }
@@ -80,12 +80,12 @@ public class PropertyReaderTest {
             assertNull(new PropertyReader(CUSTOM_PROP_FILE_NAME).getProperty(""));
         }
 
-        @Test(expected = CustomExceptions.PropertiesExceptions.InvalidKeyException.class)
+        @Test(expected = CustomExceptions.Properties.InvalidKeyException.class)
         public void getPropertyWithInvalidKey() throws Exception {
             assertNull(new PropertyReader(CUSTOM_PROP_FILE_NAME).getProperty(INVALID_KEY));
         }
 
-        @Test(expected = CustomExceptions.PropertiesExceptions.EmptyValueException.class)
+        @Test(expected = CustomExceptions.Properties.EmptyValueException.class)
         public void getPropertyWithEmptyValue() throws Exception {
             assertNull(new PropertyReader(CUSTOM_PROP_FILE_NAME).getProperty(KEY_WITH_EMPTY_VALUE));
         }
