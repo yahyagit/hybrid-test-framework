@@ -97,7 +97,7 @@ public final class CustomExceptions {
     /**
      * Custom exceptions
      */
-    public static class PropertiesExceptions {
+    public static class Properties {
 
         /**
          * Custom exception - prop file not found
@@ -125,6 +125,27 @@ public final class CustomExceptions {
         public static class InvalidKeyException extends RuntimeException {
 
             public InvalidKeyException(String message) {
+                super(message);
+            }
+        }
+
+    }
+
+    /**
+     * Sikuli related custom exceptions
+     */
+    public static class Sikuli {
+
+        public static class ImageMatchNotFoundException extends RuntimeException {
+
+            public ImageMatchNotFoundException(String message) {
+                super(message);
+            }
+        }
+
+        public static class UnableToInteractException extends RuntimeException {
+
+            public UnableToInteractException(String message) {
                 super(message);
             }
         }
