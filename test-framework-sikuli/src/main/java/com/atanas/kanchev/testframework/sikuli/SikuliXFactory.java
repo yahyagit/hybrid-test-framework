@@ -45,7 +45,7 @@ public final class SikuliXFactory {
         } catch (NoClassDefFoundError | ExceptionInInitializerError e) {
             logger.error("No Screen(s) present, image based commands will not work!", e);
         } catch (IOException e) {
-            logger.error("Unable to find image file");
+            logger.error("Unable to find image file", e);
         }
     }
 
@@ -61,13 +61,7 @@ public final class SikuliXFactory {
         try {
             File file = new ImageFinder(imageFileName).getFile();
             imageFilePath = file.getAbsolutePath();
-            try {
-                match = screen.find(imageFilePath);
-                match.hover();
-                logger.debug("Match found for image " + imageFileName + " in location " + match.getTarget());
-            } catch (FindFailed ffe) {
-                logger.error("Unable find a match for image", ffe);
-            }
+            this.match = match(imageFileName);
         } catch (FileNotFoundException fnfe) {
             logger.error("Image file Not Found Exception ", fnfe);
         } catch (IOException ioe) {
@@ -76,7 +70,6 @@ public final class SikuliXFactory {
 
         return this;
     }
-
 
     /**
      * Left click at the region's last successful match
@@ -247,37 +240,38 @@ public final class SikuliXFactory {
                 logger.debug("Successfully typed " + text);
         } catch (FindFailed findFailed) {
             logger.error("Unable to type in ", findFailed);
+            throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to type in");
         }
 
 
         return this;
     }
 
-
     /**
      * Type in text in the current {@link SikuliXFactory#match}
      *
      * @param text      value to be typed in
+     * @param pixelSize px to shift
      * @param direction relative to the current position
      * @return this
      */
-    public SikuliXFactory type(final String text, final Directions direction) {
+    public SikuliXFactory type(final String text, final int pixelSize, final Directions direction) {
 
         switch (direction) {
             case RIGHT:
-                match.right(50).type(text);
+                match.right(pixelSize).type(text);
                 break;
             case LEFT:
-                match.left(50).type(text);
+                match.left(pixelSize).type(text);
                 break;
             case CENTER:
                 match.type(text);
                 break;
             case BELOW:
-                match.below(50).type(text);
+                match.below(pixelSize).type(text);
                 break;
             case ABOVE:
-                match.above(50).type(text);
+                match.above(pixelSize).type(text);
                 break;
 
         }
@@ -295,9 +289,10 @@ public final class SikuliXFactory {
      */
     public SikuliXFactory swipeBetweenImages(String startPointImagePath, String endPointImagePath) {
         try {
-            screen.dragDrop(startPointImagePath, endPointImagePath);
+            screen.dragDrop(match(startPointImagePath), match(endPointImagePath));
         } catch (FindFailed findFailed) {
-            logger.error("Unable to swipe: " + findFailed);
+            logger.error("Unable to swipe");
+            throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to swipe", findFailed);
         }
         return this;
     }
@@ -316,7 +311,8 @@ public final class SikuliXFactory {
         int i = 0;
         boolean imageFound = false;
         do {
-            if (findImage(imagePath).imageFilePath != null) {
+            findImage(imagePath);
+            if (this.match != null) {
                 imageFound = true;
                 break;
             }
@@ -351,20 +347,21 @@ public final class SikuliXFactory {
         screen.setAutoWaitTimeout(30);
         if (!imageFound) {
             logger.error("Image not found via scrolling within timeout limit");
+            throw new CustomExceptions.Sikuli.UnableToInteractException("Image not found via scrolling within timeout limit");
         }
         return this;
     }
 
     /**
-     * From the existing Screen press a set of generic shortcut keys i.e. SPACE,
-     * F12, ESC
+     * From the existing Screen press a set of generic shortcut keys i.e. SPACE, F12, ESC
+     * {@link Key}
      * <p>
      * Example usage: press(Key.F12) or press(Key.SPACE)
      *
-     * @param specialKey - to be used with the Key class {@link Key}
+     * @param specialKey - to be used with the Key class
      * @return true if button is pressed
      */
-    public SikuliXFactory sendKey(final Key specialKey) {
+    public SikuliXFactory sendKey(final String specialKey) {
 
         if (screen.type(String.valueOf(specialKey)) == 1) {
             logger.debug("Special key successfully sent");
@@ -392,6 +389,20 @@ public final class SikuliXFactory {
         }
 
         return this;
+    }
+
+    private Match match(final String imageFileName) {
+
+        Match match = null;
+
+        try {
+            match = screen.find(imageFilePath);
+            match.hover();
+            logger.debug("Match found for image " + imageFileName + " in location " + match.getTarget());
+        } catch (FindFailed ffe) {
+            logger.error("Unable find a match for image");
+        }
+        return match;
     }
 
     public enum Directions {

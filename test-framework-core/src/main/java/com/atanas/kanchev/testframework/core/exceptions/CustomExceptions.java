@@ -1,7 +1,9 @@
 package com.atanas.kanchev.testframework.core.exceptions;
 
 /**
- * Created by atanas on 24/03/2016.
+ * Custom Exceptions
+ *
+ * @author Atanas Kanchev
  */
 public final class CustomExceptions {
 
@@ -95,7 +97,7 @@ public final class CustomExceptions {
 
 
     /**
-     * Custom exceptions
+     * The type Properties exceptions
      */
     public static class Properties {
 
@@ -132,21 +134,35 @@ public final class CustomExceptions {
     }
 
     /**
-     * Sikuli related custom exceptions
+     * The type Sikuli related custom exceptions
      */
     public static class Sikuli {
 
+        /**
+         * Image match not found exception
+         */
         public static class ImageMatchNotFoundException extends RuntimeException {
 
             public ImageMatchNotFoundException(String message) {
                 super(message);
             }
+
+            public ImageMatchNotFoundException(String message, Throwable cause) {
+                super(message, cause);
+            }
         }
 
+        /**
+         * Unable to interact exception
+         */
         public static class UnableToInteractException extends RuntimeException {
 
             public UnableToInteractException(String message) {
                 super(message);
+            }
+
+            public UnableToInteractException(String message, Throwable cause) {
+                super(message, cause);
             }
         }
 

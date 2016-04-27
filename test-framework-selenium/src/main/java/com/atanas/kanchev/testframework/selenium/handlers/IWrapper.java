@@ -1,5 +1,7 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
+import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
+
 /**
  * Web Handler Wrapper Interface
  */
@@ -27,6 +29,10 @@ public interface IWrapper extends IBaseHandler {
 
     default Context context() {
         return new Context();
+    }
+
+    default SikuliXFactory image(final String image) {
+        return new SikuliXFactory(image);
     }
 
     class Wait implements IWait {

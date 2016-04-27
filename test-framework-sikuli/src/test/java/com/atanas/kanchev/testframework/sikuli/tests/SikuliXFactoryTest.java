@@ -1,29 +1,33 @@
 package com.atanas.kanchev.testframework.sikuli.tests;
 
-import com.atanas.kanchev.testframework.selenium.context.ContextFactory;
-import com.atanas.kanchev.testframework.selenium.handlers.IWrapper;
 import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.sikuli.script.Key;
 
 /**
+ * Tests for {@link SikuliXFactory} methods
+ *
  * @author Atanas Ksnchev
  */
-public class SikuliXFactoryTest implements IWrapper {
+public class SikuliXFactoryTest {
 
     private SikuliXFactory sikuliXFactory;
+    private WebDriver driver;
 
     @Before
     public void setUp() throws Exception {
-        goTo("https://www.google.co.uk");
+        driver = new FirefoxDriver();
+        driver.get("https://www.google.co.uk");
         sikuliXFactory = new SikuliXFactory("search-field.png");
     }
 
     @After
     public void tearDown() throws Exception {
-        ContextFactory.tearDownContext();
+        driver.quit();
     }
 
     @Test
@@ -74,7 +78,7 @@ public class SikuliXFactoryTest implements IWrapper {
 
         sikuliXFactory.captureImage("image", 101, SikuliXFactory.Directions.ABOVE);
         sikuliXFactory.captureImage("image", 999, SikuliXFactory.Directions.BELOW);
-        sikuliXFactory.captureImage("image", 500, SikuliXFactory.Directions.CENTER);
+        sikuliXFactory.captureImage("image", 0, SikuliXFactory.Directions.CENTER);
         sikuliXFactory.captureImage("image", 22, SikuliXFactory.Directions.LEFT);
         sikuliXFactory.captureImage("image", 1, SikuliXFactory.Directions.RIGHT);
 
@@ -83,33 +87,42 @@ public class SikuliXFactoryTest implements IWrapper {
     @Test
     public void type() throws Exception {
 
+        sikuliXFactory.findImage("search-field.png").type("text");
+
     }
 
     @Test
     public void type1() throws Exception {
 
+        sikuliXFactory.findImage("search-field.png").type("text", 5, SikuliXFactory.Directions.RIGHT);
     }
 
     @Test
     public void swipeBetweenImages() throws Exception {
+
+        sikuliXFactory.swipeBetweenImages("search-field.png", "search-button.png");
 
     }
 
     @Test
     public void findImageByScrolling() throws Exception {
 
+        driver.get("https://www.rightmove.co.uk");
+        sikuliXFactory.findImageByScrolling("rm-select.png", 15, SikuliXFactory.Directions.BELOW);
+
     }
 
     @Test
     public void sendKey() throws Exception {
 
+        sikuliXFactory.sendKey(Key.F5);
     }
 
     @Test
     public void setMinimumSimilarityForImage() throws Exception {
 
+        sikuliXFactory.setMinimumSimilarityForImage(0.5);
+
     }
-
-
 
 }
