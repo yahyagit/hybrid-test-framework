@@ -1,9 +1,8 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
-import com.atanas.kanchev.testframework.selenium.context.ContextFactory;
 import com.atanas.kanchev.testframework.selenium.context.WebContext;
 
-import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
+import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCurrentContext;
 
 /**
  * Context Interface
@@ -13,7 +12,8 @@ import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.g
 public interface IContext {
 
     default void tearDownContexts() {
-        ContextFactory.tearDownContext();
+        //TODO
+//        ContextFactory.tearDownContext();
     }
 
     default WebContext getWebContext() {

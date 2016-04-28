@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.selenium.context;
+package com.atanas.kanchev.testframework.core.context;
 
 import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import org.slf4j.Logger;
@@ -97,4 +97,5 @@ public abstract class AbstractContext<T> extends ContextFactory {
             throw new CustomExceptions.Common.EmptyArgumentException("Empty argument contextName");
         this.contextName = contextName;
     }
+
 }

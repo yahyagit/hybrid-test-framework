@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
+import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCurrentContext;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**

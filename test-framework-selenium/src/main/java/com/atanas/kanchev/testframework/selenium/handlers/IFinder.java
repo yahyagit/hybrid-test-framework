@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.Quotes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
+import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCurrentContext;
 import static com.atanas.kanchev.testframework.selenium.handlers.Locator.XPATH;
 import static com.atanas.kanchev.testframework.selenium.handlers.Locator.getWebContext;
 

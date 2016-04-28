@@ -1,5 +1,7 @@
 package com.atanas.kanchev.testframework.selenium.context;
 
+import com.atanas.kanchev.testframework.core.context.AbstractContext;
+import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.selenium.driverfactory.IRootDriver;
 import org.openqa.selenium.WebDriver;
@@ -127,6 +129,48 @@ public final class WebContext extends AbstractContext<WebDriver> {
      */
     public void setPageLoadTimeout(long pageLoadTimeout) {
         this.pageLoadTimeout = pageLoadTimeout;
+    }
+
+    /**
+     * Tear down all active contexts stored in {@link ContextFactory#contextMap}
+     */
+    public static void tearDownContext() {
+        AbstractContext ac = null;
+        for (AbstractContext c : ContextFactory.getContextMap().values()) {
+            if (c instanceof WebContext) {
+                ac = c.getContext();
+                ((WebContext) c).getDriver().quit();
+
+            }
+            ContextFactory.getContextMap().remove(c);
+
+            if (ContextFactory.getCurrentContext() == c)
+                ContextFactory.setCurrentContext(null);
+        }
+
+
+    }
+
+
+    /**
+     * Tear down a context stored in {@link ContextFactory#contextMap}
+     *
+     * @param context AbstractContext instance
+     */
+    public static void tearDownContext(final AbstractContext context) {
+
+        AbstractContext ct = null;
+
+        if (context instanceof WebContext) {
+            ct = context.getContext();
+            ((WebContext) context).getDriver().quit();
+
+        }
+        ContextFactory.getContextMap().remove(ct);
+
+        if (ContextFactory.getCurrentContext() == context)
+            ContextFactory.setCurrentContext(null);
+
     }
 
     @Override

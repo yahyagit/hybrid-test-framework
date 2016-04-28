@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.selenium.context;
+package com.atanas.kanchev.testframework.core.context;
 
 import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import org.slf4j.Logger;
@@ -79,44 +79,11 @@ public abstract class ContextFactory {
     }
 
     /**
-     * Tear down all active contexts stored in {@link ContextFactory#contextMap}
-     */
-    public static void tearDownContext() {
-        AbstractContext ac = null;
-        for (AbstractContext c : contextMap.values()) {
-            if (c instanceof WebContext) {
-                ac = c.getContext();
-                ((WebContext) c).getDriver().quit();
-
-            }
-            contextMap.remove(c);
-
-            if (currentContext == c)
-                currentContext = null;
-        }
-
-
-    }
-
-
-    /**
-     * Tear down a context stored in {@link ContextFactory#contextMap}
+     * Set the current context
      *
-     * @param context AbstractContext instance
+     * @param currentContext AbstractContext
      */
-    public static void tearDownContext(final AbstractContext context) {
-
-        AbstractContext ct = null;
-
-        if (context instanceof WebContext) {
-            ct = context.getContext();
-            ((WebContext) context).getDriver().quit();
-
-        }
-        contextMap.remove(ct);
-
-        if (currentContext == context)
-            currentContext = null;
-
+    public static void setCurrentContext(AbstractContext currentContext) {
+        ContextFactory.currentContext = currentContext;
     }
 }

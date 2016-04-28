@@ -1,7 +1,7 @@
 package com.atanas.kanchev.testframework.selenium.tests.context;
 
 import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.selenium.context.AbstractContext;
+import com.atanas.kanchev.testframework.core.context.AbstractContext;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;

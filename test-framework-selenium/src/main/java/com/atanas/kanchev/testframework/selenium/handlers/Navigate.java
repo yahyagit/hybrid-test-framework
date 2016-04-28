@@ -1,7 +1,7 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
 import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.selenium.context.AbstractContext;
+import com.atanas.kanchev.testframework.core.context.AbstractContext;
 import com.atanas.kanchev.testframework.selenium.context.WebContext;
 import com.atanas.kanchev.testframework.selenium.driverfactory.BrowserConfig;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
+import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCurrentContext;
 
 /**
  * Nav Interface

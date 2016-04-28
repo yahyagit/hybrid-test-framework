@@ -1,5 +1,6 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
+import com.atanas.kanchev.testframework.appium.driverfactory.CreateDeviceDriver;
 import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
 
 /**
@@ -33,6 +34,10 @@ public interface IWrapper extends IBaseHandler {
 
     default SikuliXFactory image(final String image) {
         return new SikuliXFactory(image);
+    }
+
+    default CreateDeviceDriver setupAppium() {
+        return new CreateDeviceDriver();
     }
 
     class Wait implements IWait {

@@ -20,7 +20,7 @@ import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.atanas.kanchev.testframework.selenium.context.ContextFactory.getCurrentContext;
+import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCurrentContext;
 
 /**
  * @author Atanas Kanchev
