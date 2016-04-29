@@ -81,7 +81,7 @@ final class BinariesResolver implements IRootDriver {
      * The binary version to be used is controlled in two ways:</br>
      * - using the value of {@link BinariesResolver#CHROME_BIN_VERSION_PROP} in {@link IRootDriver#SELENIUM_PROPS_FILE_PATH}
      * - using the value of JVM argument {@link BinariesResolver#CHROME_BIN_VERSION_JVM_ARG}
-     * If no JVM argument is specified the selenium properties file setup will be used
+     * If no JVM argument is specified the selenium properties file setupBrowser will be used
      *
      * @return the configured path to the chrome binary based on the current system architecture and OS
      */

@@ -14,6 +14,7 @@ import java.net.URL;
  */
 public final class DriverFactory {
 
+    //the logger
     private static final Logger logger = LoggerFactory.getLogger(DriverFactory.class);
 
     private BrowserConfig selectedBrowser;

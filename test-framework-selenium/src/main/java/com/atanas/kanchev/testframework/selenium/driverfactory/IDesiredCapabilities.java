@@ -17,7 +17,7 @@ import java.util.Map;
  * <p>
  * Configure instance of {@link  org.openqa.selenium.remote.DesiredCapabilities}
  * <p>
- * Supports Chrome, Firefox and Safari capabilities setup
+ * Supports Chrome, Firefox and Safari capabilities setupBrowser
  */
 public interface IDesiredCapabilities {
 

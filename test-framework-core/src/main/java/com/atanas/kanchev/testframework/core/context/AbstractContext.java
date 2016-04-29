@@ -72,7 +72,6 @@ public abstract class AbstractContext<T> extends ContextFactory {
      * @return the value of {@link AbstractContext#contextName}
      */
     public String getContextName() {
-        logger.debug("Current context " + contextName);
         return contextName;
     }
 

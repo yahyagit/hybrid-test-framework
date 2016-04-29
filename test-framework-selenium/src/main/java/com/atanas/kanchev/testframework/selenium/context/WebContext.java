@@ -135,19 +135,17 @@ public final class WebContext extends AbstractContext<WebDriver> {
      * Tear down all active contexts stored in {@link ContextFactory#contextMap}
      */
     public static void tearDownContext() {
-        AbstractContext ac = null;
-        for (AbstractContext c : ContextFactory.getContextMap().values()) {
-            if (c instanceof WebContext) {
-                ac = c.getContext();
-                ((WebContext) c).getDriver().quit();
 
+        logger.debug("Tearing down WebContext " + ContextFactory.getContextMap().values().size());
+
+        for (AbstractContext context : ContextFactory.getContextMap().values()) {
+            if (context instanceof WebContext) {
+                ((WebContext) context).getDriver().quit();
             }
-            ContextFactory.getContextMap().remove(c);
-
-            if (ContextFactory.getCurrentContext() == c)
-                ContextFactory.setCurrentContext(null);
+            logger.debug("Teared down context " + context.getContextName());
+            ContextFactory.getContextMap().remove(context);
+            ContextFactory.setCurrentContext(null);
         }
-
 
     }
 

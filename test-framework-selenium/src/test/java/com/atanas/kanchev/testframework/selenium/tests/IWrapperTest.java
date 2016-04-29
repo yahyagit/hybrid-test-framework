@@ -88,9 +88,9 @@ public class IWrapperTest implements IWrapper {
 
     @Test
     public void driver() throws Exception {
-        DriverFactory driverFactory = setup().configureBrowser();
+        DriverFactory driverFactory = setupBrowser().configureBrowser();
         driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
-        setup().configureContext(driverFactory);
+        setupBrowser().configureContext(driverFactory);
         goTo(url);
     }
 
@@ -100,6 +100,11 @@ public class IWrapperTest implements IWrapper {
 //        System.out.println(new PropertyReader().getValidProperty("url"));
        // System.out.println(new PropertyReader("dev.env.properties").getProperty("url"));
         System.out.println(new BigInteger(130, new SecureRandom()).toString(32));
+
+    }
+
+    @Test
+    public void appium() throws Exception {
 
     }
 

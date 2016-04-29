@@ -1,12 +1,16 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
-import com.atanas.kanchev.testframework.appium.driverfactory.CreateDeviceDriver;
+import com.atanas.kanchev.testframework.appium.handlers.DeviceBasedHandler;
 import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
 
 /**
  * Web Handler Wrapper Interface
  */
 public interface IWrapper extends IBaseHandler {
+
+    default Driver setupBrowser() {
+        return new Driver();
+    }
 
     default Wait waitFor() {
         return new Wait();
@@ -20,9 +24,7 @@ public interface IWrapper extends IBaseHandler {
         return new Finder();
     }
 
-    default Driver setup() {
-        return new Driver();
-    }
+
 
     default Prober probe(Locator locator, String value) {
         return new Prober(locator, value);
@@ -35,9 +37,12 @@ public interface IWrapper extends IBaseHandler {
     default SikuliXFactory image(final String image) {
         return new SikuliXFactory(image);
     }
+    default SikuliXFactory image() {
+        return new SikuliXFactory(null);
+    }
 
-    default CreateDeviceDriver setupAppium() {
-        return new CreateDeviceDriver();
+    default DeviceBasedHandler setupAppium() {
+        return new DeviceBasedHandler();
     }
 
     class Wait implements IWait {

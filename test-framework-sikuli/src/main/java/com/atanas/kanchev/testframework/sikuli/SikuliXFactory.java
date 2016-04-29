@@ -27,30 +27,27 @@ public final class SikuliXFactory {
     // the source image file path
     private String imageFilePath;
 
-    //holds the result of the find operation
+    //holds the result of the setImageFilePath operation
     private Match match;
 
     /**
      * Constructor
      */
-    public SikuliXFactory(final String imageFilePath) {
+    public SikuliXFactory(final String imageFileName) {
+
         try {
-            File file = new ImageFinder(imageFilePath).getFile();
-            this.imageFilePath = file.getAbsolutePath();
             Settings.ActionLogs = false;
             this.screen = new Screen();
-            this.screen.setAutoWaitTimeout(5);
             logger.debug("Using screen ID: " + screen.getID());
-            findImage(imageFilePath);
+            this.screen.setAutoWaitTimeout(5);
+            this.imageFilePath = setImageFilePath(imageFileName);
         } catch (NoClassDefFoundError | ExceptionInInitializerError e) {
             logger.error("No Screen(s) present, image based commands will not work!", e);
-        } catch (IOException e) {
-            logger.error("Unable to find image file", e);
         }
     }
 
     /**
-     * From the current screen find the image defined in the {@param imageFileName}
+     * From the current screen setImageFilePath the image defined in the {@param imageFileName}
      * Hover the mouse pointer to the matched image location on the screen
      *
      * @param imageFileName The image file name
@@ -300,7 +297,7 @@ public final class SikuliXFactory {
     /**
      * Find image by scrolling
      *
-     * @param imagePath  image to find
+     * @param imagePath  image to setImageFilePath
      * @param iterations number of swipes
      * @param direction  direction of swipes
      * @return imageFound
@@ -396,13 +393,29 @@ public final class SikuliXFactory {
         Match match = null;
 
         try {
-            match = screen.find(imageFilePath);
+            setImageFilePath(imageFileName);
+            match = screen.find(imageFileName);
             match.hover();
             logger.debug("Match found for image " + imageFileName + " in location " + match.getTarget());
         } catch (FindFailed ffe) {
-            logger.error("Unable find a match for image");
+            logger.error("Unable setImageFilePath a match for image");
         }
         return match;
+    }
+
+    private String setImageFilePath(final String imageFileName) {
+
+        if (imageFileName != null) {
+            try {
+                File file = new ImageFinder(imageFileName).getFile();
+                findImage(imageFileName);
+                return file.getAbsolutePath();
+            } catch (IOException e) {
+                logger.error("Unable to setImageFilePath image file", e);
+            }
+
+        }
+        return null;
     }
 
     public enum Directions {

@@ -10,7 +10,7 @@ import java.net.URL;
  * @author Atanas Kanchev Inner class CreateAppiumDriver Handles Appium
  *         iOSDriver and Android driver initalization
  */
-public final class CreateDeviceDriver {
+public final class DeviceDriverFactory {
 
     private AppiumDevice device;
     private AppiumCapabilities deviceCapabilities;
@@ -22,7 +22,7 @@ public final class CreateDeviceDriver {
     /**
      * Constructor
      */
-    public CreateDeviceDriver() {
+    public DeviceDriverFactory() {
         this.device = new AppiumDevice();
         this.deviceCapabilities = new AppiumCapabilities();
         this.deviceServerCapabilities = deviceCapabilities.new AppiumServerCapabilities();
@@ -54,7 +54,7 @@ public final class CreateDeviceDriver {
         return this.androidCapabilities;
     }
 
-    public CreateDeviceDriver setDeviceServerURL(URL appiumServerURL) {
+    public DeviceDriverFactory setDeviceServerURL(URL appiumServerURL) {
         this.appiumServerURL = appiumServerURL;
         return this;
     }

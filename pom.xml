@@ -28,6 +28,7 @@
         <module>test-framework-data-services</module>
         <module>test-framework-sikuli</module>
         <module>test-framework-appium</module>
+        <module>test-framework-demo</module>
     </modules>
 
     <properties>

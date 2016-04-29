@@ -22,10 +22,10 @@ public class DeviceBasedHandlerTest extends DeviceBasedHandler {
 
         setupDevice()
                 .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
-                .setDeviceName("Android Emulator")
+                .setDeviceName("a1001")
                 .setPlatformName("Android")
                 .setPlatformVersion("6.0.1")
-                .setApp(app.getAbsolutePath());
+                .setApp("Chrome");
 
         setupDeviceServer()
                 .setFullReset(false)
@@ -33,11 +33,14 @@ public class DeviceBasedHandlerTest extends DeviceBasedHandler {
 
 
         setupAndroidDriver()
-                .setAppPackage("com.example.android.contactmanager")
+                //.setAppPackage("com.example.android.contactmanager")
+                .setAppPackage("com.android.chrome")
                 .setAndroidDeviceReadyTimeout(60)
                 .setEnablePerformanceLogging(true);
 
         AppiumDriver<AndroidElement> d = createAndroidDriver("http://127.0.0.1:4723/wd/hub");
-       // d.get("https://www.google.com");
+        d.get("https://www.google.co.uk");
+        Thread.sleep(10000);
+        d.quit();
     }
 }

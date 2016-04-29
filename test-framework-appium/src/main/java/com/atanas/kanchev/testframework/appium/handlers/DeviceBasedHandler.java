@@ -2,7 +2,7 @@ package com.atanas.kanchev.testframework.appium.handlers;
 
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumCapabilities;
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDevice;
-import com.atanas.kanchev.testframework.appium.driverfactory.CreateDeviceDriver;
+import com.atanas.kanchev.testframework.appium.driverfactory.DeviceDriverFactory;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
@@ -22,7 +22,7 @@ public class DeviceBasedHandler extends DeviceMethods {
 
     private final static Logger logger = LoggerFactory.getLogger(DeviceBasedHandler.class);
 
-    private CreateDeviceDriver createAppiumDriver;
+    private DeviceDriverFactory createAppiumDriver;
 
     /**
      * Setup Appium Device capabilities
@@ -31,7 +31,7 @@ public class DeviceBasedHandler extends DeviceMethods {
      */
     public AppiumDevice setupDevice() {
         if (createAppiumDriver == null)
-            this.createAppiumDriver = new CreateDeviceDriver();
+            this.createAppiumDriver = new DeviceDriverFactory();
         return createAppiumDriver.setDevice();
     }
 
@@ -43,7 +43,7 @@ public class DeviceBasedHandler extends DeviceMethods {
      */
     public AppiumDevice setupDevice(AppiumDevice appiumDevice) {
         if (createAppiumDriver == null)
-            this.createAppiumDriver = new CreateDeviceDriver();
+            this.createAppiumDriver = new DeviceDriverFactory();
         return createAppiumDriver.setDevice(appiumDevice);
     }
 
@@ -54,7 +54,7 @@ public class DeviceBasedHandler extends DeviceMethods {
      */
     public AppiumCapabilities.AppiumServerCapabilities setupDeviceServer() {
         if (createAppiumDriver == null)
-            this.createAppiumDriver = new CreateDeviceDriver();
+            this.createAppiumDriver = new DeviceDriverFactory();
         return createAppiumDriver.setDeviceServerCapabilities();
     }
 
@@ -65,7 +65,7 @@ public class DeviceBasedHandler extends DeviceMethods {
      */
     public AppiumCapabilities.IOSCapabilities setupIOSDriver() {
         if (createAppiumDriver == null)
-            this.createAppiumDriver = new CreateDeviceDriver();
+            this.createAppiumDriver = new DeviceDriverFactory();
         return createAppiumDriver.setIOSCapabilities();
     }
 
@@ -76,7 +76,7 @@ public class DeviceBasedHandler extends DeviceMethods {
      */
     public AppiumCapabilities.AndroidCapabilities setupAndroidDriver() {
         if (createAppiumDriver == null)
-            this.createAppiumDriver = new CreateDeviceDriver();
+            this.createAppiumDriver = new DeviceDriverFactory();
         return createAppiumDriver.setAndroidCapabilities();
     }
 
