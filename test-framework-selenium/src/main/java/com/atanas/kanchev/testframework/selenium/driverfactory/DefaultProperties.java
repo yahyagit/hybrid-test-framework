@@ -13,7 +13,7 @@ public class DefaultProperties {
      */
     public static boolean reuseBrowser = false;
 
-    public static BrowserConfig defaultBrowser = BrowserConfig.FIREFOX;
+    public static Browsers defaultBrowser = Browsers.FIREFOX;
 
     /**
      * The browser window is maximized when started.
@@ -22,4 +22,9 @@ public class DefaultProperties {
      * Default value: true
      */
     public static boolean startMaximized = true;
+
+    public static final long DEFAULT_IMPLICIT_WAIT = 5000L;
+    public static final long DEFAULT_PAGE_LOAD_TIMEOUT = 30000L;
+
+    public static final String DEFAULT_GRID_HUB_URL = "http://10.1.29.8:4444/wd/hub";
 }

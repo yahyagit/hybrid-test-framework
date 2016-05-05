@@ -1,6 +1,5 @@
 package com.atanas.kanchev.testframework.selenium.tests.driverfactory;
 
-import com.atanas.kanchev.testframework.selenium.driverfactory.BrowserConfig;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import org.junit.Test;
 
@@ -14,8 +13,8 @@ public class DriverFactoryTest {
 
 
         DriverFactory driverFactory = new DriverFactory();
-        driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
-        driverFactory.getWebDriverDriver();
+
+
 
 
     }

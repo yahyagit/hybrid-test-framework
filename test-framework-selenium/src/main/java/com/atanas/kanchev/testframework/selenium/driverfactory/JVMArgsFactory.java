@@ -12,7 +12,7 @@ public class JVMArgsFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(JVMArgsFactory.class);
 
-    private static final BrowserConfig defaultBrowser = BrowserConfig.FIREFOX;
+    private static final Browsers defaultBrowser = Browsers.FIREFOX;
 
     private static final String ENVIRONMENT = ArgsEnum.getJMVArg(ArgsEnum.ENVIRONMENT);
 
@@ -42,12 +42,12 @@ public class JVMArgsFactory {
         return ENVIRONMENT;
     }
 
-    public static BrowserConfig getBrowserType() {
+    public static Browsers getBrowserType() {
 
-        BrowserConfig browser = defaultBrowser;
+        Browsers browser = defaultBrowser;
 
         try {
-            browser = BrowserConfig.valueOf(BROWSER_TYPE.toUpperCase());
+            browser = Browsers.valueOf(BROWSER_TYPE.toUpperCase());
             logger.warn("Setting browser type to: " + browser.name());
         } catch (NullPointerException npe) {
             logger.warn("No JVM arg for browser type is specified, defaulting to: " + browser.name());

@@ -18,9 +18,6 @@ public interface IRootDriver {
     // the logger
     Logger logger = LoggerFactory.getLogger(IRootDriver.class);
 
-    long DEFAULT_IMPLICITLY_WAIT = 5L;
-    long DEFAULT_PAGE_TIMEOUT = 30L;
-
     String OS = System.getProperties().getProperty("os.name");
     String ARCHITECTURE = System.getProperties().getProperty("os.arch");
 

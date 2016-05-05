@@ -22,7 +22,7 @@ class IDriver {
 
     public void configureContext(DriverFactory driverFactory) {
         AbstractContext context = new WebContext();
-        ((WebContext) context).setDriver(driverFactory.getWebDriverDriver());
+        ((WebContext) context).setDriver(driverFactory.setupWebDriver().getChromeDriver().getDriver());
         context.addContext(context);
     }
 
