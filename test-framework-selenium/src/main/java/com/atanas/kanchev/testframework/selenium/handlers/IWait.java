@@ -59,8 +59,7 @@ interface IWait extends IWrapper {
             new WebDriverWait(getWebContext().getDriver(), wait)
                     .until(ExpectedConditions.textToBePresentInElementValue(getWebContext().getCurrentElement(), text));
         } catch (TimeoutException e) {
-            logger.error("Timeout after waiting for " + getWebContext().getImplicitlyWait()
-                    + " s. for invisibility of element by text:  " + text);
+            logger.error("Timeout after waiting for invisibility of element by text:  " + text);
             throw new TimeoutException(e.getMessage());
         }
         return this;

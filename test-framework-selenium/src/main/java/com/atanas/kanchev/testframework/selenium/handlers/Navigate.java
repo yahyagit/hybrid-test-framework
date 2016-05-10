@@ -3,8 +3,8 @@ package com.atanas.kanchev.testframework.selenium.handlers;
 import com.atanas.kanchev.testframework.core.context.AbstractContext;
 import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.selenium.context.WebContext;
-import com.atanas.kanchev.testframework.selenium.driverfactory.Browsers;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
+import com.atanas.kanchev.testframework.selenium.driverfactory.JVMArgsFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,10 +50,10 @@ abstract class Navigate {
             try {
                 getCurrentContext();
             } catch (CustomExceptions.Common.NullArgumentException e) {
-                DriverFactory driverFactory = new DriverFactory();
-                driverFactory.setSelectedBrowser(Browsers.CHROME);
+                DriverFactory driverFactory = new DriverFactory(JVMArgsFactory.getBrowserType());
+
                 AbstractContext context = new WebContext();
-                ((WebContext) context).setDriver(driverFactory.getWebDriverDriver());
+                ((WebContext) context).setDriver(driverFactory.getDriver());
                 context.addContext(context);
             }
 

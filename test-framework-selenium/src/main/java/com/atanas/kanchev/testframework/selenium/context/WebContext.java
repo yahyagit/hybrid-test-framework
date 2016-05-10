@@ -3,7 +3,6 @@ package com.atanas.kanchev.testframework.selenium.context;
 import com.atanas.kanchev.testframework.core.context.AbstractContext;
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.selenium.driverfactory.IRootDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -25,14 +24,8 @@ public final class WebContext extends AbstractContext<WebDriver> {
     // Current WebElement pointer
     private List<WebElement> webElementsList;
 
-    // Waits
-    private long implicitlyWait;
-    private long pageLoadTimeout;
-
     public WebContext() {
         super("webContext_");
-        this.implicitlyWait = IRootDriver.DEFAULT_IMPLICITLY_WAIT;
-        this.pageLoadTimeout = IRootDriver.DEFAULT_PAGE_TIMEOUT;
     }
 
     //////////////
@@ -65,24 +58,6 @@ public final class WebContext extends AbstractContext<WebDriver> {
             return webElementsList;
     }
 
-    /**
-     * Get Implicitly Wait
-     *
-     * @return value of {@link WebContext#implicitlyWait}
-     */
-    public long getImplicitlyWait() {
-        return implicitlyWait;
-    }
-
-    /**
-     * Get Page Timeout
-     *
-     * @return value of {@link WebContext#pageLoadTimeout}
-     */
-    public long getPageLoadTimeout() {
-        return pageLoadTimeout;
-    }
-
     //////////////
     // Setters //
     /////////////
@@ -111,24 +86,6 @@ public final class WebContext extends AbstractContext<WebDriver> {
         else
             throw new CustomExceptions.Common.NullArgumentException("Null WebElement instance passed as method argument");
 
-    }
-
-    /**
-     * Set Implicitly Wait {@link WebContext#implicitlyWait}
-     *
-     * @param implicitlyWait long
-     */
-    public void setImplicitlyWait(long implicitlyWait) {
-        this.implicitlyWait = implicitlyWait;
-    }
-
-    /**
-     * Set Page Load Timeout {@link WebContext#pageLoadTimeout}
-     *
-     * @param pageLoadTimeout long
-     */
-    public void setPageLoadTimeout(long pageLoadTimeout) {
-        this.pageLoadTimeout = pageLoadTimeout;
     }
 
     /**

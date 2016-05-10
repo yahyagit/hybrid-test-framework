@@ -8,8 +8,8 @@ import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
  */
 public interface IWrapper extends IBaseHandler {
 
-    default Driver setupBrowser() {
-        return new Driver();
+    default DriverConfig setupBrowser() {
+        return new DriverConfig();
     }
 
     default Wait waitFor() {
@@ -25,7 +25,6 @@ public interface IWrapper extends IBaseHandler {
     }
 
 
-
     default Prober probe(Locator locator, String value) {
         return new Prober(locator, value);
     }
@@ -37,6 +36,7 @@ public interface IWrapper extends IBaseHandler {
     default SikuliXFactory image(final String image) {
         return new SikuliXFactory(image);
     }
+
     default SikuliXFactory image() {
         return new SikuliXFactory(null);
     }
@@ -57,7 +57,7 @@ public interface IWrapper extends IBaseHandler {
     class Finder implements IFinder {
     }
 
-    class Driver extends IDriver {
+    class DriverConfig extends com.atanas.kanchev.testframework.selenium.handlers.DriverConfig {
     }
 
     class Prober extends Probe {

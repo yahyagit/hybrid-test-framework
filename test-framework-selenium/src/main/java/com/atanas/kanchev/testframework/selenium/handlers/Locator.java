@@ -422,8 +422,7 @@ public enum Locator implements IElementLocatorFactory, IWaitFactory {
             return true;
 
         } catch (TimeoutException e) {
-            logger.error("Timeout after waiting for " + getWebContext().getImplicitlyWait()
-                    + " s. for presence of element by:  " + locType);
+            logger.error("Timeout after waiting for presence of element by:  " + locType);
             return false;
 
         }
@@ -481,8 +480,7 @@ public enum Locator implements IElementLocatorFactory, IWaitFactory {
             return true;
 
         } catch (TimeoutException e) {
-            logger.error("Timeout after waiting for " + getWebContext().getImplicitlyWait()
-                    + " s. for visibility of element by:  " + locType);
+            logger.error("Timeout after waiting for visibility of element by:  " + locType);
             return false;
 
         }
@@ -528,8 +526,7 @@ public enum Locator implements IElementLocatorFactory, IWaitFactory {
             return true;
 
         } catch (TimeoutException e) {
-            logger.error("Timeout after waiting for " + getWebContext().getImplicitlyWait()
-                    + " s. for element to be clickable located by:  " + locType);
+            logger.error("Timeout after waiting for element to be clickable located by:  " + locType);
             return false;
 
         }

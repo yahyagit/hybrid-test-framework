@@ -1,6 +1,5 @@
 package com.atanas.kanchev.testframework.selenium.tests.driverfactory;
 
-import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import org.junit.Test;
 
 /**
@@ -12,7 +11,7 @@ public class DriverFactoryTest {
     public void getDriverTest() throws Exception {
 
 
-        DriverFactory driverFactory = new DriverFactory();
+
 
 
 

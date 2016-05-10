@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Driver Factory
+ * DriverConfig Factory
  */
 public final class DriverFactory {
 

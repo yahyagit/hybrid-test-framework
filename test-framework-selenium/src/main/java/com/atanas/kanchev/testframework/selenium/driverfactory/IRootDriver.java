@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 /**
- * Root Driver Interface
+ * Root DriverConfig Interface
  */
 public interface IRootDriver {
 

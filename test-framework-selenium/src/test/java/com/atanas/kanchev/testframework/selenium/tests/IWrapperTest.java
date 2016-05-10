@@ -1,6 +1,5 @@
 package com.atanas.kanchev.testframework.selenium.tests;
 
-import com.atanas.kanchev.testframework.selenium.driverfactory.BrowserConfig;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import com.atanas.kanchev.testframework.selenium.handlers.IWrapper;
 import com.atanas.kanchev.testframework.selenium.handlers.Locator;
@@ -89,7 +88,7 @@ public class IWrapperTest implements IWrapper {
     @Test
     public void driver() throws Exception {
         DriverFactory driverFactory = setupBrowser().configureBrowser();
-        driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
+        //driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
         setupBrowser().configureContext(driverFactory);
         goTo(url);
     }
