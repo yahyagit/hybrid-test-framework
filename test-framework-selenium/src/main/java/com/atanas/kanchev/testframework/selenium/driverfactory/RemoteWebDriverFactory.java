@@ -1,5 +1,6 @@
 package com.atanas.kanchev.testframework.selenium.driverfactory;
 
+import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.selenium.context.WebContext;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
@@ -21,6 +22,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCurrentContext;
 
@@ -29,7 +31,7 @@ import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCu
  *         <p/>
  *         RemoteWebDriver Factory
  */
-public final class RemoteWebDriverFactory extends AbstractDriver<WebDriver> {
+public final class RemoteWebDriverFactory extends AbstractDriver<RemoteWebDriver> {
 
     private static final Logger logger = LoggerFactory.getLogger(RemoteWebDriverFactory.class);
 
@@ -42,7 +44,7 @@ public final class RemoteWebDriverFactory extends AbstractDriver<WebDriver> {
     public RemoteWebDriverFactory() {
 
         try {
-            configuredGridHubUrl = new URL(DefaultProperties.DEFAULT_GRID_HUB_URL);
+            configuredGridHubUrl = new URL(JVMArgsFactory.getHubUrl());
         } catch (MalformedURLException e) {
             logger.error(e.getMessage());
         }
@@ -61,7 +63,7 @@ public final class RemoteWebDriverFactory extends AbstractDriver<WebDriver> {
             if (URL != null && !URL.isEmpty())
                 configuredGridHubUrl = new URL(URL);
             else
-                configuredGridHubUrl = new URL(DefaultProperties.DEFAULT_GRID_HUB_URL);
+                configuredGridHubUrl = new URL(JVMArgsFactory.getHubUrl());
         } catch (MalformedURLException e) {
             logger.error(e.getMessage());
         }
@@ -113,11 +115,6 @@ public final class RemoteWebDriverFactory extends AbstractDriver<WebDriver> {
     }
 
     @Override
-    WebDriver configureTimeouts(long implicitlyWait, long pageLoadTimeout) {
-        return null;
-    }
-
-    @Override
     String getExecutionIP() {
 
         String ip = null;
@@ -141,6 +138,27 @@ public final class RemoteWebDriverFactory extends AbstractDriver<WebDriver> {
 
         return ip;
     }
+
+    @Override
+    RemoteWebDriver getDriver() {
+        return null;
+    }
+
+    @Override
+    RemoteWebDriver configureTimeouts(RemoteWebDriver driver) {
+        if (driver == null)
+            throw new CustomExceptions.Common.NullArgumentException("Null AbstractDriver#driver, initialise driver beforehand");
+        if (implicitlyWait != 0) {
+            logger.debug("Setting implicitly wait to: " + implicitlyWait + " s.");
+            driver.manage().timeouts().implicitlyWait(implicitlyWait, TimeUnit.SECONDS);
+        }
+        if (pageLoadTimeout != 0) {
+            logger.debug("Setting page load timeout to: " + pageLoadTimeout + " s.");
+            driver.manage().timeouts().pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS);
+        }
+        return driver;
+    }
+
 
     /**
      * @param resp HttpResponse

@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.selenium.tests.handlers;
 
-import com.atanas.kanchev.testframework.selenium.handlers.IFinder;
+import com.atanas.kanchev.testframework.selenium.handlers.Finder;
 import com.atanas.kanchev.testframework.selenium.handlers.IWrapper;
 import com.atanas.kanchev.testframework.selenium.handlers.Locator;
 import org.junit.After;
@@ -16,13 +16,13 @@ import java.net.URL;
 /**
  * @author Atanas Ksnchev
  */
-public class IFinderTest implements IWrapper {
+public class FinderTest implements IWrapper {
 
     @Mock
-    IFinder ifind;
+    Finder ifind;
 
     private static URL url;
-    private static final Logger logger = LoggerFactory.getLogger(IFinderTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(FinderTest.class);
 
     @Before
     public void setUp() throws Exception {
@@ -48,7 +48,7 @@ public class IFinderTest implements IWrapper {
     @Test
     public void test() throws Exception {
 
-        goTo("https://bbc.co.uk").waitFor().elementToBeClickable(Locator.ID, "orb-modules", 5);
+        goTo("https://bbc.co.uk").waitFor(5L).elementToBeClickable(Locator.ID, "orb-modules");
 
     }
 }

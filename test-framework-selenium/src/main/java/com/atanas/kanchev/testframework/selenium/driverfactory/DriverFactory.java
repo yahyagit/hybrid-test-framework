@@ -1,5 +1,8 @@
 package com.atanas.kanchev.testframework.selenium.driverfactory;
 
+import com.atanas.kanchev.testframework.core.context.AbstractContext;
+import com.atanas.kanchev.testframework.core.context.ContextFactory;
+import com.atanas.kanchev.testframework.selenium.context.WebContext;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,16 +15,17 @@ public final class DriverFactory {
     //the logger
     private static final Logger logger = LoggerFactory.getLogger(DriverFactory.class);
 
-    private RemoteWebDriverFactory remoteWebDriverFactory;
-    private WebDriverFactory webDriverFactory;
-    private DesiredCapabilitiesFactory desiredCapabilitiesFactory;
-    private Browsers selectedBrowser;
+    private final RemoteWebDriverFactory remoteWebDriverFactory;
+    private final WebDriverFactory webDriverFactory;
+    private final DesiredCapabilitiesFactory desiredCapabilitiesFactory;
+    private final Browsers selectedBrowser;
 
     public DriverFactory(Browsers selectedBrowser) {
         this.desiredCapabilitiesFactory = new DesiredCapabilitiesFactory();
         this.remoteWebDriverFactory = new RemoteWebDriverFactory();
         this.webDriverFactory = new WebDriverFactory(this.desiredCapabilitiesFactory);
-        this.selectedBrowser = selectedBrowser;
+        if (selectedBrowser == null) this.selectedBrowser = JVMArgsFactory.getBrowserType();
+        else this.selectedBrowser = selectedBrowser;
     }
 
     public WebDriverFactory setupWebDriver() {
@@ -41,17 +45,24 @@ public final class DriverFactory {
         switch (selectedBrowser) {
 
             case CHROME:
-                return setupWebDriver().getChromeDriver().getDriver();
+                return configureContext(setupWebDriver().getChromeDriver().getDriver());
 
             case FIREFOX:
-                return setupWebDriver().getFirefoxDriver().getDriver();
+                return configureContext(setupWebDriver().getFirefoxDriver().getDriver());
 
             case SAFARI:
-                return setupWebDriver().getSafariDriver().getDriver();
+                return configureContext(setupWebDriver().getSafariDriver().getDriver());
 
         }
 
         return null;
+    }
+
+    private WebDriver configureContext(WebDriver driver) {
+        AbstractContext<WebDriver> context = new WebContext();
+        context.setDriver(driver);
+        ContextFactory.addContext(context);
+        return driver;
     }
 
 

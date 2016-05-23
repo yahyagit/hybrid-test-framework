@@ -12,35 +12,42 @@ import org.slf4j.LoggerFactory;
 import static com.atanas.kanchev.testframework.selenium.handlers.Locator.getWebContext;
 
 /**
- * WebDriver Wait Interface
+ * WebDriver Wait
  */
-interface IWait extends IWrapper {
+public class Wait implements IWrapper {
 
     // the logger
-    Logger logger = LoggerFactory.getLogger(IWait.class);
+    private static final Logger logger = LoggerFactory.getLogger(Wait.class);
 
-    default IWait presenceOfElement(Locator locatorType, String locator, long wait) {
+    private final long wait;
+
+    public Wait(long wait) {
+        this.wait = wait;
+    }
+
+
+    public Wait presenceOfElement(Locator locatorType, String locator) {
 
         locatorType.presenceOfElement(locatorType, locator, wait);
 
         return this;
     }
 
-    default IWait visibilityOfElement(Locator locatorType, String locator, long wait) {
+    public Wait visibilityOfElement(Locator locatorType, String locator) {
 
         locatorType.visibilityOfElement(locatorType, locator, wait);
 
         return this;
     }
 
-    default IWait invisibilityOfElement(Locator locatorType, String locator, long wait) {
+    public Wait invisibilityOfElement(Locator locatorType, String locator) {
 
         locatorType.invisibilityOfElement(locatorType, locator, wait);
 
         return this;
     }
 
-    default IWait elementToBeClickable(Locator locatorType, String locator, long wait) {
+    public Wait elementToBeClickable(Locator locatorType, String locator) {
 
         locatorType.elementToBeClickable(locatorType, locator, wait);
 
@@ -53,7 +60,7 @@ interface IWait extends IWrapper {
      * @param text
      * @return this
      */
-    default IWait valueToBePresent(final String text, long wait) {
+    public Wait valueToBePresent(final String text) {
 
         try {
             new WebDriverWait(getWebContext().getDriver(), wait)
@@ -71,7 +78,7 @@ interface IWait extends IWrapper {
      *
      * @param cssSelector
      */
-    default IWait staleElementByCss(final String cssSelector) {
+    public Wait staleElementByCss(final String cssSelector) {
         try {
             logger.debug("Trying to find element: " + cssSelector + " within waitForStale Method");
             find().elementBy(Locator.CSS_SELECTOR, cssSelector);
@@ -93,7 +100,7 @@ interface IWait extends IWrapper {
      * @param text
      * @return
      */
-    default IWait textToBePresentInElement(final String text, long wait) {
+    public Wait textToBePresentInElement(final String text) {
 
 
         try {
@@ -106,7 +113,7 @@ interface IWait extends IWrapper {
         return this;
     }
 
-    default IWait frameByIdToBeAvailableAndSwitch(String frameId, long wait) {
+    public Wait frameByIdToBeAvailableAndSwitch(String frameId) {
         try {
             new WebDriverWait(getWebContext().getDriver(), wait)
                     .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameId));

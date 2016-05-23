@@ -91,9 +91,10 @@ public final class WebContext extends AbstractContext<WebDriver> {
     /**
      * Tear down all active contexts stored in {@link ContextFactory#contextMap}
      */
-    public static void tearDownContext() {
+    @Override
+    public void tearDownContext() {
 
-        logger.debug("Tearing down WebContext " + ContextFactory.getContextMap().values().size());
+
 
         for (AbstractContext context : ContextFactory.getContextMap().values()) {
             if (context instanceof WebContext) {

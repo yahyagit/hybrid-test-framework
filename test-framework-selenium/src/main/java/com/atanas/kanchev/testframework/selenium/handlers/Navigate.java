@@ -1,6 +1,7 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
 import com.atanas.kanchev.testframework.core.context.AbstractContext;
+import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.selenium.context.WebContext;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
@@ -16,7 +17,7 @@ import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCu
 /**
  * Nav Interface
  */
-abstract class Navigate {
+public abstract class Navigate {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Navigate.class);
@@ -36,7 +37,7 @@ abstract class Navigate {
      * @param url valid URL instance
      * @return this
      */
-    private Navigate getPage(final String url) {
+    public Navigate getPage(final String url) {
 
         if (url == null)
             throw new CustomExceptions.Common.NullArgumentException("Null method argument: URL");
@@ -53,8 +54,8 @@ abstract class Navigate {
                 DriverFactory driverFactory = new DriverFactory(JVMArgsFactory.getBrowserType());
 
                 AbstractContext context = new WebContext();
-                ((WebContext) context).setDriver(driverFactory.getDriver());
-                context.addContext(context);
+                context.setDriver(driverFactory.getDriver());
+                ContextFactory.addContext(context);
             }
 
             ((WebContext) getCurrentContext()).getDriver().navigate().to(address);

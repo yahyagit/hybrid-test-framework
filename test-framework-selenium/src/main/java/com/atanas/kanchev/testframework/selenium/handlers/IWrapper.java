@@ -1,6 +1,9 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
 import com.atanas.kanchev.testframework.appium.handlers.DeviceBasedHandler;
+import com.atanas.kanchev.testframework.core.context.ContextFactory;
+import com.atanas.kanchev.testframework.selenium.driverfactory.DefaultProperties;
+import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
 
 /**
@@ -8,12 +11,17 @@ import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
  */
 public interface IWrapper extends IBaseHandler {
 
-    default DriverConfig setupBrowser() {
-        return new DriverConfig();
+    DeviceBasedHandler DEVICE_BASED_HANDLER = new DeviceBasedHandler();
+    Finder FINDER = new Finder();
+    ContextFactory CONTEXT_FACTORY = new ContextFactory();
+    DriverFactory DRIVER_FACTORY = new DriverFactory(DefaultProperties.DEFAULT_BROWSER);
+
+    default DriverFactory setupBrowser() {
+        return DRIVER_FACTORY;
     }
 
-    default Wait waitFor() {
-        return new Wait();
+    default Wait waitFor(long wait) {
+        return new Wait(wait);
     }
 
     default Nav goTo(final String url) {
@@ -21,16 +29,15 @@ public interface IWrapper extends IBaseHandler {
     }
 
     default Finder find() {
-        return new Finder();
+        return FINDER;
     }
-
 
     default Prober probe(Locator locator, String value) {
         return new Prober(locator, value);
     }
 
-    default Context context() {
-        return new Context();
+    default ContextFactory context() {
+        return CONTEXT_FACTORY;
     }
 
     default SikuliXFactory image(final String image) {
@@ -42,22 +49,13 @@ public interface IWrapper extends IBaseHandler {
     }
 
     default DeviceBasedHandler setupAppium() {
-        return new DeviceBasedHandler();
-    }
-
-    class Wait implements IWait {
+        return DEVICE_BASED_HANDLER;
     }
 
     class Nav extends Navigate implements IWrapper {
         Nav(String url) {
             super(url);
         }
-    }
-
-    class Finder implements IFinder {
-    }
-
-    class DriverConfig extends com.atanas.kanchev.testframework.selenium.handlers.DriverConfig {
     }
 
     class Prober extends Probe {
@@ -72,8 +70,6 @@ public interface IWrapper extends IBaseHandler {
         }
     }
 
-    class Context implements IContext {
-    }
 
 }
 

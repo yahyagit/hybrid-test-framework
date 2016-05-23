@@ -1,22 +1,37 @@
 package com.atanas.kanchev.testframework.selenium.driverfactory;
 
+import static com.atanas.kanchev.testframework.selenium.driverfactory.DefaultProperties.DEFAULT_IMPLICIT_WAIT;
+import static com.atanas.kanchev.testframework.selenium.driverfactory.DefaultProperties.DEFAULT_PAGE_LOAD_TIMEOUT;
+
 /**
  * @author Atanas Ksnchev
  */
 abstract class AbstractDriver<T> {
 
-    private T driver;
+    protected T driver;
 
-    abstract T configureTimeouts(long implicitlyWait, long pageLoadTimeout);
+    protected long implicitlyWait = DEFAULT_IMPLICIT_WAIT;
+    protected long pageLoadTimeout = DEFAULT_PAGE_LOAD_TIMEOUT;
 
-    abstract String getExecutionIP();
+    protected AbstractDriver() {
+        if (JVMArgsFactory.getImplicitlyWait() != null)
+            this.implicitlyWait = Long.parseLong(JVMArgsFactory.getImplicitlyWait());
+        if (JVMArgsFactory.getPageLoadTimeout() != null)
+            this.pageLoadTimeout = Long.parseLong(JVMArgsFactory.getPageLoadTimeout());
+    }
 
-    public AbstractDriver setDriver(T driver) {
+    protected abstract String getExecutionIP();
+
+    protected AbstractDriver setDriver(T driver) {
         this.driver = driver;
         return this;
     }
 
-    public T getDriver() {
-        return driver;
-    }
+    protected abstract T getDriver();
+
+    protected abstract AbstractDriver setImplicitlyWait(long wait);
+
+    protected abstract AbstractDriver setPageLoadTimeout(long timeout);
+
+    protected abstract AbstractDriver configureDriver();
 }

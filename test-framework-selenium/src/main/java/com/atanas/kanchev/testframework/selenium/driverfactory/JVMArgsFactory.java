@@ -3,6 +3,8 @@ package com.atanas.kanchev.testframework.selenium.driverfactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.atanas.kanchev.testframework.selenium.driverfactory.JVMArgsFactory.ArgsEnum.*;
+
 /**
  * JVM Arguments Factory
  *
@@ -12,42 +14,26 @@ public class JVMArgsFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(JVMArgsFactory.class);
 
-    private static final Browsers defaultBrowser = Browsers.FIREFOX;
-
-    private static final String ENVIRONMENT = ArgsEnum.getJMVArg(ArgsEnum.ENVIRONMENT);
-
-    private static final String BROWSER_TYPE = ArgsEnum.getJMVArg(ArgsEnum.BROWSER_TYPE);
-    private static final String BROWSER_RESOLUTION = ArgsEnum.getJMVArg(ArgsEnum.BROWSER_RESOLUTION);
-
-    // Grid
-    private static final String REMOTE_BROWSER_VERSION = ArgsEnum.getJMVArg(ArgsEnum.REMOTE_BROWSER_VERSION);
-    private static final String REMOTE_PLATFORM = ArgsEnum.getJMVArg(ArgsEnum.REMOTE_PLATFORM);
-    private static final String IS_GRID_EXECUTION = ArgsEnum.getJMVArg(ArgsEnum.IS_GRID_EXECUTION);
-    private static final String HUB_URL = ArgsEnum.getJMVArg(ArgsEnum.HUB_URL);
-
-    // Custom capabilities
-    private static final String CUSTOM_CAPABILITY = ArgsEnum.getJMVArg(ArgsEnum.CUSTOM_CAPABILITY);
-
-    // Mobile
-    private static final String USER_AGENT = ArgsEnum.getJMVArg(ArgsEnum.USER_AGENT);
-
-    // Binary versions
-    private static final String CHROME_BINARY_VERSION = ArgsEnum.getJMVArg(ArgsEnum.CHROME_BINARY_VERSION);
-
-    //////////////
-    // GETTERS //
-    /////////////
-
-    public static String getENVIRONMENT() {
-        return ENVIRONMENT;
+    /**
+     * Get JVM arg: execution environment
+     *
+     * @return {@link ArgsEnum#ENVIRONMENT}
+     */
+    public static String getEnvironment() {
+        return getJMVArg(ENVIRONMENT, null);
     }
 
+    /**
+     * Get JVM arg: browser type
+     *
+     * @return {@link ArgsEnum#BROWSER_TYPE} or {@link DefaultProperties#DEFAULT_BROWSER}
+     */
     public static Browsers getBrowserType() {
 
-        Browsers browser = defaultBrowser;
+        Browsers browser = DefaultProperties.DEFAULT_BROWSER;
 
         try {
-            browser = Browsers.valueOf(BROWSER_TYPE.toUpperCase());
+            browser = Browsers.valueOf(getJMVArg(BROWSER_TYPE));
             logger.warn("Setting browser type to: " + browser.name());
         } catch (NullPointerException npe) {
             logger.warn("No JVM arg for browser type is specified, defaulting to: " + browser.name());
@@ -59,50 +45,70 @@ public class JVMArgsFactory {
     }
 
     public static String getBrowserResolution() {
-        return BROWSER_RESOLUTION;
+        return getJMVArg(BROWSER_RESOLUTION, DefaultProperties.DEFAULT_BROWSER_RES);
     }
 
     public static String getRemoteBrowserVersion() {
-        return REMOTE_BROWSER_VERSION;
+        return getJMVArg(REMOTE_BROWSER_VERSION, null);
     }
 
     public static String getRemotePlatform() {
-        return REMOTE_PLATFORM;
+        return getJMVArg(REMOTE_PLATFORM, null);
     }
 
-    public static String getIsGridExecution() {
-        return IS_GRID_EXECUTION;
+    public static boolean isGridExecution() {
+        return getJMVArg(IS_GRID_EXECUTION) != null && Boolean.valueOf(getJMVArg(IS_GRID_EXECUTION)) == Boolean.TRUE;
     }
 
     public static String getHubUrl() {
-        return HUB_URL;
+        return getJMVArg(HUB_URL, null);
     }
 
     public static String getCustomCapability() {
-        return CUSTOM_CAPABILITY;
+        return getJMVArg(CUSTOM_CAPABILITY, null);
     }
 
     public static String getUserAgent() {
-        return USER_AGENT;
+        return getJMVArg(USER_AGENT, null);
     }
 
     public static String getChromeBinaryVersion() {
-        return CHROME_BINARY_VERSION;
+        return getJMVArg(CHROME_BINARY_VERSION, null);
+    }
+
+    public static boolean reuseBrowser() {
+        return getJMVArg(REUSE_BROWSER) != null && Boolean.valueOf(getJMVArg(REUSE_BROWSER)) == Boolean.TRUE;
+    }
+
+    public static boolean startMaximised() {
+        return getJMVArg(START_MAXIMIZED) != null && Boolean.valueOf(getJMVArg(START_MAXIMIZED)) == Boolean.TRUE;
+    }
+
+    public static String getImplicitlyWait() {
+        return getJMVArg(IMPLICITLY_WAIT);
+    }
+
+    public static String getPageLoadTimeout(){
+        return getJMVArg(PAGE_LOAD_TIMEOUT);
     }
 
     public static void setJVMArgument(ArgsEnum argument, final String value) {
-        ArgsEnum.setJMVArg(argument, value);
+        setJMVArg(argument, value);
     }
 
     /**
      * JVM arguments enum
      */
-    public enum ArgsEnum {
+    enum ArgsEnum {
 
         ENVIRONMENT("env"),
 
         BROWSER_TYPE("browser"),
         BROWSER_RESOLUTION("resolution"),
+        REUSE_BROWSER("reuse.browser"),
+        START_MAXIMIZED("start.maximised"),
+        IMPLICITLY_WAIT("impl.wait"),
+        PAGE_LOAD_TIMEOUT("page.load.timeout"),
 
         // Grid
         REMOTE_BROWSER_VERSION("browser.version"),
@@ -135,10 +141,21 @@ public class JVMArgsFactory {
         /**
          * Get JVM argument
          *
+         * @param arg
+         * @param def
+         * @return
+         */
+        protected static String getJMVArg(ArgsEnum arg, String def) {
+            return System.getProperty(arg.getName(), def);
+        }
+
+        /**
+         * Get JVM argument
+         *
          * @param arg JVMArgsFactory enum
          * @return String
          */
-        private static String getJMVArg(ArgsEnum arg) {
+        protected static String getJMVArg(ArgsEnum arg) {
             return System.getProperty(arg.getName());
         }
 
@@ -148,9 +165,9 @@ public class JVMArgsFactory {
          * @param arg   JVMArgsFactory enum
          * @param value String
          */
-        private static void setJMVArg(ArgsEnum arg, String value) {
+        protected static void setJMVArg(ArgsEnum arg, String value) {
             System.setProperty(arg.getName(), value);
         }
 
-        }
+    }
 }

@@ -16,17 +16,17 @@ import static com.atanas.kanchev.testframework.selenium.handlers.Locator.getWebC
 /**
  * @author Atanas Ksnchev
  */
-public interface IFinder extends IWrapper{
+public class Finder implements IWrapper {
 
     // the logger
-    Logger logger = LoggerFactory.getLogger(IFinder.class);
+    private static final Logger logger = LoggerFactory.getLogger(Finder.class);
 
     /**
      * Go to the root page element /html/body
      *
      * @return this
      */
-    default IFinder rootElement() {
+    public Finder rootElement() {
 
         try {
             getWebContext().setCurrentElement(getWebContext().getDriver().findElement(By.xpath("/html/body")));
@@ -44,7 +44,7 @@ public interface IFinder extends IWrapper{
      * @param locator     String
      * @return this
      */
-    default IFinder elementBy(Locator locatorType, String locator) {
+    public Finder elementBy(Locator locatorType, String locator) {
         if (locatorType == null || locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
@@ -59,7 +59,7 @@ public interface IFinder extends IWrapper{
      * @param locator     locator
      * @return this
      */
-    default IFinder elementsBy(Locator locatorType, String locator) {
+    public Finder elementsBy(Locator locatorType, String locator) {
 
         if (locatorType == null || locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
@@ -75,7 +75,7 @@ public interface IFinder extends IWrapper{
      * @param element WebElement
      * @return this
      */
-    default IFinder webElement(final WebElement element) {
+    public Finder webElement(final WebElement element) {
 
         if (element == null)
             throw new CustomExceptions.Common.NullArgumentException("Null method argument: WebElement element");
@@ -91,7 +91,7 @@ public interface IFinder extends IWrapper{
      * @param text Text to search
      * @return this
      */
-    default IFinder containsText(String text) {
+    public Finder containsText(String text) {
 
         if (text == null)
             throw new CustomExceptions.Common.NullArgumentException();
@@ -107,7 +107,7 @@ public interface IFinder extends IWrapper{
      * @param text Text to search
      * @return this
      */
-    default IFinder havingText(String text) {
+    public Finder havingText(String text) {
 
         if (text == null)
             throw new CustomExceptions.Common.NullArgumentException();

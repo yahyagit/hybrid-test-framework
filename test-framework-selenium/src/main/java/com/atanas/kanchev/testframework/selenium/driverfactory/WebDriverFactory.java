@@ -16,8 +16,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
-import static com.atanas.kanchev.testframework.selenium.driverfactory.DefaultProperties.DEFAULT_IMPLICIT_WAIT;
-import static com.atanas.kanchev.testframework.selenium.driverfactory.DefaultProperties.DEFAULT_PAGE_LOAD_TIMEOUT;
 import static com.atanas.kanchev.testframework.selenium.driverfactory.IRootDriver.OS;
 
 /**
@@ -43,8 +41,7 @@ public final class WebDriverFactory extends AbstractDriver<WebDriver> {
      */
     public WebDriverFactory getFirefoxDriver() {
 
-        super.setDriver(new FirefoxDriver(dcf.getDefaultFirefoxCaps()))
-                .configureTimeouts(DEFAULT_IMPLICIT_WAIT, DEFAULT_PAGE_LOAD_TIMEOUT);
+        super.setDriver(new FirefoxDriver(dcf.getDefaultFirefoxCaps()));
 
         return this;
     }
@@ -57,8 +54,7 @@ public final class WebDriverFactory extends AbstractDriver<WebDriver> {
      */
     public WebDriverFactory getFirefoxDriver(DesiredCapabilities capabilities) {
 
-        super.setDriver(new FirefoxDriver(capabilities))
-                .configureTimeouts(DEFAULT_IMPLICIT_WAIT, DEFAULT_PAGE_LOAD_TIMEOUT);
+        super.setDriver(new FirefoxDriver(capabilities));
 
         return this;
     }
@@ -71,8 +67,7 @@ public final class WebDriverFactory extends AbstractDriver<WebDriver> {
      */
     public WebDriverFactory getFirefoxDriver(FirefoxProfile profile) {
 
-        super.setDriver(new FirefoxDriver(profile))
-                .configureTimeouts(DEFAULT_IMPLICIT_WAIT, DEFAULT_PAGE_LOAD_TIMEOUT);
+        super.setDriver(new FirefoxDriver(profile));
 
         return this;
     }
@@ -86,8 +81,7 @@ public final class WebDriverFactory extends AbstractDriver<WebDriver> {
      */
     public WebDriverFactory getChromeDriver(ChromeDriverService service, DesiredCapabilities capabilities) {
 
-        super.setDriver(new ChromeDriver(service, capabilities))
-                .configureTimeouts(DEFAULT_IMPLICIT_WAIT, DEFAULT_PAGE_LOAD_TIMEOUT);
+        super.setDriver(new ChromeDriver(service, capabilities));
 
         return this;
     }
@@ -100,8 +94,7 @@ public final class WebDriverFactory extends AbstractDriver<WebDriver> {
      */
     public WebDriverFactory getChromeDriver(DesiredCapabilities capabilities) {
 
-        super.setDriver(new ChromeDriver(new BinariesResolver().configureChromeDriverService(), capabilities))
-                .configureTimeouts(DEFAULT_IMPLICIT_WAIT, DEFAULT_PAGE_LOAD_TIMEOUT);
+        super.setDriver(new ChromeDriver(new BinariesResolver().configureChromeDriverService(), capabilities));
 
         return this;
     }
@@ -113,8 +106,7 @@ public final class WebDriverFactory extends AbstractDriver<WebDriver> {
      */
     public WebDriverFactory getChromeDriver() {
 
-        super.setDriver(new ChromeDriver(new BinariesResolver().configureChromeDriverService()))
-                .configureTimeouts(DEFAULT_IMPLICIT_WAIT, DEFAULT_PAGE_LOAD_TIMEOUT);
+        super.setDriver(new ChromeDriver(new BinariesResolver().configureChromeDriverService()));
 
         return this;
     }
@@ -130,8 +122,7 @@ public final class WebDriverFactory extends AbstractDriver<WebDriver> {
         if (!OS.toLowerCase().contains("mac") || !OS.toLowerCase().contains("windows"))
             throw new RuntimeException("The current platform does not support Safari: " + OS);
         else
-            super.setDriver(new SafariDriver(capabilities))
-                    .configureTimeouts(DEFAULT_IMPLICIT_WAIT, DEFAULT_PAGE_LOAD_TIMEOUT);
+            super.setDriver(new SafariDriver(capabilities));
 
         return this;
     }
@@ -146,33 +137,51 @@ public final class WebDriverFactory extends AbstractDriver<WebDriver> {
         if (!OS.toLowerCase().contains("mac") || !OS.toLowerCase().contains("windows"))
             throw new RuntimeException("The current platform does not support Safari: " + OS);
         else
-            super.setDriver(new SafariDriver(dcf.getDefaultSafariCaps()))
-                    .configureTimeouts(DEFAULT_IMPLICIT_WAIT, DEFAULT_PAGE_LOAD_TIMEOUT);
+            super.setDriver(new SafariDriver(dcf.getDefaultSafariCaps()));
 
         return this;
     }
 
-    /**
-     * Configure Selenium WebDriver timeouts
-     *
-     * @param implicitlyWait  implicitly wait in sec
-     * @param pageLoadTimeout pageLoad timeout in sec
-     * @return configured WebDriver instance
-     */
-    public WebDriver configureTimeouts(long implicitlyWait, long pageLoadTimeout) {
+    public WebDriverFactory setTimeouts(long implicitlyWait, long pageLoadTimeout) {
 
-        if (super.getDriver() == null)
-            throw new CustomExceptions.Common.NullArgumentException("Null argument is not permitted");
-        if (implicitlyWait != 0) {
-            logger.debug("Setting implicitly wait to: " + implicitlyWait + " s.");
-            super.getDriver().manage().timeouts().implicitlyWait(implicitlyWait, TimeUnit.SECONDS);
-        }
-        if (pageLoadTimeout != 0) {
-            logger.debug("Setting page load timeout to: " + pageLoadTimeout + " s.");
-            super.getDriver().manage().timeouts().pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS);
-        }
-        return super.getDriver();
+        logger.debug("Setting implicitly wait to " + implicitlyWait);
+        logger.debug("Setting page load timeout to " + pageLoadTimeout);
+
+        this.implicitlyWait = implicitlyWait;
+        this.pageLoadTimeout = pageLoadTimeout;
+
+        return this;
     }
+
+    @Override
+    protected AbstractDriver setImplicitlyWait(long wait) {
+        if (super.driver == null)
+            throw new CustomExceptions.Common.NullArgumentException("Null AbstractDriver#driver, initialise driver beforehand");
+        if (wait != 0) {
+            logger.debug("Setting implicitly wait to: " + wait + " s.");
+            super.driver.manage().timeouts().implicitlyWait(wait, TimeUnit.SECONDS);
+        }
+        return this;
+    }
+
+    @Override
+    protected AbstractDriver setPageLoadTimeout(long timeout) {
+        if (super.driver == null)
+            throw new CustomExceptions.Common.NullArgumentException("Null AbstractDriver#driver, initialise driver beforehand");
+        if (timeout != 0) {
+            logger.debug("Setting implicitly wait to: " + timeout + " s.");
+            super.driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
+        }
+        return this;
+    }
+
+    @Override
+    protected AbstractDriver configureDriver() {
+        setImplicitlyWait(implicitlyWait);
+        setPageLoadTimeout(pageLoadTimeout);
+        return this;
+    }
+
 
     /////////////////////
     // STATIC MEMBERS //
@@ -195,6 +204,11 @@ public final class WebDriverFactory extends AbstractDriver<WebDriver> {
         }
 
         return ip;
+    }
+
+    @Override
+    protected WebDriver getDriver() {
+        return super.driver;
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Context Factory
  */
-public abstract class ContextFactory {
+public class ContextFactory {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(ContextFactory.class);
@@ -26,7 +26,7 @@ public abstract class ContextFactory {
      *
      * @param context instance of AbstractContext
      */
-    public void addContext(AbstractContext context) {
+    public static void addContext(AbstractContext context) {
         if (context == null) throw new CustomExceptions.Common.NullArgumentException("Null method argument context");
 
         if (contextMap.containsKey(context.getContextName())) {
@@ -61,7 +61,7 @@ public abstract class ContextFactory {
      *
      * @return reference of {@link ContextFactory#contextMap}
      */
-    protected static Map<String, AbstractContext> getContextMap() {
+    public static Map<String, AbstractContext> getContextMap() {
         return contextMap;
     }
 
@@ -85,6 +85,22 @@ public abstract class ContextFactory {
      */
     public static void setCurrentContext(AbstractContext currentContext) {
         ContextFactory.currentContext = currentContext;
+    }
+
+    public static void tearDownContexts() {
+
+        logger.debug("Tearing down contexts " + getContextMap().values().size());
+
+        for (AbstractContext context : getContextMap().values()) {
+            logger.debug("Tearing down context type " + context.toString());
+            context.tearDownContext();
+            logger.debug("Removing context from map" + context.getContextName());
+            getContextMap().remove(context);
+            setCurrentContext(null);
+
+        }
+
+
     }
 
 
