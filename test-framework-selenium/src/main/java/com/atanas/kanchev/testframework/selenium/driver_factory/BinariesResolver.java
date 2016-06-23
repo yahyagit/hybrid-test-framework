@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.selenium.driverfactory;
+package com.atanas.kanchev.testframework.selenium.driver_factory;
 
 import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.apache.commons.io.FileUtils;
@@ -33,9 +33,6 @@ final class BinariesResolver implements IRootDriver {
     private final static String ROOT_DOWNLOAD_URI_PROP = "https://chromedriver.storage.googleapis.com/";
     private final static String CHROME_BIN_VERSION_PROP = IRootDriver.getSeleniumPropFile().getProperty("chrome.bin.version");
 
-    // JVM args
-    private static final String CHROME_BIN_VERSION_JVM_ARG = JVMArgsFactory.getChromeBinaryVersion();
-
     // Remote URI
     private final String downloadUri;
     private final String downloadVersion;
@@ -59,15 +56,12 @@ final class BinariesResolver implements IRootDriver {
     BinariesResolver() {
 
         // configure target chrome binary version
-        if (CHROME_BIN_VERSION_JVM_ARG != null) {
-            logger.debug("Using JVM arg to configure Chrome binary version");
-            downloadVersion = CHROME_BIN_VERSION_JVM_ARG;
-        } else {
-            logger.debug("Using selenium.properties file to configure chrome binary version");
-            downloadVersion = CHROME_BIN_VERSION_PROP;
-            if (downloadVersion == null)
-                throw new NullPointerException("Missing property " + "chrome.bin.version" + " in selenium.properties file");
-        }
+
+        logger.debug("Using selenium.properties file to configure chrome binary version");
+        downloadVersion = CHROME_BIN_VERSION_PROP;
+        if (downloadVersion == null)
+            throw new NullPointerException("Missing property " + "chrome.bin.version" + " in selenium.properties file");
+
 
         this.downloadUri = ROOT_DOWNLOAD_URI_PROP.concat(downloadVersion).concat("/");
         String[] arr = getBinPathAndFileName();

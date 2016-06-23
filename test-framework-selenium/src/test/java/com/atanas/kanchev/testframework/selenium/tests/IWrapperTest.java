@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,14 +27,14 @@ public class IWrapperTest {
         @Test
         public void setupBrowserTest() throws Exception {
 
-            setupBrowser()
-                    .setupWebDriver()
-                    .setTimeouts(5L, 30L);
-            setupBrowser()
-                    .setupDesiredCapabilities()
-
-                    .mergeCapabilities(DesiredCapabilities.edge())
-            ;
+//            setupBrowser()
+//                    .setupWebDriver()
+//                    .setTimeouts(5L, 30L);
+//            setupBrowser()
+//                    .setupDesiredCapabilities()
+//
+//                    .mergeCapabilities(DesiredCapabilities.edge())
+//            ;
 
 
         }

@@ -1,6 +1,5 @@
-package com.atanas.kanchev.testframework.selenium.driverfactory;
+package com.atanas.kanchev.testframework.selenium.driver_factory;
 
-import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.selenium.context.WebContext;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
@@ -11,7 +10,7 @@ import org.apache.http.message.BasicHttpEntityEnclosingRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openqa.selenium.Platform;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
@@ -22,69 +21,36 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
 import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCurrentContext;
 
 /**
- * @author Atanas Kanchev
- *         <p/>
- *         RemoteWebDriver Factory
+ * @author Atanas Ksnchev
  */
-public final class RemoteWebDriverFactory extends AbstractDriver<RemoteWebDriver> {
+public class RemoteDriverFactory {
 
-    private static final Logger logger = LoggerFactory.getLogger(RemoteWebDriverFactory.class);
+    private static final Logger logger = LoggerFactory.getLogger(RemoteDriverFactory.class);
 
-    // Hub URL
-    private URL configuredGridHubUrl;
+    public RemoteWebDriver getRemoteWebDriver(DesiredCapabilities desiredCapabilities) {
 
-    /**
-     * Default constructor
-     */
-    public RemoteWebDriverFactory() {
-
+        URL url = null;
         try {
-            configuredGridHubUrl = new URL(JVMArgsFactory.getHubUrl());
+            url = new URL(Conf.JVMArgs.GRID_URL);
         } catch (MalformedURLException e) {
-            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+        String desiredBrowserVersion = Conf.JVMArgs.BROWSER_VERSION;
+        String desiredPlatform = Conf.JVMArgs.PLATFORM;
+
+        if (null != desiredPlatform && !desiredPlatform.isEmpty()) {
+            desiredCapabilities.setPlatform(Platform.valueOf(desiredPlatform.toUpperCase()));
         }
 
-    }
-
-    /**
-     * Param constructor
-     * Instantiates {@link RemoteWebDriverFactory#configuredGridHubUrl}
-     *
-     * @param URL String
-     */
-    public RemoteWebDriverFactory(final String URL) {
-
-        try {
-            if (URL != null && !URL.isEmpty())
-                configuredGridHubUrl = new URL(URL);
-            else
-                configuredGridHubUrl = new URL(JVMArgsFactory.getHubUrl());
-        } catch (MalformedURLException e) {
-            logger.error(e.getMessage());
+        if (null != desiredBrowserVersion && !desiredBrowserVersion.isEmpty()) {
+            desiredCapabilities.setVersion(desiredBrowserVersion);
         }
 
-        logger.debug("Configured remote hub URL: " + configuredGridHubUrl);
-
-    }
-
-    public RemoteWebDriver getRemoteWebDriver(final String version, final Platform platform, Browsers browsers) {
-        DesiredCapabilitiesFactory factory = new DesiredCapabilitiesFactory();
-        return new RemoteWebDriver(configuredGridHubUrl, factory.mergeCapabilities(factory.getDefaultChromeCaps(), factory.setRemoteBrowserCaps(version, platform, browsers)));
-
-    }
-
-    /**
-     * Get configured Grid Hub URL
-     *
-     * @return Hub URL
-     */
-    public URL getConfiguredGridHubUrl() {
-        return configuredGridHubUrl;
+        return new RemoteWebDriver(url, desiredCapabilities);
     }
 
     /**
@@ -114,21 +80,21 @@ public final class RemoteWebDriverFactory extends AbstractDriver<RemoteWebDriver
         return ((RemoteWebDriver) ((WebContext) getCurrentContext()).getDriver()).getCapabilities().getPlatform().name();
     }
 
-    @Override
-    String getExecutionIP() {
+
+    public String getExecutionIP() {
 
         String ip = null;
         try {
-            HttpCommandExecutor ce = (HttpCommandExecutor) ((RemoteWebDriver) super.getDriver()).getCommandExecutor();
+            HttpCommandExecutor ce = (HttpCommandExecutor) ((RemoteWebDriver) getCurrentContext().getDriver()).getCommandExecutor();
             String hostName = ce.getAddressOfRemoteServer().getHost();
             int port = ce.getAddressOfRemoteServer().getPort();
             HttpHost host = new HttpHost(hostName, port);
             HttpClient client = HttpClientBuilder.create().build();
-            URL sessionURL = new URL("http://" + hostName + ":" + port + "/grid/api/testsession?session=" + ((RemoteWebDriver) super.getDriver()).getSessionId());
+            URL sessionURL = new URL("http://" + hostName + ":" + port + "/grid/api/testsession?session=" + ((RemoteWebDriver) getCurrentContext().getDriver()).getSessionId());
             logger.debug("Remote session URL: " + sessionURL);
             BasicHttpEntityEnclosingRequest r = new BasicHttpEntityEnclosingRequest("POST", sessionURL.toExternalForm());
             HttpResponse response = client.execute(host, r);
-            JSONObject object = RemoteWebDriverFactory.extractObject(response);
+            JSONObject object = extractObject(response);
             URL myURL = new URL(object.getString("proxyId"));
             if ((myURL.getHost() != null) && (myURL.getPort() != -1))
                 ip = myURL.getHost();
@@ -138,27 +104,6 @@ public final class RemoteWebDriverFactory extends AbstractDriver<RemoteWebDriver
 
         return ip;
     }
-
-    @Override
-    RemoteWebDriver getDriver() {
-        return null;
-    }
-
-    @Override
-    RemoteWebDriver configureTimeouts(RemoteWebDriver driver) {
-        if (driver == null)
-            throw new CustomExceptions.Common.NullArgumentException("Null AbstractDriver#driver, initialise driver beforehand");
-        if (implicitlyWait != 0) {
-            logger.debug("Setting implicitly wait to: " + implicitlyWait + " s.");
-            driver.manage().timeouts().implicitlyWait(implicitlyWait, TimeUnit.SECONDS);
-        }
-        if (pageLoadTimeout != 0) {
-            logger.debug("Setting page load timeout to: " + pageLoadTimeout + " s.");
-            driver.manage().timeouts().pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS);
-        }
-        return driver;
-    }
-
 
     /**
      * @param resp HttpResponse

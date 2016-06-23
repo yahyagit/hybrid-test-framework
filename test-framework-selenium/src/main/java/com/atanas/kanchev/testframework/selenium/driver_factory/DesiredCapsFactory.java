@@ -1,32 +1,25 @@
-package com.atanas.kanchev.testframework.selenium.driverfactory;
+package com.atanas.kanchev.testframework.selenium.driver_factory;
 
-import org.openqa.selenium.Platform;
+import com.atanas.kanchev.testframework.selenium.driverfactory.DesiredCapabilitiesFactory;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.openqa.selenium.remote.CapabilityType.PROXY;
+import java.util.*;
 
 /**
- * Desired capabilities factory
- * <p>
- * Configure instance of {@link  org.openqa.selenium.remote.DesiredCapabilities}
- * <p>
- * Supports Chrome, Firefox and Safari capabilities setupBrowser
+ * @author Atanas Ksnchev
  */
-public class DesiredCapabilitiesFactory {
+public class DesiredCapsFactory {
 
-    private static final Logger logger = LoggerFactory.getLogger(DesiredCapabilitiesFactory.class);
-
+    private static final Logger logger = LoggerFactory.getLogger(DesiredCapsFactory.class);
     private DesiredCapabilities caps;
 
     /**
@@ -42,7 +35,7 @@ public class DesiredCapabilitiesFactory {
         chromePreferences.put("profile.password_manager_enabled", "false");
         caps.setCapability("chrome.prefs", chromePreferences);
 
-        logger.debug("Configured public Chrome DesiredCapabilities: " + caps.toString());
+        logger.debug("Configured default Chrome DesiredCapabilities: " + caps.toString());
 
         return caps;
     }
@@ -55,7 +48,19 @@ public class DesiredCapabilitiesFactory {
     public DesiredCapabilities getDefaultFirefoxCaps() {
 
         caps = DesiredCapabilities.firefox();
-        logger.debug("Configured public Firefox DesiredCapabilities: " + caps.toString());
+        logger.debug("Configured default Firefox DesiredCapabilities: " + caps.toString());
+
+        return caps;
+    }
+
+    public DesiredCapabilities getDefaultIECaps() {
+
+        caps = DesiredCapabilities.internetExplorer();
+        caps.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
+        caps.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
+        caps.setCapability("requireWindowFocus", true);
+
+        logger.debug("Configured default IE DesiredCapabilities: " + caps.toString());
 
         return caps;
     }
@@ -70,9 +75,39 @@ public class DesiredCapabilitiesFactory {
         caps = DesiredCapabilities.safari();
         caps.setCapability("safari.cleanSession", true);
 
-        logger.debug("Configured public Safari DesiredCapabilities: " + caps.toString());
+        logger.debug("Configured default Safari DesiredCapabilities: " + caps.toString());
 
         return caps;
+    }
+
+    public DesiredCapabilities getDefaultOperaCaps() {
+        caps = DesiredCapabilities.operaBlink();
+        logger.debug("Configured default Opera DesiredCapabilities: " + caps.toString());
+        return caps;
+    }
+
+    public DesiredCapabilities getDefaultPhantomJSCaps(Proxy proxySettings) {
+        caps = DesiredCapabilities.phantomjs();
+        final List<String> cliArguments = new ArrayList<String>();
+        cliArguments.add("--web-security=false");
+        cliArguments.add("--ssl-protocol=any");
+        cliArguments.add("--ignore-ssl-errors=true");
+        caps.setCapability("phantomjs.cli.args", applyPhantomJSProxySettings(cliArguments, proxySettings));
+        caps.setCapability("takesScreenshot", true);
+
+        logger.debug("Configured default PhantomJS DesiredCapabilities: " + caps.toString());
+
+        return caps;
+    }
+
+    private List<String> applyPhantomJSProxySettings(List<String> cliArguments, Proxy proxySettings) {
+        if (null == proxySettings) {
+            cliArguments.add("--proxy-type=none");
+        } else {
+            cliArguments.add("--proxy-type=http");
+            cliArguments.add("--proxy=" + proxySettings.getHttpProxy());
+        }
+        return cliArguments;
     }
 
     /**
@@ -159,39 +194,6 @@ public class DesiredCapabilitiesFactory {
         } else
             throw new IllegalArgumentException("Null FirefoxProfile argument");
 
-        return caps;
-    }
-
-    public DesiredCapabilities addProxySettings(Proxy proxySettings) {
-        if (null != proxySettings) {
-            caps.setCapability(PROXY, proxySettings);
-        }
-
-        return caps;
-    }
-
-    /**
-     * * Set {@link org.openqa.selenium.remote.DesiredCapabilities#setBrowserName(java.lang.String)}
-     * "ANY" if no value for the runtime J
-     * Set {@link org.openqa.selenium.remote.DesiredCapabilities#setVersion(java.lang.String)}
-     * "ANY" if no value for the runtime JVM arg -DbrowserVersion has been supplied.
-     *
-     * @param version  String remote browser version
-     * @param browsers Browsers
-     * @return DesiredCapabilities instance
-     */
-    public DesiredCapabilities setRemoteBrowserCaps(String version, Platform platform, Browsers browsers) {
-
-        switch (browsers) {
-            case FIREFOX:
-                caps.setBrowserName("firefox");
-                break;
-            case CHROME:
-                caps.setBrowserName("chrome");
-                break;
-        }
-        caps.setPlatform(platform);
-        caps.setVersion(version);
         return caps;
     }
 
