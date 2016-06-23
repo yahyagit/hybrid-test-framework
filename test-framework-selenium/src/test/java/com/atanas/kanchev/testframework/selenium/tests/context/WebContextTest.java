@@ -61,15 +61,6 @@ public class WebContextTest {
 
     }
 
-    @Test
-    public void getImplicitlyWaitTest() throws Exception {
-        assertNotNull(webContext.getImplicitlyWait());
-    }
-
-    @Test
-    public void getPageLoadTimeoutTest() throws Exception {
-        assertNotNull(webContext.getPageLoadTimeout());
-    }
 
     @Test
     public void setCurrentElementTest() throws Exception {
@@ -100,16 +91,6 @@ public class WebContextTest {
 
     }
 
-    @Test
-    public void setImplicitlyWaitTest() throws Exception {
-        webContext.setImplicitlyWait(666L);
-        assertEquals(666L, webContext.getImplicitlyWait());
-    }
 
-    @Test
-    public void setPageLoadTimeoutTest() throws Exception {
-        webContext.setPageLoadTimeout(666L);
-        assertEquals(666L, webContext.getPageLoadTimeout());
-    }
 
 }

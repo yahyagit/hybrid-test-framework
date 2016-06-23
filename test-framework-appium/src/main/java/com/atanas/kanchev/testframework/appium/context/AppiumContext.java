@@ -27,6 +27,12 @@ public final class AppiumContext extends AbstractContext<AppiumDriver> {
         super("appiumContext_");
     }
 
+    @Override
+    public void tearDownContext() {
+        //TODO IMPLEMENT ME
+    }
+
+
     //////////////
     // Getters //
     /////////////
@@ -59,4 +65,7 @@ public final class AppiumContext extends AbstractContext<AppiumDriver> {
     public void setElementList(List<WebElement> elementList) {
         this.elementList = elementList;
     }
+
+
+
 }

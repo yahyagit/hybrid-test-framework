@@ -1,6 +1,9 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
 import com.atanas.kanchev.testframework.appium.handlers.DeviceBasedHandler;
+import com.atanas.kanchev.testframework.core.context.ContextFactory;
+
+import com.atanas.kanchev.testframework.selenium.driver_factory.DriverBase;
 import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
 
 /**
@@ -8,12 +11,18 @@ import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
  */
 public interface IWrapper extends IBaseHandler {
 
-    default Driver setupBrowser() {
-        return new Driver();
+    DeviceBasedHandler DEVICE_BASED_HANDLER = new DeviceBasedHandler();
+    Finder FINDER = new Finder();
+    ContextFactory CONTEXT_FACTORY = new ContextFactory();
+
+    DriverBase BASE = new DriverBase();
+
+    default DriverBase setupBrowser() {
+        return BASE;
     }
 
-    default Wait waitFor() {
-        return new Wait();
+    default Wait waitFor(long wait) {
+        return new Wait(wait);
     }
 
     default Nav goTo(final String url) {
@@ -21,43 +30,33 @@ public interface IWrapper extends IBaseHandler {
     }
 
     default Finder find() {
-        return new Finder();
+        return FINDER;
     }
-
-
 
     default Prober probe(Locator locator, String value) {
         return new Prober(locator, value);
     }
 
-    default Context context() {
-        return new Context();
+    default ContextFactory context() {
+        return CONTEXT_FACTORY;
     }
 
     default SikuliXFactory image(final String image) {
         return new SikuliXFactory(image);
     }
+
     default SikuliXFactory image() {
         return new SikuliXFactory(null);
     }
 
     default DeviceBasedHandler setupAppium() {
-        return new DeviceBasedHandler();
-    }
-
-    class Wait implements IWait {
+        return DEVICE_BASED_HANDLER;
     }
 
     class Nav extends Navigate implements IWrapper {
         Nav(String url) {
             super(url);
         }
-    }
-
-    class Finder implements IFinder {
-    }
-
-    class Driver extends IDriver {
     }
 
     class Prober extends Probe {
@@ -72,8 +71,6 @@ public interface IWrapper extends IBaseHandler {
         }
     }
 
-    class Context implements IContext {
-    }
 
 }
 

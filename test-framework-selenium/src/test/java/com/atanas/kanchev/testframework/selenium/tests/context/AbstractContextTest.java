@@ -16,6 +16,16 @@ import static org.mockito.Mockito.*;
  */
 public class AbstractContextTest extends AbstractContext<WebDriver> {
 
+    /**
+     * Constructor
+     * Sets the value of {@link AbstractContext#contextName}
+     *
+     * @param contextName String
+     */
+    public AbstractContextTest(String contextName) {
+        super(contextName);
+    }
+
     @Test
     public void getAndSetDriver() throws Exception {
 
@@ -75,6 +85,11 @@ public class AbstractContextTest extends AbstractContext<WebDriver> {
     public void setEmptyContextNameTest() throws Exception {
 
         super.setContextName("");
+
+    }
+
+    @Override
+    public void tearDownContext() {
 
     }
 }

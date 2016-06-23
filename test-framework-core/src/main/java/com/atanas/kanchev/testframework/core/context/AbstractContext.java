@@ -10,10 +10,10 @@ import java.security.SecureRandom;
 /**
  * Abstract Context
  *
- * @param <T>
+ * @param <T> Context type
  * @author Atanas Kanchev
  */
-public abstract class AbstractContext<T> extends ContextFactory {
+public abstract class AbstractContext<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(AbstractContext.class);
@@ -32,14 +32,7 @@ public abstract class AbstractContext<T> extends ContextFactory {
      */
     public AbstractContext(String contextName) {
         this.contextName = contextName + new BigInteger(130, new SecureRandom()).toString(32);
-    }
-
-    /**
-     * Constructor
-     * Sets random value for {@link AbstractContext#contextName}
-     */
-    public AbstractContext() {
-        this.contextName = new BigInteger(130, new SecureRandom()).toString(32);
+        logger.debug("Setting current context name to " + this.contextName);
     }
 
     /**
@@ -96,5 +89,7 @@ public abstract class AbstractContext<T> extends ContextFactory {
             throw new CustomExceptions.Common.EmptyArgumentException("Empty argument contextName");
         this.contextName = contextName;
     }
+
+    public abstract void tearDownContext();
 
 }
