@@ -1,6 +1,6 @@
-package com.atanas.kanchev.testframework.selenium.tests;
+package com.atanas.kanchev.testframework.core;
 
-import com.atanas.kanchev.testframework.selenium.handlers.IWrapper;
+import com.atanas.kanchev.testframework.core.handlers.IWrapper;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;

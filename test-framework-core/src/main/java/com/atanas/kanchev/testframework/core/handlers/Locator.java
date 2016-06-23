@@ -1,7 +1,7 @@
-package com.atanas.kanchev.testframework.selenium.handlers;
+package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.selenium.context.WebContext;
+import com.atanas.kanchev.testframework.core.context.WebContext;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;

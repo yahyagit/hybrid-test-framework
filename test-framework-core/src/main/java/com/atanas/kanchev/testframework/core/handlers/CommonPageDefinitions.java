@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.selenium.handlers;
+package com.atanas.kanchev.testframework.core.handlers;
 
 /**
  * @author Atanas Ksnchev

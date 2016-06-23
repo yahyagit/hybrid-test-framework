@@ -1,9 +1,9 @@
-package com.atanas.kanchev.testframework.selenium.tests.context;
+package com.atanas.kanchev.testframework.core.tests.context;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.core.context.AbstractContext;
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
-import com.atanas.kanchev.testframework.selenium.context.WebContext;
+import com.atanas.kanchev.testframework.core.context.WebContext;
 import org.junit.Test;
 
 import java.util.concurrent.ConcurrentHashMap;

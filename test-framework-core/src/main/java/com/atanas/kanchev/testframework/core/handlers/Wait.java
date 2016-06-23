@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.selenium.handlers;
+package com.atanas.kanchev.testframework.core.handlers;
 
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.NoSuchFrameException;
@@ -8,8 +8,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.atanas.kanchev.testframework.selenium.handlers.Locator.getWebContext;
 
 /**
  * WebDriver Wait
@@ -63,8 +61,8 @@ public class Wait implements IWrapper {
     public Wait valueToBePresent(final String text) {
 
         try {
-            new WebDriverWait(getWebContext().getDriver(), wait)
-                    .until(ExpectedConditions.textToBePresentInElementValue(getWebContext().getCurrentElement(), text));
+            new WebDriverWait(Locator.getWebContext().getDriver(), wait)
+                    .until(ExpectedConditions.textToBePresentInElementValue(Locator.getWebContext().getCurrentElement(), text));
         } catch (TimeoutException e) {
             logger.error("Timeout after waiting for invisibility of element by text:  " + text);
             throw new TimeoutException(e.getMessage());
@@ -104,8 +102,8 @@ public class Wait implements IWrapper {
 
 
         try {
-            new WebDriverWait(getWebContext().getDriver(), wait).
-                    until(ExpectedConditions.textToBePresentInElement(getWebContext().getCurrentElement(), text));
+            new WebDriverWait(Locator.getWebContext().getDriver(), wait).
+                    until(ExpectedConditions.textToBePresentInElement(Locator.getWebContext().getCurrentElement(), text));
         } catch (TimeoutException e) {
             logger.error("String Not Found: " + text);
             throw new TimeoutException(e.getMessage());
@@ -115,7 +113,7 @@ public class Wait implements IWrapper {
 
     public Wait frameByIdToBeAvailableAndSwitch(String frameId) {
         try {
-            new WebDriverWait(getWebContext().getDriver(), wait)
+            new WebDriverWait(Locator.getWebContext().getDriver(), wait)
                     .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameId));
 
         } catch (NoSuchFrameException nsfe) {

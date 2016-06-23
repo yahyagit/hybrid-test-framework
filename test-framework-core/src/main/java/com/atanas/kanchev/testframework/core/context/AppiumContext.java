@@ -1,6 +1,6 @@
-package com.atanas.kanchev.testframework.appium.context;
+package com.atanas.kanchev.testframework.core.context;
 
-import com.atanas.kanchev.testframework.core.context.AbstractContext;
+
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;

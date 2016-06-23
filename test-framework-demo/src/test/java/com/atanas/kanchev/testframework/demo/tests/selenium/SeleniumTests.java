@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.demo.tests.selenium;
 
-import com.atanas.kanchev.testframework.selenium.handlers.IWrapper;
+import com.atanas.kanchev.testframework.core.handlers.IWrapper;
 import org.junit.Test;
 
 /**

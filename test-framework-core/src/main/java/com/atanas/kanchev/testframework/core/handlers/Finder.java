@@ -1,7 +1,7 @@
-package com.atanas.kanchev.testframework.selenium.handlers;
+package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.selenium.context.WebContext;
+import com.atanas.kanchev.testframework.core.context.WebContext;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -10,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCurrentContext;
-import static com.atanas.kanchev.testframework.selenium.handlers.Locator.XPATH;
-import static com.atanas.kanchev.testframework.selenium.handlers.Locator.getWebContext;
+import static com.atanas.kanchev.testframework.core.handlers.Locator.XPATH;
+import static com.atanas.kanchev.testframework.core.handlers.Locator.getWebContext;
 
 /**
  * @author Atanas Ksnchev

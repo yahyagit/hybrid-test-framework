@@ -1,7 +1,7 @@
-package com.atanas.kanchev.testframework.selenium.tests.context;
+package com.atanas.kanchev.testframework.core.tests.context;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.selenium.context.WebContext;
+import com.atanas.kanchev.testframework.core.context.WebContext;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

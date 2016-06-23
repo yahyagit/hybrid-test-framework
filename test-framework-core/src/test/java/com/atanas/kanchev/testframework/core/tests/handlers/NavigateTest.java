@@ -1,7 +1,7 @@
-package com.atanas.kanchev.testframework.selenium.tests.handlers;
+package com.atanas.kanchev.testframework.core.tests.handlers;
 
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
-import com.atanas.kanchev.testframework.selenium.handlers.IWrapper;
+import com.atanas.kanchev.testframework.core.handlers.IWrapper;
 import org.junit.After;
 import org.junit.Test;
 

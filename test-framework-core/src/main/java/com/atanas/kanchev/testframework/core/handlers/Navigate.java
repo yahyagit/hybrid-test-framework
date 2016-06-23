@@ -1,9 +1,9 @@
-package com.atanas.kanchev.testframework.selenium.handlers;
+package com.atanas.kanchev.testframework.core.handlers;
 
+import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.core.context.AbstractContext;
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
-import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.selenium.context.WebContext;
+import com.atanas.kanchev.testframework.core.context.WebContext;
 import com.atanas.kanchev.testframework.selenium.driver_factory.DriverBase;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;

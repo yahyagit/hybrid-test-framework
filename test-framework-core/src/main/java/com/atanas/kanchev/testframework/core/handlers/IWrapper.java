@@ -1,10 +1,10 @@
-package com.atanas.kanchev.testframework.selenium.handlers;
+package com.atanas.kanchev.testframework.core.handlers;
+
 
 import com.atanas.kanchev.testframework.appium.handlers.DeviceBasedHandler;
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
-
-import com.atanas.kanchev.testframework.selenium.driver_factory.DriverBase;
 import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
+
 
 /**
  * Web Handler Wrapper Interface
@@ -14,12 +14,12 @@ public interface IWrapper extends IBaseHandler {
     DeviceBasedHandler DEVICE_BASED_HANDLER = new DeviceBasedHandler();
     Finder FINDER = new Finder();
     ContextFactory CONTEXT_FACTORY = new ContextFactory();
-
-    DriverBase BASE = new DriverBase();
-
-    default DriverBase setupBrowser() {
-        return BASE;
-    }
+//
+//    DriverBase BASE = new DriverBase();
+//
+//    default DriverBase setupBrowser() {
+//        return BASE;
+//    }
 
     default Wait waitFor(long wait) {
         return new Wait(wait);

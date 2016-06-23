@@ -1,17 +1,13 @@
-package com.atanas.kanchev.testframework.selenium.handlers;
+package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.selenium.context.WebContext;
+
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-
-import static com.atanas.kanchev.testframework.selenium.handlers.CommonPageDefinitions.COLOR.*;
-import static com.atanas.kanchev.testframework.selenium.handlers.CommonPageDefinitions.CSS.*;
-import static com.atanas.kanchev.testframework.selenium.handlers.Locator.getWebContext;
 
 /**
  * Prober Current WebElement Interface
@@ -49,7 +45,7 @@ abstract class Probe {
         else {
             try {
                 logger.debug("Locating element by " + locator + " value: " + value);
-                getWebContext().setCurrentElement(locator.locateElement(locator, value));
+                Locator.getWebContext().setCurrentElement(locator.locateElement(locator, value));
             } catch (NoSuchElementException e) {
                 logger.error("Unable to locate element by " + locator + " value: " + value, e);
                 return false;
@@ -68,7 +64,7 @@ abstract class Probe {
      * @return {@code true} if the current WebElement has any text
      */
     public boolean hasAnyText() {
-        return !getWebContext().getCurrentElement().getText().isEmpty();
+        return !Locator.getWebContext().getCurrentElement().getText().isEmpty();
     }
 
     /**
@@ -86,7 +82,7 @@ abstract class Probe {
      */
     public boolean hasText(boolean caseSensitive, boolean preciseMatch, String... textElements) {
 
-        String elText = getWebContext().getCurrentElement().getText();
+        String elText = Locator.getWebContext().getCurrentElement().getText();
 
         boolean matchFound = false;
 
@@ -145,7 +141,7 @@ abstract class Probe {
         String attrValue;
 
         try {
-            attrValue = getWebContext().getCurrentElement().getAttribute(attributeName);
+            attrValue = Locator.getWebContext().getCurrentElement().getAttribute(attributeName);
         } catch (NullPointerException npe) {
             logger.error("The current element doesn't have a child attribute: " + attributeName);
             throw new CustomExceptions.Common.IllegalArgumentException();
@@ -174,7 +170,7 @@ abstract class Probe {
      * @return {@code true}, if element of specified tag type
      */
     public boolean isOfTagType(String tag) {
-        return getWebContext().getCurrentElement().getTagName().equals(tag);
+        return Locator.getWebContext().getCurrentElement().getTagName().equals(tag);
     }
 
     /**
@@ -183,7 +179,7 @@ abstract class Probe {
      * @return {@code true} if element is enabled
      */
     public boolean isEnabled() {
-        return getWebContext().getCurrentElement().isEnabled();
+        return Locator.getWebContext().getCurrentElement().isEnabled();
     }
 
     /**
@@ -192,7 +188,7 @@ abstract class Probe {
      * @return {@code true} if element is selected
      */
     public boolean isSelected() {
-        return getWebContext().getCurrentElement().isSelected();
+        return Locator.getWebContext().getCurrentElement().isSelected();
     }
 
     /**
@@ -201,7 +197,7 @@ abstract class Probe {
      * @return {@code true} if element is active
      */
     public boolean isActive() {
-        return getWebContext().getCurrentElement().getAttribute("class").contains("active");
+        return Locator.getWebContext().getCurrentElement().getAttribute("class").contains("active");
     }
 
     /**
@@ -219,10 +215,10 @@ abstract class Probe {
         final int maxRepetitions = 4;
 
         String[] borderAttributes = {
-                CSS_BORDER_TOP_COLOUR.name(),
-                CSS_BORDER_LEFT_COLOUR.name(),
-                CSS_BORDER_RIGHT_COLOUR.name(),
-                CSS_BORDER_BOTTOM_COLOUR.name()};
+                CommonPageDefinitions.CSS.CSS_BORDER_TOP_COLOUR.name(),
+                CommonPageDefinitions.CSS.CSS_BORDER_LEFT_COLOUR.name(),
+                CommonPageDefinitions.CSS.CSS_BORDER_RIGHT_COLOUR.name(),
+                CommonPageDefinitions.CSS.CSS_BORDER_BOTTOM_COLOUR.name()};
 
 
         try {
@@ -233,10 +229,10 @@ abstract class Probe {
         }
 
         // Ensure expected and actual are different to begin with
-        if (expectedColorHexCode.equals(COLOUR_WHITE.name())) {
-            actualColour = Color.fromString(COLOUR_BLACK.name());
+        if (expectedColorHexCode.equals(CommonPageDefinitions.COLOR.COLOUR_WHITE.name())) {
+            actualColour = Color.fromString(CommonPageDefinitions.COLOR.COLOUR_BLACK.name());
         } else {
-            actualColour = Color.fromString(COLOUR_WHITE.name());
+            actualColour = Color.fromString(CommonPageDefinitions.COLOR.COLOUR_WHITE.name());
         }
 
         for (String attr : borderAttributes) {
@@ -250,7 +246,7 @@ abstract class Probe {
             // fromString() will accept all formats
             testRepetitions = 0;
             while (!expectedColour.equals(actualColour)) {
-                actualColour = Color.fromString(getWebContext().getCurrentElement().getCssValue(attr));
+                actualColour = Color.fromString(Locator.getWebContext().getCurrentElement().getCssValue(attr));
                 try {
                     Thread.sleep(500);
                     logger.debug("Hex Value" + actualColour.asHex());
@@ -293,10 +289,10 @@ abstract class Probe {
 
         switch (css) {
             case CSS_BACKGROUND_COLOUR:
-                Color backgroundColor = Color.fromString(getWebContext().getCurrentElement().getCssValue(CSS_BACKGROUND_COLOUR.name()));
+                Color backgroundColor = Color.fromString(Locator.getWebContext().getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.name()));
                 return expColor.equals(backgroundColor);
             case CSS_TEXT_COLOUR:
-                Color textColor = Color.fromString(getWebContext().getCurrentElement().getCssValue(CSS_TEXT_COLOUR.name()));
+                Color textColor = Color.fromString(Locator.getWebContext().getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.name()));
                 return expColor.equals(textColor);
         }
 

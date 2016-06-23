@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.selenium.handlers;
+package com.atanas.kanchev.testframework.core.handlers;
 
 /**
  * Created by atanas on 24/03/2016.

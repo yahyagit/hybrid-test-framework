@@ -71,7 +71,7 @@ public class DriverFactory {
         if (USE_REMOTE_WEB_DRIVER) {
             RemoteDriverFactory remoteDriverFactory = new RemoteDriverFactory();
             driver = remoteDriverFactory.getRemoteWebDriver(desiredCapabilities);
-            logger.debug("Running on IP: " + remoteDriverFactory.getExecutionIP());
+//            logger.debug("Running on IP: " + remoteDriverFactory.getExecutionIP());
         } else {
             driver = selectedDriverType.getWebDriverObject(desiredCapabilities);
             logger.debug("Running on IP: " + getExecutionIP());

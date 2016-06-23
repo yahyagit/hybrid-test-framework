@@ -26,6 +26,10 @@
             <artifactId>logback-classic</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+        </dependency>
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
         </dependency>
@@ -41,6 +45,26 @@
         <dependency>
             <groupId>com.atanas.kanchev</groupId>
             <artifactId>test-framework-commons</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atanas.kanchev</groupId>
+            <artifactId>test-framework-sikuli</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atanas.kanchev</groupId>
+            <artifactId>test-framework-appium</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atanas.kanchev</groupId>
+            <artifactId>test-framework-selenium</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

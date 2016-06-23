@@ -1,8 +1,8 @@
-package com.atanas.kanchev.testframework.selenium.tests.handlers;
+package com.atanas.kanchev.testframework.core.tests.handlers;
 
-import com.atanas.kanchev.testframework.selenium.handlers.Finder;
-import com.atanas.kanchev.testframework.selenium.handlers.IWrapper;
-import com.atanas.kanchev.testframework.selenium.handlers.Locator;
+import com.atanas.kanchev.testframework.core.handlers.Finder;
+import com.atanas.kanchev.testframework.core.handlers.IWrapper;
+import com.atanas.kanchev.testframework.core.handlers.Locator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
