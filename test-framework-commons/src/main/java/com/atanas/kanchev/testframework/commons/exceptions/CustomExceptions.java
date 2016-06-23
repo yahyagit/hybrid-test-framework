@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.core.exceptions;
+package com.atanas.kanchev.testframework.commons.exceptions;
 
 /**
  * Custom Exceptions

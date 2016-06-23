@@ -1,7 +1,7 @@
-package com.atanas.kanchev.testframework.core.tests;
+package com.atanas.kanchev.testframework.commons.tests;
 
-import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.core.properties.PropertyReader;
+import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
+import com.atanas.kanchev.testframework.commons.properties.PropertyReader;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;

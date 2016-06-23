@@ -2,7 +2,7 @@ package com.atanas.kanchev.testframework.selenium.context;
 
 import com.atanas.kanchev.testframework.core.context.AbstractContext;
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
-import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
+import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;

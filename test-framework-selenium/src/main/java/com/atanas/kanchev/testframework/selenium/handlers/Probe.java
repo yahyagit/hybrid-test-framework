@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
-import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
+import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.selenium.context.WebContext;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.Color;

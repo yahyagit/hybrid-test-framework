@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.core.context;
 
-import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
+import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,6 +1,6 @@
-package com.atanas.kanchev.testframework.core.properties;
+package com.atanas.kanchev.testframework.commons.properties;
 
-import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
+import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-import static com.atanas.kanchev.testframework.core.exceptions.CustomExceptions.Properties.*;
+import static com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions.Properties.*;
 
 /**
  * Property Reader
