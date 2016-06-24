@@ -64,6 +64,14 @@ public class DesiredCapsFactory {
         return caps;
     }
 
+    public DesiredCapabilities getDefaultEdgeCaps() {
+
+        caps = DesiredCapabilities.edge();
+        logger.debug("Configured default Edge DesiredCapabilities: " + caps.toString());
+
+        return caps;
+    }
+
     /**
      * Get public Safari capabilities
      *

@@ -39,7 +39,7 @@ public class DriverConfig {
             logger.debug("Maximising browser window");
             driver.manage().window().maximize();
         } else {
-            logger.debug("Setting resolution to height*width: " + DEFAULT_BROWSER_RES_WIDTH + "*" + DEFAULT_BROWSER_RES_HEIGHT);
+            logger.debug("Setting resolution to: " + DEFAULT_BROWSER_RES_WIDTH + "*" + DEFAULT_BROWSER_RES_HEIGHT);
             driver.manage().window().setSize(new Dimension(DEFAULT_BROWSER_RES_WIDTH, DEFAULT_BROWSER_RES_HEIGHT));
         }
 
