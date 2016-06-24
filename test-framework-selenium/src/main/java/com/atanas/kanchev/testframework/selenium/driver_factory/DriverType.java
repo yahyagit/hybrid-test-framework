@@ -1,9 +1,11 @@
 package com.atanas.kanchev.testframework.selenium.driver_factory;
 
+import io.github.bonigarcia.wdm.*;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.MarionetteDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
@@ -22,27 +24,44 @@ public enum DriverType implements DriverSetup {
         }
 
         public WebDriver getWebDriverObject(DesiredCapabilities capabilities) {
-            return configure(new FirefoxDriver(capabilities));
+            MarionetteDriverManager.getInstance().setup();
+            return configure(new MarionetteDriver(capabilities));
         }
     },
+
     CHROME {
         public DesiredCapabilities getDesiredCapabilities(Proxy proxySettings) {
             return addProxySettings(new DesiredCapsFactory().getDefaultChromeCaps(), proxySettings);
         }
 
         public WebDriver getWebDriverObject(DesiredCapabilities capabilities) {
-            return configure(new ChromeDriver(new com.atanas.kanchev.testframework.selenium.driver_factory.BinariesResolver().configureChromeDriverService(), capabilities));
+            ChromeDriverManager.getInstance().setup();
+            return configure(new ChromeDriver(capabilities));
         }
     },
+
     IE {
         public DesiredCapabilities getDesiredCapabilities(Proxy proxySettings) {
             return addProxySettings(new DesiredCapsFactory().getDefaultIECaps(), proxySettings);
         }
 
         public WebDriver getWebDriverObject(DesiredCapabilities capabilities) {
+            InternetExplorerDriverManager.getInstance().setup();
             return configure(new InternetExplorerDriver(capabilities));
         }
     },
+
+    EDGE {
+        public DesiredCapabilities getDesiredCapabilities(Proxy proxySettings) {
+            return addProxySettings(new DesiredCapsFactory().getDefaultEdgeCaps(), proxySettings);
+        }
+
+        public WebDriver getWebDriverObject(DesiredCapabilities capabilities) {
+            EdgeDriverManager.getInstance().setup();
+            return configure(new EdgeDriver(capabilities));
+        }
+    },
+
     SAFARI {
         public DesiredCapabilities getDesiredCapabilities(Proxy proxySettings) {
             return addProxySettings(new DesiredCapsFactory().getDefaultSafariCaps(), proxySettings);
@@ -52,17 +71,21 @@ public enum DriverType implements DriverSetup {
             return configure(new SafariDriver(capabilities));
         }
     },
+
     OPERA {
         public DesiredCapabilities getDesiredCapabilities(Proxy proxySettings) {
             return addProxySettings(new DesiredCapsFactory().getDefaultOperaCaps(), proxySettings);
         }
 
         public WebDriver getWebDriverObject(DesiredCapabilities capabilities) {
+            OperaDriverManager.getInstance().setup();
             return configure(new OperaDriver(capabilities));
         }
     },
+
     PHANTOMJS {
         public DesiredCapabilities getDesiredCapabilities(Proxy proxySettings) {
+            PhantomJsDriverManager.getInstance().setup();
             return new DesiredCapsFactory().getDefaultPhantomJSCaps(proxySettings);
         }
 

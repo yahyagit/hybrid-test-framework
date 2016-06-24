@@ -1,8 +1,7 @@
 package com.atanas.kanchev.testframework.demo.tests.sikulix;
 
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
-import com.atanas.kanchev.testframework.selenium.context.WebContext;
-import com.atanas.kanchev.testframework.selenium.handlers.IWrapper;
+import com.atanas.kanchev.testframework.core.handlers.IWrapper;
 import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -25,7 +24,7 @@ public class SikulixTest implements IWrapper {
 
     @After
     public void tearDown() throws Exception {
-        ((WebContext) ContextFactory.getCurrentContext()).tearDownContext();
+       ContextFactory.getCurrentContext().tearDownContext();
 
     }
 

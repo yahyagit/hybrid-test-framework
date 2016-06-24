@@ -1,6 +1,5 @@
 package com.atanas.kanchev.testframework.selenium.driver_factory;
 
-import com.atanas.kanchev.testframework.selenium.driverfactory.DesiredCapabilitiesFactory;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -61,6 +60,14 @@ public class DesiredCapsFactory {
         caps.setCapability("requireWindowFocus", true);
 
         logger.debug("Configured default IE DesiredCapabilities: " + caps.toString());
+
+        return caps;
+    }
+
+    public DesiredCapabilities getDefaultEdgeCaps() {
+
+        caps = DesiredCapabilities.edge();
+        logger.debug("Configured default Edge DesiredCapabilities: " + caps.toString());
 
         return caps;
     }
@@ -127,7 +134,7 @@ public class DesiredCapsFactory {
     /**
      * Merge capabilities
      *
-     * @param newCaps instance of the capabilities to be merged to the {@link DesiredCapabilitiesFactory#caps}
+     * @param newCaps instance of the capabilities to be merged to the {@link DesiredCapsFactory#caps}
      * @return DesiredCapabilities instance
      */
     public DesiredCapabilities mergeCapabilities(DesiredCapabilities newCaps) {

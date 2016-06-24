@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.appium.driverfactory;
 
-import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
+import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;

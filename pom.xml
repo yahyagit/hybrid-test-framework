@@ -23,12 +23,13 @@
     </developers>
 
     <modules>
-        <module>test-framework-core</module>
+        <module>test-framework-commons</module>
         <module>test-framework-selenium</module>
         <module>test-framework-data-services</module>
         <module>test-framework-sikuli</module>
         <module>test-framework-appium</module>
         <module>test-framework-demo</module>
+        <module>test-framework-core</module>
     </modules>
 
     <properties>

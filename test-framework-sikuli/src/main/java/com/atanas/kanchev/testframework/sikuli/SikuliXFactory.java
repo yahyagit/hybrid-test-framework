@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.sikuli;
 
-import com.atanas.kanchev.testframework.core.exceptions.CustomExceptions;
+import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import org.sikuli.basics.Settings;
 import org.sikuli.script.*;
 import org.slf4j.Logger;
@@ -289,7 +289,7 @@ public final class SikuliXFactory {
             screen.dragDrop(match(startPointImagePath), match(endPointImagePath));
         } catch (FindFailed findFailed) {
             logger.error("Unable to swipe");
-            throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to swipe", findFailed);
+            throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to swipe");
         }
         return this;
     }
