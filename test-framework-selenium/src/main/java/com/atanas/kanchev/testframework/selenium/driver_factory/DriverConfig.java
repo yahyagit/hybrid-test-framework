@@ -24,13 +24,13 @@ public class DriverConfig{
     private DesiredCapabilities customCapabilities;
 
     private String browser = System.getProperty("browser", DEFAULT_BROWSER.toString()).toUpperCase();
-    private boolean useRemoteWebDriver = Boolean.getBoolean("remoteDriver");
-    private String gridURL = System.getProperty("gridURL");
-    private String browserVersion = System.getProperty("browserVersion");
-    private String platform = System.getProperty("desiredPlatform", "ANY");
-    private boolean proxyEnabled = Boolean.getBoolean("proxyEnabled");
-    private String proxyHost = System.getProperty("proxyHost");
-    private int proxyPort = Integer.getInteger("proxyPort", 0);
+    private boolean useRemoteWebDriver = Boolean.getBoolean("remote.driver");
+    private String gridURL = System.getProperty("grid.url");
+    private String browserVersion = System.getProperty("browser.version");
+    private String platform = System.getProperty("platform", "ANY");
+    private boolean proxyEnabled = Boolean.getBoolean("proxy.enabled");
+    private String proxyHost = System.getProperty("proxy.host");
+    private int proxyPort = Integer.getInteger("proxy.port", 0);
     private String proxyDetails = String.format("%s:%d", proxyHost, proxyPort);
     private boolean startMaximized = Boolean.valueOf(System.getProperty("start.maximized", "false"));
     private boolean reuseBrowser = Boolean.valueOf(System.getProperty("reuse.browser", "false"));

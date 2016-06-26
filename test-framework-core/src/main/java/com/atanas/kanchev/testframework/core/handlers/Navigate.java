@@ -4,8 +4,6 @@ import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.core.context.AbstractContext;
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.context.WebContext;
-import com.atanas.kanchev.testframework.selenium.driver_factory.DriverBase;
-import com.atanas.kanchev.testframework.selenium.driver_factory.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +16,10 @@ import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCu
 /**
  * Nav Interface
  */
-public abstract class Navigate implements IWrapper{
+public class Navigate implements IWrapper {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Navigate.class);
-
-    public Navigate(final String url) {
-        getPage(url);
-    }
 
     /**
      * Load a new web page in the current browser window. This is done using an HTTP GET operation,
@@ -49,19 +43,22 @@ public abstract class Navigate implements IWrapper{
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
+
             try {
                 getCurrentContext();
             } catch (CustomExceptions.Common.NullArgumentException e) {
-
                 AbstractContext<WebDriver> context = new WebContext();
                 context.setDriver(DRIVER_FACTORY.getDriver());
+                if (setupBrowser().isReuseBrowser())
+                    context.setContextReusable(true);
                 ContextFactory.addContext(context);
             }
 
+            logger.debug("Navigating to " + url);
             ((WebContext) getCurrentContext()).getDriver().navigate().to(address);
-        }
 
-        return this;
+            return this;
+        }
     }
 
     /**
@@ -69,6 +66,7 @@ public abstract class Navigate implements IWrapper{
      *
      * @return this
      */
+
     public Navigate back() {
         ((WebContext) getCurrentContext()).getDriver().navigate().back();
         return this;

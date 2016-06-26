@@ -1,7 +1,10 @@
 package com.atanas.kanchev.testframework.core;
 
+import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.handlers.IWrapper;
 import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -20,26 +23,32 @@ public class IWrapperTest {
 
     public static class SetupBrowserTest implements IWrapper {
 
-        @After
-        public void tearDown() throws Exception {
-            context().tearDownContexts();
+        @Before
+        public void setUp() throws Exception {
+            setupBrowser()
+                    .setBrowser("chrome")
+                    .setStartMaximized(true)
+                    .setReuseBrowser(true)
+                    .setCustomCapabilities(DesiredCapabilities.ipad());
+
+        }
+
+        @AfterClass
+        public static void tearDown() throws Exception {
+            ContextFactory.tearDownContexts();
         }
 
         @Test
         public void setupBrowserTest() throws Exception {
-
-            setupBrowser()
-                    .setBrowser("chrome")
-                    .setStartMaximized(true)
-                    .setCustomCapabilities(DesiredCapabilities.ipad());
             goTo(url);
-
         }
 
 
-    }
+        @Test
+        public void name() throws Exception {
+            goTo("https://bbc.co.uk");
 
-
+        }
 //    @Test
 //    public void goToURLTest() throws Exception {
 //        goTo(url);
@@ -126,4 +135,7 @@ public class IWrapperTest {
 //
 //
 //    }
+    }
+
+
 }

@@ -21,6 +21,8 @@ public abstract class AbstractContext<T> {
     // the context name
     private String contextName;
 
+    boolean isContextReusable;
+
     // the driver object
     private T driver;
 
@@ -88,6 +90,11 @@ public abstract class AbstractContext<T> {
         if (contextName.isEmpty())
             throw new CustomExceptions.Common.EmptyArgumentException("Empty argument contextName");
         this.contextName = contextName;
+    }
+
+
+    public void setContextReusable(boolean contextReusable) {
+        isContextReusable = contextReusable;
     }
 
     public abstract void tearDownContext();

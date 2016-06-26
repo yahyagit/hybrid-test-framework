@@ -19,6 +19,7 @@ public interface IWrapper extends IBaseHandler {
     Finder FINDER = new Finder();
     ContextFactory CONTEXT_FACTORY = new ContextFactory();
     DriverFactory DRIVER_FACTORY = new DriverFactory();
+    Navigate NAVIGATE = new Navigate();
 
     default DriverFactory setupBrowser(){
         return DRIVER_FACTORY;
@@ -28,8 +29,8 @@ public interface IWrapper extends IBaseHandler {
         return new Wait(wait);
     }
 
-    default Nav goTo(final String url) {
-        return new Nav(url);
+    default Navigate goTo(final String url) {
+        return NAVIGATE.getPage(url);
     }
 
     default Finder find() {
@@ -54,12 +55,6 @@ public interface IWrapper extends IBaseHandler {
 
     default DeviceBasedHandler setupAppium() {
         return DEVICE_BASED_HANDLER;
-    }
-
-    class Nav extends Navigate implements IWrapper {
-        Nav(String url) {
-            super(url);
-        }
     }
 
 

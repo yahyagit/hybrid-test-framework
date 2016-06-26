@@ -3,7 +3,6 @@ package com.atanas.kanchev.testframework.selenium.driver_factory;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import static com.atanas.kanchev.testframework.selenium.driver_factory.DriverType.valueOf;
 import static org.openqa.selenium.Proxy.ProxyType.MANUAL;
 
-public class DriverFactory extends DriverConfig {
+public class DriverFactory extends DriverConfig{
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(DriverFactory.class);
