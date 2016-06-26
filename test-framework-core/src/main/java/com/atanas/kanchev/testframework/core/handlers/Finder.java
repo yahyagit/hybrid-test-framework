@@ -19,12 +19,16 @@ public final class Finder implements IWrapper {
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Finder.class);
 
+    public Finder() {
+        goToRootElement();
+    }
+
     /**
      * Go to the root page element /html/body
      *
      * @return this
      */
-    public Finder rootElement() {
+    public Finder goToRootElement() {
 
         try {
             ((WebContext) getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(By.xpath("/html/body")));

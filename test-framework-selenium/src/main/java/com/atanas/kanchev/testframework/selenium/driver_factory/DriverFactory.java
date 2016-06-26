@@ -64,7 +64,7 @@ public class DriverFactory extends DriverConfig{
         if (null != getCustomCapabilities())
             desiredCapabilities = new DesiredCapsFactory().mergeCapabilities(desiredCapabilities, getCustomCapabilities());
 
-        logger.debug("Using caps " + desiredCapabilities);
+        logger.debug("Using " + desiredCapabilities);
 
         if (isUseRemoteWebDriver()) {
             RemoteWebDriverFactory remoteWebDriverFactory = new RemoteWebDriverFactory();
@@ -73,7 +73,6 @@ public class DriverFactory extends DriverConfig{
         } else {
             logger.debug("Running on IP: " + getExecutionIP());
             return conf(selectedDriverType.getWebDriverObject(desiredCapabilities));
-
         }
 
     }

@@ -1,28 +1,20 @@
 package com.atanas.kanchev.testframework.core.handlers;
 
-
 import com.atanas.kanchev.testframework.appium.handlers.DeviceBasedHandler;
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.selenium.driver_factory.DriverFactory;
 import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
 import org.openqa.selenium.By;
 
-import static com.sun.corba.se.spi.activation.IIOP_CLEAR_TEXT.value;
-
-
 /**
  * Web Handler Wrapper Interface
  */
 public interface IWrapper extends IBaseHandler {
 
-    DeviceBasedHandler DEVICE_BASED_HANDLER = new DeviceBasedHandler();
-    Finder FINDER = new Finder();
-    ContextFactory CONTEXT_FACTORY = new ContextFactory();
     DriverFactory DRIVER_FACTORY = new DriverFactory();
-    Navigate NAVIGATE = new Navigate();
 
-    default DriverFactory setupBrowser(){
-        return DRIVER_FACTORY;
+    default DriverFactory setupBrowser() {
+        return new DriverFactory();
     }
 
     default Wait waitFor(long wait) {
@@ -30,11 +22,11 @@ public interface IWrapper extends IBaseHandler {
     }
 
     default Navigate goTo(final String url) {
-        return NAVIGATE.getPage(url);
+        return new Navigate().getPage(url);
     }
 
     default Finder find() {
-        return FINDER;
+        return new Finder();
     }
 
     default Probe probe(By locator) {
@@ -42,7 +34,7 @@ public interface IWrapper extends IBaseHandler {
     }
 
     default ContextFactory context() {
-        return CONTEXT_FACTORY;
+        return new ContextFactory();
     }
 
     default SikuliXFactory image(final String image) {
@@ -54,9 +46,8 @@ public interface IWrapper extends IBaseHandler {
     }
 
     default DeviceBasedHandler setupAppium() {
-        return DEVICE_BASED_HANDLER;
+        return new DeviceBasedHandler();
     }
-
 
 }
 

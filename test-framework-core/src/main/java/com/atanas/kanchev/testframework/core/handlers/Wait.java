@@ -1,8 +1,6 @@
 package com.atanas.kanchev.testframework.core.handlers;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,7 +68,7 @@ public class Wait implements IWrapper {
             logger.debug("Element By CSS: " + cssSelector + " was not found");
             sleep(2000);
         }
-        find().rootElement();
+        find().goToRootElement();
 
         return this;
     }
