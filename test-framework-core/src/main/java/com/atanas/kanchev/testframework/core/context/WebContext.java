@@ -92,15 +92,11 @@ public final class WebContext extends AbstractContext<WebDriver> {
     @Override
     public void tearDownContext() {
 
-
-
         for (AbstractContext context : ContextFactory.getContextMap().values()) {
             if (context instanceof WebContext) {
                 ((WebContext) context).getDriver().quit();
             }
-            logger.debug("Teared down context " + context.getContextName());
-            ContextFactory.getContextMap().remove(context);
-            ContextFactory.setCurrentContext(null);
+            logger.debug("Success tearing down context " + context.getContextName());
         }
 
     }
@@ -129,6 +125,6 @@ public final class WebContext extends AbstractContext<WebDriver> {
 
     @Override
     public String toString() {
-        return getClass().getName();
+        return getClass().getSimpleName();
     }
 }

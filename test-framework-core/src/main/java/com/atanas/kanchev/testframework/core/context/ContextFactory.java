@@ -94,8 +94,8 @@ public class ContextFactory {
         for (AbstractContext context : getContextMap().values()) {
             logger.debug("Tearing down context type " + context.toString());
             context.tearDownContext();
-            logger.debug("Removing context from map" + context.getContextName());
-            getContextMap().remove(context);
+            logger.debug("Removing context " + context.getContextName() + " from the  map");
+            contextMap.remove(context.getContextName());
             setCurrentContext(null);
 
         }

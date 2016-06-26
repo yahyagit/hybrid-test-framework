@@ -3,9 +3,9 @@ package com.atanas.kanchev.testframework.core.handlers;
 /**
  * @author Atanas Ksnchev
  */
-class CommonPageDefinitions {
+public class CommonPageDefinitions {
 
-    enum HTML {
+    public enum HTML {
 
         HTML_UNORDERED_LIST("ul"),
         HTML_ORDERED_LIST("ol"),
@@ -52,15 +52,17 @@ class CommonPageDefinitions {
         HTML_ATTRIBUTE_PASSWORD("password");
 
         private final String definition;
+
         HTML(String definition) {
             this.definition = definition;
         }
-        private String getDefinition() {
+
+        public String getDefinition() {
             return definition;
         }
     }
 
-    enum CSS {
+    public enum CSS {
 
         CSS_BORDER_TOP_COLOUR("border-top-color"),
         CSS_BORDER_LEFT_COLOUR("border-left-color"),
@@ -70,23 +72,27 @@ class CommonPageDefinitions {
         CSS_BACKGROUND_COLOUR("background-color");
 
         private final String definition;
+
         CSS(String definition) {
             this.definition = definition;
         }
-        private String getDefinition() {
+
+        public String getDefinition() {
             return definition;
         }
     }
 
-    enum COLOR {
+    public enum COLOR {
         COLOUR_WHITE("#FFFFFF"),
         COLOUR_BLACK("#000000");
 
         private final String definition;
+
         COLOR(String definition) {
             this.definition = definition;
         }
-        private String getDefinition() {
+
+        public String getDefinition() {
             return definition;
         }
     }

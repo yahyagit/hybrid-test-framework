@@ -17,13 +17,10 @@ import java.util.Arrays;
  *
  * @author Atanas Ksnchev
  */
-class Probe {
+public class Probe implements IWrapper {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Probe.class);
-
-    // the locator
-    private final By locator;
 
     /**
      * Constructor
@@ -31,15 +28,6 @@ class Probe {
      * @param locator By
      */
     public Probe(By locator) {
-        this.locator = locator;
-    }
-
-    /**
-     * Check if WebElement exists based on Locator {@link Probe#locator}
-     *
-     * @return true if element is found in DOM
-     */
-    public boolean exist() {
 
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
@@ -48,14 +36,24 @@ class Probe {
                 logger.debug("Trying to locate element using " + locator);
                 ((WebContext) ContextFactory.getCurrentContext()).setCurrentElement(
                         new LocatorFactory().findElement(locator));
-                logger.debug("Element found, setting as current element pointer");
-                return true;
+                logger.debug("Element found, setting as the current element pointer WebContext#currentElement");
             } catch (NoSuchElementException e) {
                 logger.error("Unable to locate element by " + locator, e.getMessage());
-                return false;
             }
         }
+    }
 
+    /**
+     * Check if WebElement exists
+     *
+     * @return true if element is found in DOM
+     */
+    public boolean exist() {
+        try {
+            return ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement() != null;
+        } catch (CustomExceptions.Common.NullReferenceException e) {
+            return false;
+        }
     }
 
     /**
@@ -66,7 +64,11 @@ class Probe {
      * @return {@code true} if the current WebElement has any text
      */
     public boolean hasAnyText() {
-        return !((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getText().isEmpty();
+
+        boolean hasAnyText = !((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getText().isEmpty();
+        logger.debug("Has any text: " + hasAnyText);
+        return hasAnyText;
+
     }
 
     /**
@@ -107,12 +109,12 @@ class Probe {
 
                 } else {
                     if (isPreciseMatch) {
-                        if (elText.toLowerCase().equals(textElement)) {
+                        if (elText.toLowerCase().equals(textElement.toLowerCase())) {
                             matchFound = true;
                             break;
                         }
                     } else {
-                        if (elText.toLowerCase().contains(textElement)) {
+                        if (elText.toLowerCase().contains(textElement.toLowerCase())) {
                             matchFound = true;
                             break;
                         }
@@ -140,17 +142,14 @@ class Probe {
      */
     public boolean hasAttribute(boolean preciseMatch, String attributeName, String attributeText) {
 
-        String attrValue;
+        String attrValue = ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getAttribute(attributeName);
 
-        try {
-            attrValue = ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getAttribute(attributeName);
-        } catch (NullPointerException npe) {
+        if (attrValue == null) {
             logger.error("The current element doesn't have a child attribute: " + attributeName);
-            throw new CustomExceptions.Common.IllegalArgumentException();
+            return false;
         }
 
         boolean matchFound = false;
-
         if (preciseMatch) {
             if (attrValue.equals(attributeText)) matchFound = true;
         } else {
@@ -162,6 +161,7 @@ class Probe {
         else
             logger.error("Match not found! Attribute name: [" + attributeName + "] Attribute Value: [" + attrValue + "]");
 
+
         return matchFound;
     }
 
@@ -172,7 +172,11 @@ class Probe {
      * @return {@code true}, if element of specified tag type
      */
     public boolean isOfTagType(String tag) {
-        return ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getTagName().equals(tag);
+
+        String tagName = ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getTagName();
+        logger.debug("Current element tag name: " + tagName);
+
+        return tagName.equals(tag);
     }
 
     /**
@@ -203,68 +207,6 @@ class Probe {
     }
 
     /**
-     * Check if {@link WebContext#currentElement} has border color
-     *
-     * @param expectedColorHexCode
-     * @return {@code true} if element has border color
-     */
-    public boolean hasBorderColour(String expectedColorHexCode) {
-
-        boolean hasColour = true;
-        Color expectedColour;
-        Color actualColour;
-        int testRepetitions;
-        final int maxRepetitions = 4;
-
-        String[] borderAttributes = {
-                CommonPageDefinitions.CSS.CSS_BORDER_TOP_COLOUR.name(),
-                CommonPageDefinitions.CSS.CSS_BORDER_LEFT_COLOUR.name(),
-                CommonPageDefinitions.CSS.CSS_BORDER_RIGHT_COLOUR.name(),
-                CommonPageDefinitions.CSS.CSS_BORDER_BOTTOM_COLOUR.name()};
-
-        try {
-            expectedColour = Color.fromString(expectedColorHexCode);
-        } catch (IllegalArgumentException e) {
-            logger.error("Error processing color : " + expectedColorHexCode + " : colour should have format : #[6 Hexadecimal Characters]");
-            throw new IllegalArgumentException();
-        }
-
-        // Ensure expected and actual are different to begin with
-        if (expectedColorHexCode.equals(CommonPageDefinitions.COLOR.COLOUR_WHITE.name())) {
-            actualColour = Color.fromString(CommonPageDefinitions.COLOR.COLOUR_BLACK.name());
-        } else {
-            actualColour = Color.fromString(CommonPageDefinitions.COLOR.COLOUR_WHITE.name());
-        }
-
-        for (String attr : borderAttributes) {
-            if (!hasColour) {
-                break;
-            }
-
-            // Firefox : rgba(187, 187, 187)
-            // Chrome : rgba(187, 187, 187, 1)
-            // IE : 6 digit hexadecimal
-            // fromString() will accept all formats
-            testRepetitions = 0;
-            while (!expectedColour.equals(actualColour)) {
-                actualColour = Color.fromString(((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(attr));
-                try {
-                    Thread.sleep(500);
-                    logger.debug("Hex Value" + actualColour.asHex());
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                }
-                if (++testRepetitions == maxRepetitions) {
-                    hasColour = false;
-                    logger.error("Fail : Expected = " + expectedColour.toString() + ", Actual = " + actualColour.toString());
-                    break;
-                }
-            }
-        }
-        return hasColour;
-    }
-
-    /**
      * Check if {@link WebContext#currentElement} has color as expected
      *
      * @param css                  CSS definition {@link CommonPageDefinitions.CSS}
@@ -277,6 +219,7 @@ class Probe {
 
         try {
             expColor = Color.fromString(expectedColorHexCode);
+            logger.debug("Expected color: " + expColor.asHex());
         } catch (IllegalArgumentException e) {
             logger.error("Error processing color : " + expectedColorHexCode + " : color should have format : #[6 Hexadecimal Characters]");
             throw new IllegalArgumentException();
@@ -284,11 +227,15 @@ class Probe {
 
         switch (css) {
             case CSS_BACKGROUND_COLOUR:
-                Color backgroundColor = Color.fromString(((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.name()));
-                return expColor.equals(backgroundColor);
+                Color backgroundColor = Color.fromString(
+                        ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.getDefinition()));
+                logger.debug("Actual color: " + backgroundColor.asHex());
+                return expColor.asHex().equals(backgroundColor.asHex());
             case CSS_TEXT_COLOUR:
-                Color textColor = Color.fromString(((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.name()));
-                return expColor.equals(textColor);
+                Color textColor = Color.fromString(
+                        ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.getDefinition()));
+                logger.debug("Actual color: " + textColor.asHex());
+                return expColor.asHex().equals(textColor.asHex());
         }
 
         return false;
