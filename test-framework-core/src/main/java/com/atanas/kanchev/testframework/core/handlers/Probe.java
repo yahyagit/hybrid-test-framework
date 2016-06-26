@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 
 /**
- * Prober Current WebElement Interface
+ * Probe WebElement
  *
  * @author Atanas Ksnchev
  */
@@ -22,15 +22,20 @@ class Probe {
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Probe.class);
 
+    // the locator
     private final By locator;
 
-
+    /**
+     * Constructor
+     *
+     * @param locator By
+     */
     public Probe(By locator) {
         this.locator = locator;
     }
 
     /**
-     * Check if WebElement exists based on Locator {@link Probe#locator} and {@link Probe#value}
+     * Check if WebElement exists based on Locator {@link Probe#locator}
      *
      * @return true if element is found in DOM
      */
@@ -40,46 +45,46 @@ class Probe {
             throw new CustomExceptions.Common.NullArgumentException();
         else {
             try {
-                logger.debug("Locating element by " + locator);
-                ((WebContext)ContextFactory.getCurrentContext()).setCurrentElement(
+                logger.debug("Trying to locate element using " + locator);
+                ((WebContext) ContextFactory.getCurrentContext()).setCurrentElement(
                         new LocatorFactory().findElement(locator));
+                logger.debug("Element found, setting as current element pointer");
+                return true;
             } catch (NoSuchElementException e) {
                 logger.error("Unable to locate element by " + locator, e.getMessage());
                 return false;
             }
         }
 
-        return true;
-
     }
 
     /**
-     * Prober if {@link WebContext#currentElement} has any text i.e. </br>
+     * Probe if {@link WebContext#currentElement} has any text i.e. </br>
      * {@code <div>Text</div>} match will return <b>true</b>.
      * The text to be found can be anywhere in the element text string
      *
      * @return {@code true} if the current WebElement has any text
      */
     public boolean hasAnyText() {
-        return !((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getText().isEmpty();
+        return !((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getText().isEmpty();
     }
 
     /**
-     * Prober if {@link WebContext#currentElement} has partial text match e.g.
+     * Probe if {@link WebContext#currentElement} has partial text match e.g.
      * {@code hasPartialText("hello");} matching against {@code <div>hello there<\div>}
      * will return <b>true</b> The text to be found can be a subset of
      * element text string </br> The method can also be used for multiple String elements
      * e.g. {@code hasPartialText("+", "-");
      * </br>(Note once an item is matched it returns true, irrespective of the other checks)
      *
-     * @param caseSensitive
-     * @param preciseMatch
-     * @param textElements  the text elements
+     * @param isCaseSensitiveMatch {@code boolean}
+     * @param isPreciseMatch       {@code boolean}
+     * @param textElements         the text elements
      * @return {@code true} if the current WebElement contains the text
      */
-    public boolean hasText(boolean caseSensitive, boolean preciseMatch, String... textElements) {
+    public boolean hasText(boolean isCaseSensitiveMatch, boolean isPreciseMatch, String... textElements) {
 
-        String elText = ((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getText();
+        String elText = ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getText();
 
         boolean matchFound = false;
 
@@ -87,8 +92,8 @@ class Probe {
             logger.debug("Matching " + Arrays.toString(textElements) + " against element text:  " + elText);
             for (String textElement : textElements) {
 
-                if (caseSensitive) {
-                    if (preciseMatch) {
+                if (isCaseSensitiveMatch) {
+                    if (isPreciseMatch) {
                         if (elText.equals(textElement)) {
                             matchFound = true;
                             break;
@@ -101,7 +106,7 @@ class Probe {
                     }
 
                 } else {
-                    if (preciseMatch) {
+                    if (isPreciseMatch) {
                         if (elText.toLowerCase().equals(textElement)) {
                             matchFound = true;
                             break;
@@ -138,7 +143,7 @@ class Probe {
         String attrValue;
 
         try {
-            attrValue = ((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getAttribute(attributeName);
+            attrValue = ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getAttribute(attributeName);
         } catch (NullPointerException npe) {
             logger.error("The current element doesn't have a child attribute: " + attributeName);
             throw new CustomExceptions.Common.IllegalArgumentException();
@@ -167,7 +172,7 @@ class Probe {
      * @return {@code true}, if element of specified tag type
      */
     public boolean isOfTagType(String tag) {
-        return ((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getTagName().equals(tag);
+        return ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getTagName().equals(tag);
     }
 
     /**
@@ -176,7 +181,7 @@ class Probe {
      * @return {@code true} if element is enabled
      */
     public boolean isEnabled() {
-        return ((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().isEnabled();
+        return ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().isEnabled();
     }
 
     /**
@@ -185,7 +190,7 @@ class Probe {
      * @return {@code true} if element is selected
      */
     public boolean isSelected() {
-        return ((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().isSelected();
+        return ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().isSelected();
     }
 
     /**
@@ -194,7 +199,7 @@ class Probe {
      * @return {@code true} if element is active
      */
     public boolean isActive() {
-        return ((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getAttribute("class").contains("active");
+        return ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getAttribute("class").contains("active");
     }
 
     /**
@@ -216,7 +221,6 @@ class Probe {
                 CommonPageDefinitions.CSS.CSS_BORDER_LEFT_COLOUR.name(),
                 CommonPageDefinitions.CSS.CSS_BORDER_RIGHT_COLOUR.name(),
                 CommonPageDefinitions.CSS.CSS_BORDER_BOTTOM_COLOUR.name()};
-
 
         try {
             expectedColour = Color.fromString(expectedColorHexCode);
@@ -243,7 +247,7 @@ class Probe {
             // fromString() will accept all formats
             testRepetitions = 0;
             while (!expectedColour.equals(actualColour)) {
-                actualColour = Color.fromString(((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(attr));
+                actualColour = Color.fromString(((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(attr));
                 try {
                     Thread.sleep(500);
                     logger.debug("Hex Value" + actualColour.asHex());
@@ -260,12 +264,6 @@ class Probe {
         return hasColour;
     }
 
-    /**
-     * Check if {@link WebContext#currentElement} text has color as expected
-     *
-     * @param expectedColorHexCode
-     * @return
-     */
     /**
      * Check if {@link WebContext#currentElement} has color as expected
      *
@@ -286,10 +284,10 @@ class Probe {
 
         switch (css) {
             case CSS_BACKGROUND_COLOUR:
-                Color backgroundColor = Color.fromString(((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.name()));
+                Color backgroundColor = Color.fromString(((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.name()));
                 return expColor.equals(backgroundColor);
             case CSS_TEXT_COLOUR:
-                Color textColor = Color.fromString(((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.name()));
+                Color textColor = Color.fromString(((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.name()));
                 return expColor.equals(textColor);
         }
 
