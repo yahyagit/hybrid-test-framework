@@ -25,7 +25,7 @@ public enum DriverType implements DriverSetup {
 
         public WebDriver getWebDriverObject(DesiredCapabilities capabilities) {
             MarionetteDriverManager.getInstance().setup();
-            return configure(new MarionetteDriver(capabilities));
+            return new MarionetteDriver(capabilities);
         }
     },
 
@@ -36,7 +36,7 @@ public enum DriverType implements DriverSetup {
 
         public WebDriver getWebDriverObject(DesiredCapabilities capabilities) {
             ChromeDriverManager.getInstance().setup();
-            return configure(new ChromeDriver(capabilities));
+            return new ChromeDriver(capabilities);
         }
     },
 
@@ -47,7 +47,7 @@ public enum DriverType implements DriverSetup {
 
         public WebDriver getWebDriverObject(DesiredCapabilities capabilities) {
             InternetExplorerDriverManager.getInstance().setup();
-            return configure(new InternetExplorerDriver(capabilities));
+            return new InternetExplorerDriver(capabilities);
         }
     },
 
@@ -58,7 +58,7 @@ public enum DriverType implements DriverSetup {
 
         public WebDriver getWebDriverObject(DesiredCapabilities capabilities) {
             EdgeDriverManager.getInstance().setup();
-            return configure(new EdgeDriver(capabilities));
+            return new EdgeDriver(capabilities);
         }
     },
 
@@ -68,7 +68,7 @@ public enum DriverType implements DriverSetup {
         }
 
         public WebDriver getWebDriverObject(DesiredCapabilities capabilities) {
-            return configure(new SafariDriver(capabilities));
+            return new SafariDriver(capabilities);
         }
     },
 
@@ -79,7 +79,7 @@ public enum DriverType implements DriverSetup {
 
         public WebDriver getWebDriverObject(DesiredCapabilities capabilities) {
             OperaDriverManager.getInstance().setup();
-            return configure(new OperaDriver(capabilities));
+            return new OperaDriver(capabilities);
         }
     },
 
@@ -90,7 +90,7 @@ public enum DriverType implements DriverSetup {
         }
 
         public WebDriver getWebDriverObject(DesiredCapabilities capabilities) {
-            return configure(new PhantomJSDriver(capabilities));
+            return new PhantomJSDriver(capabilities);
         }
     };
 
@@ -104,10 +104,7 @@ public enum DriverType implements DriverSetup {
         logger.debug("Proxy settings: " + proxySettings);
         return capabilities;
     }
-
-    WebDriver configure(WebDriver driver) {
-        return new DriverConfig(driver).getDriver();
-    }
+    
 
 }
 

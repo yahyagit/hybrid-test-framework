@@ -126,7 +126,7 @@ public class DesiredCapsFactory {
      */
     public DesiredCapabilities mergeCapabilities(DesiredCapabilities sourceCaps, DesiredCapabilities newCaps) {
 
-        logger.debug("Merging capabilities [NEW_CAPS]: " + sourceCaps + " into [SOURCE]: " + sourceCaps);
+        logger.debug("Merging capabilities [NEW_CAPS]: " + newCaps + " into [SOURCE]: " + sourceCaps);
 
         return caps = sourceCaps.merge(newCaps);
     }

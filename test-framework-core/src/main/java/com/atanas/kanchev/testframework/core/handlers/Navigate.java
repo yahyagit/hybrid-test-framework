@@ -5,6 +5,7 @@ import com.atanas.kanchev.testframework.core.context.AbstractContext;
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.context.WebContext;
 import com.atanas.kanchev.testframework.selenium.driver_factory.DriverBase;
+import com.atanas.kanchev.testframework.selenium.driver_factory.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,7 @@ import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCu
 /**
  * Nav Interface
  */
-public abstract class Navigate {
+public abstract class Navigate implements IWrapper{
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Navigate.class);
@@ -51,10 +52,9 @@ public abstract class Navigate {
             try {
                 getCurrentContext();
             } catch (CustomExceptions.Common.NullArgumentException e) {
-//                DriverFactory driverFactory = new DriverFactory(JVMArgsFactory.getBrowserType());
-                DriverBase driverBase = new DriverBase();
+
                 AbstractContext<WebDriver> context = new WebContext();
-                context.setDriver(driverBase.getDriver());
+                context.setDriver(DRIVER_FACTORY.getDriver());
                 ContextFactory.addContext(context);
             }
 

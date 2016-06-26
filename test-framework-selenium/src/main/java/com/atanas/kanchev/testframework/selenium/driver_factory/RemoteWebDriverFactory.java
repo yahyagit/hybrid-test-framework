@@ -10,11 +10,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
-
 /**
  * @author Atanas Ksnchev
  */
-public class RemoteWebDriverFactory {
+public class RemoteWebDriverFactory extends DriverConfig{
 
     private static final Logger logger = LoggerFactory.getLogger(RemoteWebDriverFactory.class);
 
@@ -22,12 +21,12 @@ public class RemoteWebDriverFactory {
 
         URL url = null;
         try {
-            url = new URL(Conf.JVMArgs.GRID_URL);
+            url = new URL(getGridURL());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        String desiredBrowserVersion = Conf.JVMArgs.BROWSER_VERSION;
-        String desiredPlatform = Conf.JVMArgs.PLATFORM;
+        String desiredBrowserVersion = getBrowserVersion();
+        String desiredPlatform = getPlatform();
 
         if (null != desiredPlatform && !desiredPlatform.isEmpty()) {
             desiredCapabilities.setPlatform(Platform.valueOf(desiredPlatform.toUpperCase()));

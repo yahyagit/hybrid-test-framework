@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +28,11 @@ public class IWrapperTest {
         @Test
         public void setupBrowserTest() throws Exception {
 
-            setupBrowser();
+            setupBrowser()
+                    .setBrowser("chrome")
+                    .setStartMaximized(true)
+                    .setCustomCapabilities(DesiredCapabilities.ipad());
+            goTo(url);
 
         }
 
