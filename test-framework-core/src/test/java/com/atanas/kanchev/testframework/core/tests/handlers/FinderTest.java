@@ -2,11 +2,12 @@ package com.atanas.kanchev.testframework.core.tests.handlers;
 
 import com.atanas.kanchev.testframework.core.handlers.Finder;
 import com.atanas.kanchev.testframework.core.handlers.IWrapper;
-import com.atanas.kanchev.testframework.core.handlers.Locator;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,15 +41,17 @@ public class FinderTest implements IWrapper {
 
     @Test
     public void elementByTest() throws Exception {
+goTo("https://www.google.co.uk/");
 
-        ifind.elementBy(Locator.XPATH, "//");
+
+       find().elementBy(By.name("btnK"));
 
     }
 
     @Test
     public void test() throws Exception {
 
-        goTo("https://bbc.co.uk").waitFor(5L).elementToBeClickable(Locator.ID, "orb-modules");
+        goTo("https://bbc.co.uk").waitFor(5L).elementToBeClickable(By.id("orb-modules"));
 
     }
 }

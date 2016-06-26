@@ -27,15 +27,7 @@ public class IWrapperTest {
         @Test
         public void setupBrowserTest() throws Exception {
 
-//            setupBrowser()
-//                    .setupWebDriver()
-//                    .setTimeouts(5L, 30L);
-//            setupBrowser()
-//                    .setupDesiredCapabilities()
-//
-//                    .mergeCapabilities(DesiredCapabilities.edge())
-//            ;
-
+            setupBrowser();
 
         }
 
@@ -61,12 +53,12 @@ public class IWrapperTest {
 //
 //    @Test
 //    public void loc() throws Exception {
-//        goTo(url).find().elementBy(Locator.XPATH, "//*[@id=\"tsf\"]/div[2]/div[3]/center/input[1]");
+//        goTo(url).findElement().elementBy(Locator.XPATH, "//*[@id=\"tsf\"]/div[2]/div[3]/center/input[1]");
 //    }
 //
 //    @Test
 //    public void locs() throws Exception {
-//        goTo(url).find().elementBy(Locator.TAG_NAME, "tr");
+//        goTo(url).findElement().elementBy(Locator.TAG_NAME, "tr");
 //    }
 //
 //    @Test
@@ -79,16 +71,16 @@ public class IWrapperTest {
 //    @Test
 //    public void findElementByNameTest() throws Exception {
 //        goTo(url).
-//                find().elementBy(Locator.XPATH, "w");
+//                findElement().elementBy(Locator.XPATH, "w");
 //    }
 //
 //    @Test
 //    public void waitingTest() throws Exception {
 //
 //        goTo(url)
-//                .find().elementBy(Locator.NAME, "x");
+//                .findElement().elementBy(Locator.NAME, "x");
 //        waitFor(5L)
-//                .presenceOfElement(Locator.NAME, "lst-ib");
+//                .isElementPresent(Locator.NAME, "lst-ib");
 //
 //    }
 //

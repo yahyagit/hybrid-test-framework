@@ -2,6 +2,9 @@ package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 
+import com.atanas.kanchev.testframework.core.context.ContextFactory;
+import com.atanas.kanchev.testframework.core.context.WebContext;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.Color;
 import org.slf4j.Logger;
@@ -14,23 +17,16 @@ import java.util.Arrays;
  *
  * @author Atanas Ksnchev
  */
-abstract class Probe {
+class Probe {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Probe.class);
 
-    private final Locator locator;
-    private final String value;
+    private final By locator;
 
-    /**
-     * Constructor
-     *
-     * @param value Locator type
-     * @param value Locator value
-     */
-    public Probe(Locator locator, String value) {
+
+    public Probe(By locator) {
         this.locator = locator;
-        this.value = value;
     }
 
     /**
@@ -40,14 +36,15 @@ abstract class Probe {
      */
     public boolean exist() {
 
-        if (locator == null || value == null)
+        if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else {
             try {
-                logger.debug("Locating element by " + locator + " value: " + value);
-                Locator.getWebContext().setCurrentElement(locator.locateElement(locator, value));
+                logger.debug("Locating element by " + locator);
+                ((WebContext)ContextFactory.getCurrentContext()).setCurrentElement(
+                        new LocatorFactory().findElement(locator));
             } catch (NoSuchElementException e) {
-                logger.error("Unable to locate element by " + locator + " value: " + value, e);
+                logger.error("Unable to locate element by " + locator, e.getMessage());
                 return false;
             }
         }
@@ -64,7 +61,7 @@ abstract class Probe {
      * @return {@code true} if the current WebElement has any text
      */
     public boolean hasAnyText() {
-        return !Locator.getWebContext().getCurrentElement().getText().isEmpty();
+        return !((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getText().isEmpty();
     }
 
     /**
@@ -82,7 +79,7 @@ abstract class Probe {
      */
     public boolean hasText(boolean caseSensitive, boolean preciseMatch, String... textElements) {
 
-        String elText = Locator.getWebContext().getCurrentElement().getText();
+        String elText = ((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getText();
 
         boolean matchFound = false;
 
@@ -141,7 +138,7 @@ abstract class Probe {
         String attrValue;
 
         try {
-            attrValue = Locator.getWebContext().getCurrentElement().getAttribute(attributeName);
+            attrValue = ((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getAttribute(attributeName);
         } catch (NullPointerException npe) {
             logger.error("The current element doesn't have a child attribute: " + attributeName);
             throw new CustomExceptions.Common.IllegalArgumentException();
@@ -170,7 +167,7 @@ abstract class Probe {
      * @return {@code true}, if element of specified tag type
      */
     public boolean isOfTagType(String tag) {
-        return Locator.getWebContext().getCurrentElement().getTagName().equals(tag);
+        return ((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getTagName().equals(tag);
     }
 
     /**
@@ -179,7 +176,7 @@ abstract class Probe {
      * @return {@code true} if element is enabled
      */
     public boolean isEnabled() {
-        return Locator.getWebContext().getCurrentElement().isEnabled();
+        return ((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().isEnabled();
     }
 
     /**
@@ -188,7 +185,7 @@ abstract class Probe {
      * @return {@code true} if element is selected
      */
     public boolean isSelected() {
-        return Locator.getWebContext().getCurrentElement().isSelected();
+        return ((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().isSelected();
     }
 
     /**
@@ -197,7 +194,7 @@ abstract class Probe {
      * @return {@code true} if element is active
      */
     public boolean isActive() {
-        return Locator.getWebContext().getCurrentElement().getAttribute("class").contains("active");
+        return ((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getAttribute("class").contains("active");
     }
 
     /**
@@ -246,7 +243,7 @@ abstract class Probe {
             // fromString() will accept all formats
             testRepetitions = 0;
             while (!expectedColour.equals(actualColour)) {
-                actualColour = Color.fromString(Locator.getWebContext().getCurrentElement().getCssValue(attr));
+                actualColour = Color.fromString(((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(attr));
                 try {
                     Thread.sleep(500);
                     logger.debug("Hex Value" + actualColour.asHex());
@@ -289,10 +286,10 @@ abstract class Probe {
 
         switch (css) {
             case CSS_BACKGROUND_COLOUR:
-                Color backgroundColor = Color.fromString(Locator.getWebContext().getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.name()));
+                Color backgroundColor = Color.fromString(((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.name()));
                 return expColor.equals(backgroundColor);
             case CSS_TEXT_COLOUR:
-                Color textColor = Color.fromString(Locator.getWebContext().getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.name()));
+                Color textColor = Color.fromString(((WebContext)ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.name()));
                 return expColor.equals(textColor);
         }
 

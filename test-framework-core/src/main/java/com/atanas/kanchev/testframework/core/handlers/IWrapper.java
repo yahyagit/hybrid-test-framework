@@ -3,7 +3,11 @@ package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.appium.handlers.DeviceBasedHandler;
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
+import com.atanas.kanchev.testframework.selenium.driver_factory.DriverFactory;
 import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
+import org.openqa.selenium.By;
+
+import static com.sun.corba.se.spi.activation.IIOP_CLEAR_TEXT.value;
 
 
 /**
@@ -14,12 +18,11 @@ public interface IWrapper extends IBaseHandler {
     DeviceBasedHandler DEVICE_BASED_HANDLER = new DeviceBasedHandler();
     Finder FINDER = new Finder();
     ContextFactory CONTEXT_FACTORY = new ContextFactory();
-//
-//    DriverBase BASE = new DriverBase();
-//
-//    default DriverBase setupBrowser() {
-//        return BASE;
-//    }
+    DriverFactory DRIVER_FACTORY = new DriverFactory();
+
+    default DriverFactory setupBrowser(){
+        return DRIVER_FACTORY;
+    }
 
     default Wait waitFor(long wait) {
         return new Wait(wait);
@@ -33,8 +36,8 @@ public interface IWrapper extends IBaseHandler {
         return FINDER;
     }
 
-    default Prober probe(Locator locator, String value) {
-        return new Prober(locator, value);
+    default Probe probe(By locator) {
+        return new Probe(locator);
     }
 
     default ContextFactory context() {
@@ -56,18 +59,6 @@ public interface IWrapper extends IBaseHandler {
     class Nav extends Navigate implements IWrapper {
         Nav(String url) {
             super(url);
-        }
-    }
-
-    class Prober extends Probe {
-        /**
-         * Constructor
-         *
-         * @param locator
-         * @param value   Locator type
-         */
-        Prober(Locator locator, String value) {
-            super(locator, value);
         }
     }
 

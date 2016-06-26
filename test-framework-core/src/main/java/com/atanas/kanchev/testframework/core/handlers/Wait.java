@@ -1,9 +1,6 @@
 package com.atanas.kanchev.testframework.core.handlers;
 
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.NoSuchFrameException;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -24,31 +21,23 @@ public class Wait implements IWrapper {
     }
 
 
-    public Wait presenceOfElement(Locator locatorType, String locator) {
-
-        locatorType.presenceOfElement(locatorType, locator, wait);
-
+    public Wait presenceOfElement(By locator) {
+        new LocatorFactory().isElementPresent(locator, wait);
         return this;
     }
 
-    public Wait visibilityOfElement(Locator locatorType, String locator) {
-
-        locatorType.visibilityOfElement(locatorType, locator, wait);
-
+    public Wait visibilityOfElement(By locator) {
+        new LocatorFactory().isElementVisible(locator, true,  wait);
         return this;
     }
 
-    public Wait invisibilityOfElement(Locator locatorType, String locator) {
-
-        locatorType.invisibilityOfElement(locatorType, locator, wait);
-
+    public Wait invisibilityOfElement(By locator) {
+        new LocatorFactory().isElementVisible(locator, false,  wait);
         return this;
     }
 
-    public Wait elementToBeClickable(Locator locatorType, String locator) {
-
-        locatorType.elementToBeClickable(locatorType, locator, wait);
-
+    public Wait elementToBeClickable(By locator) {
+        new LocatorFactory().isElementClickable(locator, wait);
         return this;
     }
 
@@ -58,15 +47,8 @@ public class Wait implements IWrapper {
      * @param text
      * @return this
      */
-    public Wait valueToBePresent(final String text) {
-
-        try {
-            new WebDriverWait(Locator.getWebContext().getDriver(), wait)
-                    .until(ExpectedConditions.textToBePresentInElementValue(Locator.getWebContext().getCurrentElement(), text));
-        } catch (TimeoutException e) {
-            logger.error("Timeout after waiting for invisibility of element by text:  " + text);
-            throw new TimeoutException(e.getMessage());
-        }
+    public Wait valueToBePresent(By locator, String text) {
+        new LocatorFactory().isTextPresentInElementValue(locator, text, wait);
         return this;
     }
 
@@ -78,8 +60,9 @@ public class Wait implements IWrapper {
      */
     public Wait staleElementByCss(final String cssSelector) {
         try {
-            logger.debug("Trying to find element: " + cssSelector + " within waitForStale Method");
-            find().elementBy(Locator.CSS_SELECTOR, cssSelector);
+            logger.debug("Trying to findElement element: " + cssSelector + " within waitForStale Method");
+            //TODO fix me
+            //findElement().elementBy(Locator.CSS_SELECTOR, cssSelector);
         } catch (StaleElementReferenceException e) {
             logger.debug("Element By CSS: " + cssSelector + " Triggered Stale Element Reference");
             sleep(2000);
@@ -98,29 +81,13 @@ public class Wait implements IWrapper {
      * @param text
      * @return
      */
-    public Wait textToBePresentInElement(final String text) {
-
-
-        try {
-            new WebDriverWait(Locator.getWebContext().getDriver(), wait).
-                    until(ExpectedConditions.textToBePresentInElement(Locator.getWebContext().getCurrentElement(), text));
-        } catch (TimeoutException e) {
-            logger.error("String Not Found: " + text);
-            throw new TimeoutException(e.getMessage());
-        }
+    public Wait textToBePresentInElement(By locator, final String text) {
+        new LocatorFactory().isTextPresentInElement(locator, text, wait);
         return this;
     }
 
-    public Wait frameByIdToBeAvailableAndSwitch(String frameId) {
-        try {
-            new WebDriverWait(Locator.getWebContext().getDriver(), wait)
-                    .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameId));
-
-        } catch (NoSuchFrameException nsfe) {
-            logger.error("Unable to Switch Frame - No Such Frame");
-            throw new NoSuchFrameException(nsfe.getMessage());
-
-        }
+    public Wait frameByIdToBeAvailableAndSwitch(By locator) {
+        new LocatorFactory().isFrameAvailable(locator, wait);
         return this;
     }
 
