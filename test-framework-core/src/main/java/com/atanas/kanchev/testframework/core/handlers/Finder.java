@@ -1,10 +1,13 @@
 package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
+import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.context.WebContext;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Quotes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +24,14 @@ public final class Finder implements IWrapper {
 
     public Finder() {
         goToRootElement();
+    }
+
+    public Finder(Class<?> clasz) {
+        PageFactory.initElements((WebDriver) ContextFactory.getCurrentContext().getDriver(), clasz);
+    }
+
+    public Finder(WebElement element){
+        ((WebContext) getCurrentContext()).setCurrentElement(element);
     }
 
     /**
@@ -118,4 +129,5 @@ public final class Finder implements IWrapper {
         return this;
 
     }
+
 }
