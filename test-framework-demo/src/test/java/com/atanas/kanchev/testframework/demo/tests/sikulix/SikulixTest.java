@@ -24,7 +24,7 @@ public class SikulixTest implements IWrapper {
 
     @After
     public void tearDown() throws Exception {
-       ContextFactory.getCurrentContext().tearDownContext();
+       ContextFactory.tearDownContexts();
 
     }
 

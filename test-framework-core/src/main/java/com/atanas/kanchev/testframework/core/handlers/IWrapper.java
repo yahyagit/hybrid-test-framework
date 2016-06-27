@@ -42,7 +42,7 @@ public interface IWrapper extends IBaseHandler {
     }
 
     default SikuliXFactory image() {
-        return new SikuliXFactory(null);
+        return new SikuliXFactory();
     }
 
     default DeviceBasedHandler setupAppium() {

@@ -59,4 +59,22 @@
         </dependency>
     </dependencies>
 
+    <repositories>
+        <repository>
+            <!-- OSSRH: com.sikulix -->
+            <name>com.sikulix</name>
+            <id>com.sikulix</id>
+            <url>https://oss.sonatype.org/content/groups/public</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
 </project>

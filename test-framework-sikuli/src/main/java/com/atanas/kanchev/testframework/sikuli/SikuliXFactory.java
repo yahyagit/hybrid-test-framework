@@ -7,8 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -22,32 +20,28 @@ public final class SikuliXFactory {
     private static final Logger logger = LoggerFactory.getLogger(SikuliXFactory.class);
 
     // the screen
-    private Screen screen;
+    private final static Screen screen = new Screen();
 
-    // the source image file path
-    private String imageFilePath;
-
-    //holds the result of the setImageFilePath operation
+    //holds the result of the getImageFilePath operation
     private Match match;
 
-    /**
-     * Constructor
-     */
-    public SikuliXFactory(final String imageFileName) {
+    public SikuliXFactory() {
 
-        try {
-            Settings.ActionLogs = false;
-            this.screen = new Screen();
-            logger.debug("Using screen ID: " + screen.getID());
-            this.screen.setAutoWaitTimeout(5);
-            this.imageFilePath = setImageFilePath(imageFileName);
-        } catch (NoClassDefFoundError | ExceptionInInitializerError e) {
-            logger.error("No Screen(s) present, image based commands will not work!", e);
-        }
+        Settings.ActionLogs = true;
+        screen.setAutoWaitTimeout(5);
+        logger.debug("Using screen ID: " + screen.getID());
+
+    }
+
+    public SikuliXFactory(final String path) {
+
+        this();
+        if (path != null) findImage(path);
+
     }
 
     /**
-     * From the current screen setImageFilePath the image defined in the {@param imageFileName}
+     * From the current screen getImageFilePath the image defined in the {@param imageFileName}
      * Hover the mouse pointer to the matched image location on the screen
      *
      * @param imageFileName The image file name
@@ -55,15 +49,7 @@ public final class SikuliXFactory {
      */
     public SikuliXFactory findImage(String imageFileName) {
 
-        try {
-            File file = new ImageFinder(imageFileName).getFile();
-            imageFilePath = file.getAbsolutePath();
-            this.match = match(imageFileName);
-        } catch (FileNotFoundException fnfe) {
-            logger.error("Image file Not Found Exception ", fnfe);
-        } catch (IOException ioe) {
-            logger.error("Unable to read file ", ioe);
-        }
+        match(imageFileName);
 
         return this;
     }
@@ -229,7 +215,6 @@ public final class SikuliXFactory {
      * @param text Text to enter in the
      * @return this
      */
-
     public SikuliXFactory type(String text) {
 
         try {
@@ -297,7 +282,7 @@ public final class SikuliXFactory {
     /**
      * Find image by scrolling
      *
-     * @param imagePath  image to setImageFilePath
+     * @param imagePath  image to getImageFilePath
      * @param iterations number of swipes
      * @param direction  direction of swipes
      * @return imageFound
@@ -390,28 +375,23 @@ public final class SikuliXFactory {
 
     private Match match(final String imageFileName) {
 
-        Match match = null;
-
         try {
-            setImageFilePath(imageFileName);
-            match = screen.find(imageFileName);
+            match = screen.find(getImageFilePath(imageFileName));
             match.hover();
             logger.debug("Match found for image " + imageFileName + " in location " + match.getTarget());
         } catch (FindFailed ffe) {
-            logger.error("Unable setImageFilePath a match for image");
+            logger.error("Unable getImageFilePath a match for image");
         }
         return match;
     }
 
-    private String setImageFilePath(final String imageFileName) {
+    private String getImageFilePath(final String imageFileName) {
 
         if (imageFileName != null) {
             try {
-                File file = new ImageFinder(imageFileName).getFile();
-                findImage(imageFileName);
-                return file.getAbsolutePath();
+                return new ImageFinder(imageFileName).getFile().getAbsolutePath();
             } catch (IOException e) {
-                logger.error("Unable to setImageFilePath image file", e);
+                logger.error("Unable to getImageFilePath image file", e);
             }
 
         }
