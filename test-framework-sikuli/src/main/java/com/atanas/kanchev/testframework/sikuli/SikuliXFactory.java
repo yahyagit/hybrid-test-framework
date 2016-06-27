@@ -204,6 +204,7 @@ public final class SikuliXFactory {
             logger.error("Unable to capture image ", e);
         } finally {
             if (image != null) ImageFinder.saveImage(image, imageName);
+            logger.debug("Saved image ", imageName);
         }
 
         return this;

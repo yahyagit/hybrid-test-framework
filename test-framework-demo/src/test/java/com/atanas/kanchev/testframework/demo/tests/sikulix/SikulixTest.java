@@ -74,11 +74,11 @@ public class SikulixTest implements IWrapper {
     @Test
     public void captureImage() throws Exception {
 
-        image("search-field.png").captureImage("image", 101, SikuliXFactory.Directions.ABOVE);
-        image("search-field.png").captureImage("image", 999, SikuliXFactory.Directions.BELOW);
-        image("search-field.png").captureImage("image", 0, SikuliXFactory.Directions.CENTER);
-        image("search-field.png").captureImage("image", 22, SikuliXFactory.Directions.LEFT);
-        image("search-field.png").captureImage("image", 1, SikuliXFactory.Directions.RIGHT);
+        image("search-field.png").captureImage("image1", 101, SikuliXFactory.Directions.ABOVE);
+        image("search-field.png").captureImage("image2", 999, SikuliXFactory.Directions.BELOW);
+        image("search-field.png").captureImage("image3", 0, SikuliXFactory.Directions.CENTER);
+        image("search-field.png").captureImage("image4", 22, SikuliXFactory.Directions.LEFT);
+        image("search-field.png").captureImage("image5", 1, SikuliXFactory.Directions.RIGHT);
 
     }
 

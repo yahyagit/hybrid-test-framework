@@ -76,11 +76,11 @@ public class SikuliXFactoryTest {
     @Test
     public void captureImage() throws Exception {
 
-        sikuliXFactory.captureImage("image", 101, SikuliXFactory.Directions.ABOVE);
-        sikuliXFactory.captureImage("image", 999, SikuliXFactory.Directions.BELOW);
-        sikuliXFactory.captureImage("image", 0, SikuliXFactory.Directions.CENTER);
-        sikuliXFactory.captureImage("image", 22, SikuliXFactory.Directions.LEFT);
-        sikuliXFactory.captureImage("image", 1, SikuliXFactory.Directions.RIGHT);
+        sikuliXFactory.captureImage("image1", 101, SikuliXFactory.Directions.ABOVE);
+        sikuliXFactory.captureImage("image2", 999, SikuliXFactory.Directions.BELOW);
+        sikuliXFactory.captureImage("image3", 0, SikuliXFactory.Directions.CENTER);
+        sikuliXFactory.captureImage("image4", 22, SikuliXFactory.Directions.LEFT);
+        sikuliXFactory.captureImage("image5", 1, SikuliXFactory.Directions.RIGHT);
 
     }
 
