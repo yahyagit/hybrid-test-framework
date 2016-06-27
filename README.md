@@ -8,7 +8,7 @@ browser             |Browser type               |chrome, firefox, ie, edge, safa
 grid.enabled        |Is Grid execution          |true?false                                           |-Dgrid.enabled=true
 grid.browser.version|Remote browser version     |39                                                   |-Dgrid.browser.version=39
 grid.platform       |Remote platform            |windows                                              |-Dgrid.platform=windows
-grid.hub.url        |Remote hub URL             |Valid URL                                            |-Dgridhub.url=http://localhost:4444/grid/
+grid.hub.url        |Remote hub URL             |Valid URL                                            |-Dgrid.hub.url=http://localhost:4444/grid/
 proxy.enabled       |Proxy                      |true?false                                           |-Dproxy.enabled=true
 proxy.host          |Proxy host URL             |Valid URL                                            |-Dproxy.host=localhost
 proxy.port          |Proxy port                 |Integer value                                        |-Dproxy.port=8081
