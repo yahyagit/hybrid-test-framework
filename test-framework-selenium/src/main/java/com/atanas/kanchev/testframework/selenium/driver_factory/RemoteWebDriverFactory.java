@@ -21,7 +21,7 @@ public class RemoteWebDriverFactory extends DriverConfig{
 
         URL url = null;
         try {
-            url = new URL(getGridURL());
+            url = new URL(getHubURL());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

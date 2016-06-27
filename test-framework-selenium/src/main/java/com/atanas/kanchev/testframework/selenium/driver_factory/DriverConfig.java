@@ -24,9 +24,13 @@ public class DriverConfig{
     private DesiredCapabilities customCapabilities;
 
     private String browser = System.getProperty("browser", DEFAULT_BROWSER.toString()).toUpperCase();
-    private boolean useRemoteWebDriver = Boolean.getBoolean("remote.driver");
-    private String gridURL = System.getProperty("grid.url");
-    private String browserVersion = System.getProperty("browser.version");
+    private String resolution = System.getProperty("resolution");
+    private String userAgent = System.getProperty("user.agent");
+    private String env = System.getProperty("env");
+    // TODO Add resolution, user agent and env handlers
+    private boolean useRemoteWebDriver = Boolean.getBoolean("grid.enabled");
+    private String hubURL = System.getProperty("grid.hub.url");
+    private String browserVersion = System.getProperty("grid.browser.version");
     private String platform = System.getProperty("platform", "ANY");
     private boolean proxyEnabled = Boolean.getBoolean("proxy.enabled");
     private String proxyHost = System.getProperty("proxy.host");
@@ -35,12 +39,40 @@ public class DriverConfig{
     private boolean startMaximized = Boolean.valueOf(System.getProperty("start.maximized", "false"));
     private boolean reuseBrowser = Boolean.valueOf(System.getProperty("reuse.browser", "false"));
 
+    public String getResolution() {
+        return resolution;
+    }
+
+    public DriverConfig setResolution(String resolution) {
+        this.resolution = resolution;
+        return this;
+    }
+
+    public String getUserAgent() {
+        return userAgent;
+    }
+
+    public DriverConfig setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+        return this;
+    }
+
+    public String getEnv() {
+        return env;
+    }
+
+    public DriverConfig setEnv(String env) {
+        this.env = env;
+        return this;
+    }
+
     public DesiredCapabilities getCustomCapabilities() {
         return customCapabilities;
     }
 
-    public void setCustomCapabilities(DesiredCapabilities customCapabilities) {
+    public DriverConfig setCustomCapabilities(DesiredCapabilities customCapabilities) {
         this.customCapabilities = customCapabilities;
+        return this;
     }
 
     public String getBrowser() {
@@ -61,12 +93,12 @@ public class DriverConfig{
         return this;
     }
 
-    public String getGridURL() {
-        return gridURL;
+    public String getHubURL() {
+        return hubURL;
     }
 
-    public DriverConfig setGridURL(String gridURL) {
-        this.gridURL = gridURL;
+    public DriverConfig setHubURL(String hubURL) {
+        this.hubURL = hubURL;
         return this;
     }
 
