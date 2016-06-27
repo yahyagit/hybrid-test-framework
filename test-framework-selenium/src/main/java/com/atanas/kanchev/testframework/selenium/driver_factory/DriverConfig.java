@@ -19,7 +19,7 @@ public class DriverConfig{
     public static final int DEFAULT_BROWSER_RES_WIDTH = 1024;
     public static final int DEFAULT_BROWSER_RES_HEIGHT = 768;
     public static final long DEFAULT_IMPL_WAIT = 500L;
-    public static final long DEFAULT_PAGE_LOAD_TIMEOUT = 3000L;
+    public static final long DEFAULT_PAGE_LOAD_TIMEOUT = 30000L;
 
     private DesiredCapabilities customCapabilities;
 
