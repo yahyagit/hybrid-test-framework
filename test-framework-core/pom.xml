@@ -11,15 +11,6 @@
 
     <artifactId>test-framework-core</artifactId>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
     <dependencies>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -50,7 +41,6 @@
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
-            <version>4.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.atanas.kanchev</groupId>
