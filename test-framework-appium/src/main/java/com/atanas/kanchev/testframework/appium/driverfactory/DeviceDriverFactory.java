@@ -1,6 +1,7 @@
 package com.atanas.kanchev.testframework.appium.driverfactory;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
 
@@ -67,7 +68,7 @@ public final class DeviceDriverFactory {
         return new AppiumDriverInit(device, deviceServerCapabilities, iosCapabilities, appiumServerURL).getIOSDriver();
     }
 
-    public AppiumDriver<AndroidElement> getAndroidDriver() {
+    public AndroidDriver<AndroidElement> getAndroidDriver() {
         return new AppiumDriverInit(device, deviceServerCapabilities, androidCapabilities, appiumServerURL).getAndroidDriver();
     }
 

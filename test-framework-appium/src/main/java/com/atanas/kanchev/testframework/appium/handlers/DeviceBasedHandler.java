@@ -3,7 +3,11 @@ package com.atanas.kanchev.testframework.appium.handlers;
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumCapabilities;
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDevice;
 import com.atanas.kanchev.testframework.appium.driverfactory.DeviceDriverFactory;
+import com.atanas.kanchev.testframework.core.context.AbstractContext;
+import com.atanas.kanchev.testframework.core.context.AppiumContext;
+import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
 import org.slf4j.Logger;
@@ -86,7 +90,7 @@ public class DeviceBasedHandler extends DeviceMethods {
      * @param appiumServerURL Appium server URL String, e.g. "http://127.0.0.1:4723/wd/hub"
      * @return IOSDriver instance
      */
-    public IOSDriver createIOSDriver(String appiumServerURL) {
+    public IOSDriver initIOSDriver(String appiumServerURL) {
         try {
             this.createAppiumDriver.setDeviceServerURL(new URL(appiumServerURL));
             return this.createAppiumDriver.getIOSDriver();
@@ -103,10 +107,14 @@ public class DeviceBasedHandler extends DeviceMethods {
      * @param appiumServerURL Appium server URL String, e.g. "http://127.0.0.1:4723/wd/hub"
      * @return AndroidDriver instance
      */
-    public AppiumDriver<AndroidElement> createAndroidDriver(String appiumServerURL) {
+    public AndroidDriver<AndroidElement> initAndroidDriver(String appiumServerURL) {
         try {
             this.createAppiumDriver.setDeviceServerURL(new URL(appiumServerURL));
-            return this.createAppiumDriver.getAndroidDriver();
+            AbstractContext<AppiumDriver> context = new AppiumContext();
+            AndroidDriver<AndroidElement> driver = this.createAppiumDriver.getAndroidDriver();
+            context.setDriver(driver);
+            ContextFactory.addContext(context);
+            return driver;
         } catch (MalformedURLException e) {
             logger.error(e.getMessage());
         }
@@ -132,7 +140,7 @@ public class DeviceBasedHandler extends DeviceMethods {
 //				options.addArguments("enable-automatic-password-saving");
 //				setupAndroidDriver().setChromeOptions(options).setAndroidDeviceReadyTimeout(60)
 //						.setEnablePerformanceLogging(true);
-//				createAndroidDriver("http://" + DeviceHandler.getAppiumServerIP() + ":" + DeviceHandler.getAppiumServerPort() + "/wd/hub");
+//				initAndroidDriver("http://" + DeviceHandler.getAppiumServerIP() + ":" + DeviceHandler.getAppiumServerPort() + "/wd/hub");
 //			} else if (DeviceHandler.getPlatformName().equalsIgnoreCase("iOS")) {
 //				setupDevice().setDeviceType(AppiumDeviceTypesEnum.IPHONE_DEVICE).setPlatformName(DeviceHandler.getPlatFormVersion())
 //						.setPlatformVersion(DeviceHandler.getPlatFormVersion()).setDeviceName(DeviceHandler.getDeviceName());

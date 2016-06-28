@@ -44,7 +44,7 @@ public class AppiumTests extends DeviceBasedHandler {
                 .setAndroidDeviceReadyTimeout(60)
                 .setEnablePerformanceLogging(true);
 
-        d = createAndroidDriver(AppiumHub);
+        d = initAndroidDriver(AppiumHub);
 
     }
 
@@ -66,7 +66,7 @@ public class AppiumTests extends DeviceBasedHandler {
                 .setAvdReadyTimeout(60)
                 .setEnablePerformanceLogging(true);
 
-        d = createAndroidDriver(AppiumHub);
+        d = initAndroidDriver(AppiumHub);
         d.get("https://www.bbc.co.uk");
 
     }

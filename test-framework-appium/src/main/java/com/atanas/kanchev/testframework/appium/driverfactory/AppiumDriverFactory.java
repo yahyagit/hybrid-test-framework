@@ -32,7 +32,7 @@ public final class AppiumDriverFactory {
         return new IOSDriver(this.remoteAddress, this.desiredCapabilities);
     }
 
-    public AppiumDriver<AndroidElement> getAndroidDriver() {
+    public AndroidDriver<AndroidElement> getAndroidDriver() {
         return new AndroidDriver<>(this.remoteAddress, this.desiredCapabilities);
     }
 }

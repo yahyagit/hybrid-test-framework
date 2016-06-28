@@ -1,6 +1,5 @@
 package com.atanas.kanchev.testframework.core.handlers;
 
-import com.atanas.kanchev.testframework.appium.handlers.DeviceBasedHandler;
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.context.WebContext;
 import com.atanas.kanchev.testframework.selenium.driver_factory.DriverFactory;
@@ -55,9 +54,9 @@ public interface IWrapper extends IBaseHandler {
         return new SikuliXFactory();
     }
 
-    default DeviceBasedHandler setupAppium() {
-        return new DeviceBasedHandler();
-    }
+//    default DeviceBasedHandler setupAppium() {
+//        return new DeviceBasedHandler();
+//    }
 
     default WebElement currentElement(){
         return ((WebContext)ContextFactory.getCurrentContext()).getCurrentElement();

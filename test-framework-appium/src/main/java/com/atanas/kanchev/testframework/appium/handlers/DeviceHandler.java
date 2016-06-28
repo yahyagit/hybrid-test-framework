@@ -33,7 +33,7 @@ public class DeviceHandler {
             throw new NullPointerException();
         }
         try {
-            List<String[]> table = new CSVParser("").getAllRows();
+            List<String[]> table = new CSVParser("src/test/resources/mobile.devices.csv").getAllRows();
             String[] columnHeaders = table.get(0);
             for (String[] devices : table) {
                 if (devices[0].trim().equals(deviceUnderTest)) {

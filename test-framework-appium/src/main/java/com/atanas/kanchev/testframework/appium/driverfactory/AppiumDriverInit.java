@@ -1,6 +1,7 @@
 package com.atanas.kanchev.testframework.appium.driverfactory;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
 
@@ -86,7 +87,7 @@ public final class AppiumDriverInit {
      *
      * @return driver
      */
-    public final AppiumDriver<AndroidElement> getAndroidDriver() {
+    public final AndroidDriver<AndroidElement> getAndroidDriver() {
 
         return new AppiumDriverFactory(remoteAddress, new AppiumCapabilitiesFactory(appiumDevice, androidCapabilities, appiumServerCapabilities)
                 .getGeneratedCaps()).getAndroidDriver();

@@ -3,6 +3,7 @@ package com.atanas.kanchev.testframework.appium.tests;
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDeviceTypesEnum;
 import com.atanas.kanchev.testframework.appium.handlers.DeviceBasedHandler;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import org.junit.Test;
 
@@ -38,8 +39,8 @@ public class DeviceBasedHandlerTest extends DeviceBasedHandler {
                 .setAndroidDeviceReadyTimeout(60)
                 .setEnablePerformanceLogging(true);
 
-        AppiumDriver<AndroidElement> d = createAndroidDriver("http://127.0.0.1:4723/wd/hub");
-        d.get("https://www.google.co.uk");
+        AndroidDriver<AndroidElement> d = initAndroidDriver("http://127.0.0.1:4723/wd/hub");
+        d.get("https://bbc.co.uk");
         Thread.sleep(10000);
         d.quit();
     }
