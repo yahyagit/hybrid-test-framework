@@ -3,6 +3,7 @@ package com.atanas.kanchev.testframework.core.context;
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Web Context
  */
-public final class WebContext extends AbstractContext<WebDriver> {
+public class WebContext<T> extends AbstractContext<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(WebContext.class);
@@ -22,8 +23,36 @@ public final class WebContext extends AbstractContext<WebDriver> {
     // Current WebElement pointer
     private List<WebElement> webElementsList;
 
-    public WebContext() {
-        super("webContext_");
+    public WebContext(T driver) {
+        this(driver, "webContext_");
+    }
+
+    public WebContext(T driver, String contextName) {
+        super(contextName);
+        super.setDriver(driver);
+    }
+
+    @Override
+    public void tearDownContext(AbstractContext context) {
+        if (context instanceof WebContext) {
+            if (context.getDriver() instanceof WebDriver)
+                ((WebContext<WebDriver>) context).getDriver().quit();
+            if (context.getDriver() instanceof RemoteWebDriver)
+                ((WebContext<RemoteWebDriver>) context).getDriver().quit();
+        }
+    }
+
+    @Override
+    public void tearDownContexts() {
+        for (AbstractContext context : ContextFactory.getContextMap().values()) {
+            tearDownContext(context);
+            removeContext(context);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
     }
 
     //////////////
@@ -86,45 +115,4 @@ public final class WebContext extends AbstractContext<WebDriver> {
 
     }
 
-    /**
-     * Tear down all active contexts stored in {@link ContextFactory#contextMap}
-     */
-    @Override
-    public void tearDownContext() {
-
-        for (AbstractContext context : ContextFactory.getContextMap().values()) {
-            if (context instanceof WebContext) {
-                ((WebContext) context).getDriver().quit();
-            }
-            logger.debug("Success tearing down context " + context.getContextName());
-        }
-
-    }
-
-
-    /**
-     * Tear down a context stored in {@link ContextFactory#contextMap}
-     *
-     * @param context AbstractContext instance
-     */
-    public static void tearDownContext(final AbstractContext context) {
-
-        AbstractContext ct = null;
-
-        if (context instanceof WebContext) {
-            ct = context.getContext();
-            ((WebContext) context).getDriver().quit();
-
-        }
-        ContextFactory.getContextMap().remove(ct);
-
-        if (ContextFactory.getCurrentContext() == context)
-            ContextFactory.setCurrentContext(null);
-
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName();
-    }
 }

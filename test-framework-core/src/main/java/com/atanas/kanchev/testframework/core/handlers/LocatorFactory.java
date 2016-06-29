@@ -24,7 +24,7 @@ public class LocatorFactory implements IElementLocator, IWait {
     public WebElement findElement(By locator) {
         logger.debug("Locating element using " + locator.toString());
         try {
-            return ((WebContext) getCurrentContext()).getDriver().findElement(locator);
+            return ((WebContext<WebDriver>) getCurrentContext()).getDriver().findElement(locator);
         } catch (NoSuchElementException nsee) {
             throw new NoSuchElementException("Unable to locate element using " + locator.toString(), nsee);
         }
@@ -34,7 +34,7 @@ public class LocatorFactory implements IElementLocator, IWait {
     public List<WebElement> findElements(By locator) {
         logger.debug("Locating elements using " + locator.toString());
         try {
-            List<WebElement> e = ((WebContext) getCurrentContext()).getDriver().findElements(locator);
+            List<WebElement> e = ((WebContext<WebDriver>) getCurrentContext()).getDriver().findElements(locator);
             int numberOfElementsFound = e.size();
             if (numberOfElementsFound == 0)
                 throw new NoSuchElementException("Elements found: " + numberOfElementsFound);
@@ -128,7 +128,7 @@ public class LocatorFactory implements IElementLocator, IWait {
 
     private FluentWait<WebDriver> getWait(long duration) {
         try {
-            return new FluentWait<>(((WebContext) getCurrentContext()).getDriver())
+            return new FluentWait<>((((WebContext<WebDriver>) getCurrentContext()).getDriver()))
                     .withTimeout(duration, SECONDS)
                     .pollingEvery(5, SECONDS)
                     .ignoring(NoSuchElementException.class);

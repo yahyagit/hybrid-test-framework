@@ -6,8 +6,6 @@ import com.atanas.kanchev.testframework.core.handlers.IWrapper;
 import org.junit.*;
 import org.openqa.selenium.By;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by atanas on 26/06/2016.
  */
@@ -15,7 +13,7 @@ public class ProbeTest implements IWrapper{
 
     @Before
     public void setUp() throws Exception {
-        setupBrowser()
+        setupSelenium()
                 .setBrowser("chrome");
     }
 

@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.appium.handlers;
+package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.dataservices.csv.CSVParser;
 import org.slf4j.Logger;

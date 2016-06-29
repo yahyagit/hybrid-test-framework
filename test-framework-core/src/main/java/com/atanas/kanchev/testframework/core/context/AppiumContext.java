@@ -2,11 +2,8 @@ package com.atanas.kanchev.testframework.core.context;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 /**
  * Appium Context
@@ -14,66 +11,36 @@ import java.util.List;
  * @param <T>
  * @author Atanas Ksnchev
  */
-public final class AppiumContext<T> extends AbstractContext<T> {
+public final class AppiumContext<T> extends WebContext<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(AppiumContext.class);
 
-    // Current element pointer
-    private WebElement currentElement;
-    // Global saved element pointer - see saveCurrentElementPosition()
-    private WebElement elementStore;
-    // Internal web element list - see getListByTag() getListByClass() ...
-    private List<WebElement> elementList;
-
-    public AppiumContext() {
-        super("appiumContext_");
+    public AppiumContext(T driver) {
+        super(driver, "appiumContext_");
     }
 
     @Override
-    public void tearDownContext() {
-        for (AbstractContext context : ContextFactory.getContextMap().values()) {
-            if (context instanceof AppiumContext) {
-                if (context.getDriver() instanceof AndroidDriver)
-                    ((AppiumContext<AndroidDriver>) context).getDriver().quit();
-                if (context.getDriver() instanceof IOSDriver)
-                    ((AppiumContext<IOSDriver>) context).getDriver().quit();
-
-            }
-            logger.debug("Success tearing down context " + context.getContextName());
+    public void tearDownContext(AbstractContext context) {
+        if (context instanceof AppiumContext) {
+            if (context.getDriver() instanceof AndroidDriver)
+                ((AppiumContext<AndroidDriver>) context).getDriver().quit();
+            if (context.getDriver() instanceof IOSDriver)
+                ((AppiumContext<IOSDriver>) context).getDriver().quit();
         }
     }
 
-    //////////////
-    // Getters //
-    /////////////
-
-    public WebElement getCurrentElement() {
-        return currentElement;
+    @Override
+    public void tearDownContexts() {
+        for (AbstractContext context : ContextFactory.getContextMap().values()) {
+            tearDownContext(context);
+            removeContext(context);
+        }
     }
 
-    public WebElement getElementStore() {
-        return elementStore;
-    }
-
-    public List<WebElement> getElementList() {
-        return elementList;
-    }
-
-    //////////////
-    // Setters //
-    /////////////
-
-    public void setCurrentElement(WebElement currentElement) {
-        this.currentElement = currentElement;
-    }
-
-    public void setElementStore(WebElement elementStore) {
-        this.elementStore = elementStore;
-    }
-
-    public void setElementList(List<WebElement> elementList) {
-        this.elementList = elementList;
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
     }
 
 }

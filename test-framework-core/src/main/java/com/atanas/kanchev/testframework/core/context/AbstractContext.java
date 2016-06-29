@@ -21,7 +21,7 @@ public abstract class AbstractContext<T> {
     // the context name
     private String contextName;
 
-    boolean isContextReusable;
+    private boolean isContextReusable;
 
     // the driver object
     private T driver;
@@ -92,11 +92,19 @@ public abstract class AbstractContext<T> {
         this.contextName = contextName;
     }
 
-
     public void setContextReusable(boolean contextReusable) {
         isContextReusable = contextReusable;
     }
 
-    public abstract void tearDownContext();
+    public abstract void tearDownContext(AbstractContext context);
+
+    /**
+     * Tear down all active contexts stored in {@link ContextFactory#contextMap}
+     */
+    public abstract void tearDownContexts();
+
+    public void removeContext(AbstractContext context){
+        ContextFactory.removeContext(context);
+    }
 
 }

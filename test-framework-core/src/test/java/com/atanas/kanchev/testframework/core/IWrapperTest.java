@@ -2,7 +2,6 @@ package com.atanas.kanchev.testframework.core;
 
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.handlers.IWrapper;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,10 +24,10 @@ public class IWrapperTest {
 
         @Before
         public void setUp() throws Exception {
-            setupBrowser()
+            setupSelenium()
                     .setBrowser("chrome")
                     .setStartMaximized(true)
-                    .setReuseBrowser(true)
+//                    .setReuseBrowser(true)
                     .setCustomCapabilities(DesiredCapabilities.ipad());
 
         }
@@ -110,9 +109,9 @@ public class IWrapperTest {
 //
 //    @Test
 //    public void driver() throws Exception {
-//        DriverFactory driverFactory = setupBrowser().configureBrowser();
+//        DriverFactory driverFactory = setupSelenium().configureBrowser();
 //        //driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
-//        setupBrowser().configureContext(driverFactory);
+//        setupSelenium().configureContext(driverFactory);
 //        goTo(url);
 //    }
 //

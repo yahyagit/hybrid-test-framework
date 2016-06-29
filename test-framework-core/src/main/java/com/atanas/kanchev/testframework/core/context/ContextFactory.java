@@ -1,6 +1,8 @@
 package com.atanas.kanchev.testframework.core.context;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,9 +26,10 @@ public class ContextFactory {
     /**
      * Add context to {@link ContextFactory#contextMap}
      *
-     * @param context instance of AbstractContext
+     * @param context AbstractContext
      */
     public static void addContext(AbstractContext context) {
+
         if (context == null) throw new CustomExceptions.Common.NullArgumentException("Null method argument context");
 
         if (contextMap.containsKey(context.getContextName())) {
@@ -34,8 +37,30 @@ public class ContextFactory {
             logger.warn("Duplicated key in ContextFactory#contextMap, renaming to " + context.getContextName());
         }
 
+        logger.warn("Adding context " + context.getContextName() + " to the map");
         contextMap.put(context.getContextName(), context);
         currentContext = context;
+    }
+
+    /**
+     * Remove context instance from {@link ContextFactory#contextMap}
+     *
+     * @param context AbstractContext
+     */
+    public static void removeContext(AbstractContext context) {
+
+        if (context == null) throw new CustomExceptions.Common.NullArgumentException("Null method argument context");
+
+        if (contextMap.containsKey(context.getContextName())) {
+            contextMap.remove(context);
+            logger.debug("Removing context " + context.getContextName() + " from ContextFactory#contextMap");
+            if (currentContext == context)
+                currentContext = null;
+        } else {
+            logger.error("Error removing context " + context.getContextName() + " from ContextFactory#contextMap");
+            throw new RuntimeException("Error removing context " + context.getContextName() + " from ContextFactory#contextMap");
+        }
+
     }
 
     /**
@@ -81,10 +106,11 @@ public class ContextFactory {
     /**
      * Set the current context
      *
-     * @param currentContext AbstractContext
+     * @param context AbstractContext
      */
-    public static void setCurrentContext(AbstractContext currentContext) {
-        ContextFactory.currentContext = currentContext;
+    public static void setCurrentContext(AbstractContext context) {
+        logger.debug("Setting current context " + context.toString());
+        currentContext = context;
     }
 
     public static void tearDownContexts() {
@@ -92,16 +118,24 @@ public class ContextFactory {
         logger.debug("Tearing down contexts " + getContextMap().values().size());
 
         for (AbstractContext context : getContextMap().values()) {
-            logger.debug("Tearing down context type " + context.toString());
-            context.tearDownContext();
-            logger.debug("Removing context " + context.getContextName() + " from the  map");
-            contextMap.remove(context.getContextName());
-            setCurrentContext(null);
-
+            context.tearDownContexts();
         }
-
 
     }
 
+    public static AbstractContext<?> getCtx(){
+
+        AbstractContext<?> context = getCurrentContext();
+
+        if (context instanceof WebContext) {
+            if (context.getDriver() instanceof WebDriver)
+                return context;
+            if (context.getDriver() instanceof RemoteWebDriver)
+                return context;
+        }
+
+
+        return context;
+    }
 
 }

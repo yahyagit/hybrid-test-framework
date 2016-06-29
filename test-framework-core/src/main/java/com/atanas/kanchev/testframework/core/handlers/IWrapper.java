@@ -13,9 +13,14 @@ import org.openqa.selenium.WebElement;
 public interface IWrapper extends IBaseHandler {
 
     DriverFactory DRIVER_FACTORY = new DriverFactory();
+    DeviceBasedHandler DEVICE_BASED_HANDLER = new DeviceBasedHandler();
 
-    default DriverFactory setupBrowser() {
+    default DriverFactory setupSelenium() {
         return DRIVER_FACTORY;
+    }
+
+    default DeviceBasedHandler setupAppium() {
+        return DEVICE_BASED_HANDLER;
     }
 
     default Wait waitFor(long wait) {
@@ -23,7 +28,7 @@ public interface IWrapper extends IBaseHandler {
     }
 
     default Navigate goTo(final String url) {
-        return new Navigate().getPage(url);
+        return new Navigate(DRIVER_FACTORY).getPage(url);
     }
 
     default Finder find() {
@@ -54,12 +59,8 @@ public interface IWrapper extends IBaseHandler {
         return new SikuliXFactory();
     }
 
-//    default DeviceBasedHandler setupAppium() {
-//        return new DeviceBasedHandler();
-//    }
-
-    default WebElement currentElement(){
-        return ((WebContext)ContextFactory.getCurrentContext()).getCurrentElement();
+    default WebElement currentElement() {
+        return ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement();
     }
 
 }

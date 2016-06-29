@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.appium.handlers;
+package com.atanas.kanchev.testframework.core.handlers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

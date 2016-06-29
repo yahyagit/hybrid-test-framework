@@ -26,6 +26,16 @@ public class AbstractContextTest extends AbstractContext<WebDriver> {
         super(contextName);
     }
 
+    @Override
+    public void tearDownContext(AbstractContext context) {
+
+    }
+
+    @Override
+    public void tearDownContexts() {
+
+    }
+
     @Test
     public void getAndSetDriver() throws Exception {
 
@@ -88,8 +98,4 @@ public class AbstractContextTest extends AbstractContext<WebDriver> {
 
     }
 
-    @Override
-    public void tearDownContext() {
-
-    }
 }

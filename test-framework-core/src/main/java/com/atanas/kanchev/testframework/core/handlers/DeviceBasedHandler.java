@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.appium.handlers;
+package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumCapabilities;
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDevice;
@@ -6,10 +6,10 @@ import com.atanas.kanchev.testframework.appium.driverfactory.DeviceDriverFactory
 import com.atanas.kanchev.testframework.core.context.AbstractContext;
 import com.atanas.kanchev.testframework.core.context.AppiumContext;
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.IOSElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,15 +90,15 @@ public class DeviceBasedHandler extends DeviceMethods {
      * @param appiumServerURL Appium server URL String, e.g. "http://127.0.0.1:4723/wd/hub"
      * @return IOSDriver instance
      */
-    public IOSDriver initIOSDriver(String appiumServerURL) {
+    public void initIOSDriver(String appiumServerURL) {
         try {
             this.createAppiumDriver.setDeviceServerURL(new URL(appiumServerURL));
-            return this.createAppiumDriver.getIOSDriver();
+            AbstractContext<IOSDriver<IOSElement>> context = new AppiumContext<>(this.createAppiumDriver.getIOSDriver());
+            ContextFactory.addContext(context);
         } catch (MalformedURLException e) {
             logger.error(e.getMessage());
         }
 
-        return null;
     }
 
     /**
@@ -107,18 +107,14 @@ public class DeviceBasedHandler extends DeviceMethods {
      * @param appiumServerURL Appium server URL String, e.g. "http://127.0.0.1:4723/wd/hub"
      * @return AndroidDriver instance
      */
-    public AndroidDriver<AndroidElement> initAndroidDriver(String appiumServerURL) {
+    public void initAndroidDriver(String appiumServerURL) {
         try {
             this.createAppiumDriver.setDeviceServerURL(new URL(appiumServerURL));
-            AbstractContext<AppiumDriver> context = new AppiumContext();
-            AndroidDriver<AndroidElement> driver = this.createAppiumDriver.getAndroidDriver();
-            context.setDriver(driver);
+            AbstractContext<AndroidDriver<AndroidElement>> context = new AppiumContext<>(this.createAppiumDriver.getAndroidDriver());
             ContextFactory.addContext(context);
-            return driver;
         } catch (MalformedURLException e) {
             logger.error(e.getMessage());
         }
-        return null;
     }
 
 //	boolean deviceStart(){

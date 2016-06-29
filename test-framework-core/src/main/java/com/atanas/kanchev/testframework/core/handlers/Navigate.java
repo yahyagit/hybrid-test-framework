@@ -1,9 +1,10 @@
 package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.core.context.AbstractContext;
+import com.atanas.kanchev.testframework.core.context.AppiumContext;
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.context.WebContext;
+import com.atanas.kanchev.testframework.selenium.driver_factory.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +17,16 @@ import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCu
 /**
  * Nav Interface
  */
-public class Navigate implements IWrapper {
+public final class Navigate implements IWrapper {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Navigate.class);
+
+    DriverFactory driverFactory;
+
+    public Navigate(DriverFactory driverFactory) {
+        this.driverFactory = driverFactory;
+    }
 
     /**
      * Load a new web page in the current browser window. This is done using an HTTP GET operation,
@@ -47,18 +54,21 @@ public class Navigate implements IWrapper {
             try {
                 getCurrentContext();
             } catch (CustomExceptions.Common.NullArgumentException e) {
-                AbstractContext<WebDriver> context = new WebContext();
-                context.setDriver(DRIVER_FACTORY.getDriver());
-                if (setupBrowser().isReuseBrowser())
+                WebContext<WebDriver> context = new WebContext<>(driverFactory.getDriver());
+                if (driverFactory.isReuseBrowser())
                     context.setContextReusable(true);
                 ContextFactory.addContext(context);
             }
 
             logger.debug("Navigating to " + url);
-            ((WebContext) getCurrentContext()).getDriver().navigate().to(address);
 
-            return this;
+            if (getCurrentContext() instanceof AppiumContext)
+                INavigateAppium.getPage(address);
+            if (getCurrentContext() instanceof WebContext)
+                INavigateSelenium.getPage(address);
         }
+        return this;
+
     }
 
     /**
@@ -66,9 +76,10 @@ public class Navigate implements IWrapper {
      *
      * @return this
      */
-
     public Navigate back() {
-        ((WebContext) getCurrentContext()).getDriver().navigate().back();
+        logger.debug("Navigating back");
+        if (getCurrentContext() instanceof AppiumContext) INavigateAppium.back();
+        if (getCurrentContext() instanceof WebContext) INavigateSelenium.back();
         return this;
     }
 
@@ -79,7 +90,9 @@ public class Navigate implements IWrapper {
      * @return this
      */
     public Navigate forward() {
-        ((WebContext) getCurrentContext()).getDriver().navigate().forward();
+        logger.debug("Navigating forward");
+        if (getCurrentContext() instanceof AppiumContext) INavigateAppium.forward();
+        if (getCurrentContext() instanceof WebContext) INavigateSelenium.forward();
         return this;
     }
 
@@ -89,7 +102,10 @@ public class Navigate implements IWrapper {
      * @return this
      */
     public Navigate refresh() {
-        ((WebContext) getCurrentContext()).getDriver().navigate().refresh();
+        logger.debug("Refreshing page");
+        if (getCurrentContext() instanceof AppiumContext) INavigateAppium.refresh();
+        if (getCurrentContext() instanceof WebContext) INavigateSelenium.refresh();
         return this;
     }
+
 }
