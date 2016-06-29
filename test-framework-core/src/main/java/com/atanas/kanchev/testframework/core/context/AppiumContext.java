@@ -1,7 +1,7 @@
 package com.atanas.kanchev.testframework.core.context;
 
-
-import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,9 +9,12 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
+ * Appium Context
+ *
+ * @param <T>
  * @author Atanas Ksnchev
  */
-public final class AppiumContext extends AbstractContext<AppiumDriver> {
+public final class AppiumContext<T> extends AbstractContext<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(AppiumContext.class);
@@ -29,9 +32,17 @@ public final class AppiumContext extends AbstractContext<AppiumDriver> {
 
     @Override
     public void tearDownContext() {
-        //TODO IMPLEMENT ME
-    }
+        for (AbstractContext context : ContextFactory.getContextMap().values()) {
+            if (context instanceof AppiumContext) {
+                if (context.getDriver() instanceof AndroidDriver)
+                    ((AppiumContext<AndroidDriver>) context).getDriver().quit();
+                if (context.getDriver() instanceof IOSDriver)
+                    ((AppiumContext<IOSDriver>) context).getDriver().quit();
 
+            }
+            logger.debug("Success tearing down context " + context.getContextName());
+        }
+    }
 
     //////////////
     // Getters //
@@ -53,7 +64,6 @@ public final class AppiumContext extends AbstractContext<AppiumDriver> {
     // Setters //
     /////////////
 
-
     public void setCurrentElement(WebElement currentElement) {
         this.currentElement = currentElement;
     }
@@ -65,7 +75,5 @@ public final class AppiumContext extends AbstractContext<AppiumDriver> {
     public void setElementList(List<WebElement> elementList) {
         this.elementList = elementList;
     }
-
-
 
 }
