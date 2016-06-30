@@ -1,16 +1,16 @@
 package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.context.WebContext;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+
+import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCurrentContext;
 
 /**
  * Probe WebElement
@@ -207,6 +207,15 @@ public class Probe implements IWrapper {
     }
 
     /**
+     * Checks {@link WebContext#currentElement} is displayed.
+     *
+     * @return {@code true} if element is displayed
+     */
+    public boolean isDisplayed() {
+        return ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().isDisplayed();
+    }
+
+    /**
      * Check if {@link WebContext#currentElement} has color as expected
      *
      * @param css                  CSS definition {@link CommonPageDefinitions.CSS}
@@ -239,6 +248,98 @@ public class Probe implements IWrapper {
         }
 
         return false;
+    }
+
+    public boolean hasURL(String expectedURL, boolean isPreciseMatch) {
+        String actualURL = ((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getDriver().getCurrentUrl();
+        if (isPreciseMatch) return actualURL.equals(expectedURL);
+        else return actualURL.contains(expectedURL);
+
+    }
+
+    public boolean hasTitle(String expectedTitle, boolean isPreciseMatch) {
+        String actualURL = ((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getDriver().getTitle();
+        if (isPreciseMatch) return actualURL.equals(expectedTitle);
+        else return actualURL.contains(expectedTitle);
+
+    }
+
+    /**
+     * Contains image reference. Either exact or as a subset i.e. 'image.gif' =
+     * 'c:/images/image.gif' = true.
+     *
+     * @param imagePath
+     * @return true if image found false if not found or the current element is
+     * not an <IMG> tag
+     */
+    public boolean hasPartialImagePath(String imagePath) {
+        boolean contains = false;
+        if (!((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getTagName().equals(CommonPageDefinitions.HTML.IMAGE.getDefinition())) {
+            logger.error("hasImage : Current element is not image container");
+        } else {
+            contains = ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getAttribute("src").contains(imagePath);
+        }
+        return contains;
+    }
+
+    /**
+     * Contains link to url.
+     *
+     * @param url
+     * @return true, if successful
+     */
+    public boolean hasLinkToURL(String url) {
+        boolean hasAnchorAndHref = false;
+        ((WebContext) ContextFactory.getCurrentContext()).setWebElementsList(((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getDriver().findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
+
+        for (WebElement anchor : ((WebContext<WebDriver>) getCurrentContext()).getWebElementsList()) {
+            if (anchor.getAttribute("href") != null && anchor.getAttribute("href").contains(url)) ;
+            hasAnchorAndHref = true;
+            break;
+
+        }
+        return hasAnchorAndHref;
+    }
+
+    public boolean followLinkToURL(String link) {
+        boolean canFollow = false;
+        if (hasLinkToURL(link)) {
+            ((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getDriver().navigate().to(link);
+            canFollow = true;
+        }
+        return canFollow;
+    }
+
+    public boolean titleHasPartialText(String text) {
+
+        String title = ((WebContext<WebDriver>) getCurrentContext()).getDriver().getTitle();
+
+        if (title.contains(text)) {
+            return true;
+        } else {
+            logger.error("Page title does not contain: " + text + " Actual Title: " + title);
+            return false;
+        }
+    }
+
+    public boolean hasPartialCookieValue(String cookieName, String cookieValue) {
+
+        try {
+
+            if (((WebContext<WebDriver>) getCurrentContext()).getDriver().manage().getCookieNamed(cookieName).getValue().contains(cookieValue)) {
+                return true;
+            }
+        } catch (NullPointerException e) {
+            logger.error("Cookie: " + cookieName + " does not exist");
+            logger.debug("Cookie Names:");
+            for (Cookie cookie : ((WebContext<WebDriver>) getCurrentContext()).getDriver().manage().getCookies()) {
+                logger.debug(cookie.getName());
+            }
+            return false;
+        }
+        logger.error("Cookie does not contain the value: " + cookieValue + ", actual value: " + ((WebContext<WebDriver>) getCurrentContext()).getDriver().manage().getCookieNamed(cookieName).getValue());
+        return false;
+
     }
 
 }

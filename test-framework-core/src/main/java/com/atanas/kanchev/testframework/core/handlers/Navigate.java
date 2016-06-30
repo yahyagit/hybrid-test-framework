@@ -5,12 +5,16 @@ import com.atanas.kanchev.testframework.core.context.AppiumContext;
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.context.WebContext;
 import com.atanas.kanchev.testframework.selenium.driver_factory.DriverFactory;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.Set;
 
 import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCurrentContext;
 
@@ -107,5 +111,161 @@ public final class Navigate implements IWrapper {
         if (getCurrentContext() instanceof WebContext) INavigateSelenium.refresh();
         return this;
     }
+
+
+    public Navigate navigateToWindowByPartialTitle(String title) {
+
+        try {
+            WebDriver popup;
+            Iterator<String> windowIterator = ((WebContext<WebDriver>) getCurrentContext()).getDriver().getWindowHandles().iterator();
+            while (windowIterator.hasNext()) {
+                String windowHandle = windowIterator.next();
+                popup = ((WebContext<WebDriver>) getCurrentContext()).getDriver().switchTo().window(windowHandle);
+                if (popup.getTitle().contains(title)) {
+                    break;
+                }
+            }
+            logger.debug("navigateToWindowByPartialTitle : Navigated to window by:" + title);
+
+        } catch (NoSuchWindowException nswe) {
+            logger.error("navigateToWindowByPartialTitle : No Window found");
+            throw new NoSuchWindowException("navigateToWindowByPartialTitle : No Window found");
+
+        }
+
+        return null;
+    }
+
+    public Navigate navigateToWindow(String windowIdentifier) {
+        try {
+            ((WebContext<WebDriver>) getCurrentContext()).getDriver().switchTo().window(windowIdentifier);
+        } catch (NoSuchWindowException nswe) {
+
+        }
+        return this;
+    }
+
+    /**
+     * Goto other window. Move to child window from parent or vise-versa
+     *
+     * @return true, if successful
+     */
+    public Navigate navigateToOtherWindow() {
+
+        Set<String> handles = ((WebContext<WebDriver>) getCurrentContext()).getDriver().getWindowHandles();
+        String currentWindow = ((WebContext<WebDriver>) getCurrentContext()).getDriver().getWindowHandle();
+        for (String handle : handles) {
+            if (!handle.equals(currentWindow)) {
+                ((WebContext<WebDriver>) getCurrentContext()).getDriver().switchTo().window(handle);
+                logger.debug("Switched to Other Window");
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Switch to IFrame following activation and focus.
+     *
+     * @return true if successful, false if there is no IFrame
+     */
+    public Navigate navigateToActivateFrame() {
+        try {
+            ((WebContext<WebDriver>) getCurrentContext()).getDriver().switchTo().frame(0);
+            logger.debug("Switched to Active Frame");
+
+        } catch (NoSuchFrameException nsfe) {
+            logger.error("Unable to Switch Frame - No Such Frame");
+
+        }
+        return this;
+    }
+
+    /**
+     * Switch to IFrame by Id
+     *
+     * @param id The Id
+     * @return true if successful, false if there is no such IFrame
+     */
+    public Navigate navigateToFrameById(String id) {
+        try {
+            ((WebContext<WebDriver>) getCurrentContext()).getDriver().switchTo().frame(id);
+            logger.debug("Switched to Active Frame by Id");
+
+        } catch (NoSuchFrameException nsfe) {
+            logger.error("Unable to Switch Frame - No Such Frame");
+
+        }
+        return this;
+    }
+
+    /**
+     * Switch to IFrame by className
+     *
+     * @param
+     * @return true if successful, false if there is no such IFrame
+     */
+    public Navigate navigateToFrameBy(By by) {
+        try {
+            ((WebContext<WebDriver>) getCurrentContext()).getDriver().switchTo().frame(((WebContext<WebDriver>) getCurrentContext()).getDriver().findElement(by));
+            logger.debug("Switched to Active Frame by className");
+
+        } catch (NoSuchFrameException nsfe) {
+            logger.error("Unable to Switch Frame - No Such Frame");
+
+        }
+        return this;
+    }
+
+
+    public Navigate waitForFrameByIdToBeAvailableAndSwitch(String frameId) {
+        try {
+            new WebDriverWait(((WebContext<WebDriver>) getCurrentContext()).getDriver(), 5)
+                    .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameId));
+
+        } catch (NoSuchFrameException nsfe) {
+            logger.error("Unable to Switch Frame - No Such Frame");
+
+        }
+        return this;
+    }
+    /**
+     * Switch to parent window from child window or IFrame. Will have no effect
+     * if only one window open
+     *
+     * @return true
+     */
+    public Navigate returnToDefaultWindow() {
+        ((WebContext<WebDriver>) getCurrentContext()).getDriver().switchTo().defaultContent();
+        return this;
+    }
+
+    public Navigate deleteCookies() {
+        try {
+            ((WebContext<WebDriver>) getCurrentContext()).getDriver().manage().deleteAllCookies();
+        } catch (NoSuchWindowException nsw) {
+
+        }
+        return this;
+    }
+
+    public Navigate deleteCookie(String cookieName) {
+        try {
+            ((WebContext<WebDriver>) getCurrentContext()).getDriver().manage().deleteCookieNamed(cookieName);
+        } catch (NoSuchWindowException nsw) {
+
+        }
+        return this;
+    }
+
+    public Navigate setCookie(String cookieName, String cookieValue) {
+        try {
+            ((WebContext<WebDriver>) getCurrentContext()).getDriver().manage().addCookie(new Cookie(cookieName, cookieValue));
+        } catch (NoSuchWindowException nsw) {
+
+        }
+        return this;
+    }
+
+
 
 }
