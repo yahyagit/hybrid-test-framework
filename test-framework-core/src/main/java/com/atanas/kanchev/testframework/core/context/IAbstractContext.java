@@ -3,7 +3,7 @@ package com.atanas.kanchev.testframework.core.context;
 /**
  * @author Atanas Ksnchev
  */
-public interface IAbstractContext<T> {
+interface IAbstractContext<T> {
 
     /**
      * Get driver reference
@@ -15,7 +15,7 @@ public interface IAbstractContext<T> {
     /**
      * Set the {@link AbstractContext#driver}
      *
-     * @param driver
+     * @param driver T
      */
     void setDriver(T driver);
 
@@ -37,6 +37,12 @@ public interface IAbstractContext<T> {
 
     void setContextReusable(boolean contextReusable);
 
+    /**
+     * Tear down all active contexts stored in {@link ContextFactory#contextMap}
+     *
+     * @param context
+     * @param <U>
+     */
     <U extends AbstractContext> void tearDownContext(U context);
 
 }

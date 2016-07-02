@@ -13,7 +13,7 @@ import java.security.SecureRandom;
  * @param <T> Context type
  * @author Atanas Kanchev
  */
-public abstract class AbstractContext<T> {
+public abstract class AbstractContext<T> implements IAbstractContext<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(AbstractContext.class);
@@ -37,11 +37,7 @@ public abstract class AbstractContext<T> {
         logger.debug("Setting current context name to " + this.contextName);
     }
 
-    /**
-     * Get driver reference
-     *
-     * @return reference of {@link AbstractContext#driver}
-     */
+    @Override
     public T getDriver() {
         if (this.driver == null)
             throw new CustomExceptions.Common.NullReferenceException("Null driver object AbstractContext#driver");
@@ -49,11 +45,7 @@ public abstract class AbstractContext<T> {
             return this.driver;
     }
 
-    /**
-     * Set the {@link AbstractContext#driver}
-     *
-     * @param driver
-     */
+    @Override
     public void setDriver(T driver) {
         if (driver != null)
             this.driver = driver;
@@ -61,29 +53,12 @@ public abstract class AbstractContext<T> {
             throw new CustomExceptions.Common.NullArgumentException("Null driver instance passed as method argument");
     }
 
-    /**
-     * Get context name
-     *
-     * @return the value of {@link AbstractContext#contextName}
-     */
+    @Override
     public String getContextName() {
         return contextName;
     }
 
-    /**
-     * Get reference to the current context object
-     *
-     * @return this
-     */
-    public AbstractContext getContext() {
-        return this;
-    }
-
-    /**
-     * Set the value of {@link AbstractContext#contextName}
-     *
-     * @param contextName String
-     */
+    @Override
     public void setContextName(String contextName) {
         if (contextName == null)
             throw new CustomExceptions.Common.NullArgumentException("Null argument contextName");
@@ -92,19 +67,14 @@ public abstract class AbstractContext<T> {
         this.contextName = contextName;
     }
 
-    public void setContextReusable(boolean contextReusable) {
-        isContextReusable = contextReusable;
+    @Override
+    public boolean isContextReusable() {
+        return isContextReusable;
     }
 
-    public abstract void tearDownContext(AbstractContext context);
-
-    /**
-     * Tear down all active contexts stored in {@link ContextFactory#contextMap}
-     */
-    public abstract void tearDownContexts();
-
-    public void removeContext(AbstractContext context){
-        ContextFactory.removeContext(context);
+    @Override
+    public void setContextReusable(boolean contextReusable) {
+        isContextReusable = contextReusable;
     }
 
 }

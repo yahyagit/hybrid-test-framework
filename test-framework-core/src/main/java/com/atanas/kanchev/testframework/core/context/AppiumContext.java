@@ -31,14 +31,6 @@ public final class AppiumContext<T> extends WebContext<T> {
     }
 
     @Override
-    public void tearDownContexts() {
-        for (AbstractContext context : ContextFactory.getContextMap().values()) {
-            tearDownContext(context);
-            removeContext(context);
-        }
-    }
-
-    @Override
     public String toString() {
         return getClass().getSimpleName();
     }

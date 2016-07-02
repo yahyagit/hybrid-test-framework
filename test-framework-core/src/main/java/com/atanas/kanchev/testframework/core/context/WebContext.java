@@ -42,19 +42,6 @@ public class WebContext<T> extends AbstractContext<T> {
         }
     }
 
-    @Override
-    public void tearDownContexts() {
-        for (AbstractContext context : ContextFactory.getContextMap().values()) {
-            tearDownContext(context);
-            removeContext(context);
-        }
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName();
-    }
-
     //////////////
     // Getters //
     /////////////
@@ -113,6 +100,11 @@ public class WebContext<T> extends AbstractContext<T> {
         else
             throw new CustomExceptions.Common.NullArgumentException("Null WebElement instance passed as method argument");
 
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
     }
 
 }

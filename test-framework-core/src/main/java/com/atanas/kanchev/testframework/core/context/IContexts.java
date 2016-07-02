@@ -17,4 +17,6 @@ public interface IContexts {
 
     <T extends AbstractContext> IContexts tearDownContext(T context);
 
+    IContexts tearDownContexs();
+
 }
