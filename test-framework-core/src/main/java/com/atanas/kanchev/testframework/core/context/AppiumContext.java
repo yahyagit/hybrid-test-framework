@@ -17,7 +17,11 @@ public final class AppiumContext<T> extends WebContext<T> {
     private static final Logger logger = LoggerFactory.getLogger(AppiumContext.class);
 
     public AppiumContext(T driver) {
-        super(driver, "appiumContext_");
+        this(driver, "appiumContext_");
+    }
+
+    public AppiumContext(T driver, String contextName) {
+        super(driver, contextName);
     }
 
     @Override

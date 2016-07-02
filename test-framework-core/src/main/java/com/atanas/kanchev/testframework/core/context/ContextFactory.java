@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Context Factory
  */
-public class ContextFactory implements IContexts {
+public class ContextFactory implements IContextFactory {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(ContextFactory.class);
@@ -22,7 +22,7 @@ public class ContextFactory implements IContexts {
     private static final Map<String, AbstractContext> contextMap = new ConcurrentHashMap<>();
 
     @Override
-    public <T extends AbstractContext> IContexts addContext(T context) {
+    public <T extends AbstractContext> IContextFactory addContext(T context) {
         if (context == null) throw new CustomExceptions.Common.NullArgumentException("Null method argument context");
 
         if (contextMap.containsKey(context.getContextName())) {
@@ -37,7 +37,7 @@ public class ContextFactory implements IContexts {
     }
 
     @Override
-    public <T extends AbstractContext> IContexts removeContext(T context) {
+    public <T extends AbstractContext> IContextFactory removeContext(T context) {
         if (context == null) throw new CustomExceptions.Common.NullArgumentException("Null method argument context");
 
         if (contextMap.containsKey(context.getContextName())) {
@@ -68,7 +68,7 @@ public class ContextFactory implements IContexts {
     }
 
     @Override
-    public <T extends AbstractContext> IContexts setCurrentContext(T context) {
+    public <T extends AbstractContext> IContextFactory setCurrentContext(T context) {
         logger.debug("Setting current context " + context.toString());
         currentContext = context;
         return this;
@@ -83,7 +83,7 @@ public class ContextFactory implements IContexts {
     }
 
     @Override
-    public <T extends AbstractContext> IContexts tearDownContext(T context) {
+    public <T extends AbstractContext> IContextFactory tearDownContext(T context) {
 
         logger.debug("Tearing down contexts " + contextMap.values().size());
 
@@ -94,7 +94,7 @@ public class ContextFactory implements IContexts {
     }
 
     @Override
-    public IContexts tearDownContexs() {
+    public IContextFactory tearDownContexs() {
         logger.debug("Tearing down contexts " + getContextMap().values().size());
 
         for (AbstractContext context : getContextMap().values()) {
@@ -116,5 +116,26 @@ public class ContextFactory implements IContexts {
     public static Map<String, AbstractContext> getContextMap() {
         return contextMap;
     }
+
+}
+
+/**
+ * @author Atanas Ksnchev
+ */
+interface IContextFactory {
+
+    <T extends AbstractContext> IContextFactory addContext(T context);
+
+    <T extends AbstractContext> IContextFactory removeContext(T context);
+
+    <T extends AbstractContext> T switchContext(String contextName);
+
+    <T extends AbstractContext> IContextFactory setCurrentContext(T context);
+
+    <T extends AbstractContext> T getCurrentContext();
+
+    <T extends AbstractContext> IContextFactory tearDownContext(T context);
+
+    IContextFactory tearDownContexs();
 
 }
