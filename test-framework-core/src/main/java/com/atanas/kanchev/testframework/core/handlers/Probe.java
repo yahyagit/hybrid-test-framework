@@ -1,7 +1,6 @@
 package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.context.WebContext;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.Color;
@@ -9,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-
-import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCurrentContext;
 
 /**
  * Probe WebElement
@@ -34,7 +31,7 @@ public class Probe implements IWrapper {
         else {
             try {
                 logger.debug("Trying to locate element using " + locator);
-                ((WebContext) ContextFactory.getCurrentContext()).setCurrentElement(
+                ((WebContext) context().getCurrentContext()).setCurrentElement(
                         new LocatorFactory().findElement(locator));
                 logger.debug("Element found, setting as the current element pointer WebContext#currentElement");
             } catch (NoSuchElementException e) {
@@ -50,7 +47,7 @@ public class Probe implements IWrapper {
      */
     public boolean exist() {
         try {
-            return ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement() != null;
+            return ((WebContext) context().getCurrentContext()).getCurrentElement() != null;
         } catch (CustomExceptions.Common.NullReferenceException e) {
             return false;
         }
@@ -65,7 +62,7 @@ public class Probe implements IWrapper {
      */
     public boolean hasAnyText() {
 
-        boolean hasAnyText = !((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getText().isEmpty();
+        boolean hasAnyText = !((WebContext) context().getCurrentContext()).getCurrentElement().getText().isEmpty();
         logger.debug("Has any text: " + hasAnyText);
         return hasAnyText;
 
@@ -86,7 +83,7 @@ public class Probe implements IWrapper {
      */
     public boolean hasText(boolean isCaseSensitiveMatch, boolean isPreciseMatch, String... textElements) {
 
-        String elText = ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getText();
+        String elText = ((WebContext) context().getCurrentContext()).getCurrentElement().getText();
 
         boolean matchFound = false;
 
@@ -142,7 +139,7 @@ public class Probe implements IWrapper {
      */
     public boolean hasAttribute(boolean preciseMatch, String attributeName, String attributeText) {
 
-        String attrValue = ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getAttribute(attributeName);
+        String attrValue = ((WebContext) context().getCurrentContext()).getCurrentElement().getAttribute(attributeName);
 
         if (attrValue == null) {
             logger.error("The current element doesn't have a child attribute: " + attributeName);
@@ -173,7 +170,7 @@ public class Probe implements IWrapper {
      */
     public boolean isOfTagType(String tag) {
 
-        String tagName = ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getTagName();
+        String tagName = ((WebContext) context().getCurrentContext()).getCurrentElement().getTagName();
         logger.debug("Current element tag name: " + tagName);
 
         return tagName.equals(tag);
@@ -185,7 +182,7 @@ public class Probe implements IWrapper {
      * @return {@code true} if element is enabled
      */
     public boolean isEnabled() {
-        return ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().isEnabled();
+        return ((WebContext) context().getCurrentContext()).getCurrentElement().isEnabled();
     }
 
     /**
@@ -194,7 +191,7 @@ public class Probe implements IWrapper {
      * @return {@code true} if element is selected
      */
     public boolean isSelected() {
-        return ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().isSelected();
+        return ((WebContext) context().getCurrentContext()).getCurrentElement().isSelected();
     }
 
     /**
@@ -203,7 +200,7 @@ public class Probe implements IWrapper {
      * @return {@code true} if element is active
      */
     public boolean isActive() {
-        return ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getAttribute("class").contains("active");
+        return ((WebContext) context().getCurrentContext()).getCurrentElement().getAttribute("class").contains("active");
     }
 
     /**
@@ -212,7 +209,7 @@ public class Probe implements IWrapper {
      * @return {@code true} if element is displayed
      */
     public boolean isDisplayed() {
-        return ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().isDisplayed();
+        return ((WebContext) context().getCurrentContext()).getCurrentElement().isDisplayed();
     }
 
     /**
@@ -237,12 +234,12 @@ public class Probe implements IWrapper {
         switch (css) {
             case CSS_BACKGROUND_COLOUR:
                 Color backgroundColor = Color.fromString(
-                        ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.getDefinition()));
+                        ((WebContext) context().getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.getDefinition()));
                 logger.debug("Actual color: " + backgroundColor.asHex());
                 return expColor.asHex().equals(backgroundColor.asHex());
             case CSS_TEXT_COLOUR:
                 Color textColor = Color.fromString(
-                        ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.getDefinition()));
+                        ((WebContext) context().getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.getDefinition()));
                 logger.debug("Actual color: " + textColor.asHex());
                 return expColor.asHex().equals(textColor.asHex());
         }
@@ -251,14 +248,14 @@ public class Probe implements IWrapper {
     }
 
     public boolean hasURL(String expectedURL, boolean isPreciseMatch) {
-        String actualURL = ((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getDriver().getCurrentUrl();
+        String actualURL = ((WebContext<WebDriver>) context().getCurrentContext()).getDriver().getCurrentUrl();
         if (isPreciseMatch) return actualURL.equals(expectedURL);
         else return actualURL.contains(expectedURL);
 
     }
 
     public boolean hasTitle(String expectedTitle, boolean isPreciseMatch) {
-        String actualURL = ((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getDriver().getTitle();
+        String actualURL = ((WebContext<WebDriver>) context().getCurrentContext()).getDriver().getTitle();
         if (isPreciseMatch) return actualURL.equals(expectedTitle);
         else return actualURL.contains(expectedTitle);
 
@@ -274,10 +271,10 @@ public class Probe implements IWrapper {
      */
     public boolean hasPartialImagePath(String imagePath) {
         boolean contains = false;
-        if (!((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getTagName().equals(CommonPageDefinitions.HTML.IMAGE.getDefinition())) {
+        if (!((WebContext) context().getCurrentContext()).getCurrentElement().getTagName().equals(CommonPageDefinitions.HTML.IMAGE.getDefinition())) {
             logger.error("hasImage : Current element is not image container");
         } else {
-            contains = ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getAttribute("src").contains(imagePath);
+            contains = ((WebContext) context().getCurrentContext()).getCurrentElement().getAttribute("src").contains(imagePath);
         }
         return contains;
     }
@@ -290,9 +287,9 @@ public class Probe implements IWrapper {
      */
     public boolean hasLinkToURL(String url) {
         boolean hasAnchorAndHref = false;
-        ((WebContext) ContextFactory.getCurrentContext()).setWebElementsList(((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getDriver().findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
+        ((WebContext) context().getCurrentContext()).setWebElementsList(((WebContext<WebDriver>) context().getCurrentContext()).getDriver().findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
 
-        for (WebElement anchor : ((WebContext<WebDriver>) getCurrentContext()).getWebElementsList()) {
+        for (WebElement anchor : ((WebContext<WebDriver>) context().getCurrentContext()).getWebElementsList()) {
             if (anchor.getAttribute("href") != null && anchor.getAttribute("href").contains(url)) ;
             hasAnchorAndHref = true;
             break;
@@ -304,7 +301,7 @@ public class Probe implements IWrapper {
     public boolean followLinkToURL(String link) {
         boolean canFollow = false;
         if (hasLinkToURL(link)) {
-            ((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getDriver().navigate().to(link);
+            ((WebContext<WebDriver>) context().getCurrentContext()).getDriver().navigate().to(link);
             canFollow = true;
         }
         return canFollow;
@@ -312,7 +309,7 @@ public class Probe implements IWrapper {
 
     public boolean titleHasPartialText(String text) {
 
-        String title = ((WebContext<WebDriver>) getCurrentContext()).getDriver().getTitle();
+        String title = ((WebContext<WebDriver>) context().getCurrentContext()).getDriver().getTitle();
 
         if (title.contains(text)) {
             return true;
@@ -326,18 +323,18 @@ public class Probe implements IWrapper {
 
         try {
 
-            if (((WebContext<WebDriver>) getCurrentContext()).getDriver().manage().getCookieNamed(cookieName).getValue().contains(cookieValue)) {
+            if (((WebContext<WebDriver>) context().getCurrentContext()).getDriver().manage().getCookieNamed(cookieName).getValue().contains(cookieValue)) {
                 return true;
             }
         } catch (NullPointerException e) {
             logger.error("Cookie: " + cookieName + " does not exist");
             logger.debug("Cookie Names:");
-            for (Cookie cookie : ((WebContext<WebDriver>) getCurrentContext()).getDriver().manage().getCookies()) {
+            for (Cookie cookie : ((WebContext<WebDriver>) context().getCurrentContext()).getDriver().manage().getCookies()) {
                 logger.debug(cookie.getName());
             }
             return false;
         }
-        logger.error("Cookie does not contain the value: " + cookieValue + ", actual value: " + ((WebContext<WebDriver>) getCurrentContext()).getDriver().manage().getCookieNamed(cookieName).getValue());
+        logger.error("Cookie does not contain the value: " + cookieValue + ", actual value: " + (((WebContext<WebDriver>) context().getCurrentContext())).getDriver().manage().getCookieNamed(cookieName).getValue());
         return false;
 
     }

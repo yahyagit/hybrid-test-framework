@@ -1,8 +1,7 @@
 package com.atanas.kanchev.testframework.core;
 
-import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.handlers.IWrapper;
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -32,9 +31,9 @@ public class IWrapperTest {
 
         }
 
-        @AfterClass
-        public static void tearDown() throws Exception {
-            ContextFactory.tearDownContexts();
+        @After
+        public void tearDown() throws Exception {
+            context().tearDownContexs();
         }
 
         @Test

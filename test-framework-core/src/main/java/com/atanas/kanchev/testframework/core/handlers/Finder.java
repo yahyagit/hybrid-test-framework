@@ -1,7 +1,6 @@
 package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.context.WebContext;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -12,7 +11,6 @@ import org.openqa.selenium.support.ui.Quotes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.atanas.kanchev.testframework.core.context.ContextFactory.getCurrentContext;
 
 /**
  * @author Atanas Ksnchev
@@ -27,11 +25,11 @@ public final class Finder implements IWrapper {
     }
 
     public Finder(Class<?> clasz) {
-        PageFactory.initElements((WebDriver) ContextFactory.getCurrentContext().getDriver(), clasz);
+        PageFactory.initElements((WebDriver) context().getCurrentContext().getDriver(), clasz);
     }
 
     public Finder(WebElement element) {
-        ((WebContext) getCurrentContext()).setCurrentElement(element);
+        ((WebContext) context().getCurrentContext()).setCurrentElement(element);
     }
 
     /**
@@ -42,7 +40,7 @@ public final class Finder implements IWrapper {
     public Finder goToRootElement() {
 
         try {
-            ((WebContext) getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(By.xpath("/html/body")));
+            ((WebContext) context().getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(By.xpath("/html/body")));
         } catch (NoSuchElementException nsee) {
             logger.error("Unable to return to Root Element - Body");
         }
@@ -60,7 +58,7 @@ public final class Finder implements IWrapper {
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            ((WebContext) getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(locator));
+            ((WebContext) context().getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(locator));
         return this;
     }
 
@@ -75,7 +73,7 @@ public final class Finder implements IWrapper {
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            ((WebContext) getCurrentContext()).setWebElementsList(new LocatorFactory().findElements(locator));
+            ((WebContext) context().getCurrentContext()).setWebElementsList(new LocatorFactory().findElements(locator));
         return this;
 
     }
@@ -91,7 +89,7 @@ public final class Finder implements IWrapper {
         if (element == null)
             throw new CustomExceptions.Common.NullArgumentException("Null method argument: WebElement element");
         else
-            ((WebContext) getCurrentContext()).setCurrentElement(element);
+            ((WebContext) context().getCurrentContext()).setCurrentElement(element);
 
         return this;
     }
@@ -107,7 +105,7 @@ public final class Finder implements IWrapper {
         if (text == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            ((WebContext) getCurrentContext()).setCurrentElement(
+            ((WebContext) context().getCurrentContext()).setCurrentElement(
                     new LocatorFactory().findElement(By.xpath(".//*/text()[contains(normalize-space(.), " + Quotes.escape(text) + ")]/parent::*")));
         return this;
 
@@ -124,7 +122,7 @@ public final class Finder implements IWrapper {
         if (text == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            ((WebContext) getCurrentContext()).setCurrentElement(
+            ((WebContext) context().getCurrentContext()).setCurrentElement(
                     new LocatorFactory().findElement(By.xpath(".//*/text()[normalize-space(.) = " + Quotes.escape(text) + "]/parent::*")));
         return this;
 
@@ -135,33 +133,33 @@ public final class Finder implements IWrapper {
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else {
-            ((WebContext) getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(locator));
+            ((WebContext) context().getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(locator));
             new JSExecutor().executeScript(
-                    ((WebContext<WebDriver>) getCurrentContext()).getDriver(),
+                    ((WebContext<WebDriver>) context().getCurrentContext()).getDriver(),
                     "arguments[0].scrollIntoView(true);",
-                    ((WebContext) getCurrentContext()).getCurrentElement());
+                    ((WebContext) context().getCurrentContext()).getCurrentElement());
         }
         return this;
     }
 
     public Finder scrollToElementByAttribute(String attribute, String value) {
 
-        ((WebContext) getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(By.xpath("//*[contains(@" + attribute + ", '" + value + "')]")));
+        ((WebContext) context().getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(By.xpath("//*[contains(@" + attribute + ", '" + value + "')]")));
         new JSExecutor().executeScript(
-                ((WebContext<WebDriver>) getCurrentContext()).getDriver(),
+                ((WebContext<WebDriver>) context().getCurrentContext()).getDriver(),
                 "arguments[0].scrollIntoView(true);",
-                ((WebContext) getCurrentContext()).getCurrentElement());
+                ((WebContext) context().getCurrentContext()).getCurrentElement());
 
         return this;
     }
 
     public Finder scrollToElementByTag(String tag, String value) {
 
-        ((WebContext) getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(By.xpath("//*[contains(" + tag + ", '" + value + "')]")));
+        ((WebContext) context().getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(By.xpath("//*[contains(" + tag + ", '" + value + "')]")));
         new JSExecutor().executeScript(
-                ((WebContext<WebDriver>) getCurrentContext()).getDriver(),
+                ((WebContext<WebDriver>) context().getCurrentContext()).getDriver(),
                 "arguments[0].scrollIntoView(true);",
-                ((WebContext) getCurrentContext()).getCurrentElement());
+                ((WebContext) context().getCurrentContext()).getCurrentElement());
 
         return this;
     }
@@ -169,14 +167,14 @@ public final class Finder implements IWrapper {
     public Finder scrollToElementByText(String text, boolean isExactMatch) {
 
         if (isExactMatch)
-            ((WebContext) getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(By.xpath("//*[.=\"" + text + "\"]")));
+            ((WebContext) context().getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(By.xpath("//*[.=\"" + text + "\"]")));
         else
-            ((WebContext) getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(By.xpath("//*[contains(text(), \"" + text + "\")]")));
+            ((WebContext) context().getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(By.xpath("//*[contains(text(), \"" + text + "\")]")));
 
         new JSExecutor().executeScript(
-                ((WebContext<WebDriver>) getCurrentContext()).getDriver(),
+                ((WebContext<WebDriver>) context().getCurrentContext()).getDriver(),
                 "arguments[0].scrollIntoView(true);",
-                ((WebContext) getCurrentContext()).getCurrentElement());
+                ((WebContext) context().getCurrentContext()).getCurrentElement());
 
         return this;
     }
@@ -196,7 +194,7 @@ public final class Finder implements IWrapper {
         if (attribute == null || value == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            ((WebContext) getCurrentContext()).setCurrentElement(
+            ((WebContext) context().getCurrentContext()).setCurrentElement(
                     new LocatorFactory().findElement(By.cssSelector("[" + attribute + "='" + value + "']")));
 
         return this;
@@ -214,13 +212,13 @@ public final class Finder implements IWrapper {
     public Finder labelForId(String id) {
         boolean labelFound = false;
 
-        ((WebContext) getCurrentContext()).setWebElementsList(
+        ((WebContext) context().getCurrentContext()).setWebElementsList(
                 new LocatorFactory().findElements(By.tagName(CommonPageDefinitions.HTML.LABEL.getDefinition())));
-        if (!((WebContext) getCurrentContext()).getWebElementsList().isEmpty()) {
-            for (WebElement labelElement : ((WebContext<WebDriver>) getCurrentContext()).getWebElementsList()) {
+        if (!((WebContext) context().getCurrentContext()).getWebElementsList().isEmpty()) {
+            for (WebElement labelElement : ((WebContext<WebDriver>) context().getCurrentContext()).getWebElementsList()) {
                 String s = labelElement.getAttribute(CommonPageDefinitions.HTML.ATTRIBUTE_FOR.getDefinition());
                 if (s.equals(id)) {
-                    ((WebContext) getCurrentContext()).setCurrentElement(labelElement);
+                    ((WebContext) context().getCurrentContext()).setCurrentElement(labelElement);
                     labelFound = true;
                     break;
                 }
@@ -233,12 +231,12 @@ public final class Finder implements IWrapper {
     public Finder byHref(String href) {
 
         boolean navigated = false;
-        ((WebContext) getCurrentContext()).setWebElementsList(
+        ((WebContext) context().getCurrentContext()).setWebElementsList(
                 new LocatorFactory().findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
-        if (!((WebContext) getCurrentContext()).getWebElementsList().isEmpty()) {
-            for (WebElement anchor : ((WebContext<WebDriver>) getCurrentContext()).getWebElementsList()) {
+        if (!((WebContext) context().getCurrentContext()).getWebElementsList().isEmpty()) {
+            for (WebElement anchor : ((WebContext<WebDriver>) context().getCurrentContext()).getWebElementsList()) {
                 if (anchor.getAttribute("href").equals(href)) {
-                    ((WebContext) getCurrentContext()).setCurrentElement(anchor);
+                    ((WebContext) context().getCurrentContext()).setCurrentElement(anchor);
                     navigated = true;
                     break;
                 }
@@ -258,7 +256,7 @@ public final class Finder implements IWrapper {
     public Finder navigateToChild() {
 
         // Step into child element
-        ((WebContext) getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(By.xpath("./*[1]")));
+        ((WebContext) context().getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(By.xpath("./*[1]")));
 
         return this;
 
@@ -271,7 +269,7 @@ public final class Finder implements IWrapper {
     public Finder navigateToParent() {
 
         // Step up to parent element
-        ((WebContext) getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(By.xpath("..")));
+        ((WebContext) context().getCurrentContext()).setCurrentElement(new LocatorFactory().findElement(By.xpath("..")));
         return this;
     }
 

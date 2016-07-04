@@ -1,7 +1,7 @@
 package com.atanas.kanchev.testframework.core.handlers;
 
-import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.context.WebContext;
+import com.atanas.kanchev.testframework.core.handlers.interfaces.IContext;
 import com.atanas.kanchev.testframework.selenium.driver_factory.DriverConfig;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -15,20 +15,22 @@ import static com.atanas.kanchev.testframework.core.handlers.CommonPageDefinitio
 /**
  * @author Atanas Ksnchev
  */
-public class Interact {
+public class Interact implements IInteract, IContext {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Interact.class);
 
+
+    @Override
     public Interact typeIn(CharSequence... keys) {
 
-        String tag = ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().getTagName();
+        String tag = ((WebContext) context().getCurrentContext()).getCurrentElement().getTagName();
         if (tag.equals(INPUT.getDefinition()) ||
                 tag.equals(TEXTAREA.getDefinition()) ||
                 tag.equals(UIA_SECURETEXTFIELD.getDefinition()) ||
                 tag.equals(UIA_TEXTFIELD.getDefinition()) ||
                 tag.equals("android.widget.EditText")) {
-            ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().sendKeys(keys);
+            ((WebContext) context().getCurrentContext()).getCurrentElement().sendKeys(keys);
         } else {
             logger.error("elementWriteable() : Cannot write to this element ");
         }
@@ -39,11 +41,12 @@ public class Interact {
      * Clear the text or textarea. Throws an exception if the current element
      * not an input field.
      */
+    @Override
     public Interact clear() {
         try {
-            ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().clear();
+            ((WebContext) context().getCurrentContext()).getCurrentElement().clear();
             // Fire change event
-            ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().sendKeys(Keys.BACK_SPACE);
+            ((WebContext) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.BACK_SPACE);
         } catch (NoSuchElementException nsee) {
             logger.error("Clear() : Element not, or within FORM, element");
         }
@@ -57,10 +60,11 @@ public class Interact {
      * @return true if submission successful or false if element is not, or
      * within, a FORM
      */
+    @Override
     public Interact submit() {
         boolean submitted = false;
         try {
-            ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().submit();
+            ((WebContext) context().getCurrentContext()).getCurrentElement().submit();
             submitted = true;
         } catch (NoSuchElementException nsee) {
             logger.error("submit() : Element not, or within FORM, element");
@@ -68,10 +72,11 @@ public class Interact {
         return this;
     }
 
+    @Override
     public Interact click() {
         try {
-            if (((WebContext) ContextFactory.getCurrentContext()).getCurrentElement() != null) {
-                ((WebContext) ContextFactory.getCurrentContext()).getCurrentElement().click();
+            if (((WebContext) context().getCurrentContext()).getCurrentElement() != null) {
+                ((WebContext) context().getCurrentContext()).getCurrentElement().click();
                 logger.debug("Element Clicked");
 
             } else {
@@ -86,6 +91,7 @@ public class Interact {
         return this;
     }
 
+    @Override
     public Interact sleep(int duration) {
 
         try {
@@ -103,13 +109,14 @@ public class Interact {
      * @param duration in milliseconds
      * @return false if no Element Present
      */
+    @Override
     public Interact clickAndHold(int duration) {
-        if (((WebContext) ContextFactory.getCurrentContext()).getCurrentElement() != null) {
+        if (((WebContext) context().getCurrentContext()).getCurrentElement() != null) {
             logger.debug("Click and Hold Element");
-            Actions actions = new Actions(((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getDriver());
-            actions.clickAndHold(((WebContext) ContextFactory.getCurrentContext()).getCurrentElement()).perform();
+            Actions actions = new Actions(((WebContext<WebDriver>) context().getCurrentContext()).getDriver());
+            actions.clickAndHold(((WebContext) context().getCurrentContext()).getCurrentElement()).perform();
             sleep(duration);
-            actions.release(((WebContext) ContextFactory.getCurrentContext()).getCurrentElement()).perform();
+            actions.release(((WebContext) context().getCurrentContext()).getCurrentElement()).perform();
 
         } else {
             logger.error("clickAndHold() : Element is Null");
@@ -118,11 +125,12 @@ public class Interact {
         return this;
     }
 
+    @Override
     public Interact doubleClick() {
-        if (((WebContext) ContextFactory.getCurrentContext()).getCurrentElement() != null) {
+        if (((WebContext) context().getCurrentContext()).getCurrentElement() != null) {
             logger.debug("Double Clicking Element");
-            Actions actions = new Actions(((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getDriver());
-            actions.doubleClick(((WebContext) ContextFactory.getCurrentContext()).getCurrentElement()).perform();
+            Actions actions = new Actions(((WebContext<WebDriver>) context().getCurrentContext()).getDriver());
+            actions.doubleClick(((WebContext) context().getCurrentContext()).getCurrentElement()).perform();
 
         } else {
             logger.error("doubleClick() : Element is Null");
@@ -131,11 +139,12 @@ public class Interact {
         return this;
     }
 
+    @Override
     public Interact hover() {
-        if (((WebContext) ContextFactory.getCurrentContext()).getCurrentElement() != null) {
+        if (((WebContext) context().getCurrentContext()).getCurrentElement() != null) {
             logger.debug("Double Clicking Element");
-            Actions actions = new Actions(((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getDriver());
-            actions.moveToElement(((WebContext) ContextFactory.getCurrentContext()).getCurrentElement()).perform();
+            Actions actions = new Actions(((WebContext<WebDriver>) context().getCurrentContext()).getDriver());
+            actions.moveToElement(((WebContext) context().getCurrentContext()).getCurrentElement()).perform();
 
         } else {
             logger.error("doubleClick() : Element is Null");
@@ -149,10 +158,11 @@ public class Interact {
      *
      * @return false if no Alert Present
      */
+    @Override
     public Interact handleAlert(boolean accept) {
         try {
-            new WebDriverWait(((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getDriver(), DriverConfig.DEFAULT_IMPL_WAIT).until(ExpectedConditions.alertIsPresent());
-            Alert alert = ((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getDriver().switchTo().alert();
+            new WebDriverWait(((WebContext<WebDriver>) context().getCurrentContext()).getDriver(), DriverConfig.DEFAULT_IMPL_WAIT).until(ExpectedConditions.alertIsPresent());
+            Alert alert = ((WebContext<WebDriver>) context().getCurrentContext()).getDriver().switchTo().alert();
             if (accept) alert.accept();
             else alert.dismiss();
 
@@ -167,8 +177,9 @@ public class Interact {
      * Select all the text or textarea.
      * Sends the keys Ctrl + a
      */
+    @Override
     public Interact selectAll() {
-        ((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getCurrentElement().sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        ((WebContext<WebDriver>) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.chord(Keys.CONTROL, "a"));
         return this;
     }
 
@@ -176,16 +187,9 @@ public class Interact {
      * Copies the selected the text or textarea.
      * Sends the keys Ctrl + c
      */
+    @Override
     public Interact copy() {
-        ((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getCurrentElement().sendKeys(Keys.chord(Keys.CONTROL, "c"));
-        return this;
-    }
-    /**
-     * Pastes the copied the text or textarea.
-     * Sends the keys Ctrl + v
-     */
-    public Interact paste() {
-        ((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getCurrentElement().sendKeys(Keys.chord(Keys.CONTROL, "v"));
+        ((WebContext<WebDriver>) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.chord(Keys.CONTROL, "c"));
         return this;
     }
 
@@ -193,27 +197,40 @@ public class Interact {
      * Pastes the copied the text or textarea.
      * Sends the keys Ctrl + v
      */
+    @Override
+    public Interact paste() {
+        ((WebContext<WebDriver>) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.chord(Keys.CONTROL, "v"));
+        return this;
+    }
+
+    /**
+     * Pastes the copied the text or textarea.
+     * Sends the keys Ctrl + v
+     */
+    @Override
     public String getCssAttribute(String attribute) {
 
-        return ((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getCurrentElement().getCssValue(attribute);
+        return ((WebContext<WebDriver>) context().getCurrentContext()).getCurrentElement().getCssValue(attribute);
     }
 
     /**
      * Pastes the copied the text or textarea.
      * Sends the keys Ctrl + v
      */
+    @Override
     public String getttribute(String attribute) {
 
-        return ((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getCurrentElement().getAttribute(attribute);
+        return ((WebContext<WebDriver>) context().getCurrentContext()).getCurrentElement().getAttribute(attribute);
     }
 
     /**
      * Pastes the copied the text or textarea.
      * Sends the keys Ctrl + v
      */
+    @Override
     public String getText() {
 
-        return ((WebContext<WebDriver>) ContextFactory.getCurrentContext()).getCurrentElement().getText();
+        return ((WebContext<WebDriver>) context().getCurrentContext()).getCurrentElement().getText();
     }
 
 }

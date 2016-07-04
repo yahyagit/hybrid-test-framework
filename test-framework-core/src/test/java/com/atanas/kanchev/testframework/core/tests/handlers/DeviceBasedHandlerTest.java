@@ -1,7 +1,6 @@
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDeviceTypesEnum;
-import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.handlers.IWrapper;
 import io.appium.java_client.remote.MobileBrowserType;
 import org.junit.After;
@@ -13,7 +12,7 @@ import org.junit.Test;
 public class DeviceBasedHandlerTest implements IWrapper {
     @After
     public void tearDown() throws Exception {
-        ContextFactory.tearDownContexts();
+        context().tearDownContexs();
     }
 
     @Test

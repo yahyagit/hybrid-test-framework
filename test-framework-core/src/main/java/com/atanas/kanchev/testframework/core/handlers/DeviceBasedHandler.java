@@ -5,7 +5,6 @@ import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDevice;
 import com.atanas.kanchev.testframework.appium.driverfactory.DeviceDriverFactory;
 import com.atanas.kanchev.testframework.core.context.AbstractContext;
 import com.atanas.kanchev.testframework.core.context.AppiumContext;
-import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
@@ -23,7 +22,7 @@ import java.net.URL;
  * from the ASL. This way, only this class needs to be extended to be able to
  * use all the Appium Methods
  */
-public class DeviceBasedHandler  {
+public class DeviceBasedHandler implements IWrapper  {
 
     private final static Logger logger = LoggerFactory.getLogger(DeviceBasedHandler.class);
 
@@ -95,7 +94,7 @@ public class DeviceBasedHandler  {
         try {
             this.createAppiumDriver.setDeviceServerURL(new URL(appiumServerURL));
             AbstractContext<IOSDriver<IOSElement>> context = new AppiumContext<>(this.createAppiumDriver.getIOSDriver());
-            ContextFactory.addContext(context);
+            context().addContext(context);
         } catch (MalformedURLException e) {
             logger.error(e.getMessage());
         }
@@ -112,7 +111,7 @@ public class DeviceBasedHandler  {
         try {
             this.createAppiumDriver.setDeviceServerURL(new URL(appiumServerURL));
             AbstractContext<AndroidDriver<AndroidElement>> context = new AppiumContext<>(this.createAppiumDriver.getAndroidDriver());
-            ContextFactory.addContext(context);
+            context().addContext(context);
         } catch (MalformedURLException e) {
             logger.error(e.getMessage());
         } catch (WebDriverException ex) {

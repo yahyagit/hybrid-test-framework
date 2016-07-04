@@ -49,7 +49,7 @@
         <hamcrest.version>1.3</hamcrest.version>
         <io.appium.java.version>4.0.0</io.appium.java.version>
         <open.csv.version>2.3</open.csv.version>
-        <webdrivermanager.version>1.4.5</webdrivermanager.version>
+        <webdrivermanager.version>1.4.6</webdrivermanager.version>
     </properties>
 
     <build>

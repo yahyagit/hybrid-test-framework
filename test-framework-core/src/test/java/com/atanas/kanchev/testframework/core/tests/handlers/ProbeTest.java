@@ -1,9 +1,11 @@
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
-import com.atanas.kanchev.testframework.core.context.ContextFactory;
 import com.atanas.kanchev.testframework.core.handlers.CommonPageDefinitions;
 import com.atanas.kanchev.testframework.core.handlers.IWrapper;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openqa.selenium.By;
 
 /**
@@ -19,7 +21,7 @@ public class ProbeTest implements IWrapper{
 
     @After
     public void tearDown() throws Exception {
-        ContextFactory.tearDownContexts();
+        context().tearDownContexs();
     }
 
     @Test
