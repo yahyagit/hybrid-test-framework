@@ -1,7 +1,7 @@
 package com.atanas.kanchev.testframework.core.handlers;
 
-import com.atanas.kanchev.testframework.core.context.WebContext;
-import com.atanas.kanchev.testframework.core.handlers.interfaces.IContext;
+import com.atanas.kanchev.testframework.core.context.SeleniumContext;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.driver_factory.DriverConfig;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -20,17 +20,16 @@ public class Interact implements IInteract, IContext {
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Interact.class);
 
-
     @Override
     public Interact typeIn(CharSequence... keys) {
 
-        String tag = ((WebContext) context().getCurrentContext()).getCurrentElement().getTagName();
+        String tag = ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getTagName();
         if (tag.equals(INPUT.getDefinition()) ||
                 tag.equals(TEXTAREA.getDefinition()) ||
                 tag.equals(UIA_SECURETEXTFIELD.getDefinition()) ||
                 tag.equals(UIA_TEXTFIELD.getDefinition()) ||
                 tag.equals("android.widget.EditText")) {
-            ((WebContext) context().getCurrentContext()).getCurrentElement().sendKeys(keys);
+            ((SeleniumContext) context().getCurrentContext()).getCurrentElement().sendKeys(keys);
         } else {
             logger.error("elementWriteable() : Cannot write to this element ");
         }
@@ -44,9 +43,9 @@ public class Interact implements IInteract, IContext {
     @Override
     public Interact clear() {
         try {
-            ((WebContext) context().getCurrentContext()).getCurrentElement().clear();
+            ((SeleniumContext) context().getCurrentContext()).getCurrentElement().clear();
             // Fire change event
-            ((WebContext) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.BACK_SPACE);
+            ((SeleniumContext) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.BACK_SPACE);
         } catch (NoSuchElementException nsee) {
             logger.error("Clear() : Element not, or within FORM, element");
         }
@@ -64,7 +63,7 @@ public class Interact implements IInteract, IContext {
     public Interact submit() {
         boolean submitted = false;
         try {
-            ((WebContext) context().getCurrentContext()).getCurrentElement().submit();
+            ((SeleniumContext) context().getCurrentContext()).getCurrentElement().submit();
             submitted = true;
         } catch (NoSuchElementException nsee) {
             logger.error("submit() : Element not, or within FORM, element");
@@ -75,8 +74,8 @@ public class Interact implements IInteract, IContext {
     @Override
     public Interact click() {
         try {
-            if (((WebContext) context().getCurrentContext()).getCurrentElement() != null) {
-                ((WebContext) context().getCurrentContext()).getCurrentElement().click();
+            if (((SeleniumContext) context().getCurrentContext()).getCurrentElement() != null) {
+                ((SeleniumContext) context().getCurrentContext()).getCurrentElement().click();
                 logger.debug("Element Clicked");
 
             } else {
@@ -111,12 +110,12 @@ public class Interact implements IInteract, IContext {
      */
     @Override
     public Interact clickAndHold(int duration) {
-        if (((WebContext) context().getCurrentContext()).getCurrentElement() != null) {
+        if (((SeleniumContext) context().getCurrentContext()).getCurrentElement() != null) {
             logger.debug("Click and Hold Element");
-            Actions actions = new Actions(((WebContext<WebDriver>) context().getCurrentContext()).getDriver());
-            actions.clickAndHold(((WebContext) context().getCurrentContext()).getCurrentElement()).perform();
+            Actions actions = new Actions(((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver());
+            actions.clickAndHold(((SeleniumContext) context().getCurrentContext()).getCurrentElement()).perform();
             sleep(duration);
-            actions.release(((WebContext) context().getCurrentContext()).getCurrentElement()).perform();
+            actions.release(((SeleniumContext) context().getCurrentContext()).getCurrentElement()).perform();
 
         } else {
             logger.error("clickAndHold() : Element is Null");
@@ -127,10 +126,10 @@ public class Interact implements IInteract, IContext {
 
     @Override
     public Interact doubleClick() {
-        if (((WebContext) context().getCurrentContext()).getCurrentElement() != null) {
+        if (((SeleniumContext) context().getCurrentContext()).getCurrentElement() != null) {
             logger.debug("Double Clicking Element");
-            Actions actions = new Actions(((WebContext<WebDriver>) context().getCurrentContext()).getDriver());
-            actions.doubleClick(((WebContext) context().getCurrentContext()).getCurrentElement()).perform();
+            Actions actions = new Actions(((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver());
+            actions.doubleClick(((SeleniumContext) context().getCurrentContext()).getCurrentElement()).perform();
 
         } else {
             logger.error("doubleClick() : Element is Null");
@@ -141,10 +140,10 @@ public class Interact implements IInteract, IContext {
 
     @Override
     public Interact hover() {
-        if (((WebContext) context().getCurrentContext()).getCurrentElement() != null) {
+        if (((SeleniumContext) context().getCurrentContext()).getCurrentElement() != null) {
             logger.debug("Double Clicking Element");
-            Actions actions = new Actions(((WebContext<WebDriver>) context().getCurrentContext()).getDriver());
-            actions.moveToElement(((WebContext) context().getCurrentContext()).getCurrentElement()).perform();
+            Actions actions = new Actions(((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver());
+            actions.moveToElement(((SeleniumContext) context().getCurrentContext()).getCurrentElement()).perform();
 
         } else {
             logger.error("doubleClick() : Element is Null");
@@ -161,8 +160,8 @@ public class Interact implements IInteract, IContext {
     @Override
     public Interact handleAlert(boolean accept) {
         try {
-            new WebDriverWait(((WebContext<WebDriver>) context().getCurrentContext()).getDriver(), DriverConfig.DEFAULT_IMPL_WAIT).until(ExpectedConditions.alertIsPresent());
-            Alert alert = ((WebContext<WebDriver>) context().getCurrentContext()).getDriver().switchTo().alert();
+            new WebDriverWait(((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver(), DriverConfig.DEFAULT_IMPL_WAIT).until(ExpectedConditions.alertIsPresent());
+            Alert alert = ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().switchTo().alert();
             if (accept) alert.accept();
             else alert.dismiss();
 
@@ -179,7 +178,7 @@ public class Interact implements IInteract, IContext {
      */
     @Override
     public Interact selectAll() {
-        ((WebContext<WebDriver>) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.chord(Keys.CONTROL, "a"));
         return this;
     }
 
@@ -189,7 +188,7 @@ public class Interact implements IInteract, IContext {
      */
     @Override
     public Interact copy() {
-        ((WebContext<WebDriver>) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.chord(Keys.CONTROL, "c"));
+        ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.chord(Keys.CONTROL, "c"));
         return this;
     }
 
@@ -199,7 +198,7 @@ public class Interact implements IInteract, IContext {
      */
     @Override
     public Interact paste() {
-        ((WebContext<WebDriver>) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.chord(Keys.CONTROL, "v"));
+        ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.chord(Keys.CONTROL, "v"));
         return this;
     }
 
@@ -210,7 +209,7 @@ public class Interact implements IInteract, IContext {
     @Override
     public String getCssAttribute(String attribute) {
 
-        return ((WebContext<WebDriver>) context().getCurrentContext()).getCurrentElement().getCssValue(attribute);
+        return ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement().getCssValue(attribute);
     }
 
     /**
@@ -220,7 +219,7 @@ public class Interact implements IInteract, IContext {
     @Override
     public String getttribute(String attribute) {
 
-        return ((WebContext<WebDriver>) context().getCurrentContext()).getCurrentElement().getAttribute(attribute);
+        return ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement().getAttribute(attribute);
     }
 
     /**
@@ -230,7 +229,91 @@ public class Interact implements IInteract, IContext {
     @Override
     public String getText() {
 
-        return ((WebContext<WebDriver>) context().getCurrentContext()).getCurrentElement().getText();
+        return ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement().getText();
     }
+
+
+}
+
+/**
+ * Created by atanas on 02/07/2016.
+ */
+interface IInteract {
+
+    <T> IInteract typeIn(CharSequence... keys);
+
+    /**
+     * Clear the text or text area. Throws an exception if the current element
+     * not an input field.
+     */
+    IInteract clear();
+
+    /**
+     * If the current element is a form or has a form as parent, submit it.
+     * Otherwise throw an exception.
+     *
+     * @return true if submission successful or false if element is not, or
+     * within, a FORM
+     */
+    IInteract submit();
+
+    IInteract click();
+
+    IInteract sleep(int duration);
+
+    /**
+     * Click and hold a specific amount of time in milliseconds before release
+     *
+     * @param duration in milliseconds
+     * @return false if no Element Present
+     */
+    IInteract clickAndHold(int duration);
+
+    IInteract doubleClick();
+
+    IInteract hover();
+
+    /**
+     * Navigate the current Alert and Accept
+     *
+     * @return false if no Alert Present
+     */
+    IInteract handleAlert(boolean accept);
+
+    /**
+     * Select all the text or textarea.
+     * Sends the keys Ctrl + a
+     */
+    IInteract selectAll();
+
+    /**
+     * Copies the selected the text or textarea.
+     * Sends the keys Ctrl + c
+     */
+    IInteract copy();
+
+    /**
+     * Pastes the copied the text or textarea.
+     * Sends the keys Ctrl + v
+     */
+    IInteract paste();
+
+    /**
+     * Pastes the copied the text or textarea.
+     * Sends the keys Ctrl + v
+     */
+    String getCssAttribute(String attribute);
+
+    /**
+     * Pastes the copied the text or textarea.
+     * Sends the keys Ctrl + v
+     */
+    String getttribute(String attribute);
+
+    /**
+     * Pastes the copied the text or textarea.
+     * Sends the keys Ctrl + v
+     */
+    String getText();
 
 }

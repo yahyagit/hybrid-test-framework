@@ -1,7 +1,7 @@
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDeviceTypesEnum;
-import com.atanas.kanchev.testframework.core.handlers.IWrapper;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 import io.appium.java_client.remote.MobileBrowserType;
 import org.junit.After;
 import org.junit.Test;

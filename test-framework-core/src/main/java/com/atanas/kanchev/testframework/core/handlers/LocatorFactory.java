@@ -1,7 +1,7 @@
 package com.atanas.kanchev.testframework.core.handlers;
 
-import com.atanas.kanchev.testframework.core.context.WebContext;
-import com.atanas.kanchev.testframework.core.handlers.interfaces.IContext;
+import com.atanas.kanchev.testframework.core.context.SeleniumContext;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -24,7 +24,7 @@ public class LocatorFactory implements IElementLocator, IWait, IContext {
     public WebElement findElement(By locator) {
         logger.debug("Locating element using " + locator.toString());
         try {
-            return ((WebContext<WebDriver>) context().getCurrentContext()).getDriver().findElement(locator);
+            return ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().findElement(locator);
         } catch (NoSuchElementException nsee) {
             throw new NoSuchElementException("Unable to locate element using " + locator.toString(), nsee);
         }
@@ -34,7 +34,7 @@ public class LocatorFactory implements IElementLocator, IWait, IContext {
     public List<WebElement> findElements(By locator) {
         logger.debug("Locating elements using " + locator.toString());
         try {
-            List<WebElement> e = ((WebContext<WebDriver>) context().getCurrentContext()).getDriver().findElements(locator);
+            List<WebElement> e = ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().findElements(locator);
             int numberOfElementsFound = e.size();
             if (numberOfElementsFound == 0)
                 throw new NoSuchElementException("Elements found: " + numberOfElementsFound);
@@ -105,9 +105,9 @@ public class LocatorFactory implements IElementLocator, IWait, IContext {
     @Override
     public boolean isTextPresentInElement(By locator, String text, long wait) {
 
-        ((WebContext) context().getCurrentContext()).setCurrentElement(findElement(locator));
+        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(findElement(locator));
         try {
-            getWait(wait).until(ExpectedConditions.textToBePresentInElement(((WebContext) context().getCurrentContext()).getCurrentElement(), text));
+            getWait(wait).until(ExpectedConditions.textToBePresentInElement(((SeleniumContext) context().getCurrentContext()).getCurrentElement(), text));
             return true;
         } catch (TimeoutException e) {
             logger.error("Timeout after waiting for invisibility of element by text:  " + text);
@@ -128,7 +128,7 @@ public class LocatorFactory implements IElementLocator, IWait, IContext {
 
     private FluentWait<WebDriver> getWait(long duration) {
         try {
-            return new FluentWait<>((((WebContext<WebDriver>) context().getCurrentContext()).getDriver()))
+            return new FluentWait<>((((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver()))
                     .withTimeout(duration, SECONDS)
                     .pollingEvery(5, SECONDS)
                     .ignoring(NoSuchElementException.class);

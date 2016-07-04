@@ -1,7 +1,7 @@
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
 import com.atanas.kanchev.testframework.core.handlers.Finder;
-import com.atanas.kanchev.testframework.core.handlers.IWrapper;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 
 import org.junit.After;
 import org.junit.Before;

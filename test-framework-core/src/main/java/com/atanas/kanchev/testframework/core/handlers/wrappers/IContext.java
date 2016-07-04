@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.core.handlers.interfaces;
+package com.atanas.kanchev.testframework.core.handlers.wrappers;
 
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
 

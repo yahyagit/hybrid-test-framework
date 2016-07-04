@@ -1,7 +1,8 @@
 package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.core.context.WebContext;
+import com.atanas.kanchev.testframework.core.context.SeleniumContext;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.Color;
 import org.slf4j.Logger;
@@ -10,20 +11,15 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 
 /**
- * Probe WebElement
+ * Probe
  *
  * @author Atanas Ksnchev
  */
-public class Probe implements IWrapper {
+public final class Probe implements IProbe, IContext {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Probe.class);
 
-    /**
-     * Constructor
-     *
-     * @param locator By
-     */
     public Probe(By locator) {
 
         if (locator == null)
@@ -31,59 +27,37 @@ public class Probe implements IWrapper {
         else {
             try {
                 logger.debug("Trying to locate element using " + locator);
-                ((WebContext) context().getCurrentContext()).setCurrentElement(
+                ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
                         new LocatorFactory().findElement(locator));
-                logger.debug("Element found, setting as the current element pointer WebContext#currentElement");
+                logger.debug("Element found, setting as the current element pointer SeleniumContext#currentElement");
             } catch (NoSuchElementException e) {
                 logger.error("Unable to locate element by " + locator, e.getMessage());
             }
         }
     }
 
-    /**
-     * Check if WebElement exists
-     *
-     * @return true if element is found in DOM
-     */
+    @Override
     public boolean exist() {
         try {
-            return ((WebContext) context().getCurrentContext()).getCurrentElement() != null;
+            return ((SeleniumContext) context().getCurrentContext()).getCurrentElement() != null;
         } catch (CustomExceptions.Common.NullReferenceException e) {
             return false;
         }
     }
 
-    /**
-     * Probe if {@link WebContext#currentElement} has any text i.e. </br>
-     * {@code <div>Text</div>} match will return <b>true</b>.
-     * The text to be found can be anywhere in the element text string
-     *
-     * @return {@code true} if the current WebElement has any text
-     */
+    @Override
     public boolean hasAnyText() {
 
-        boolean hasAnyText = !((WebContext) context().getCurrentContext()).getCurrentElement().getText().isEmpty();
+        boolean hasAnyText = !((SeleniumContext) context().getCurrentContext()).getCurrentElement().getText().isEmpty();
         logger.debug("Has any text: " + hasAnyText);
         return hasAnyText;
 
     }
 
-    /**
-     * Probe if {@link WebContext#currentElement} has partial text match e.g.
-     * {@code hasPartialText("hello");} matching against {@code <div>hello there<\div>}
-     * will return <b>true</b> The text to be found can be a subset of
-     * element text string </br> The method can also be used for multiple String elements
-     * e.g. {@code hasPartialText("+", "-");
-     * </br>(Note once an item is matched it returns true, irrespective of the other checks)
-     *
-     * @param isCaseSensitiveMatch {@code boolean}
-     * @param isPreciseMatch       {@code boolean}
-     * @param textElements         the text elements
-     * @return {@code true} if the current WebElement contains the text
-     */
+    @Override
     public boolean hasText(boolean isCaseSensitiveMatch, boolean isPreciseMatch, String... textElements) {
 
-        String elText = ((WebContext) context().getCurrentContext()).getCurrentElement().getText();
+        String elText = ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getText();
 
         boolean matchFound = false;
 
@@ -128,18 +102,10 @@ public class Probe implements IWrapper {
         return matchFound;
     }
 
-    /**
-     * Check if {@link WebContext#currentElement} contains specified identifier. The identifier to be
-     * found can be a subset of element identifier
-     *
-     * @param preciseMatch  {@code boolean}
-     * @param attributeName the attribute name to check
-     * @param attributeText the attribute text to check
-     * @return {@code true} if identifier is present and its value matches @param attributeText
-     */
+    @Override
     public boolean hasAttribute(boolean preciseMatch, String attributeName, String attributeText) {
 
-        String attrValue = ((WebContext) context().getCurrentContext()).getCurrentElement().getAttribute(attributeName);
+        String attrValue = ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getAttribute(attributeName);
 
         if (attrValue == null) {
             logger.error("The current element doesn't have a child attribute: " + attributeName);
@@ -162,63 +128,36 @@ public class Probe implements IWrapper {
         return matchFound;
     }
 
-    /**
-     * Checks if {@link WebContext#currentElement} of specified HTML tag type.
-     *
-     * @param tag the tag name to check
-     * @return {@code true}, if element of specified tag type
-     */
+    @Override
     public boolean isOfTagType(String tag) {
 
-        String tagName = ((WebContext) context().getCurrentContext()).getCurrentElement().getTagName();
+        String tagName = ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getTagName();
         logger.debug("Current element tag name: " + tagName);
 
         return tagName.equals(tag);
     }
 
-    /**
-     * Checks if {@link WebContext#currentElement} is enabled i.e. can receive focus.
-     *
-     * @return {@code true} if element is enabled
-     */
+    @Override
     public boolean isEnabled() {
-        return ((WebContext) context().getCurrentContext()).getCurrentElement().isEnabled();
+        return ((SeleniumContext) context().getCurrentContext()).getCurrentElement().isEnabled();
     }
 
-    /**
-     * Checks if {@link WebContext#currentElement} is selected. Checkboxes, options in select and radio buttons.
-     *
-     * @return {@code true} if element is selected
-     */
+    @Override
     public boolean isSelected() {
-        return ((WebContext) context().getCurrentContext()).getCurrentElement().isSelected();
+        return ((SeleniumContext) context().getCurrentContext()).getCurrentElement().isSelected();
     }
 
-    /**
-     * Checks {@link WebContext#currentElement} is active.
-     *
-     * @return {@code true} if element is active
-     */
+    @Override
     public boolean isActive() {
-        return ((WebContext) context().getCurrentContext()).getCurrentElement().getAttribute("class").contains("active");
+        return ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getAttribute("class").contains("active");
     }
 
-    /**
-     * Checks {@link WebContext#currentElement} is displayed.
-     *
-     * @return {@code true} if element is displayed
-     */
+    @Override
     public boolean isDisplayed() {
-        return ((WebContext) context().getCurrentContext()).getCurrentElement().isDisplayed();
+        return ((SeleniumContext) context().getCurrentContext()).getCurrentElement().isDisplayed();
     }
 
-    /**
-     * Check if {@link WebContext#currentElement} has color as expected
-     *
-     * @param css                  CSS definition {@link CommonPageDefinitions.CSS}
-     * @param expectedColorHexCode HEX color code
-     * @return {@code true} if the color matches
-     */
+    @Override
     public boolean hasColour(CommonPageDefinitions.CSS css, String expectedColorHexCode) {
 
         Color expColor;
@@ -234,12 +173,12 @@ public class Probe implements IWrapper {
         switch (css) {
             case CSS_BACKGROUND_COLOUR:
                 Color backgroundColor = Color.fromString(
-                        ((WebContext) context().getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.getDefinition()));
+                        ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.getDefinition()));
                 logger.debug("Actual color: " + backgroundColor.asHex());
                 return expColor.asHex().equals(backgroundColor.asHex());
             case CSS_TEXT_COLOUR:
                 Color textColor = Color.fromString(
-                        ((WebContext) context().getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.getDefinition()));
+                        ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.getDefinition()));
                 logger.debug("Actual color: " + textColor.asHex());
                 return expColor.asHex().equals(textColor.asHex());
         }
@@ -247,49 +186,40 @@ public class Probe implements IWrapper {
         return false;
     }
 
+    @Override
     public boolean hasURL(String expectedURL, boolean isPreciseMatch) {
-        String actualURL = ((WebContext<WebDriver>) context().getCurrentContext()).getDriver().getCurrentUrl();
+        String actualURL = ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().getCurrentUrl();
         if (isPreciseMatch) return actualURL.equals(expectedURL);
         else return actualURL.contains(expectedURL);
 
     }
 
+    @Override
     public boolean hasTitle(String expectedTitle, boolean isPreciseMatch) {
-        String actualURL = ((WebContext<WebDriver>) context().getCurrentContext()).getDriver().getTitle();
+        String actualURL = ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().getTitle();
         if (isPreciseMatch) return actualURL.equals(expectedTitle);
         else return actualURL.contains(expectedTitle);
 
     }
 
-    /**
-     * Contains image reference. Either exact or as a subset i.e. 'image.gif' =
-     * 'c:/images/image.gif' = true.
-     *
-     * @param imagePath
-     * @return true if image found false if not found or the current element is
-     * not an <IMG> tag
-     */
+    @Override
     public boolean hasPartialImagePath(String imagePath) {
         boolean contains = false;
-        if (!((WebContext) context().getCurrentContext()).getCurrentElement().getTagName().equals(CommonPageDefinitions.HTML.IMAGE.getDefinition())) {
+        if (!((SeleniumContext) context().getCurrentContext()).getCurrentElement().getTagName().equals(CommonPageDefinitions.HTML.IMAGE.getDefinition())) {
             logger.error("hasImage : Current element is not image container");
         } else {
-            contains = ((WebContext) context().getCurrentContext()).getCurrentElement().getAttribute("src").contains(imagePath);
+            contains = ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getAttribute("src").contains(imagePath);
         }
         return contains;
     }
 
-    /**
-     * Contains link to url.
-     *
-     * @param url
-     * @return true, if successful
-     */
+    @Override
     public boolean hasLinkToURL(String url) {
         boolean hasAnchorAndHref = false;
-        ((WebContext) context().getCurrentContext()).setWebElementsList(((WebContext<WebDriver>) context().getCurrentContext()).getDriver().findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
+        ((SeleniumContext) context().getCurrentContext()).setWebElementsList(
+                ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
 
-        for (WebElement anchor : ((WebContext<WebDriver>) context().getCurrentContext()).getWebElementsList()) {
+        for (WebElement anchor : ((SeleniumContext<WebDriver>) context().getCurrentContext()).getWebElementsList()) {
             if (anchor.getAttribute("href") != null && anchor.getAttribute("href").contains(url)) ;
             hasAnchorAndHref = true;
             break;
@@ -298,45 +228,208 @@ public class Probe implements IWrapper {
         return hasAnchorAndHref;
     }
 
+    @Override
     public boolean followLinkToURL(String link) {
         boolean canFollow = false;
         if (hasLinkToURL(link)) {
-            ((WebContext<WebDriver>) context().getCurrentContext()).getDriver().navigate().to(link);
+            ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().navigate().to(link);
             canFollow = true;
         }
         return canFollow;
     }
 
-    public boolean titleHasPartialText(String text) {
+    @Override
+    public boolean titleHasText(String text, boolean isPreciseMatch) {
 
-        String title = ((WebContext<WebDriver>) context().getCurrentContext()).getDriver().getTitle();
+        String title = ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().getTitle();
 
-        if (title.contains(text)) {
-            return true;
+        boolean matchFound = false;
+        if (isPreciseMatch) {
+            if (title.contains(text)) matchFound = true;
         } else {
-            logger.error("Page title does not contain: " + text + " Actual Title: " + title);
-            return false;
+            if (title.equals(text)) matchFound = true;
         }
+
+        if (matchFound) logger.debug("Page title contains: " + text + " Actual Title: " + title);
+        else logger.error("Page title does not contain: " + text + " Actual Title: " + title);
+
+        return matchFound;
     }
 
+    @Override
     public boolean hasPartialCookieValue(String cookieName, String cookieValue) {
 
         try {
 
-            if (((WebContext<WebDriver>) context().getCurrentContext()).getDriver().manage().getCookieNamed(cookieName).getValue().contains(cookieValue)) {
+            if (((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().manage().getCookieNamed(cookieName).getValue().contains(cookieValue)) {
                 return true;
             }
         } catch (NullPointerException e) {
             logger.error("Cookie: " + cookieName + " does not exist");
             logger.debug("Cookie Names:");
-            for (Cookie cookie : ((WebContext<WebDriver>) context().getCurrentContext()).getDriver().manage().getCookies()) {
+            for (Cookie cookie : ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().manage().getCookies()) {
                 logger.debug(cookie.getName());
             }
             return false;
         }
-        logger.error("Cookie does not contain the value: " + cookieValue + ", actual value: " + (((WebContext<WebDriver>) context().getCurrentContext())).getDriver().manage().getCookieNamed(cookieName).getValue());
+        logger.error("Cookie does not contain the value: " + cookieValue + ", actual value: " + (((SeleniumContext<WebDriver>) context().getCurrentContext())).getDriver().manage().getCookieNamed(cookieName).getValue());
         return false;
 
     }
+
+}
+
+interface IProbe {
+    /**
+     * Check if the element locator passed to the constructor exists
+     *
+     * @return {@code true} if the element has been found
+     */
+    boolean exist();
+
+    /**
+     * Probe if {@link SeleniumContext#currentElement} has any text i.e. </br>
+     * {@code <div>Text</div>} match will return <b>true</b>.
+     * The text to be found can be anywhere in the element text string
+     *
+     * @return {@code true} if the current WebElement has any text
+     */
+    boolean hasAnyText();
+
+    /**
+     * Probe if {@link SeleniumContext#currentElement} has partial text match e.g.
+     * {@code hasPartialText("hello");} matching against {@code <div>hello there<\div>}
+     * will return <b>true</b> The text to be found can be a subset of
+     * element text string </br> The method can also be used for multiple String elements
+     * e.g. {@code hasPartialText("+", "-");
+     * </br>(Note once an item is matched it returns true, irrespective of the other checks)
+     *
+     * @param isCaseSensitiveMatch {@code boolean}
+     * @param isPreciseMatch       {@code boolean}
+     * @param textElements         the text elements
+     * @return {@code true} if the current element contains the text
+     */
+    boolean hasText(boolean isCaseSensitiveMatch, boolean isPreciseMatch, String... textElements);
+
+    /**
+     * Check if {@link SeleniumContext#currentElement} contains specified identifier.
+     * The identifier to be found can be a subset of element identifier
+     *
+     * @param preciseMatch  {@code boolean}
+     * @param attributeName the attribute name to check
+     * @param attributeText the attribute text to check
+     * @return {@code true} if identifier is present and its value matches @param attributeText
+     */
+    boolean hasAttribute(boolean preciseMatch, String attributeName, String attributeText);
+
+    /**
+     * Checks if {@link SeleniumContext#currentElement} of specified HTML tag type.
+     *
+     * @param tag the tag name to check
+     * @return {@code true}, if element of specified tag type
+     */
+    boolean isOfTagType(String tag);
+
+    /**
+     * Checks if {@link SeleniumContext#currentElement} is enabled i.e. can receive focus.
+     *
+     * @return {@code true} if element is enabled
+     */
+    boolean isEnabled();
+
+    /**
+     * Checks if {@link SeleniumContext#currentElement} is selected.
+     * Checkboxes, options in select and radio buttons.
+     *
+     * @return {@code true} if element is selected
+     */
+    boolean isSelected();
+
+    /**
+     * Checks {@link SeleniumContext#currentElement} is active.
+     *
+     * @return {@code true} if element is active
+     */
+    boolean isActive();
+
+    /**
+     * Checks {@link SeleniumContext#currentElement} is displayed.
+     *
+     * @return {@code true} if element is displayed
+     */
+    boolean isDisplayed();
+
+    /**
+     * Check if {@link SeleniumContext#currentElement} has color as expected
+     *
+     * @param css                  CSS definition {@link CommonPageDefinitions.CSS}
+     * @param expectedColorHexCode HEX color code
+     * @return {@code true} if the color matches
+     */
+    boolean hasColour(CommonPageDefinitions.CSS css, String expectedColorHexCode);
+
+    /**
+     * Check if the current URL that the browser is looking at is same as {@code @param expectedURL}
+     *
+     * @param expectedURL    String the expected URL
+     * @param isPreciseMatch boolean is precise match
+     * @return {@code true} if the url matches
+     */
+    boolean hasURL(String expectedURL, boolean isPreciseMatch);
+
+
+    /**
+     * Check if {@link SeleniumContext#currentElement} has a title as expected
+     *
+     * @param expectedTitle  String
+     * @param isPreciseMatch boolean
+     * @return {@code true} if the title matches
+     */
+    boolean hasTitle(String expectedTitle, boolean isPreciseMatch);
+
+    /**
+     * Contains image reference. Either exact or as a subset i.e. 'image.gif' =
+     * 'c:/images/image.gif' = true.
+     *
+     * @param imagePath String path to image
+     * @return true if image found false if not found or the current element is
+     * not an <IMG> tag
+     */
+    boolean hasPartialImagePath(String imagePath);
+
+    /**
+     * Check if {@link SeleniumContext#currentElement} has link to url
+     *
+     * @param url expected url
+     * @return {@code true} if it has link to url
+     */
+    boolean hasLinkToURL(String url);
+
+    /**
+     * Check if {@link SeleniumContext#currentElement} has link to url
+     * and if it does - navigate to it
+     *
+     * @param link URL
+     * @return {@code true} if it has link to url and it was able to navigate
+     */
+    boolean followLinkToURL(String link);
+
+    /**
+     * Check if {@link SeleniumContext#currentElement} has title with text
+     *
+     * @param text           expected text
+     * @param isPreciseMatch boolean
+     * @return {@code true} if it has has title with text
+     */
+    boolean titleHasText(String text, boolean isPreciseMatch);
+
+    /**
+     * Check if the cookie has text
+     *
+     * @param cookieName
+     * @param cookieValue
+     * @return
+     */
+    boolean hasPartialCookieValue(String cookieName, String cookieValue);
 
 }

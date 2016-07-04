@@ -12,7 +12,7 @@ public class ContextFactoryTest extends ContextFactory {
 //    @Test
 //    public void addContextTest() throws Exception {
 //
-//        AbstractContext context = new WebContext();
+//        AbstractContext context = new SeleniumContext();
 //        super.addContext(context);
 //        assertTrue(getContextMap().containsValue(context));
 //        assertTrue(getCurrentContext() == context);
@@ -22,7 +22,7 @@ public class ContextFactoryTest extends ContextFactory {
 //    @Test
 //    public void addContextWithDuplicatedNameTest() throws Exception {
 //
-//        AbstractContext context1 = new WebContext();
+//        AbstractContext context1 = new SeleniumContext();
 //        String contextName = context1.getContextName();
 //        super.addContext(context1);
 //        super.addContext(context1);
@@ -43,12 +43,12 @@ public class ContextFactoryTest extends ContextFactory {
 //    @Test
 //    public void switchContextTest() throws Exception {
 //
-//        AbstractContext context1 = new WebContext();
+//        AbstractContext context1 = new SeleniumContext();
 //        super.addContext(context1);
 //        assertTrue(getContextMap().containsValue(context1));
 //        assertTrue(getCurrentContext() == context1);
 //
-//        AbstractContext context2 = new WebContext();
+//        AbstractContext context2 = new SeleniumContext();
 //        super.addContext(context2);
 //        assertTrue(getContextMap().containsValue(context2));
 //        assertTrue(getCurrentContext() == context2);
@@ -81,11 +81,11 @@ public class ContextFactoryTest extends ContextFactory {
 //
 //    @Test
 //    public void getCurrentContextTest() throws Exception {
-//        AbstractContext context = new WebContext();
+//        AbstractContext context = new SeleniumContext();
 //        super.addContext(context);
 //        assertTrue(getContextMap().containsValue(context));
 //        assertTrue(getCurrentContext() == context);
-//        assertTrue(getCurrentContext() instanceof WebContext);
+//        assertTrue(getCurrentContext() instanceof SeleniumContext);
 //    }
 //
 //    @Test(expected = CustomExceptions.Common.NullArgumentException.class)

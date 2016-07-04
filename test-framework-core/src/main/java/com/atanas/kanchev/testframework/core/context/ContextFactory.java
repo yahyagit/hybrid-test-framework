@@ -69,7 +69,7 @@ public class ContextFactory implements IContextFactory {
 
     @Override
     public <T extends AbstractContext> IContextFactory setCurrentContext(T context) {
-        logger.debug("Setting current context " + context.toString());
+        logger.debug("Setting current context to " + (context == null ? "null" : context.getContextName()));
         currentContext = context;
         return this;
     }

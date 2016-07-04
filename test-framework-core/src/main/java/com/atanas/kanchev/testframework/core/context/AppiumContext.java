@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * @param <T>
  * @author Atanas Ksnchev
  */
-public final class AppiumContext<T> extends WebContext<T> {
+public final class AppiumContext<T> extends SeleniumContext<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(AppiumContext.class);

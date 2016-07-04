@@ -1,8 +1,9 @@
 package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.core.context.WebContext;
-import com.atanas.kanchev.testframework.core.handlers.interfaces.IContext;
+import com.atanas.kanchev.testframework.core.context.SeleniumContext;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 import com.atanas.kanchev.testframework.selenium.driver_factory.DriverFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -31,7 +32,7 @@ public class NavigateSelenium implements INavigate, IWrapper, IContext {
         try {
             context().getCurrentContext();
         } catch (CustomExceptions.Common.NullArgumentException e) {
-            WebContext<WebDriver> context = new WebContext<>(driverFactory.getDriver());
+            SeleniumContext<WebDriver> context = new SeleniumContext<>(driverFactory.getDriver());
             if (driverFactory.isReuseBrowser())
                 context.setContextReusable(true);
             context().addContext(context);
@@ -53,7 +54,7 @@ public class NavigateSelenium implements INavigate, IWrapper, IContext {
     }
 
     @Override
-    public INavigate getPage(String url) {
+    public NavigateSelenium getPage(String url) {
         if (url == null)
             throw new CustomExceptions.Common.NullArgumentException("Null method argument: URL");
         else {
@@ -220,4 +221,40 @@ public class NavigateSelenium implements INavigate, IWrapper, IContext {
         }
         return this;
     }
+}
+
+interface INavigate {
+
+    INavigate getPage(final URL url);
+
+    INavigate getPage(final String url);
+
+    INavigate back();
+
+    INavigate forward();
+
+    INavigate refresh();
+
+    INavigate navigateToWindowByPartialTitle(String title);
+
+    INavigate navigateToWindow(String windowIdentifier);
+
+    INavigate navigateToOtherWindow();
+
+    INavigate navigateToActivateFrame();
+
+    INavigate navigateToFrameById(String id);
+
+    INavigate navigateToFrameBy(By by);
+
+    INavigate waitForFrameByIdToBeAvailableAndSwitch(String frameId);
+
+    INavigate returnToDefaultWindow();
+
+    INavigate deleteCookies();
+
+    INavigate deleteCookie(String cookieName);
+
+    INavigate setCookie(String cookieName, String cookieValue);
+
 }

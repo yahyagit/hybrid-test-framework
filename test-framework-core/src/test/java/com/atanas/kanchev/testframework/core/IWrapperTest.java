@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.core;
 
-import com.atanas.kanchev.testframework.core.handlers.IWrapper;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
