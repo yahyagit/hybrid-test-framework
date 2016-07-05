@@ -2,10 +2,7 @@ package com.atanas.kanchev.testframework.core.handlers.appium;
 
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
 import io.appium.java_client.*;
-import io.appium.java_client.android.AndroidDeviceActionShortcuts;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.PushesFiles;
-import io.appium.java_client.android.StartsActivity;
+import io.appium.java_client.android.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
 import org.openqa.selenium.html5.LocationContext;
@@ -278,6 +275,42 @@ public class IAppiumNative {
         @Override
         default String getContext() {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).getContext();
+        }
+    }
+
+    interface IHasNetworkConnection extends HasNetworkConnection, IContext {
+
+        @Override
+        default void setConnection(Connection connection) {
+            ((AndroidDriver) context().getCurrentContext().getDriver()).setConnection(connection);
+        }
+
+        @Override
+        default Connection getConnection() {
+            return ((AndroidDriver) context().getCurrentContext().getDriver()).getConnection();
+        }
+    }
+
+    interface IAppiumDriverMethods extends IContext {
+
+        default boolean isLocked() {
+            return ((AndroidDriver) context().getCurrentContext().getDriver()).isLocked();
+        }
+
+        default void lockDevice() {
+            ((AndroidDriver) context().getCurrentContext().getDriver()).lockDevice();
+        }
+
+        default void unlockDevice() {
+            ((AndroidDriver) context().getCurrentContext().getDriver()).unlockDevice();
+        }
+
+        default void toggleLocationServices() {
+            ((AndroidDriver) context().getCurrentContext().getDriver()).toggleLocationServices();
+        }
+
+        default void openNotifications() {
+            ((AndroidDriver) context().getCurrentContext().getDriver()).openNotifications();
         }
     }
 
