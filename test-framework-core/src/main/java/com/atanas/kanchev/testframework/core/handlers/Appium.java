@@ -4,6 +4,7 @@ import com.atanas.kanchev.testframework.appium.driverfactory.AppiumCapabilities;
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDevice;
 import com.atanas.kanchev.testframework.appium.driverfactory.DeviceDriverFactory;
 import com.atanas.kanchev.testframework.core.context.AppiumContext;
+import com.atanas.kanchev.testframework.core.handlers.appium.IAppiumNative;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -118,5 +119,7 @@ public class Appium implements IWrapper {
             logger.error("WebDriverException" + ex.getMessage());
         }
     }
+
+
 
 }

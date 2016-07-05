@@ -4,6 +4,7 @@ import com.atanas.kanchev.testframework.core.handlers.Appium;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IInteract;
 import io.appium.java_client.*;
 import io.appium.java_client.NoSuchContextException;
+import io.appium.java_client.android.AndroidDriver;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.*;
@@ -37,7 +38,7 @@ public class DeviceMethods implements IInteract {
     // Device Context
     String currentContext = null;
     // WebDriver
-    AppiumDriver driver;
+    AndroidDriver driver;
 
     // Appium Methods
     String getCurrentContext(AppiumDriver driver) {
@@ -109,6 +110,7 @@ public class DeviceMethods implements IInteract {
     boolean tapAndroid(RemoteWebDriver driver, WebElement el) {
 
         try {
+            logger.debug("Tapping on the current element");
             String javascriptToExecute = "var e = document.createEvent('TouchEvent'); e.initUIEvent('touchstart',true,true); e.initUIEvent('touchend',true,true); arguments[0].dispatchEvent(e);";
             js().executeScript(driver, javascriptToExecute, el);
             return true;
@@ -143,7 +145,7 @@ public class DeviceMethods implements IInteract {
             js().executeScript(driver, javascriptToExecute, el);
             return true;
         } catch (UnsupportedCommandException var2) {
-            this.logger.error("Tap Action not supported for this element");
+            logger.error("Tap Action not supported for this element");
             return false;
         }
     }
@@ -170,7 +172,7 @@ public class DeviceMethods implements IInteract {
             switchToContext(driver, currentContext);
             return true;
         } catch (Exception var2) {
-            this.logger.error("Not possible to Scroll to element by text: " + value);
+            logger.error("Not possible to Scroll to element by text: " + value);
             switchToContext(driver, currentContext);
             return false;
         }
@@ -518,17 +520,6 @@ public class DeviceMethods implements IInteract {
     }
 
     /**
-     * Reset App Method
-     *
-     * @param driver
-     * @return true when successful
-     */
-    boolean resetApp(AppiumDriver driver) {
-        driver.resetApp();
-        return true;
-    }
-
-    /**
      * Run App in Background
      *
      * @param driver
@@ -541,7 +532,7 @@ public class DeviceMethods implements IInteract {
     }
 
     /**
-     * Launch App Method
+     * Launch the app which was provided in the capabilities at session creation.
      *
      * @param driver
      * @return true when successful
@@ -604,16 +595,6 @@ public class DeviceMethods implements IInteract {
         return driver.getOrientation();
     }
 
-    boolean installAppAppium(String appPath) {
-        driver.installApp(appPath);
-        if (driver.isAppInstalled(appPath)) {
-            logger.debug("App installed");
-            return true;
-        } else {
-            logger.debug("App was not installed");
-            return false;
-        }
-    }
 
     void swipeAndroid(AppiumDriver driver, int startX, int startY, int endX, int endY, int duration) {
 //        deviceStoreCurrentContext("currentContext");

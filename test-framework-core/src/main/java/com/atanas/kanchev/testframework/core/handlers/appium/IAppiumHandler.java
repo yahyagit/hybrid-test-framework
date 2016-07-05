@@ -3,9 +3,22 @@ package com.atanas.kanchev.testframework.core.handlers.appium;
 /**
  * @author Atanas Ksnchev
  */
-public interface IAppiumHander {
+public interface IAppiumHandler {
 
-    boolean deviceStart();
+    IAppiumHandler startDevice();
+
+    IAppiumHandler startDevice(String... options);
+
+    IAppiumHandler installApp(String appPath);
+
+    IAppiumHandler openApp(String... appArguments);
+
+    /**
+     * Reset the currently running app for this session.
+     *
+     * @return this
+     */
+    IAppiumHandler resetApp();
 
     boolean deviceSwitchToContextNativeApp();
 
@@ -15,7 +28,6 @@ public interface IAppiumHander {
 
     boolean deviceLongPress();
 
-    boolean deviceResetApp();
 
     boolean deviceUninstallApp(String packageName);
 
@@ -90,10 +102,6 @@ public interface IAppiumHander {
 
     // Native Apps Only Methods
 
-    /**
-     * Method not tested
-     */
-    boolean deviceInstallApp(String appPath);
 
     /**
      * Swipe Android - Device needs to be on Native App Context Duration in
@@ -114,4 +122,5 @@ public interface IAppiumHander {
     int deviceGetWidth();
 
     boolean deviceStoreCurrentContext(String contextName);
+
 }

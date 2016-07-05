@@ -1,11 +1,15 @@
 package com.atanas.kanchev.testframework.core.handlers.appium;
 
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDeviceTypesEnum;
+import com.atanas.kanchev.testframework.core.context.AppiumContext;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IAppium;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.INavigate;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.SwipeElementDirection;
+import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,44 +21,17 @@ import java.util.Map;
 /**
  * @author Atanas Ksnchev
  */
-public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHander, IAppium, INavigate {
+public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHandler, IAppium, INavigate, IContext {
 
     private final static Logger logger = LoggerFactory.getLogger(AppiumHandlerImpl.class);
 
-    String webContext = "webContext";
-    private Map<String, String> AppiumContext = new HashMap<>();
+    private Map<String, String> appiumContextMap = new HashMap<>();
 
     @Override
-    public boolean deviceStoreCurrentContext(String contextName) {
-        AppiumContext.put(contextName, getCurrentContext((AppiumDriver) driver));
-        return true;
-    }
-
-    @Override
-    public boolean deviceSwitchToContextNativeApp() {
-        return switchToContextNativeApp((AppiumDriver) driver);
-    }
-
-    @Override
-    public boolean deviceSwitchToContext(String context) {
-        if (AppiumContext.containsKey(context)) {
-            return switchToContext((AppiumDriver) driver, AppiumContext.get(context));
-        } else {
-            return switchToContext((AppiumDriver) driver, context);
-        }
-    }
-
-    public String getCurrentContext() {
-        return getCurrentContext((AppiumDriver) driver);
-    }
-
-    //TODO: Custom Capabilities Setup
-    @Override
-    public boolean deviceStart() {
+    public IAppiumHandler startDevice() {
         try {
             DeviceSetupFromPropFile.setCapabilities();
         } catch (Exception e) {
-            return false;
         }
         try {
 
@@ -122,17 +99,20 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHander, I
             }
         } catch (UnreachableBrowserException e) {
             logger.error(e.getMessage());
-            return false;
+
         }
         mobileBrowser = true;
-        return true;
+
+        return this;
     }
 
-    public boolean deviceStart(String... options) {
+    @Override
+    public IAppiumHandler startDevice(String... options) {
+
         try {
             DeviceSetupFromPropFile.setCapabilities();
         } catch (Exception e) {
-            return false;
+
         }
         try {
 
@@ -191,21 +171,32 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHander, I
             }
         } catch (UnreachableBrowserException e) {
             logger.error(e.getMessage());
-            return false;
+
         }
         mobileBrowser = true;
-        return true;
+
+
+        return this;
     }
 
+    @Override
+    public IAppiumHandler installApp(String appPath) {
+        ((AppiumContext<AndroidDriver>) context().getCurrentContext()).getDriver().installApp(appPath);
+        if (((AppiumContext<AndroidDriver>) context().getCurrentContext()).getDriver().isAppInstalled(appPath))
+            logger.debug("App installed");
+        else
+            logger.error("App was not installed");
+        return this;
+    }
 
-    public boolean openApp(String... appArguments) {
+    @Override
+    public IAppiumHandler openApp(String... appArguments) {
         try {
             DeviceSetupFromPropFile.setCapabilities();
         } catch (Exception e) {
-            return false;
+
         }
         try {
-
 
             if (DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("Android")) {
                 setup()
@@ -223,9 +214,10 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHander, I
                             .setAppActivity(appArguments[1]);
                 } catch (IndexOutOfBoundsException e) {
                     logger.error("When launching an android app you need to provide the app launch activity as the second argument");
-                    return false;
+
                 }
-                setup().initAndroidDriver("http://" + DeviceSetupFromPropFile.getAppiumServerIP() + ":" + DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
+                setup()
+                        .initAndroidDriver("http://" + DeviceSetupFromPropFile.getAppiumServerIP() + ":" + DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
             } else {
                 setup()
                         .setupDevice()
@@ -243,17 +235,66 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHander, I
                             "end if"};
                     Runtime.getRuntime().exec(launchCommand);
                 } catch (IOException e) {
-
                 }
             }
         } catch (UnreachableBrowserException e) {
             logger.error(e.getMessage());
-            return false;
+
         }
+        return this;
+    }
+
+    @Override
+    public IAppiumHandler resetApp() {
+        ((AppiumContext<AndroidDriver>) context().getCurrentContext()).getDriver().resetApp();
+        return this;
+    }
+
+    @Override
+    public boolean deviceUninstallApp(String packageName) {
+        return removeApp((AppiumDriver) driver, packageName);
+    }
+
+    @Override
+    public boolean deviceLaunchApp() {
+        return launchApp((AppiumDriver) driver);
+    }
+
+    @Override
+    public boolean deviceBackgroundApp(int seconds) {
+        return backgroundApp((AppiumDriver) driver, seconds);
+    }
+
+    @Override
+    public boolean deviceCloseApp() {
+        return closeApp((AppiumDriver) driver);
+    }
+
+
+    @Override
+    public boolean deviceStoreCurrentContext(String contextName) {
+        appiumContextMap.put(contextName, getCurrentContext((AppiumDriver) driver));
         return true;
     }
 
-    ;
+
+    @Override
+    public boolean deviceSwitchToContextNativeApp() {
+        return switchToContextNativeApp((AppiumDriver) driver);
+    }
+
+    @Override
+    public boolean deviceSwitchToContext(String context) {
+        if (appiumContextMap.containsKey(context)) {
+            return switchToContext((AppiumDriver) driver, appiumContextMap.get(context));
+        } else {
+            return switchToContext((AppiumDriver) driver, context);
+        }
+    }
+
+    public String getCurrentContext() {
+        return getCurrentContext((AppiumDriver) driver);
+    }
 
 
     @Override
@@ -265,6 +306,8 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHander, I
 //        } else {
 //            return tapAndroid((RemoteWebDriver) driver, currentElement);
 //        }
+
+        tapAndroid(((AppiumContext<RemoteWebDriver>) context().getCurrentContext()).getDriver(), ((AppiumContext) context().getCurrentContext()).getCurrentElement());
 
         return false;
     }
@@ -355,30 +398,6 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHander, I
         return tapOnStoredCoordinatesAppium((AppiumDriver) driver);
     }
 
-    @Override
-    public boolean deviceResetApp() {
-        return resetApp((AppiumDriver) driver);
-    }
-
-    @Override
-    public boolean deviceUninstallApp(String packageName) {
-        return removeApp((AppiumDriver) driver, packageName);
-    }
-
-    @Override
-    public boolean deviceLaunchApp() {
-        return launchApp((AppiumDriver) driver);
-    }
-
-    @Override
-    public boolean deviceBackgroundApp(int seconds) {
-        return backgroundApp((AppiumDriver) driver, seconds);
-    }
-
-    @Override
-    public boolean deviceCloseApp() {
-        return closeApp((AppiumDriver) driver);
-    }
 
     @Override
     public boolean deviceTapOnCoordinates(int x, int y) {
@@ -424,11 +443,6 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHander, I
     }
 
     @Override
-    public boolean deviceInstallApp(String appPath) {
-        return installAppAppium(appPath);
-    }
-
-    @Override
     public boolean deviceSwipe(int startX, int startY, int endX, int endY, int duration) {
 
         swipeAndroid((AppiumDriver) driver, startX, startY, endX, endY, duration);
@@ -452,5 +466,9 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHander, I
         int width = driver.manage().window().getSize().getWidth();
         deviceSwitchToContext("currentContext");
         return width;
+    }
+
+    public IAppiumNative methods() {
+        return new IAppiumNative();
     }
 }

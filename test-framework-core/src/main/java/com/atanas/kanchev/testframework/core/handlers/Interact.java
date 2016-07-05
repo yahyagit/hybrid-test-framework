@@ -75,6 +75,7 @@ public class Interact implements IInteract, IContext {
     public Interact click() {
         try {
             if (((SeleniumContext) context().getCurrentContext()).getCurrentElement() != null) {
+
                 ((SeleniumContext) context().getCurrentContext()).getCurrentElement().click();
                 logger.debug("Element Clicked");
 
@@ -84,7 +85,8 @@ public class Interact implements IInteract, IContext {
             }
         } catch (ElementNotVisibleException e) {
             logger.error("click() : Element is Not visible");
-
+        } catch (WebDriverException e) {
+            logger.debug("WebDriverException ", e.getMessage());
         }
 
         return this;

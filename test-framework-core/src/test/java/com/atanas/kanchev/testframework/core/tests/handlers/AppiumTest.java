@@ -6,6 +6,7 @@ import io.appium.java_client.remote.MobileBrowserType;
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ScreenOrientation;
 
 /**
  * @author Atanas Ksnchev
@@ -40,9 +41,14 @@ public class AppiumTest implements IWrapper {
                 .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
         goTo("https://bbc.co.uk");
         find().elementBy(By.id("idcta-link"));
-        appium().deviceTap();
 
-        Thread.sleep(30000);
+        appium().deviceTap();
+        interact().click();
+
+
+        Thread.sleep(10000);
+
+        appium().methods().rotate().rotate(ScreenOrientation.PORTRAIT);
 
 
     }
