@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.core.handlers;
+package com.atanas.kanchev.testframework.core.handlers.appium;
 
 import com.atanas.kanchev.testframework.dataservices.csv.CSVParser;
 import org.slf4j.Logger;
@@ -7,12 +7,11 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * Created by iainm on 22/09/2015.
+ * @author Atanas Ksnchev
  */
-public class DeviceHandler {
-
+public class DeviceSetupFromPropFile {
     // the logger
-    private final static Logger logger = LoggerFactory.getLogger(DeviceHandler.class);
+    private final static Logger logger = LoggerFactory.getLogger(DeviceSetupFromPropFile.class);
     static String device = "";
     static String platformName = "";
     static String platFormVersion = "";
@@ -22,13 +21,12 @@ public class DeviceHandler {
     static String udid = "";
 
 
-
     public static void setCapabilities() throws Exception {
 
         String deviceUnderTest = System.getProperty("device");
         String[] deviceColumn = new String[0];
 
-        if(deviceUnderTest == null) {
+        if (deviceUnderTest == null) {
             logger.error("Missing runtime argument -Ddevice");
             throw new NullPointerException();
         }
@@ -42,27 +40,27 @@ public class DeviceHandler {
                 }
             }
             for (int i = 0; i < columnHeaders.length; i++) {
-                if(columnHeaders[i].trim().equals("DEVICE")){
+                if (columnHeaders[i].trim().equals("DEVICE")) {
                     device = deviceColumn[i];
                 }
-                if (columnHeaders[i].trim().equals("platformName")){
+                if (columnHeaders[i].trim().equals("platformName")) {
                     platformName = deviceColumn[i];
                 }
-                if (columnHeaders[i].trim().equals("platformVersion")){
+                if (columnHeaders[i].trim().equals("platformVersion")) {
                     platFormVersion = deviceColumn[i];
                 }
-                if (columnHeaders[i].trim().equals("deviceName")){
+                if (columnHeaders[i].trim().equals("deviceName")) {
                     deviceName = deviceColumn[i];
                     udid = deviceColumn[i];
                 }
-                if (columnHeaders[i].trim().equals("appiumServerIP")){
+                if (columnHeaders[i].trim().equals("appiumServerIP")) {
                     appiumServerIP = deviceColumn[i];
                 }
-                if (columnHeaders[i].trim().equals("appiumServerPort")){
+                if (columnHeaders[i].trim().equals("appiumServerPort")) {
                     appiumServerPort = deviceColumn[i];
                 }
-                if (columnHeaders[i].trim().equals("udid")){
-                    if(platformName.equalsIgnoreCase("iOS")){
+                if (columnHeaders[i].trim().equals("udid")) {
+                    if (platformName.equalsIgnoreCase("iOS")) {
                         udid = deviceColumn[i];
                     }
                 }
@@ -72,8 +70,8 @@ public class DeviceHandler {
             logger.error("Missing CSV File - check src/test/resources/devices.mobile/devices.csv");
             throw e;
         }
-        if(deviceColumn.length == 0){
-            logger.error("The specified device: "+deviceUnderTest+" is not in the file devices.csv");
+        if (deviceColumn.length == 0) {
+            logger.error("The specified device: " + deviceUnderTest + " is not in the file devices.csv");
             throw new NullPointerException();
         }
     }
@@ -101,4 +99,5 @@ public class DeviceHandler {
     public static String getUdid() {
         return udid;
     }
+
 }

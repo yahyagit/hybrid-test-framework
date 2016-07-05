@@ -1,9 +1,11 @@
 package com.atanas.kanchev.testframework.core.handlers.appium;
 
-import io.appium.java_client.AppiumDriver;
+import com.atanas.kanchev.testframework.core.handlers.Appium;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IInteract;
+import io.appium.java_client.*;
 import io.appium.java_client.NoSuchContextException;
-import io.appium.java_client.TouchAction;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -16,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -25,94 +28,102 @@ import java.io.IOException;
 /**
  * @author Atanas Ksnchev
  */
-public class AppiumNativeMethods {
-
-    protected final static Logger logger = LoggerFactory.getLogger(AppiumImpl.class);
-
-    // Device Context
-    protected String currentContext = null;
-    // WebDriver
-    AppiumDriver driver;
+public class DeviceMethods implements IInteract {
 
     boolean mobileBrowser;
 
+    final static Logger logger = LoggerFactory.getLogger(Appium.class);
+
+    // Device Context
+    String currentContext = null;
+    // WebDriver
+    AppiumDriver driver;
+
     // Appium Methods
-    protected String getCurrentContext(AppiumDriver driver) {
+    String getCurrentContext(AppiumDriver driver) {
         currentContext = driver.getContext();
         logger.debug("Context: " + currentContext);
         return currentContext;
     }
 
-    protected boolean switchToContextNativeApp(AppiumDriver driver) {
+    boolean switchToContextNativeApp(AppiumDriver driver) {
         try {
+
             driver.context("NATIVE_APP");
-            this.logger.info("Switched to context: " + "NATIVE_APP");
+            logger.info("Switched to context: " + "NATIVE_APP");
             return true;
         } catch (NoSuchContextException var2) {
-            this.logger.error("Wrong context: " + "NATIVE_APP");
+            logger.error("Wrong context: " + "NATIVE_APP");
             return false;
         }
     }
 
-    protected boolean switchToContext(AppiumDriver driver, String context) {
+    boolean switchToContext(AppiumDriver driver, String context) {
         try {
             driver.context(context);
-            this.logger.info("Switched to context: " + context);
+            logger.info("Switched to context: " + context);
             return true;
         } catch (NoSuchContextException var2) {
-            this.logger.error("Wrong context: " + context);
+            logger.error("Wrong context: " + context);
             return false;
         }
     }
 
-    protected boolean tapAndroid(AppiumDriver driver, WebElement el) {
+    boolean swipeFromElement(AppiumDriver driver, WebElement el, SwipeElementDirection direction, int duration) {
+
+        ((MobileElement) el).swipe(SwipeElementDirection.LEFT, duration);
+        return true;
+    }
+
+    boolean tapAndroid(AppiumDriver driver, WebElement el) {
 
         TouchAction action = new TouchAction(driver);
         try {
             if (mobileBrowser) {
                 String javascriptToExecute = "var e = document.createEvent('TouchEvent'); e.initUIEvent('touchstart',true,true); e.initUIEvent('touchend',true,true); arguments[0].dispatchEvent(e);";
-//                executeScript(javascriptToExecute, el);
+                js().executeScript(driver, javascriptToExecute, el);
 
             } else {
                 action.tap(el).perform();
+
             }
             return true;
         } catch (UnsupportedCommandException var2) {
-            this.logger.error("Tap Action not supported for this element");
+            logger.error("Tap Action not supported for this element");
             return false;
         }
     }
 
-    protected boolean tapAndroid(ChromeDriver driver, WebElement el) {
+    boolean tapAndroid(ChromeDriver driver, WebElement el) {
 
         try {
             String javascriptToExecute = "var e = document.createEvent('TouchEvent'); e.initUIEvent('touchstart',true,true); e.initUIEvent('touchend',true,true); arguments[0].dispatchEvent(e);";
-//            executeScript(javascriptToExecute, el);
+            js().executeScript(driver, javascriptToExecute, el);
             return true;
         } catch (UnsupportedCommandException var2) {
-            this.logger.error("Tap Action not supported for this element");
+            logger.error("Tap Action not supported for this element");
             return false;
         }
     }
 
-    protected boolean tapAndroid(RemoteWebDriver driver, WebElement el) {
+    boolean tapAndroid(RemoteWebDriver driver, WebElement el) {
 
         try {
             String javascriptToExecute = "var e = document.createEvent('TouchEvent'); e.initUIEvent('touchstart',true,true); e.initUIEvent('touchend',true,true); arguments[0].dispatchEvent(e);";
-//            executeScript(javascriptToExecute, el);
+            js().executeScript(driver, javascriptToExecute, el);
             return true;
         } catch (UnsupportedCommandException var2) {
-            this.logger.error("Tap Action not supported for this element");
+            logger.error("Tap Action not supported for this element");
             return false;
         }
     }
 
-    protected boolean longPressAndroid(AppiumDriver driver, WebElement el) {
+    boolean longPressAndroid(AppiumDriver driver, WebElement el) {
 
         try {
             if (mobileBrowser) {
                 String javascriptToExecute = "var e = document.createEvent('TouchEvent'); e.initUIEvent('touchstart',true,true);arguments[0].dispatchEvent(e);";
-//                executeScript(javascriptToExecute, el);
+                js().executeScript(driver, javascriptToExecute, el);
             } else {
 
                 TouchAction action = new TouchAction(driver);
@@ -120,16 +131,16 @@ public class AppiumNativeMethods {
             }
             return true;
         } catch (UnsupportedCommandException var2) {
-            this.logger.error("Tap Action not supported for this element");
+            logger.error("Tap Action not supported for this element");
             return false;
         }
     }
 
-    protected boolean longPressAndroid(ChromeDriver driver, WebElement el) {
+    boolean longPressAndroid(ChromeDriver driver, WebElement el) {
 
         try {
             String javascriptToExecute = "var e = document.createEvent('TouchEvent'); e.initUIEvent('touchstart',true,true);arguments[0].dispatchEvent(e);";
-//            executeScript(javascriptToExecute, el);
+            js().executeScript(driver, javascriptToExecute, el);
             return true;
         } catch (UnsupportedCommandException var2) {
             this.logger.error("Tap Action not supported for this element");
@@ -137,19 +148,19 @@ public class AppiumNativeMethods {
         }
     }
 
-    protected boolean longPressAndroid(RemoteWebDriver driver, WebElement el) {
+    boolean longPressAndroid(RemoteWebDriver driver, WebElement el) {
 
         try {
             String javascriptToExecute = "var e = document.createEvent('TouchEvent'); e.initUIEvent('touchstart',true,true);arguments[0].dispatchEvent(e);";
-//            executeScript(javascriptToExecute, el);
+            js().executeScript(driver, javascriptToExecute, el);
             return true;
         } catch (UnsupportedCommandException var2) {
-            this.logger.error("Tap Action not supported for this element");
+            logger.error("Tap Action not supported for this element");
             return false;
         }
     }
 
-    protected boolean scrollToElementByText(AppiumDriver driver, String value) {
+    boolean scrollToElementByText(AppiumDriver driver, String value) {
         currentContext = getCurrentContext(driver);
         if (!currentContext.equals("NATIVE_APP")) {
             switchToContextNativeApp(driver);
@@ -172,19 +183,19 @@ public class AppiumNativeMethods {
     /*
      * This function captures takes a screenshot of the Appium Driver
      */
-    protected Screen appiumScreen = null;
-    protected File appiumSikuliImageFile = null;
-    protected File appiumScreenShot = null;
-    protected String appiumImageFolder = System.getProperty("user.dir");
-    protected String appiumSikuliScreenshot = "/appiumSikuliScreenshot";
-    protected Finder finder;
-    protected Match match;
-    protected int x;
-    protected int y;
-    protected int appiumImageWaitTime = 30;
-    protected boolean waitForImage;
+    Screen appiumScreen = null;
+    File appiumSikuliImageFile = null;
+    File appiumScreenShot = null;
+    String appiumImageFolder = System.getProperty("user.dir");
+    String appiumSikuliScreenshot = "/appiumSikuliScreenshot";
+    Finder finder;
+    Match match;
+    int x;
+    int y;
+    int appiumImageWaitTime = 30;
+    boolean waitForImage;
 
-    protected boolean captureImageAppium(AppiumDriver driver, String imageName) {
+    boolean captureImageAppium(AppiumDriver driver, String imageName) {
         driver = (AppiumDriver) new Augmenter().augment(driver);
         // Get the screenshot
         appiumSikuliImageFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -209,44 +220,42 @@ public class AppiumNativeMethods {
         }
     }
 
-    protected File createAppiumFile(String imageName) {
-//        String screenshotsDir = System.getProperty("screenshotDirectory");
-//        String screenshotFileName = new StringBuilder().append(GenericUtilities.counter).append(".").append(imageName).append("-")
-//                .append(GenericUtilities.CURRENT_DATE).append("_").append(GenericUtilities.CURRENT_TIME).toString();
-//
-//        File outputFolder = null;
-//
-//        if (!GraphicsEnvironment.isHeadless()) {
+    File createAppiumFile(String imageName) {
+        String screenshotsDir = System.getProperty("screenshotDirectory");
+        String screenshotFileName = imageName.concat(RandomStringUtils.randomAlphanumeric(10));
+
+        File outputFolder = null;
+
+        if (!GraphicsEnvironment.isHeadless()) {
 //
 //            if (GenericUtilities.isJenkinsExecution() || screenshotsDir == null) {
 //                screenshotsDir = "src/test/resources/screenshots/mobile/";
 //            }
-//
-//            String environment = System.getProperty("env");
-//
-//            String folderString = (environment == null)
-//                    ? screenshotsDir + GenericUtilities.CURRENT_DATE + "/ " + imageName.replaceAll("[^a-zA-Z0-9.-]", "")
+
+            String environment = System.getProperty("env");
+
+            String folderString = "screenshot";
+//                    ? screenshotsDir + Date.from().GenericUtilities.CURRENT_DATE + "/ " + imageName.replaceAll("[^a-zA-Z0-9.-]", "")
 //                    : screenshotsDir + GenericUtilities.CURRENT_DATE + "com.williamhill.whgtf"
 //                    + imageName.replaceAll("[^a-zA-Z0-9.-]", "") + "/" + environment + "/" + GenericUtilities.CURRENT_TIME;
-//            try {
-//
-//                outputFolder = new File(folderString);
-//                if (!outputFolder.exists()) {
-//                    outputFolder.mkdirs();
-//                }
-//            } catch (Exception e1) {
-//                logger.error("Unable to create outputFolder!");
-//            }
-//            appiumImageFolder = folderString;
-//            appiumSikuliScreenshot = "/" + screenshotFileName + ".png";
-//        }
+            try {
 
-//        return new File(outputFolder + "/" + screenshotFileName + ".png");
-        return null;
+                outputFolder = new File(folderString);
+                if (!outputFolder.exists()) {
+                    outputFolder.mkdirs();
+                }
+            } catch (Exception e1) {
+                logger.error("Unable to create outputFolder!");
+            }
+            appiumImageFolder = folderString;
+            appiumSikuliScreenshot = "/" + screenshotFileName + ".png";
+        }
+
+        return new File(outputFolder + "/" + screenshotFileName + ".png");
     }
 
 
-    protected void rotateScreenshotToLandscape() {
+    void rotateScreenshotToLandscape() {
         try {
             BufferedImage bufferedImage = (BufferedImage) ImageIO
                     .read(appiumScreenShot);
@@ -255,12 +264,12 @@ public class AppiumNativeMethods {
             tx.translate(bufferedImage.getHeight() / 2, bufferedImage.getWidth() / 2);
             tx.rotate(Math.toRadians(90));
             tx.translate(-bufferedImage.getWidth() / 2, -bufferedImage.getHeight() / 2);
-//            sleep(500);
+            wait(500);
 
             AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-//            sleep(500);
+            wait(500);
             bufferedImage = op.filter(bufferedImage, null);
-//            sleep(500);
+            wait(500);
             File outputfile = appiumScreenShot;
             ImageIO.write(bufferedImage, "png", outputfile);
             wait(1000);
@@ -269,7 +278,7 @@ public class AppiumNativeMethods {
         }
     }
 
-    protected boolean findImageAppium(AppiumDriver driver, String imagePath) {
+    boolean findImageAppium(AppiumDriver driver, String imagePath) {
         captureImageAppium(driver, appiumSikuliScreenshot);
         org.sikuli.script.Image.reset();
         org.sikuli.script.Image image = org.sikuli.script.Image.create(appiumImageFolder + appiumSikuliScreenshot);
@@ -286,7 +295,7 @@ public class AppiumNativeMethods {
 
     }
 
-    protected boolean setImageAsScreen(AppiumDriver driver, String imagePath) {
+    boolean setImageAsScreen(AppiumDriver driver, String imagePath) {
         boolean found = findImageAppium(driver, imagePath);
         if (this.match == null) {
             logger.error("Sub Image: '" + imagePath
@@ -295,7 +304,7 @@ public class AppiumNativeMethods {
         return found;
     }
 
-    protected boolean getCoordinatesAppium(AppiumDriver driver, String imagePath) {
+    boolean getCoordinatesAppium(AppiumDriver driver, String imagePath) {
         try {
 
             setImageAsScreen(driver, imagePath);
@@ -316,7 +325,7 @@ public class AppiumNativeMethods {
      * Compares with a given sub image and takes the Coordinates X,Y using
      * Sikuli Taps on coordinates X,Y on the Appium Driver
      */
-    protected boolean tapImageAppium(AppiumDriver driver, String imagePath) {
+    boolean tapImageAppium(AppiumDriver driver, String imagePath) {
         String context = driver.getContext();
         switchToContextNativeApp(driver);
         boolean coordinates = getCoordinatesAppium(driver, imagePath);
@@ -331,12 +340,13 @@ public class AppiumNativeMethods {
         }
     }
 
-    protected boolean tapOnCoordinatesAppium(AppiumDriver driver, int x, int y) {
+    boolean tapOnCoordinatesAppium(AppiumDriver driver, int x, int y) {
         String context = driver.getContext();
         switchToContextNativeApp(driver);
         logger.debug("Tapping on Coordinates X,Y: " + x + "," + y);
         driver.tap(1, x, y, 100);
         switchToContext(driver, context);
+
         return true;
     }
 
@@ -346,7 +356,7 @@ public class AppiumNativeMethods {
      * Scenario If this is not used, default Wait Time will be used (Ex: int
      * appiumImageWaitTime = 30)
      */
-    protected boolean setAppiumImageWaitTime(int time) {
+    boolean setAppiumImageWaitTime(int time) {
         if (time > 0) {
             this.appiumImageWaitTime = time;
             logger.debug("Appium Image Wait Time changed to: " + this.appiumImageWaitTime);
@@ -358,7 +368,7 @@ public class AppiumNativeMethods {
         }
     }
 
-    protected boolean wait(int time) {
+    boolean wait(int time) {
         try {
             Thread.sleep(time);
             return true;
@@ -368,7 +378,7 @@ public class AppiumNativeMethods {
         }
     }
 
-    protected boolean waitForImageAppium(AppiumDriver driver, String imagePath) {
+    boolean waitForImageAppium(AppiumDriver driver, String imagePath) {
         int waitTime = 0;
         boolean found = false;
         String context = driver.getContext();
@@ -389,7 +399,7 @@ public class AppiumNativeMethods {
         return found;
     }
 
-    protected boolean waitForImageAndStoreCoordinatesAppium(AppiumDriver driver, String imagePath) {
+    boolean waitForImageAndStoreCoordinatesAppium(AppiumDriver driver, String imagePath) {
         int waitTime = 0;
         boolean found = false;
         String context = driver.getContext();
@@ -412,7 +422,7 @@ public class AppiumNativeMethods {
         return found;
     }
 
-    protected boolean tapOnStoredCoordinatesAppium(AppiumDriver driver) {
+    boolean tapOnStoredCoordinatesAppium(AppiumDriver driver) {
         String context = driver.getContext();
         switchToContextNativeApp(driver);
         try {
@@ -426,7 +436,7 @@ public class AppiumNativeMethods {
         }
     }
 
-    protected boolean typeInImageAppium(AppiumDriver driver, String imagePath, String text) {
+    boolean typeInImageAppium(AppiumDriver driver, String imagePath, String text) {
         String context = driver.getContext();
         switchToContextNativeApp(driver);
         boolean validCoordinates = getCoordinatesAppium(driver, imagePath);
@@ -442,7 +452,7 @@ public class AppiumNativeMethods {
      * This method will only work for Web Apps at the moment !!! WORK IN
      * PROGRESS !!!
      */
-    protected boolean scrollToImageAppium(AppiumDriver driver, String imagePath) {
+    boolean scrollToImageAppium(AppiumDriver driver, String imagePath) {
         boolean found = false;
         int originalScrollPosition = 0;
         int scrollPositionWeb = getScrollPositionAppium(driver);
@@ -472,15 +482,15 @@ public class AppiumNativeMethods {
         return found;
     }
 
-    protected int getScrollPositionAppium(AppiumDriver driver) {
+    int getScrollPositionAppium(AppiumDriver driver) {
         return Integer.parseInt(driver.findElement(By.xpath("/html/body")).getAttribute("scrollTop"));
     }
 
-    protected int getPageHeightAppium(AppiumDriver driver) {
+    int getPageHeightAppium(AppiumDriver driver) {
         return Integer.parseInt(driver.findElement(By.xpath("/html")).getAttribute("clientHeight"));
     }
 
-    protected org.openqa.selenium.Dimension getDimensionsAppium(AppiumDriver driver) {
+    org.openqa.selenium.Dimension getDimensionsAppium(AppiumDriver driver) {
         logger.debug("Position Y: " + driver.manage().window().getPosition().getY());
         logger.debug("Size: " + driver.manage().window().getSize());
         return driver.manage().window().getSize();
@@ -490,7 +500,7 @@ public class AppiumNativeMethods {
      * This method only works on Native Context, use the
      * switchToContextNativeApp() method first
      */
-    protected boolean rotateDeviceLandscape(AppiumDriver driver) {
+    boolean rotateDeviceLandscape(AppiumDriver driver) {
         currentContext = getCurrentContext(driver);
         if (!currentContext.equals("NATIVE_APP")) {
             switchToContextNativeApp(driver);
@@ -507,11 +517,69 @@ public class AppiumNativeMethods {
         }
     }
 
+    /**
+     * Reset App Method
+     *
+     * @param driver
+     * @return true when successful
+     */
+    boolean resetApp(AppiumDriver driver) {
+        driver.resetApp();
+        return true;
+    }
+
+    /**
+     * Run App in Background
+     *
+     * @param driver
+     * @param seconds length of time to run app for
+     * @return true when successful
+     */
+    boolean backgroundApp(AppiumDriver driver, int seconds) {
+        driver.runAppInBackground(seconds);
+        return true;
+    }
+
+    /**
+     * Launch App Method
+     *
+     * @param driver
+     * @return true when successful
+     */
+    boolean launchApp(AppiumDriver driver) {
+        driver.launchApp();
+        return true;
+    }
+
+    /**
+     * Remove App Method
+     *
+     * @param driver
+     * @param bundleId
+     * @return
+     */
+    public boolean removeApp(AppiumDriver driver, String bundleId) {
+        driver.removeApp(bundleId);
+        return true;
+    }
+
+    /**
+     * Close App Method
+     *
+     * @param driver
+     * @return true when successful
+     */
+    boolean closeApp(AppiumDriver driver) {
+        driver.closeApp();
+        return true;
+    }
+
+
     /*
      * This method only works on Native Context, use the
      * switchToContextNativeApp() method first
      */
-    protected boolean rotateDevicePortrait(AppiumDriver driver) {
+    boolean rotateDevicePortrait(AppiumDriver driver) {
         currentContext = getCurrentContext(driver);
         if (!currentContext.equals("NATIVE_APP")) {
             switchToContextNativeApp(driver);
@@ -532,11 +600,11 @@ public class AppiumNativeMethods {
      * This method only works on Native Context, use the
      * switchToContextNativeApp() method first
      */
-    protected ScreenOrientation screenOrientation(AppiumDriver driver) {
+    ScreenOrientation screenOrientation(AppiumDriver driver) {
         return driver.getOrientation();
     }
 
-    protected boolean installAppAppium(String appPath) {
+    boolean installAppAppium(String appPath) {
         driver.installApp(appPath);
         if (driver.isAppInstalled(appPath)) {
             logger.debug("App installed");
@@ -547,18 +615,19 @@ public class AppiumNativeMethods {
         }
     }
 
-    protected void swipeAndroid(AppiumDriver driver, int startX, int startY, int endX, int endY, int duration) {
+    void swipeAndroid(AppiumDriver driver, int startX, int startY, int endX, int endY, int duration) {
 //        deviceStoreCurrentContext("currentContext");
 //        deviceSwitchToContextNativeApp();
-//        driver.swipe(startX, startY, endX, endY, duration);
-//        deviceSwitchToContext("currentContext"));
+        driver.swipe(startX, startY, endX, endY, duration);
+//        deviceSwitchToContext("currentContext");
+
     }
 
-    protected int getDeviceHeightAndroid(AppiumDriver driver) {
+    int getDeviceHeightAndroid(AppiumDriver driver) {
         return driver.manage().window().getSize().getHeight();
     }
 
-    protected int getDeviceWidthAndroid(AppiumDriver driver) {
+    int getDeviceWidthAndroid(AppiumDriver driver) {
         return driver.manage().window().getSize().getWidth();
     }
 }

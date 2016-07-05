@@ -11,7 +11,7 @@ import org.openqa.selenium.By;
 /**
  * Created by atanas on 26/06/2016.
  */
-public class ProbeTest implements IWrapper{
+public class ProbeTest implements IWrapper {
 
     @Before
     public void setUp() throws Exception {
@@ -21,7 +21,7 @@ public class ProbeTest implements IWrapper{
 
     @After
     public void tearDown() throws Exception {
-        context().tearDownContexs();
+        context().tearDownContexts();
     }
 
     @Test

@@ -94,7 +94,7 @@ public class ContextFactory implements IContextFactory {
     }
 
     @Override
-    public IContextFactory tearDownContexs() {
+    public IContextFactory tearDownContexts() {
         logger.debug("Tearing down contexts " + getContextMap().values().size());
 
         for (AbstractContext context : getContextMap().values()) {
@@ -136,6 +136,6 @@ interface IContextFactory {
 
     <T extends AbstractContext> IContextFactory tearDownContext(T context);
 
-    IContextFactory tearDownContexs();
+    IContextFactory tearDownContexts();
 
 }

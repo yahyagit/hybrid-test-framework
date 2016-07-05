@@ -14,10 +14,10 @@ import org.slf4j.LoggerFactory;
  * Created by atanas on 24/03/2016.
  */
 @RunWith(Enclosed.class)
-public class IWrapperTest {
+public class IWrapperWrapperTest {
 
     private static String url = "https://www.google.co.uk/";
-    private static final Logger logger = LoggerFactory.getLogger(IWrapperTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(IWrapperWrapperTest.class);
 
     public static class SetupBrowserTest implements IWrapper {
 
@@ -33,7 +33,7 @@ public class IWrapperTest {
 
         @After
         public void tearDown() throws Exception {
-            context().tearDownContexs();
+            context().tearDownContexts();
         }
 
         @Test

@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+
 /**
  * @author Atanas Ksnchev
  */
@@ -42,7 +44,7 @@ public class JSExecutor implements IJSExecutor {
             return (T) ((JavascriptExecutor) webdriver).executeAsyncScript(script, args);
         } catch (IllegalArgumentException iae) {
             logger.error("IJSExecutor : executeScript : Argument list must contain objects - Number, Boolean, String, WebElement, List or any combination thereof");
-            logger.error("IJSExecutor : args : " + args.toString());
+            logger.error("IJSExecutor : args : " + Arrays.toString(args));
         }
         return null;
     }
@@ -61,11 +63,11 @@ public class JSExecutor implements IJSExecutor {
  */
 interface IJSExecutor {
 
-    <T> T executeScript(WebDriver webdriver, java.lang.String script);
+    <T> T executeScript(WebDriver webdriver, String script);
 
-    <T> T executeScript(WebDriver webdriver, java.lang.String script, java.lang.Object... args);
+    <T> T executeScript(WebDriver webdriver, String script, Object... args);
 
-    <T> T executeAsyncScript(WebDriver webdriver, java.lang.String script);
+    <T> T executeAsyncScript(WebDriver webdriver, String script);
 
-    <T> T executeAsyncScript(WebDriver webdriver, java.lang.String script, java.lang.Object... args);
+    <T> T executeAsyncScript(WebDriver webdriver, String script, Object... args);
 }

@@ -5,39 +5,45 @@ import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 import io.appium.java_client.remote.MobileBrowserType;
 import org.junit.After;
 import org.junit.Test;
+import org.openqa.selenium.By;
 
 /**
  * @author Atanas Ksnchev
  */
-public class DeviceBasedHandlerTest implements IWrapper {
+public class AppiumTest implements IWrapper {
     @After
     public void tearDown() throws Exception {
-        context().tearDownContexs();
+        context().tearDownContexts();
     }
 
     @Test
     public void androidChromeTest() throws Exception {
 
-        setupAppium()
+        setup()
                 .setupDevice()
                 .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
                 .setDeviceName("ZY22398GL7")
                 .setPlatformVersion("6.0.1");
 
-        setupAppium()
+        setup()
                 .setupDeviceServer()
                 .setBrowserName(MobileBrowserType.CHROME)
                 .setFullReset(false)
                 .setAutoLaunch(false);
 
-        setupAppium()
+        setup()
                 .setupAndroidDriver()
                 .setAndroidDeviceReadyTimeout(60)
                 .setEnablePerformanceLogging(true);
 
-        setupAppium()
+        setup()
                 .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
         goTo("https://bbc.co.uk");
+        find().elementBy(By.id("idcta-link"));
+        appium().deviceTap();
+
+        Thread.sleep(30000);
+
 
     }
 

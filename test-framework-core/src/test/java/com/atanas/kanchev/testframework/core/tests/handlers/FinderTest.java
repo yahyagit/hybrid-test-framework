@@ -36,7 +36,7 @@ public class FinderTest implements IWrapper {
 
     @After
     public void tearDown() throws Exception {
-        context().tearDownContexs();
+        context().tearDownContexts();
     }
 
     @Test

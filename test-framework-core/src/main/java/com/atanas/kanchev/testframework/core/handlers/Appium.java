@@ -3,7 +3,6 @@ package com.atanas.kanchev.testframework.core.handlers;
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumCapabilities;
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDevice;
 import com.atanas.kanchev.testframework.appium.driverfactory.DeviceDriverFactory;
-import com.atanas.kanchev.testframework.core.context.AbstractContext;
 import com.atanas.kanchev.testframework.core.context.AppiumContext;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 import io.appium.java_client.android.AndroidDriver;
@@ -19,13 +18,13 @@ import java.net.URL;
 
 /**
  * Appium Methods - These methods only work with the AppiumDriver driver,
- * therefore, I created them on the AppiumMethods class. And they will be called
+ * therefore, IWrapper created them on the AppiumMethods class. And they will be called
  * from the ASL. This way, only this class needs to be extended to be able to
  * use all the Appium Methods
  */
-public class DeviceBasedHandler implements IWrapper {
+public class Appium implements IWrapper {
 
-    private final static Logger logger = LoggerFactory.getLogger(DeviceBasedHandler.class);
+    private final static Logger logger = LoggerFactory.getLogger(Appium.class);
 
     private DeviceDriverFactory createAppiumDriver;
 
@@ -94,7 +93,7 @@ public class DeviceBasedHandler implements IWrapper {
     public void initIOSDriver(String appiumServerURL) {
         try {
             this.createAppiumDriver.setDeviceServerURL(new URL(appiumServerURL));
-            AbstractContext<IOSDriver<IOSElement>> context = new AppiumContext<>(this.createAppiumDriver.getIOSDriver());
+            AppiumContext<IOSDriver<IOSElement>> context = new AppiumContext<>(this.createAppiumDriver.getIOSDriver());
             context().addContext(context);
         } catch (MalformedURLException e) {
             logger.error(e.getMessage());
@@ -111,7 +110,7 @@ public class DeviceBasedHandler implements IWrapper {
     public void initAndroidDriver(String appiumServerURL) {
         try {
             this.createAppiumDriver.setDeviceServerURL(new URL(appiumServerURL));
-            AbstractContext<AndroidDriver<AndroidElement>> context = new AppiumContext<>(this.createAppiumDriver.getAndroidDriver());
+            AppiumContext<AndroidDriver<AndroidElement>> context = new AppiumContext<>(this.createAppiumDriver.getAndroidDriver());
             context().addContext(context);
         } catch (MalformedURLException e) {
             logger.error(e.getMessage());

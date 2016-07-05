@@ -23,7 +23,7 @@ public class SikulixTest implements IWrapper {
 
     @After
     public void tearDown() throws Exception {
-        context().tearDownContexs();
+        context().tearDownContexts();
 
     }
 

@@ -1,85 +1,99 @@
 package com.atanas.kanchev.testframework.core.handlers.appium;
 
 /**
- * Appium Methods - These methods only work with the AppiumDriver driver
- *
  * @author Atanas Ksnchev
  */
-public interface IAppium {
+public interface IAppiumHander {
 
-    IAppium deviceStart();
+    boolean deviceStart();
 
-    IAppium deviceSwitchToContextNativeApp();
+    boolean deviceSwitchToContextNativeApp();
 
-    IAppium deviceSwitchToContext(String context);
+    boolean deviceSwitchToContext(String context);
 
-    IAppium deviceTap();
+    boolean deviceTap();
 
-    IAppium deviceLongPress();
+    boolean deviceLongPress();
 
-    IAppium deviceTapOnCoordinates(int x, int y);
+    boolean deviceResetApp();
 
-    IAppium deviceScrollToElementByText(String value);
+    boolean deviceUninstallApp(String packageName);
 
-    IAppium deviceFindImage(String imagePath);
+    boolean deviceLaunchApp();
+
+    boolean deviceBackgroundApp(int seconds);
+
+    boolean deviceCloseApp();
+
+    boolean deviceTapOnCoordinates(int x, int y);
+
+    boolean deviceSwipeOnElement(String direction, int duration);
+
+    boolean deviceScrollToElementByText(String value);
+
+    boolean deviceFindImage(String imagePath);
 
     /**
      * Captures a Screenshot on the Appium Driver (Real Device or Emulator)
      * Compares with a given sub image and takes the Coordinates X,Y using
      * Sikuli Taps on coordinates X,Y on the Appium Driver
      */
-    IAppium deviceTapImage(String imagePath);
+    boolean deviceTapImage(String imagePath);
 
     /**
      * Waits for an image and stores the coordinates
      */
-    IAppium deviceWaitForImageStoreCoordinates(String imagePath);
+
+    boolean deviceWaitForImageStoreCoordinates(String imagePath);
 
     /**
      * Taps on the Stored Coordinates
      */
-    IAppium deviceTapOnStoredCoordinates();
+
+    boolean deviceTapOnStoredCoordinates();
 
     /**
      * This method can be used to control the Wait Time for a particular
      * Scenario If this is not used, default Wait Time will be used (Ex: int
      * appiumImageWaitTime = 30)
      */
-    IAppium deviceSetImageWaitTime(int time);
 
-    IAppium deviceWaitForImage(String imagePath);
 
-    IAppium deviceTypeInImage(String imagePath, String text);
+    boolean deviceSetImageWaitTime(int time);
+
+    boolean deviceWaitForImage(String imagePath);
+
+    boolean deviceTypeInImage(String imagePath, String text);
 
     /**
      * Method not tested
      */
-    IAppium deviceScrollToImage(String imagePath);
+    boolean deviceScrollToImage(String imagePath);
 
     /**
      * This method only works on Native Context, use the
      * switchToContextNativeApp() method first
      */
-    IAppium deviceRotateLandscape();
+    boolean deviceRotateLandscape();
 
     /**
      * This method only works on Native Context, use the
      * switchToContextNativeApp() method first
      */
-    IAppium deviceRotatePortrait();
+    boolean deviceRotatePortrait();
 
     /**
      * This method only works on Native Context, use the
      * switchToContextNativeApp() method first
      */
-    IAppium deviceScreenOrientation();
+    boolean deviceScreenOrientation();
 
     // Native Apps Only Methods
 
     /**
      * Method not tested
      */
-    IAppium deviceInstallApp(String appPath);
+    boolean deviceInstallApp(String appPath);
 
     /**
      * Swipe Android - Device needs to be on Native App Context Duration in
@@ -87,7 +101,7 @@ public interface IAppium {
      *
      * @return
      */
-    IAppium deviceSwipe(int startX, int startY, int endX, int endY, int duration);
+    boolean deviceSwipe(int startX, int startY, int endX, int endY, int duration);
 
     /**
      * Gets the Android device's screen height
@@ -99,5 +113,5 @@ public interface IAppium {
      */
     int deviceGetWidth();
 
-    IAppium deviceStoreCurrentContext(String contextName);
+    boolean deviceStoreCurrentContext(String contextName);
 }

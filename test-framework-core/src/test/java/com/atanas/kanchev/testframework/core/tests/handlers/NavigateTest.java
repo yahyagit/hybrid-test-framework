@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * @author Atanas Ksnchev
  */
-public class NavigateTest implements IWrapper{
+public class NavigateTest implements IWrapper {
 
     @Test
     public void getPage() throws Exception {
@@ -31,7 +31,7 @@ public class NavigateTest implements IWrapper{
 
     @After
     public void tearDown() throws Exception {
-        context().tearDownContexs();
+        context().tearDownContexts();
 
     }
 }

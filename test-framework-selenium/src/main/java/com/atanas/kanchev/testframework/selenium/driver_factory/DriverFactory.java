@@ -21,9 +21,6 @@ public class DriverFactory extends DriverConfig{
     private DriverType selectedDriverType;
     private Proxy proxy;
 
-    public DriverFactory() {
-    }
-
     public WebDriver getDriver() {
         this.selectedDriverType = determineEffectiveDriverType();
         return instantiateWebDriver(selectedDriverType.getDesiredCapabilities(proxy));

@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.demo.tests.appium;
 
-import com.atanas.kanchev.testframework.core.handlers.DeviceBasedHandler;
+import com.atanas.kanchev.testframework.core.handlers.Appium;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidElement;
 import org.junit.After;
@@ -8,7 +8,7 @@ import org.junit.After;
 /**
  * @author Atanas Ksnchev
  */
-public class AppiumTests extends DeviceBasedHandler {
+public class AppiumTests extends Appium {
 
     private AppiumDriver<AndroidElement> d;
     private String AppiumHub = "http://127.0.0.1:4723/wd/hub";
