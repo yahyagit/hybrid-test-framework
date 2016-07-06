@@ -218,44 +218,61 @@ public class IAppiumNative {
         }
     }
 
-    interface IFinds extends FindsByAccessibilityId, FindsByAndroidUIAutomator, IContext {
+    interface IFinds extends FindsByAccessibilityId, FindsByAndroidUIAutomator, SearchContext, IContext {
 
         @Override
-        default WebElement findElementByAccessibilityId(String using) {
-            return (WebElement) ((AndroidDriver) context().getCurrentContext().getDriver()).findElementsByAccessibilityId(using);
+        default AndroidElement findElementByAccessibilityId(String using) {
+            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElementByAccessibilityId(using);
         }
 
         @Override
         default List findElementsByAccessibilityId(String using) {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).findElementsByAccessibilityId(using);
+            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElementsByAccessibilityId(using);
         }
 
         @Override
-        default WebElement findElementByAndroidUIAutomator(String using) {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).findElementByAndroidUIAutomator(using);
+        default AndroidElement findElementByAndroidUIAutomator(String using) {
+            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElementByAndroidUIAutomator(using);
         }
 
         @Override
         default List findElementsByAndroidUIAutomator(String using) {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).findElementsByAndroidUIAutomator(using);
+            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElementsByAndroidUIAutomator(using);
         }
+
+        @Override
+        default List findElements(By by) {
+            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElements(by);
+        }
+
+        @Override
+        default AndroidElement findElement(By by) {
+            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElement(by);
+        }
+
+        //TODO Override MobileDriver interface after it's been implemented in 5.0.0
+        default AndroidElement findElementById(String id) {
+            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElementById(id);
+        }
+
+
     }
 
     interface IHasAppStrings extends HasAppStrings, IContext {
 
         @Override
         default Map<String, String> getAppStringMap() {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).getAppStringMap();
+            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).getAppStringMap();
         }
 
         @Override
         default Map<String, String> getAppStringMap(String language) {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).getAppStringMap(language);
+            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).getAppStringMap(language);
         }
 
         @Override
         default Map<String, String> getAppStringMap(String language, String stringFile) {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).getAppStringMap(language, stringFile);
+            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).getAppStringMap(language, stringFile);
         }
 
     }
