@@ -32,6 +32,70 @@ public class IAppiumNative {
         return new IRotatableClazz();
     }
 
+    public class PushesFilesClazz implements IPushesFiles {
+    }
+
+    public PushesFilesClazz pushesFiles() {
+        return new PushesFilesClazz();
+    }
+
+    public class ActionShortcutsClazz implements IActionShortcuts {
+    }
+
+    public ActionShortcutsClazz actionShortcuts() {
+        return new ActionShortcutsClazz();
+    }
+
+    public class TouchShortcutsClazz implements ITouchShortcuts {
+    }
+
+    public TouchShortcutsClazz touchShortcuts() {
+        return new TouchShortcutsClazz();
+    }
+
+    public class FindsClazz implements IFinds {
+    }
+
+    public FindsClazz find() {
+        return new FindsClazz();
+    }
+
+    public class HasAppStringsClazz implements IHasAppStrings {
+    }
+
+    public HasAppStringsClazz hasAppStrings() {
+        return new HasAppStringsClazz();
+    }
+
+    public class InteractsWithAppsClazz implements IInteractsWithApps {
+    }
+
+    public InteractsWithAppsClazz interactsWithApps() {
+        return new InteractsWithAppsClazz();
+    }
+
+    public class LocationContextClazz implements ILocationContext {
+    }
+
+    public LocationContextClazz locationContext() {
+        return new LocationContextClazz();
+    }
+
+    public class ContextAwareClazz implements IContextAware {
+    }
+
+    public ContextAwareClazz contextAware() {
+        return new ContextAwareClazz();
+    }
+
+    public class AppiumDriverMethodsClazz implements IAppiumDriverMethods {
+    }
+
+    public AppiumDriverMethodsClazz appiumDriverMethods() {
+        return new AppiumDriverMethodsClazz();
+    }
+
+
     public interface IStartsActivity extends StartsActivity, IContext {
 
         @Override
@@ -312,6 +376,19 @@ public class IAppiumNative {
         default void openNotifications() {
             ((AndroidDriver) context().getCurrentContext().getDriver()).openNotifications();
         }
+
+        default String currentActivity() {
+            return ((AndroidDriver) context().getCurrentContext().getDriver()).currentActivity();
+        }
+
+        default void ignoreUnimportantViews(boolean compress) {
+            ((AndroidDriver) context().getCurrentContext().getDriver()).ignoreUnimportantViews(compress);
+        }
+
+        default void endTestCoverage(String intent, String path) {
+            ((AndroidDriver) context().getCurrentContext().getDriver()).endTestCoverage(intent, path);
+        }
+
     }
 
 }
