@@ -102,6 +102,13 @@ public class IAppiumNative {
         return new PerformsTouchActionsClazz();
     }
 
+    public class HasNetworkConnectionClazz implements IHasNetworkConnection {
+    }
+
+    public HasNetworkConnectionClazz hasNetworkConnection() {
+        return new HasNetworkConnectionClazz();
+    }
+
 
     public interface IStartsActivity extends StartsActivity, IContext {
 
@@ -380,6 +387,18 @@ public class IAppiumNative {
         @Override
         default Connection getConnection() {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).getConnection();
+        }
+
+        // TODO Remove deprecated methods ones removed from the interface
+
+        @Override
+        default NetworkConnectionSetting getNetworkConnection() {
+            return null;
+        }
+
+        @Override
+        default void setNetworkConnection(NetworkConnectionSetting connection) {
+
         }
     }
 

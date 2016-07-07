@@ -2,6 +2,7 @@ package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.nati
 
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDeviceTypesEnum;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IAppium;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
 import io.appium.java_client.NoSuchContextException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -11,7 +12,7 @@ import java.io.File;
 
 import static org.junit.Assert.assertEquals;
 
-public class AndroidContextTest implements IAppium{
+public class AndroidContextTest implements IAppium, IContext{
 
     /**
      * initialization.
@@ -52,6 +53,7 @@ public class AndroidContextTest implements IAppium{
     @AfterClass
     public static void tearDown() throws Exception {
         DEVICE_BASED_HANDLER.stopAppiumServer();
+        CONTEXT_FACTORY.tearDownContexts();
 
     }
 
