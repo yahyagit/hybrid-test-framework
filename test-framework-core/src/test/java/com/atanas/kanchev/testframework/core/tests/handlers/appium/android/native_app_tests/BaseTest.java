@@ -1,7 +1,8 @@
-package com.atanas.kanchev.testframework.core.tests.handlers.appium.android;
+package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.native_app_tests;
 
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDeviceTypesEnum;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IAppium;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -10,11 +11,11 @@ import java.io.File;
 /**
  * @author Atanas Ksnchev
  */
-public class BaseTest implements IAppium {
+public class BaseTest implements IAppium, IContext {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        File appDir = new File("src\\test\\java\\com\\atanas\\kanchev\\testframework\\core\\tests\\handlers\\appium\\android");
+        File appDir = new File("src/test/java/com/atanas/kanchev/testframework/core/tests/handlers/appium/android/native_app_tests");
         File app = new File(appDir, "ApiDemos-debug.apk");
 
         DEVICE_BASED_HANDLER
@@ -45,6 +46,7 @@ public class BaseTest implements IAppium {
     @AfterClass
     public static void tearDown() throws Exception {
         DEVICE_BASED_HANDLER.stopAppiumServer();
+        CONTEXT_FACTORY.tearDownContexts();
 
     }
 }

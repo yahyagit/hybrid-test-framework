@@ -151,7 +151,7 @@ public class Appium implements IWrapper {
             Assert.fail("Unspecified OS found, Appium can't run");
         }
 
-        System.out.println("- - - - - - - - Starting Appium Server- - - - - - - - ");
+        logger.debug("- - - - - - - - Starting Appium Server- - - - - - - - ");
         service.start();
         if (service == null || !service.isRunning()) {
             throw new RuntimeException("An appium server node is not started!");
@@ -159,13 +159,15 @@ public class Appium implements IWrapper {
     }
 
     public void stopAppiumServer() {
-        System.out.println("- - - - - - - - Stopping Appium Server- - - - - - - - ");
+        logger.debug("- - - - - - - - Stopping Appium Server- - - - - - - - ");
 
-        if (service != null && service.isRunning()) {
-            service.stop();
+        if (service != null && service.isRunning())
+            try {
+                service.stop();
+            } catch (Exception e) {
+                logger.debug("Error shutting down appium server " + e.getMessage());
+            }
 
-        } else throw new RuntimeException("An appium server node is not started!");
     }
-
 
 }

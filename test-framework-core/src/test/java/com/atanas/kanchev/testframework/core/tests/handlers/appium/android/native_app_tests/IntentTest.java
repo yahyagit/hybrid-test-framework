@@ -1,7 +1,8 @@
-package com.atanas.kanchev.testframework.core.tests.handlers.appium.android;
+package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.native_app_tests;
 
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDeviceTypesEnum;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IAppium;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -42,6 +43,12 @@ public class IntentTest implements IAppium {
 
         DEVICE_BASED_HANDLER
                 .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
+    }
+
+    @AfterClass
+    public static void tearDown() throws Exception {
+        DEVICE_BASED_HANDLER.stopAppiumServer();
+
     }
 
     @Test
