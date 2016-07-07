@@ -16,11 +16,10 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.Set;
 
-
 /**
  * Created by atanas on 02/07/2016.
  */
-public class NavigateSelenium implements INavigate, IWrapper, IContext {
+public class NavigateSelenium implements IWrapper, INavigate, IContext {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(NavigateSelenium.class);

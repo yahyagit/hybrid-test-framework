@@ -5,6 +5,7 @@ import com.atanas.kanchev.testframework.core.handlers.wrappers.IAppium;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
 import io.appium.java_client.NoSuchContextException;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -45,9 +46,13 @@ public class AndroidContextTest implements IAppium, IContext{
 
         DEVICE_BASED_HANDLER
                 .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
+    }
 
-        DEVICE_BASED_HANDLER.appium().methods().startActivity().startActivity("io.appium.android.apis", ".view.WebView1");
+    @Before
+    public void setUp() throws Exception {
+        appium().methods().startActivity().startActivity("io.appium.android.apis", ".view.WebView1");
         Thread.sleep(20000);
+
     }
 
     @AfterClass

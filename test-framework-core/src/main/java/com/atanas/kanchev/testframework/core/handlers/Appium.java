@@ -4,7 +4,7 @@ import com.atanas.kanchev.testframework.appium.driverfactory.AppiumCapabilities;
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDevice;
 import com.atanas.kanchev.testframework.appium.driverfactory.DeviceDriverFactory;
 import com.atanas.kanchev.testframework.core.context.AppiumContext;
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
@@ -27,7 +27,7 @@ import java.net.URL;
  * from the ASL. This way, only this class needs to be extended to be able to
  * use all the Appium Methods
  */
-public class Appium implements IWrapper {
+public class Appium implements IContext {
 
     private final static Logger logger = LoggerFactory.getLogger(Appium.class);
 

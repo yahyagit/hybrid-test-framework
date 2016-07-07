@@ -6,7 +6,7 @@ import com.atanas.kanchev.testframework.selenium.driver_factory.DriverFactory;
 /**
  * @author Atanas Ksnchev
  */
-public interface INavigate {
+public interface INavigate{
     DriverFactory DRIVER_FACTORY = new DriverFactory();
 
     default DriverFactory setupSelenium() {
