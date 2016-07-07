@@ -40,7 +40,6 @@ public class BaseTest implements IAppium {
 
         DEVICE_BASED_HANDLER
                 .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
-
     }
 
     @AfterClass

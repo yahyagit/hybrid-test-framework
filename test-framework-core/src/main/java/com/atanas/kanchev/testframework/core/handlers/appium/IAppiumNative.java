@@ -95,6 +95,13 @@ public class IAppiumNative {
         return new AppiumDriverMethodsClazz();
     }
 
+    public class PerformsTouchActionsClazz implements IPerformsTouchActions {
+    }
+
+    public PerformsTouchActionsClazz performsTouchActions() {
+        return new PerformsTouchActionsClazz();
+    }
+
 
     public interface IStartsActivity extends StartsActivity, IContext {
 
@@ -410,6 +417,19 @@ public class IAppiumNative {
             ((AndroidDriver) context().getCurrentContext().getDriver()).endTestCoverage(intent, path);
         }
 
+    }
+
+    interface IPerformsTouchActions extends PerformsTouchActions,IContext{
+
+        @Override
+        default TouchAction performTouchAction(TouchAction touchAction) {
+            return ((AndroidDriver) context().getCurrentContext().getDriver()).performTouchAction(touchAction);
+        }
+
+        @Override
+        default void performMultiTouchAction(MultiTouchAction multiAction) {
+            ((AndroidDriver) context().getCurrentContext().getDriver()).performMultiTouchAction(multiAction);
+        }
     }
 
 }

@@ -1,12 +1,10 @@
 package com.atanas.kanchev.testframework.core.tests.handlers.appium.android;
 
-import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDeviceTypesEnum;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 import io.appium.java_client.AppiumSetting;
 import io.appium.java_client.android.AndroidDriver;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
-import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.html5.Location;
@@ -18,36 +16,7 @@ import static org.junit.Assert.*;
 /**
  * @author Atanas Ksnchev
  */
-public class AndroidDriverTest implements IWrapper {
-
-    @Before
-    public void setUp() throws Exception {
-
-        File appDir = new File("src\\test\\java\\com\\atanas\\kanchev\\testframework\\core\\tests\\handlers\\appium\\android");
-        File app = new File(appDir, "ApiDemos-debug.apk");
-
-        setup()
-                .setupDevice()
-                .setApp(app.getAbsolutePath())
-                .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
-                .setDeviceName("ZY22398GL7")
-                .setPlatformVersion("6.0.1");
-
-        setup()
-                .setupDeviceServer()
-                .setNewCommandTimeout(10)
-                .setFullReset(false)
-                .setAutoLaunch(false);
-
-        setup()
-                .setupAndroidDriver()
-                .setAndroidDeviceReadyTimeout(10)
-                .setEnablePerformanceLogging(true);
-
-        setup()
-                .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
-
-    }
+public class AndroidDriverTest extends BaseTest implements IWrapper {
 
     @Test
     public void isAppInstalledTest() {
