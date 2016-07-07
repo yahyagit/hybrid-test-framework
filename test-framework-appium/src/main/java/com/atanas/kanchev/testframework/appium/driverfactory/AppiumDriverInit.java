@@ -4,6 +4,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
 
 import java.net.URL;
 
@@ -18,8 +19,6 @@ public final class AppiumDriverInit {
     private final AppiumCapabilities.AppiumServerCapabilities appiumServerCapabilities;
     private AppiumCapabilities.IOSCapabilities iosCapabilities;
     private AppiumCapabilities.AndroidCapabilities androidCapabilities;
-
-    //private MultiThreadedDriverFactory multiThreadedDriverFactory;
 
     private final URL remoteAddress;
 
@@ -42,7 +41,6 @@ public final class AppiumDriverInit {
         this.appiumServerCapabilities = appiumServerCapabilities;
         this.iosCapabilities = iosCapabilities;
         this.remoteAddress = remoteAddress;
-        //this.multiThreadedDriverFactory = new MultiThreadedDriverFactory();
     }
 
     /**
@@ -60,7 +58,6 @@ public final class AppiumDriverInit {
         this.appiumServerCapabilities = appiumServerCapabilities;
         this.androidCapabilities = androidCapabilities;
         this.remoteAddress = remoteAddress;
-        //this.multiThreadedDriverFactory = new MultiThreadedDriverFactory();
     }
 
     //////////////
@@ -74,12 +71,8 @@ public final class AppiumDriverInit {
      */
     public final IOSDriver<IOSElement> getIOSDriver() {
 
-        IOSDriver<IOSElement> iosDriver = new AppiumDriverFactory(remoteAddress, new AppiumCapabilitiesFactory(appiumDevice, iosCapabilities, appiumServerCapabilities)
+        return new AppiumDriverFactory(remoteAddress, new AppiumCapabilitiesFactory(appiumDevice, iosCapabilities, appiumServerCapabilities)
                 .getGeneratedCaps()).getIOSDriver();
-
-        //multiThreadedDriverFactory.setMultiThreadedDriver(iosDriver);
-
-        return iosDriver;
     }
 
     /**
@@ -91,5 +84,16 @@ public final class AppiumDriverInit {
 
         return new AppiumDriverFactory(remoteAddress, new AppiumCapabilitiesFactory(appiumDevice, androidCapabilities, appiumServerCapabilities)
                 .getGeneratedCaps()).getAndroidDriver();
+    }
+
+    /**
+     * Get AndroidDriver
+     *
+     * @return driver
+     */
+    public final AndroidDriver<AndroidElement> getAndroidDriver(AppiumDriverLocalService service) {
+
+        return new AppiumDriverFactory(remoteAddress, new AppiumCapabilitiesFactory(appiumDevice, androidCapabilities, appiumServerCapabilities)
+                .getGeneratedCaps()).getAndroidDriver(service);
     }
 }

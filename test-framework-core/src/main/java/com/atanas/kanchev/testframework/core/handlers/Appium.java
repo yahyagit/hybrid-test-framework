@@ -4,16 +4,20 @@ import com.atanas.kanchev.testframework.appium.driverfactory.AppiumCapabilities;
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDevice;
 import com.atanas.kanchev.testframework.appium.driverfactory.DeviceDriverFactory;
 import com.atanas.kanchev.testframework.core.context.AppiumContext;
-import com.atanas.kanchev.testframework.core.handlers.appium.IAppiumNative;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
+import io.appium.java_client.service.local.flags.GeneralServerFlag;
+import junit.framework.Assert;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -28,6 +32,8 @@ public class Appium implements IWrapper {
     private final static Logger logger = LoggerFactory.getLogger(Appium.class);
 
     private DeviceDriverFactory createAppiumDriver;
+
+    private static AppiumDriverLocalService service;
 
     /**
      * Setup Appium Device capabilities
@@ -111,7 +117,11 @@ public class Appium implements IWrapper {
     public void initAndroidDriver(String appiumServerURL) {
         try {
             this.createAppiumDriver.setDeviceServerURL(new URL(appiumServerURL));
-            AppiumContext<AndroidDriver<AndroidElement>> context = new AppiumContext<>(this.createAppiumDriver.getAndroidDriver());
+            AppiumContext<AndroidDriver<AndroidElement>> context = null;
+            if (service != null)
+                context = new AppiumContext<>(this.createAppiumDriver.getAndroidDriver(service));
+            else
+                context = new AppiumContext<>(this.createAppiumDriver.getAndroidDriver());
             context().addContext(context);
         } catch (MalformedURLException e) {
             logger.error(e.getMessage());
@@ -120,6 +130,42 @@ public class Appium implements IWrapper {
         }
     }
 
+    public void startAppiumServer() {
+        String deviceUnderExecution = "oneplusone";
+
+        String osName = System.getProperty("os.name");
+        if (osName.contains("Mac")) {
+            service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+                    .usingDriverExecutable(new File("/Applications/Appium.app/Contents/Resources/node/bin/node"))
+                    .withAppiumJS(new File("D:\\appium\\appium\\build\\lib\\appium.js"))
+                    .withIPAddress("127.0.0.1")
+                    .usingAnyFreePort()
+                    .withLogFile(new File("target/" + deviceUnderExecution + ".log")));
+        } else if (osName.contains("Windows")) {
+            service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+                    .usingAnyFreePort()
+                    .withAppiumJS(new File("D:\\appium\\appium\\build\\lib\\main.js"))
+                    .withArgument(GeneralServerFlag.LOG_LEVEL, "info")
+                    .withLogFile(new File("target/" + deviceUnderExecution + ".log")));
+        } else {
+            Assert.fail("Unspecified OS found, Appium can't run");
+        }
+
+        System.out.println("- - - - - - - - Starting Appium Server- - - - - - - - ");
+        service.start();
+        if (service == null || !service.isRunning()) {
+            throw new RuntimeException("An appium server node is not started!");
+        }
+    }
+
+    public void stopAppiumServer() {
+        System.out.println("- - - - - - - - Stopping Appium Server- - - - - - - - ");
+
+        if (service != null && service.isRunning()) {
+            service.stop();
+
+        } else throw new RuntimeException("An appium server node is not started!");
+    }
 
 
 }

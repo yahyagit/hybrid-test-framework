@@ -255,6 +255,10 @@ public class IAppiumNative {
             return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElementById(id);
         }
 
+        default List findElementsById(String id) {
+            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElementsById(id);
+        }
+
 
     }
 

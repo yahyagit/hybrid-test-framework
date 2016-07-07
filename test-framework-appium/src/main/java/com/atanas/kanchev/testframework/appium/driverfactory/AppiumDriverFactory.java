@@ -4,6 +4,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
 import org.openqa.selenium.Capabilities;
 
 import java.net.URL;
@@ -34,5 +35,9 @@ public final class AppiumDriverFactory {
 
     public AndroidDriver<AndroidElement> getAndroidDriver() {
         return new AndroidDriver<>(this.remoteAddress, this.desiredCapabilities);
+    }
+
+    public AndroidDriver<AndroidElement> getAndroidDriver(AppiumDriverLocalService service) {
+        return new AndroidDriver<>(service, this.desiredCapabilities);
     }
 }
