@@ -7,7 +7,6 @@ import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.INavigate;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.SwipeElementDirection;
-import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.UnreachableBrowserException;
@@ -179,15 +178,15 @@ public class ASL_AppiumHandlerImpl extends ASL_DeviceMethods implements ASL_IApp
         return this;
     }
 
-    @Override
-    public ASL_IAppiumHandler installApp(String appPath) {
-        ((AppiumContext<AndroidDriver>) context().getCurrentContext()).getDriver().installApp(appPath);
-        if (((AppiumContext<AndroidDriver>) context().getCurrentContext()).getDriver().isAppInstalled(appPath))
-            logger.debug("App installed");
-        else
-            logger.error("App was not installed");
-        return this;
-    }
+//    @Override
+//    public ASL_IAppiumHandler installApp(String appPath) {
+//        ((AppiumContext<AndroidDriver>) context().getCurrentContext()).getDriver().installApp(appPath);
+//        if (((AppiumContext<AndroidDriver>) context().getCurrentContext()).getDriver().isAppInstalled(appPath))
+//            logger.debug("App installed");
+//        else
+//            logger.error("App was not installed");
+//        return this;
+//    }
 
     @Override
     public ASL_IAppiumHandler openApp(String... appArguments) {
@@ -244,31 +243,31 @@ public class ASL_AppiumHandlerImpl extends ASL_DeviceMethods implements ASL_IApp
         return this;
     }
 
-    @Override
-    public ASL_IAppiumHandler resetApp() {
-        ((AppiumContext<AndroidDriver>) context().getCurrentContext()).getDriver().resetApp();
-        return this;
-    }
+//    @Override
+//    public ASL_IAppiumHandler resetApp() {
+//        ((AppiumContext<AndroidDriver>) context().getCurrentContext()).getDriver().resetApp();
+//        return this;
+//    }
+//
+//    @Override
+//    public boolean deviceUninstallApp(String packageName) {
+//        return removeApp((AppiumDriver) driver, packageName);
+//    }
+//
+//    @Override
+//    public boolean deviceLaunchApp() {
+//        return launchApp((AppiumDriver) driver);
+//    }
 
-    @Override
-    public boolean deviceUninstallApp(String packageName) {
-        return removeApp((AppiumDriver) driver, packageName);
-    }
-
-    @Override
-    public boolean deviceLaunchApp() {
-        return launchApp((AppiumDriver) driver);
-    }
-
-    @Override
-    public boolean deviceBackgroundApp(int seconds) {
-        return backgroundApp((AppiumDriver) driver, seconds);
-    }
-
-    @Override
-    public boolean deviceCloseApp() {
-        return closeApp((AppiumDriver) driver);
-    }
+//    @Override
+//    public boolean deviceBackgroundApp(int seconds) {
+//        return backgroundApp((AppiumDriver) driver, seconds);
+//    }
+//
+//    @Override
+//    public boolean deviceCloseApp() {
+//        return closeApp((AppiumDriver) driver);
+//    }
 
 
     @Override

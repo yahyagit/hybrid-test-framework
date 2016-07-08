@@ -9,16 +9,16 @@ public interface ASL_IAppiumHandler {
 
     ASL_IAppiumHandler startDevice(String... options);
 
-    ASL_IAppiumHandler installApp(String appPath);
+//    ASL_IAppiumHandler installApp(String appPath);
 
     ASL_IAppiumHandler openApp(String... appArguments);
 
-    /**
-     * Reset the currently running app for this session.
-     *
-     * @return this
-     */
-    ASL_IAppiumHandler resetApp();
+//    /**
+//     * Reset the currently running app for this session.
+//     *
+//     * @return this
+//     */
+//    ASL_IAppiumHandler resetApp();
 
     boolean deviceSwitchToContextNativeApp();
 
@@ -29,13 +29,13 @@ public interface ASL_IAppiumHandler {
     boolean deviceLongPress();
 
 
-    boolean deviceUninstallApp(String packageName);
+//    boolean deviceUninstallApp(String packageName);
 
-    boolean deviceLaunchApp();
+//    boolean deviceLaunchApp();
 
-    boolean deviceBackgroundApp(int seconds);
+//    boolean deviceBackgroundApp(int seconds);
 
-    boolean deviceCloseApp();
+//    boolean deviceCloseApp();
 
     boolean deviceTapOnCoordinates(int x, int y);
 

@@ -518,51 +518,51 @@ public class ASL_DeviceMethods implements IInteract {
         }
     }
 
-    /**
-     * Run App in Background
-     *
-     * @param driver
-     * @param seconds length of time to run app for
-     * @return true when successful
-     */
-    boolean backgroundApp(AppiumDriver driver, int seconds) {
-        driver.runAppInBackground(seconds);
-        return true;
-    }
+//    /**
+//     * Run App in Background
+//     *
+//     * @param driver
+//     * @param seconds length of time to run app for
+//     * @return true when successful
+//     */
+//    boolean backgroundApp(AppiumDriver driver, int seconds) {
+//        driver.runAppInBackground(seconds);
+//        return true;
+//    }
+//
+//    /**
+//     * Launch the app which was provided in the capabilities at session creation.
+//     *
+//     * @param driver
+//     * @return true when successful
+//     */
+//    boolean launchApp(AppiumDriver driver) {
+//        driver.launchApp();
+//        return true;
+//    }
 
-    /**
-     * Launch the app which was provided in the capabilities at session creation.
-     *
-     * @param driver
-     * @return true when successful
-     */
-    boolean launchApp(AppiumDriver driver) {
-        driver.launchApp();
-        return true;
-    }
-
-    /**
-     * Remove App Method
-     *
-     * @param driver
-     * @param bundleId
-     * @return
-     */
-    public boolean removeApp(AppiumDriver driver, String bundleId) {
-        driver.removeApp(bundleId);
-        return true;
-    }
-
-    /**
-     * Close App Method
-     *
-     * @param driver
-     * @return true when successful
-     */
-    boolean closeApp(AppiumDriver driver) {
-        driver.closeApp();
-        return true;
-    }
+//    /**
+//     * Remove App Method
+//     *
+//     * @param driver
+//     * @param bundleId
+//     * @return
+//     */
+//    public boolean removeApp(AppiumDriver driver, String bundleId) {
+//        driver.removeApp(bundleId);
+//        return true;
+//    }
+//
+//    /**
+//     * Close App Method
+//     *
+//     * @param driver
+//     * @return true when successful
+//     */
+//    boolean closeApp(AppiumDriver driver) {
+//        driver.closeApp();
+//        return true;
+//    }
 
 
     /*

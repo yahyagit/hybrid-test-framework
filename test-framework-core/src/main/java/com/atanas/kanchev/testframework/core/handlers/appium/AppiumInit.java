@@ -149,7 +149,7 @@ public class AppiumInit implements IContext {
             Assert.fail("Unspecified OS found, AppiumInit can't run");
         }
 
-        logger.debug("- - - - - - - - Starting AppiumInit Server- - - - - - - - ");
+        System.out.println("- - - - - - - - Starting AppiumInit Server- - - - - - - - ");
         service.start();
         if (service == null || !service.isRunning()) {
             throw new RuntimeException("An APPIUM_INIT server node is not started!");
@@ -157,7 +157,7 @@ public class AppiumInit implements IContext {
     }
 
     public void stopAppiumServer() {
-        logger.debug("- - - - - - - - Stopping AppiumInit Server- - - - - - - - ");
+        System.out.println("- - - - - - - - Stopping AppiumInit Server- - - - - - - - ");
 
         if (service != null && service.isRunning())
             try {
