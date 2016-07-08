@@ -1,6 +1,5 @@
 package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.native_app_tests;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 import io.appium.java_client.AppiumSetting;
 import io.appium.java_client.android.AndroidDriver;
 import org.apache.commons.codec.binary.Base64;
@@ -16,37 +15,53 @@ import static org.junit.Assert.*;
 /**
  * @author Atanas Ksnchev
  */
-public class AndroidDriverTest extends BaseTest implements IWrapper {
+public class AndroidDriverTest extends BaseTest {
 
     @Test
     public void isAppInstalledTest() {
-        assertTrue(appium().methods().interactsWithApps().isAppInstalled("io.appium.android.apis"));
+        assertTrue(android()
+                .interactsWithApps()
+                .isAppInstalled("io.APPIUM_INIT.android.apis"));
     }
 
     @Test
     public void getDeviceTimeTest() {
-        String time = appium().methods().actionShortcuts().getDeviceTime();
+        String time = android()
+                .actionShortcuts()
+                .getDeviceTime();
         assertTrue(time.length() == 28);
     }
 
     @Test
     public void isAppNotInstalledTest() {
-        assertFalse(appium().methods().interactsWithApps().isAppInstalled("foo"));
+        assertFalse(android()
+                .interactsWithApps()
+                .isAppInstalled("foo"));
     }
 
     @Test
     public void closeAppTest() throws InterruptedException {
-        appium().methods().interactsWithApps().closeApp();
-        appium().methods().interactsWithApps().launchApp();
-        assertEquals(".ApiDemos", appium().methods().appiumDriverMethods().currentActivity());
+        android()
+                .interactsWithApps()
+                .closeApp();
+        android()
+                .interactsWithApps()
+                .launchApp();
+        assertEquals(".ApiDemos", android()
+                .appiumDriverMethods()
+                .currentActivity());
     }
 
     @Test
     public void pushFileTest() {
         byte[] data = Base64.encodeBase64("The eventual code is no more than the deposit of your understanding. ~E. W. Dijkstra"
                 .getBytes());
-        appium().methods().pushesFiles().pushFile("/data/local/tmp/remote.txt", data);
-        byte[] returnData = appium().methods().pushesFiles().pullFile("/data/local/tmp/remote.txt");
+        android()
+                .pushesFiles()
+                .pushFile("/data/local/tmp/remote.txt", data);
+        byte[] returnData = android()
+                .pushesFiles()
+                .pullFile("/data/local/tmp/remote.txt");
         String returnDataDecoded = new String(Base64.decodeBase64(returnData));
         assertEquals("The eventual code is no more than the deposit of your understanding. ~E. W. Dijkstra",
                 returnDataDecoded);
@@ -58,8 +73,12 @@ public class AndroidDriverTest extends BaseTest implements IWrapper {
         try {
             FileUtils.writeStringToFile(temp, "The eventual code is no "
                     + "more than the deposit of your understanding. ~E. W. Dijkstra", "UTF-8", true);
-            appium().methods().pushesFiles().pushFile("/data/local/tmp/remote2.txt", temp);
-            byte[] returnData = appium().methods().pushesFiles().pullFile("/data/local/tmp/remote2.txt");
+            android()
+                    .pushesFiles()
+                    .pushFile("/data/local/tmp/remote2.txt", temp);
+            byte[] returnData = android()
+                    .pushesFiles()
+                    .pullFile("/data/local/tmp/remote2.txt");
             String returnDataDecoded = new String(Base64.decodeBase64(returnData));
             assertEquals(
                     "The eventual code is no more than the deposit of "
@@ -72,8 +91,11 @@ public class AndroidDriverTest extends BaseTest implements IWrapper {
 
     @Test
     public void ignoreUnimportantViews() {
-        appium().methods().appiumDriverMethods().ignoreUnimportantViews(true);
-        boolean ignoreViews = ((AndroidDriver) context().getCurrentContext().getDriver()).getSettings().get(AppiumSetting.IGNORE_UNIMPORTANT_VIEWS.toString()).getAsBoolean();
+        android()
+                .appiumDriverMethods()
+                .ignoreUnimportantViews(true);
+        boolean ignoreViews = ((AndroidDriver) context().getCurrentContext().getDriver())
+                .getSettings().get(AppiumSetting.IGNORE_UNIMPORTANT_VIEWS.toString()).getAsBoolean();
         assertTrue(ignoreViews);
         ((AndroidDriver) context().getCurrentContext().getDriver()).ignoreUnimportantViews(false);
         ignoreViews = ((AndroidDriver) context().getCurrentContext().getDriver()).getSettings().get(AppiumSetting.IGNORE_UNIMPORTANT_VIEWS.toString()).getAsBoolean();
@@ -93,10 +115,18 @@ public class AndroidDriverTest extends BaseTest implements IWrapper {
 
     @Test
     public void orientationTest() {
-        assertEquals(ScreenOrientation.PORTRAIT, appium().methods().rotate().getOrientation());
-        appium().methods().rotate().rotate(ScreenOrientation.LANDSCAPE);
-        assertEquals(ScreenOrientation.LANDSCAPE, appium().methods().rotate().getOrientation());
-        appium().methods().rotate().rotate(ScreenOrientation.PORTRAIT);
+        assertEquals(ScreenOrientation.PORTRAIT, android()
+                .orientation()
+                .getOrientation());
+        android()
+                .orientation()
+                .rotate(ScreenOrientation.LANDSCAPE);
+        assertEquals(ScreenOrientation.LANDSCAPE, android()
+                .orientation()
+                .getOrientation());
+        android()
+                .orientation()
+                .rotate(ScreenOrientation.PORTRAIT);
     }
 
     @Test
@@ -110,7 +140,7 @@ public class AndroidDriverTest extends BaseTest implements IWrapper {
     @Test
     public void runAppInBackgroundTest() {
         long time = System.currentTimeMillis();
-        appium().methods().interactsWithApps().runAppInBackground(4);
+        android().interactsWithApps().runAppInBackground(4);
         long timeAfter = System.currentTimeMillis();
         assert (timeAfter - time > 3000);
     }
@@ -118,18 +148,24 @@ public class AndroidDriverTest extends BaseTest implements IWrapper {
     @Test
     public void pullFileTest() {
         byte[] data =
-                appium().methods().pushesFiles().pullFile("data/system/registered_services/android.content.SyncAdapter.xml");
+                android()
+                        .pushesFiles()
+                        .pullFile("data/system/registered_services/android.content.SyncAdapter.xml");
         assert (data.length > 0);
     }
 
     @Test
     public void resetTest() {
-        appium().methods().interactsWithApps().resetApp();
+        android()
+                .interactsWithApps()
+                .resetApp();
     }
 
     @Test
     public void endTestCoverage() {
-        appium().methods().appiumDriverMethods().endTestCoverage("android.intent.action.MAIN", "");
+        android()
+                .appiumDriverMethods()
+                .endTestCoverage("android.intent.action.MAIN", "");
     }
 
 }

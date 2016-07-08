@@ -1,21 +1,21 @@
 package com.atanas.kanchev.testframework.core.handlers.wrappers;
 
-import com.atanas.kanchev.testframework.core.handlers.Appium;
-import com.atanas.kanchev.testframework.core.handlers.appium.AppiumHandlerImpl;
+import com.atanas.kanchev.testframework.core.handlers.appium.AppiumInit;
+import com.atanas.kanchev.testframework.core.handlers.appium.AppiumNative;
 
 /**
  * @author Atanas Ksnchev
  */
 public interface IAppium {
 
-    Appium DEVICE_BASED_HANDLER = new Appium();
+    AppiumInit APPIUM_INIT = new AppiumInit();
 
-    default Appium setup() {
-        return DEVICE_BASED_HANDLER;
+    default AppiumInit appiumInit() {
+        return APPIUM_INIT;
     }
 
-    default AppiumHandlerImpl appium() {
-        return new AppiumHandlerImpl();
+    default AppiumNative android() {
+        return new AppiumNative();
     }
 
 }

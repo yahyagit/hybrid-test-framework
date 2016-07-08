@@ -8,8 +8,8 @@ public class OpenNotificationsTest extends BaseTest {
 
     @Test
     public void openNotification() throws Exception {
-        appium().methods().appiumDriverMethods().openNotifications();
-        assertNotEquals(0, appium().methods().find().findElementsById("com.android.systemui:id/time_view").size());
-        appium().methods().appiumDriverMethods().openNotifications();
+        android().appiumDriverMethods().openNotifications();
+        assertNotEquals(0, android().find().findElementsById("com.android.systemui:id/time_view").size());
+        android().appiumDriverMethods().openNotifications();
     }
 }

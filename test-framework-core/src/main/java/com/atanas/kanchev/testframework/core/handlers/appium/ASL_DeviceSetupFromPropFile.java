@@ -9,9 +9,9 @@ import java.util.List;
 /**
  * @author Atanas Ksnchev
  */
-public class DeviceSetupFromPropFile {
+public class ASL_DeviceSetupFromPropFile {
     // the logger
-    private final static Logger logger = LoggerFactory.getLogger(DeviceSetupFromPropFile.class);
+    private final static Logger logger = LoggerFactory.getLogger(ASL_DeviceSetupFromPropFile.class);
     static String device = "";
     static String platformName = "";
     static String platFormVersion = "";

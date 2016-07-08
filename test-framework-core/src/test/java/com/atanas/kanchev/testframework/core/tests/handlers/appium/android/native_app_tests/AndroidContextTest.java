@@ -13,75 +13,92 @@ import java.io.File;
 
 import static org.junit.Assert.assertEquals;
 
-public class AndroidContextTest implements IAppium, IContext{
+public class AndroidContextTest implements IAppium, IContext {
 
     /**
      * initialization.
      */
     @BeforeClass
     public static void beforeClass() throws Exception {
-        File appDir = new File("src\\test\\java\\com\\atanas\\kanchev\\testframework\\core\\tests\\handlers\\appium\\android");
+        File appDir = new File("src\\test\\java\\com\\atanas\\kanchev\\testframework\\core\\tests\\handlers\\APPIUM_INIT\\android");
         File app = new File(appDir, "IntentExample.apk");
 
-        DEVICE_BASED_HANDLER
+        APPIUM_INIT
                 .setupDevice()
                 .setApp(app.getAbsolutePath())
                 .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
                 .setDeviceName("ZY22398GL7")
                 .setPlatformVersion("6.0.1");
 
-        DEVICE_BASED_HANDLER
+        APPIUM_INIT
                 .setupDeviceServer()
                 .setNewCommandTimeout(10)
                 .setFullReset(false)
                 .setAutoLaunch(false);
 
-        DEVICE_BASED_HANDLER
+        APPIUM_INIT
                 .setupAndroidDriver()
                 .setAndroidDeviceReadyTimeout(10)
                 .setEnablePerformanceLogging(true);
 
-        DEVICE_BASED_HANDLER
+        APPIUM_INIT
                 .startAppiumServer();
 
-        DEVICE_BASED_HANDLER
+        APPIUM_INIT
                 .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
     }
 
     @Before
     public void setUp() throws Exception {
-        appium().methods().startActivity().startActivity("io.appium.android.apis", ".view.WebView1");
+        android()
+                .activity()
+                .startActivity("io.APPIUM_INIT.android.apis", ".view.WebView1");
         Thread.sleep(20000);
 
     }
 
     @AfterClass
     public static void tearDown() throws Exception {
-        DEVICE_BASED_HANDLER.stopAppiumServer();
+        APPIUM_INIT.stopAppiumServer();
         CONTEXT_FACTORY.tearDownContexts();
 
     }
 
     @Test
     public void testGetContext() {
-        assertEquals("NATIVE_APP", appium().methods().contextAware().getContext());
+        assertEquals("NATIVE_APP", android()
+                .contextAware()
+                .getContext());
     }
 
     @Test
     public void testGetContextHandles() {
-        assertEquals(appium().methods().contextAware().getContextHandles().size(), 2);
+        assertEquals(android()
+                .contextAware()
+                .getContextHandles().size(), 2);
     }
 
     @Test
     public void testSwitchContext() {
-        appium().methods().contextAware().getContextHandles();
-        appium().methods().contextAware().context("WEBVIEW_io.appium.android.apis");
-        assertEquals(appium().methods().contextAware().getContext(), "WEBVIEW_io.appium.android.apis");
-        appium().methods().contextAware().context("NATIVE_APP");
+        android()
+                .contextAware()
+                .getContextHandles();
+        android()
+                .contextAware()
+                .context("WEBVIEW_io.APPIUM_INIT.android.apis");
+        assertEquals(android()
+                .contextAware()
+                .getContext(), "WEBVIEW_io.APPIUM_INIT.android.apis");
+        android()
+                .contextAware()
+                .context("NATIVE_APP");
     }
 
-    @Test(expected = NoSuchContextException.class) public void testContextError() {
-        appium().methods().contextAware().context("Planet of the Ape-ium");
+    @Test(expected = NoSuchContextException.class)
+    public void testContextError() {
+        android()
+                .contextAware()
+                .context("Planet of the Ape-ium");
     }
 
 }

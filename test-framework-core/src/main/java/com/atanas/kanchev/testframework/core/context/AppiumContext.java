@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Appium Context
+ * AppiumInit Context
  *
  * @param <T>
  * @author Atanas Ksnchev

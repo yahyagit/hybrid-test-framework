@@ -124,7 +124,7 @@ public class IWrapperWrapperTest {
 //    }
 //
 //    @Test
-//    public void appium() throws Exception {
+//    public void APPIUM_INIT() throws Exception {
 //
 //    }
 //

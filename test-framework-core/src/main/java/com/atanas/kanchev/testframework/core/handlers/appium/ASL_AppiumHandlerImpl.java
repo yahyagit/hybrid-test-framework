@@ -21,29 +21,29 @@ import java.util.Map;
 /**
  * @author Atanas Ksnchev
  */
-public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHandler, IAppium, INavigate, IContext {
+public class ASL_AppiumHandlerImpl extends ASL_DeviceMethods implements ASL_IAppiumHandler, IAppium, INavigate, IContext {
 
-    private final static Logger logger = LoggerFactory.getLogger(AppiumHandlerImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(ASL_AppiumHandlerImpl.class);
 
     private Map<String, String> appiumContextMap = new HashMap<>();
 
     @Override
-    public IAppiumHandler startDevice() {
+    public ASL_IAppiumHandler startDevice() {
         try {
-            DeviceSetupFromPropFile.setCapabilities();
+            ASL_DeviceSetupFromPropFile.setCapabilities();
         } catch (Exception e) {
         }
         try {
 
-            if (DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("Android")) {
-                setup()
+            if (ASL_DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("Android")) {
+                appiumInit()
                         .setupDevice()
                         .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
-                        .setPlatformName(DeviceSetupFromPropFile.getPlatformName())
-                        .setPlatformVersion(DeviceSetupFromPropFile.getPlatFormVersion())
-                        .setDeviceName(DeviceSetupFromPropFile.getDeviceName())
-                        .setDeviceUDID(DeviceSetupFromPropFile.getUdid());
-                setup()
+                        .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatformName())
+                        .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
+                        .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName())
+                        .setDeviceUDID(ASL_DeviceSetupFromPropFile.getUdid());
+                appiumInit()
                         .setupDeviceServer()
                         .setBrowserName("Chrome")
                         .setFullReset(false)
@@ -53,27 +53,27 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHandler, 
                 options.addArguments("disable-popup-blocking");
                 options.addArguments("disable-save-password-bubble");
                 options.addArguments("enable-automatic-password-saving");
-                setup()
+                appiumInit()
                         .setupAndroidDriver()
                         .setChromeOptions(options)
                         .setAndroidDeviceReadyTimeout(60)
                         .setEnablePerformanceLogging(true);
-                setup()
-                        .initAndroidDriver("http://" + DeviceSetupFromPropFile.getAppiumServerIP() + ":" + DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
-            } else if (DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("iOS")) {
-                setup()
+                appiumInit()
+                        .initAndroidDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
+            } else if (ASL_DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("iOS")) {
+                appiumInit()
                         .setupDevice()
                         .setDeviceType(AppiumDeviceTypesEnum.IPHONE_DEVICE)
-                        .setPlatformName(DeviceSetupFromPropFile.getPlatFormVersion())
-                        .setPlatformVersion(DeviceSetupFromPropFile.getPlatFormVersion())
-                        .setDeviceName(DeviceSetupFromPropFile.getDeviceName());
-                setup()
+                        .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
+                        .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
+                        .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName());
+                appiumInit()
                         .setupDeviceServer()
                         .setBrowserName("Safari")
                         .setFullReset(false)
                         .setAutoLaunch(false);
-                setup()
-                        .initIOSDriver("http://" + DeviceSetupFromPropFile.getAppiumServerIP() + ":" + DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
+                appiumInit()
+                        .initIOSDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
                 try {
                     String[] launchCommand = {"osascript", "-e", "if application \"Simulator\" is running then \n tell application \"Simulator\" to activate\n" +
                             "end if"};
@@ -85,7 +85,7 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHandler, 
             } else {
 
                 Map<String, String> mobileEmulation = new HashMap<>();
-                mobileEmulation.put("deviceName", DeviceSetupFromPropFile.getDeviceName());
+                mobileEmulation.put("deviceName", ASL_DeviceSetupFromPropFile.getDeviceName());
                 HashMap<String, Object> chromeOptions = new HashMap<>();
                 chromeOptions.put("mobileEmulation", mobileEmulation);
 
@@ -107,26 +107,26 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHandler, 
     }
 
     @Override
-    public IAppiumHandler startDevice(String... options) {
+    public ASL_IAppiumHandler startDevice(String... options) {
 
         try {
-            DeviceSetupFromPropFile.setCapabilities();
+            ASL_DeviceSetupFromPropFile.setCapabilities();
         } catch (Exception e) {
 
         }
         try {
 
-            if (DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("Android")) {
-                setup()
+            if (ASL_DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("Android")) {
+                appiumInit()
                         .setupDevice()
                         .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
-                        .setPlatformName(DeviceSetupFromPropFile.getPlatformName())
-                        .setPlatformVersion(DeviceSetupFromPropFile.getPlatFormVersion())
+                        .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatformName())
+                        .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
                         .setApp("Chrome")
-                        .setDeviceName(DeviceSetupFromPropFile.getDeviceName())
-                        .setDeviceUDID(DeviceSetupFromPropFile.getUdid());
+                        .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName())
+                        .setDeviceUDID(ASL_DeviceSetupFromPropFile.getUdid());
 
-                setup()
+                appiumInit()
                         .setupDeviceServer()
                         .setBrowserName("Chrome")
                         .setFullReset(false)
@@ -135,31 +135,31 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHandler, 
                 for (int i = 0; i < options.length; i++) {
                     chromeOptions.addArguments(options[i]);
                 }
-                setup()
+                appiumInit()
                         .setupAndroidDriver()
                         .setChromeOptions(chromeOptions)
                         .setAndroidDeviceReadyTimeout(60)
                         .setEnablePerformanceLogging(true);
-                setup().initAndroidDriver("http://" + DeviceSetupFromPropFile.getAppiumServerIP() + ":" + DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
+                appiumInit().initAndroidDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
             } else {
-                if (DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("iOS")) {
-                    setup()
+                if (ASL_DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("iOS")) {
+                    appiumInit()
                             .setupDevice()
                             .setDeviceType(AppiumDeviceTypesEnum.IPHONE_DEVICE)
-                            .setPlatformName(DeviceSetupFromPropFile.getPlatFormVersion())
-                            .setPlatformVersion(DeviceSetupFromPropFile.getPlatFormVersion())
+                            .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
+                            .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
                             .setApp("Safari")
-                            .setDeviceName(DeviceSetupFromPropFile.getDeviceName());
-                    setup()
+                            .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName());
+                    appiumInit()
                             .setupDeviceServer()
                             .setBrowserName("Safari")
                             .setFullReset(false)
                             .setAutoLaunch(false);
-                    setup().initIOSDriver("http://" + DeviceSetupFromPropFile.getAppiumServerIP() + ":" + DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
+                    appiumInit().initIOSDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
                 } else {
 
                     Map<String, String> mobileEmulation = new HashMap<>();
-                    mobileEmulation.put("deviceName", DeviceSetupFromPropFile.getDeviceName());
+                    mobileEmulation.put("deviceName", ASL_DeviceSetupFromPropFile.getDeviceName());
                     HashMap<String, Object> chromeOptions = new HashMap<>();
                     chromeOptions.put("mobileEmulation", mobileEmulation);
 
@@ -180,7 +180,7 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHandler, 
     }
 
     @Override
-    public IAppiumHandler installApp(String appPath) {
+    public ASL_IAppiumHandler installApp(String appPath) {
         ((AppiumContext<AndroidDriver>) context().getCurrentContext()).getDriver().installApp(appPath);
         if (((AppiumContext<AndroidDriver>) context().getCurrentContext()).getDriver().isAppInstalled(appPath))
             logger.debug("App installed");
@@ -190,25 +190,25 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHandler, 
     }
 
     @Override
-    public IAppiumHandler openApp(String... appArguments) {
+    public ASL_IAppiumHandler openApp(String... appArguments) {
         try {
-            DeviceSetupFromPropFile.setCapabilities();
+            ASL_DeviceSetupFromPropFile.setCapabilities();
         } catch (Exception e) {
 
         }
         try {
 
-            if (DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("Android")) {
-                setup()
+            if (ASL_DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("Android")) {
+                appiumInit()
                         .setupDevice()
                         .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
-                        .setPlatformName(DeviceSetupFromPropFile.getPlatformName())
-                        .setPlatformVersion(DeviceSetupFromPropFile.getPlatFormVersion())
+                        .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatformName())
+                        .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
                         .setApp(appArguments[0])
-                        .setDeviceName(DeviceSetupFromPropFile.getDeviceName())
-                        .setDeviceUDID(DeviceSetupFromPropFile.getUdid());
+                        .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName())
+                        .setDeviceUDID(ASL_DeviceSetupFromPropFile.getUdid());
                 try {
-                    setup()
+                    appiumInit()
                             .setupAndroidDriver()
                             .setAndroidDeviceReadyTimeout(60)
                             .setAppActivity(appArguments[1]);
@@ -216,20 +216,20 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHandler, 
                     logger.error("When launching an android app you need to provide the app launch activity as the second argument");
 
                 }
-                setup()
-                        .initAndroidDriver("http://" + DeviceSetupFromPropFile.getAppiumServerIP() + ":" + DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
+                appiumInit()
+                        .initAndroidDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
             } else {
-                setup()
+                appiumInit()
                         .setupDevice()
                         .setDeviceType(AppiumDeviceTypesEnum.IPHONE_DEVICE)
-                        .setPlatformName(DeviceSetupFromPropFile.getPlatFormVersion())
-                        .setPlatformVersion(DeviceSetupFromPropFile.getPlatFormVersion())
+                        .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
+                        .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
                         .setApp(appArguments[0])
-                        .setDeviceName(DeviceSetupFromPropFile.getDeviceName());
-                setup()
+                        .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName());
+                appiumInit()
                         .setupDeviceServer()
                         .setBrowserName("");
-                setup().initIOSDriver("http://" + DeviceSetupFromPropFile.getAppiumServerIP() + ":" + DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
+                appiumInit().initIOSDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
                 try {
                     String[] launchCommand = {"osascript", "-e", "if application \"Simulator\" is running then \n tell application \"Simulator\" to activate\n" +
                             "end if"};
@@ -245,7 +245,7 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHandler, 
     }
 
     @Override
-    public IAppiumHandler resetApp() {
+    public ASL_IAppiumHandler resetApp() {
         ((AppiumContext<AndroidDriver>) context().getCurrentContext()).getDriver().resetApp();
         return this;
     }
@@ -468,7 +468,4 @@ public class AppiumHandlerImpl extends DeviceMethods implements IAppiumHandler, 
         return width;
     }
 
-    public IAppiumNative methods() {
-        return new IAppiumNative();
-    }
 }

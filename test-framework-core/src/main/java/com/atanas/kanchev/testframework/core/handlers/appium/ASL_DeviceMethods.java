@@ -1,6 +1,5 @@
 package com.atanas.kanchev.testframework.core.handlers.appium;
 
-import com.atanas.kanchev.testframework.core.handlers.Appium;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IInteract;
 import io.appium.java_client.*;
 import io.appium.java_client.NoSuchContextException;
@@ -29,18 +28,18 @@ import java.io.IOException;
 /**
  * @author Atanas Ksnchev
  */
-public class DeviceMethods implements IInteract {
+public class ASL_DeviceMethods implements IInteract {
 
     boolean mobileBrowser;
 
-    final static Logger logger = LoggerFactory.getLogger(Appium.class);
+    final static Logger logger = LoggerFactory.getLogger(AppiumInit.class);
 
     // Device Context
     String currentContext = null;
     // WebDriver
     AndroidDriver driver;
 
-    // Appium Methods
+    // AppiumInit Methods
     String getCurrentContext(AppiumDriver driver) {
         currentContext = driver.getContext();
         logger.debug("Context: " + currentContext);
@@ -178,12 +177,12 @@ public class DeviceMethods implements IInteract {
         }
     }
 
-    // Capture an image in the Appium Driver, compare that image using
+    // Capture an image in the AppiumInit Driver, compare that image using
     // sikuli to get X and Y coordinates, and use them
-    // With the Tap() function on the Appium Driver.
+    // With the Tap() function on the AppiumInit Driver.
 
     /*
-     * This function captures takes a screenshot of the Appium Driver
+     * This function captures takes a screenshot of the AppiumInit Driver
      */
     Screen appiumScreen = null;
     File appiumSikuliImageFile = null;
@@ -201,7 +200,7 @@ public class DeviceMethods implements IInteract {
         driver = (AppiumDriver) new Augmenter().augment(driver);
         // Get the screenshot
         appiumSikuliImageFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        logger.debug("Appium Screenshot Completed");
+        logger.debug("AppiumInit Screenshot Completed");
         try {
             if (waitForImage) {
                 appiumScreenShot = new File(appiumImageFolder + "/" + imageName + ".png");
@@ -217,7 +216,7 @@ public class DeviceMethods implements IInteract {
 
         } catch (IOException e) {
             e.printStackTrace();
-            logger.error("Take Appium Driver screenshot failed");
+            logger.error("Take AppiumInit Driver screenshot failed");
             return false;
         }
     }
@@ -301,7 +300,7 @@ public class DeviceMethods implements IInteract {
         boolean found = findImageAppium(driver, imagePath);
         if (this.match == null) {
             logger.error("Sub Image: '" + imagePath
-                    + "' does not exist on the Appium Driver Screen. Be sure of capturing the sub image on a 100% resolution");
+                    + "' does not exist on the AppiumInit Driver Screen. Be sure of capturing the sub image on a 100% resolution");
         }
         return found;
     }
@@ -323,9 +322,9 @@ public class DeviceMethods implements IInteract {
     }
 
     /*
-     * Captures a Screenshot on the Appium Driver (Real Device or Emulator)
+     * Captures a Screenshot on the AppiumInit Driver (Real Device or Emulator)
      * Compares with a given sub image and takes the Coordinates X,Y using
-     * Sikuli Taps on coordinates X,Y on the Appium Driver
+     * Sikuli Taps on coordinates X,Y on the AppiumInit Driver
      */
     boolean tapImageAppium(AppiumDriver driver, String imagePath) {
         String context = driver.getContext();
@@ -361,10 +360,10 @@ public class DeviceMethods implements IInteract {
     boolean setAppiumImageWaitTime(int time) {
         if (time > 0) {
             this.appiumImageWaitTime = time;
-            logger.debug("Appium Image Wait Time changed to: " + this.appiumImageWaitTime);
+            logger.debug("AppiumInit Image Wait Time changed to: " + this.appiumImageWaitTime);
             return true;
         } else {
-            logger.error("Appium Image Wait Time needs to be positive");
+            logger.error("AppiumInit Image Wait Time needs to be positive");
             logger.debug("Using default wait time: " + this.appiumImageWaitTime);
             return false;
         }

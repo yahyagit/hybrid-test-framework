@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.core.handlers;
+package com.atanas.kanchev.testframework.core.handlers.appium;
 
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumCapabilities;
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDevice;
@@ -22,21 +22,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Appium Methods - These methods only work with the AppiumDriver driver,
- * therefore, IWrapper created them on the AppiumMethods class. And they will be called
- * from the ASL. This way, only this class needs to be extended to be able to
- * use all the Appium Methods
+ * AppiumInit Methods - These methods only work with the AppiumDriver driver,
+ * therefore, IWrapper created them on the AppiumMethods class.
  */
-public class Appium implements IContext {
+public class AppiumInit implements IContext {
 
-    private final static Logger logger = LoggerFactory.getLogger(Appium.class);
+    private final static Logger logger = LoggerFactory.getLogger(AppiumInit.class);
 
     private DeviceDriverFactory createAppiumDriver;
 
     private static AppiumDriverLocalService service;
 
     /**
-     * Setup Appium Device capabilities
+     * Setup AppiumInit Device capabilities
      *
      * @return AppiumDevice instance
      */
@@ -47,7 +45,7 @@ public class Appium implements IContext {
     }
 
     /**
-     * Setup Appium Device capabilities using appiumDevice instance
+     * Setup AppiumInit Device capabilities using appiumDevice instance
      *
      * @param appiumDevice AppiumDevice
      * @return AppiumDevice instance
@@ -59,7 +57,7 @@ public class Appium implements IContext {
     }
 
     /**
-     * Setup Appium Server capabilities
+     * Setup AppiumInit Server capabilities
      *
      * @return AppiumCapabilities.AppiumServerCapabilities instance
      */
@@ -94,7 +92,7 @@ public class Appium implements IContext {
     /**
      * Create IOSDriver
      *
-     * @param appiumServerURL Appium server URL String, e.g. "http://127.0.0.1:4723/wd/hub"
+     * @param appiumServerURL AppiumInit server URL String, e.g. "http://127.0.0.1:4723/wd/hub"
      * @return IOSDriver instance
      */
     public void initIOSDriver(String appiumServerURL) {
@@ -111,7 +109,7 @@ public class Appium implements IContext {
     /**
      * Create AndroidDriver
      *
-     * @param appiumServerURL Appium server URL String, e.g. "http://127.0.0.1:4723/wd/hub"
+     * @param appiumServerURL AppiumInit server URL String, e.g. "http://127.0.0.1:4723/wd/hub"
      * @return AndroidDriver instance
      */
     public void initAndroidDriver(String appiumServerURL) {
@@ -136,36 +134,36 @@ public class Appium implements IContext {
         String osName = System.getProperty("os.name");
         if (osName.contains("Mac")) {
             service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
-                    .usingDriverExecutable(new File("/Applications/Appium.app/Contents/Resources/node/bin/node"))
-                    .withAppiumJS(new File("D:\\appium\\appium\\build\\lib\\appium.js"))
+                    .usingDriverExecutable(new File("/Applications/AppiumInit.app/Contents/Resources/node/bin/node"))
+                    .withAppiumJS(new File("D:\\APPIUM_INIT\\APPIUM_INIT\\build\\lib\\APPIUM_INIT.js"))
                     .withIPAddress("127.0.0.1")
                     .usingAnyFreePort()
                     .withLogFile(new File("target/" + deviceUnderExecution + ".log")));
         } else if (osName.contains("Windows")) {
             service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
                     .usingAnyFreePort()
-                    .withAppiumJS(new File("D:\\appium\\appium\\build\\lib\\main.js"))
+                    .withAppiumJS(new File("D:\\APPIUM_INIT\\APPIUM_INIT\\build\\lib\\main.js"))
                     .withArgument(GeneralServerFlag.LOG_LEVEL, "info")
                     .withLogFile(new File("target/" + deviceUnderExecution + ".log")));
         } else {
-            Assert.fail("Unspecified OS found, Appium can't run");
+            Assert.fail("Unspecified OS found, AppiumInit can't run");
         }
 
-        logger.debug("- - - - - - - - Starting Appium Server- - - - - - - - ");
+        logger.debug("- - - - - - - - Starting AppiumInit Server- - - - - - - - ");
         service.start();
         if (service == null || !service.isRunning()) {
-            throw new RuntimeException("An appium server node is not started!");
+            throw new RuntimeException("An APPIUM_INIT server node is not started!");
         }
     }
 
     public void stopAppiumServer() {
-        logger.debug("- - - - - - - - Stopping Appium Server- - - - - - - - ");
+        logger.debug("- - - - - - - - Stopping AppiumInit Server- - - - - - - - ");
 
         if (service != null && service.isRunning())
             try {
                 service.stop();
             } catch (Exception e) {
-                logger.debug("Error shutting down appium server " + e.getMessage());
+                logger.debug("Error shutting down APPIUM_INIT server " + e.getMessage());
             }
 
     }

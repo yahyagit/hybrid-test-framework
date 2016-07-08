@@ -1,19 +1,22 @@
 package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.native_app_tests;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IAppium;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotEquals;
 
-public class AndroidAppStringsTest extends BaseTest implements IAppium {
+public class AndroidAppStringsTest extends BaseTest {
 
     @Test
     public void getAppStrings() {
-        assertNotEquals(0, appium().methods().hasAppStrings().getAppStringMap().size());
+        assertNotEquals(0, android()
+                .hasAppStrings()
+                .getAppStringMap().size());
     }
 
     @Test
     public void getGetAppStringsUsingLang() {
-        assertNotEquals(0, appium().methods().hasAppStrings().getAppStringMap("en").size());
+        assertNotEquals(0, android()
+                .hasAppStrings()
+                .getAppStringMap("en").size());
     }
 }

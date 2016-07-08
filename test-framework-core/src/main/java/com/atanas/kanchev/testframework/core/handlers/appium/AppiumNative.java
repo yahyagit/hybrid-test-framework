@@ -2,10 +2,12 @@ package com.atanas.kanchev.testframework.core.handlers.appium;
 
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
 import io.appium.java_client.*;
-import io.appium.java_client.android.*;
+import io.appium.java_client.android.AndroidDeviceActionShortcuts;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.android.Connection;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
-import org.openqa.selenium.html5.LocationContext;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,437 +18,397 @@ import java.util.Set;
 /**
  * @author Atanas Ksnchev
  */
-public class IAppiumNative {
+public class AppiumNative {
 
-    public class StartsActivityClazz implements IStartsActivity {
+    public StartsActivity activity() {
+        return new StartsActivity();
     }
 
-    public StartsActivityClazz startActivity() {
-        return new StartsActivityClazz();
+    public Rotatable orientation() {
+        return new Rotatable();
     }
 
-    public class IRotatableClazz implements IRotatable {
+    public PushesFiles pushesFiles() {
+        return new PushesFiles();
     }
 
-    public IRotatableClazz rotate() {
-        return new IRotatableClazz();
+    public ActionShortcuts actionShortcuts() {
+        return new ActionShortcuts();
     }
 
-    public class PushesFilesClazz implements IPushesFiles {
+    public TouchShortcuts touchShortcuts() {
+        return new TouchShortcuts();
     }
 
-    public PushesFilesClazz pushesFiles() {
-        return new PushesFilesClazz();
+    public Finds find() {
+        return new Finds();
     }
 
-    public class ActionShortcutsClazz implements IActionShortcuts {
+    public HasAppStrings hasAppStrings() {
+        return new HasAppStrings();
     }
 
-    public ActionShortcutsClazz actionShortcuts() {
-        return new ActionShortcutsClazz();
+    public InteractsWithApps interactsWithApps() {
+        return new InteractsWithApps();
     }
 
-    public class TouchShortcutsClazz implements ITouchShortcuts {
+    public LocationContext locationContext() {
+        return new LocationContext();
     }
 
-    public TouchShortcutsClazz touchShortcuts() {
-        return new TouchShortcutsClazz();
+    public ContextAware contextAware() {
+        return new ContextAware();
     }
 
-    public class FindsClazz implements IFinds {
+    public AppiumDriverMethods appiumDriverMethods() {
+        return new AppiumDriverMethods();
     }
 
-    public FindsClazz find() {
-        return new FindsClazz();
+    public PerformsTouchActions performsTouchActions() {
+        return new PerformsTouchActions();
     }
 
-    public class HasAppStringsClazz implements IHasAppStrings {
+    public HasNetworkConnection hasNetworkConnection() {
+        return new HasNetworkConnection();
     }
 
-    public HasAppStringsClazz hasAppStrings() {
-        return new HasAppStringsClazz();
-    }
-
-    public class InteractsWithAppsClazz implements IInteractsWithApps {
-    }
-
-    public InteractsWithAppsClazz interactsWithApps() {
-        return new InteractsWithAppsClazz();
-    }
-
-    public class LocationContextClazz implements ILocationContext {
-    }
-
-    public LocationContextClazz locationContext() {
-        return new LocationContextClazz();
-    }
-
-    public class ContextAwareClazz implements IContextAware {
-    }
-
-    public ContextAwareClazz contextAware() {
-        return new ContextAwareClazz();
-    }
-
-    public class AppiumDriverMethodsClazz implements IAppiumDriverMethods {
-    }
-
-    public AppiumDriverMethodsClazz appiumDriverMethods() {
-        return new AppiumDriverMethodsClazz();
-    }
-
-    public class PerformsTouchActionsClazz implements IPerformsTouchActions {
-    }
-
-    public PerformsTouchActionsClazz performsTouchActions() {
-        return new PerformsTouchActionsClazz();
-    }
-
-    public class HasNetworkConnectionClazz implements IHasNetworkConnection {
-    }
-
-    public HasNetworkConnectionClazz hasNetworkConnection() {
-        return new HasNetworkConnectionClazz();
-    }
-
-
-    public interface IStartsActivity extends StartsActivity, IContext {
+    public class StartsActivity implements io.appium.java_client.android.StartsActivity, IContext {
 
         @Override
-        default void startActivity(String appPackage, String appActivity, String appWaitPackage, String appWaitActivity, boolean stopApp) {
+        public void startActivity(String appPackage, String appActivity, String appWaitPackage, String appWaitActivity, boolean stopApp) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).startActivity(appPackage, appActivity, appWaitPackage, appWaitActivity, stopApp);
         }
 
         @Override
-        default void startActivity(String appPackage, String appActivity, String appWaitPackage, String appWaitActivity) {
+        public void startActivity(String appPackage, String appActivity, String appWaitPackage, String appWaitActivity) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).startActivity(appPackage, appActivity, appWaitPackage, appWaitActivity);
         }
 
         @Override
-        default void startActivity(String appPackage, String appActivity) {
+        public void startActivity(String appPackage, String appActivity) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).startActivity(appPackage, appActivity);
         }
 
         @Override
-        default void startActivity(String appPackage, String appActivity, String appWaitPackage, String appWaitActivity, String intentAction, String intentCategory, String intentFlags, String intentOptionalArgs) {
+        public void startActivity(String appPackage, String appActivity, String appWaitPackage, String appWaitActivity, String intentAction, String intentCategory, String intentFlags, String intentOptionalArgs) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).startActivity(appPackage, appActivity, appWaitPackage, appWaitActivity, intentAction, intentCategory, intentFlags, intentOptionalArgs);
         }
 
         @Override
-        default void startActivity(String appPackage, String appActivity, String appWaitPackage, String appWaitActivity, String intentAction, String intentCategory, String intentFlags, String optionalIntentArguments, boolean stopApp) {
+        public void startActivity(String appPackage, String appActivity, String appWaitPackage, String appWaitActivity, String intentAction, String intentCategory, String intentFlags, String optionalIntentArguments, boolean stopApp) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).startActivity(appPackage, appActivity, appWaitPackage, appWaitActivity, intentAction, intentCategory, intentFlags, optionalIntentArguments, stopApp);
         }
     }
 
-    interface IPushesFiles extends PushesFiles, IContext {
+    public class PushesFiles implements io.appium.java_client.android.PushesFiles, IContext {
 
         @Override
-        default void pushFile(String remotePath, byte[] base64Data) {
+        public void pushFile(String remotePath, byte[] base64Data) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).pushFile(remotePath, base64Data);
         }
 
         @Override
-        default void pushFile(String remotePath, File file) throws IOException {
+        public void pushFile(String remotePath, File file) throws IOException {
             ((AndroidDriver) context().getCurrentContext().getDriver()).pushFile(remotePath, file);
         }
 
         @Override
-        default byte[] pullFile(String remotePath) {
+        public byte[] pullFile(String remotePath) {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).pullFile(remotePath);
         }
 
         @Override
-        default byte[] pullFolder(String remotePath) {
+        public byte[] pullFolder(String remotePath) {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).pullFile(remotePath);
         }
     }
 
-    interface IActionShortcuts extends AndroidDeviceActionShortcuts, IContext {
+    public class ActionShortcuts implements AndroidDeviceActionShortcuts, IContext {
 
         @Override
-        default void pressKeyCode(int key) {
+        public void pressKeyCode(int key) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).pressKeyCode(key);
         }
 
         @Override
-        default void pressKeyCode(int key, Integer metastate) {
+        public void pressKeyCode(int key, Integer metastate) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).pressKeyCode(key, metastate);
         }
 
         @Override
-        default void longPressKeyCode(int key) {
+        public void longPressKeyCode(int key) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).longPressKeyCode(key);
         }
 
         @Override
-        default void longPressKeyCode(int key, Integer metastate) {
+        public void longPressKeyCode(int key, Integer metastate) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).longPressKeyCode(key, metastate);
         }
 
         @Override
-        default void hideKeyboard() {
+        public void hideKeyboard() {
             ((AndroidDriver) context().getCurrentContext().getDriver()).hideKeyboard();
         }
 
         @Override
-        default String getDeviceTime() {
+        public String getDeviceTime() {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).getDeviceTime();
         }
     }
 
-    interface ITouchShortcuts extends TouchShortcuts, IContext {
+    public class TouchShortcuts implements io.appium.java_client.TouchShortcuts, IContext {
 
         @Override
-        default void zoom(int x, int y) {
+        public void zoom(int x, int y) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).zoom(x, y);
         }
 
         @Override
-        default void zoom(WebElement el) {
+        public void zoom(WebElement el) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).zoom(el);
         }
 
         @Override
-        default void tap(int fingers, int x, int y, int duration) {
+        public void tap(int fingers, int x, int y, int duration) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).tap(fingers, x, y, duration);
         }
 
         @Override
-        default void tap(int fingers, WebElement element, int duration) {
+        public void tap(int fingers, WebElement element, int duration) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).tap(fingers, element, duration);
         }
 
         @Override
-        default void swipe(int startx, int starty, int endx, int endy, int duration) {
+        public void swipe(int startx, int starty, int endx, int endy, int duration) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).swipe(startx, starty, endx, endy, duration);
         }
 
         @Override
-        default void pinch(int x, int y) {
+        public void pinch(int x, int y) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).pinch(x, y);
         }
 
         @Override
-        default void pinch(WebElement el) {
+        public void pinch(WebElement el) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).pinch(el);
         }
     }
 
-    interface IFinds extends FindsByAccessibilityId, FindsByAndroidUIAutomator, SearchContext, IContext {
+    public class Finds implements FindsByAccessibilityId, FindsByAndroidUIAutomator, SearchContext, IContext {
 
         @Override
-        default AndroidElement findElementByAccessibilityId(String using) {
+        public AndroidElement findElementByAccessibilityId(String using) {
             return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElementByAccessibilityId(using);
         }
 
         @Override
-        default List findElementsByAccessibilityId(String using) {
+        public List findElementsByAccessibilityId(String using) {
             return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElementsByAccessibilityId(using);
         }
 
         @Override
-        default AndroidElement findElementByAndroidUIAutomator(String using) {
+        public AndroidElement findElementByAndroidUIAutomator(String using) {
             return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElementByAndroidUIAutomator(using);
         }
 
         @Override
-        default List findElementsByAndroidUIAutomator(String using) {
+        public List findElementsByAndroidUIAutomator(String using) {
             return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElementsByAndroidUIAutomator(using);
         }
 
         @Override
-        default List findElements(By by) {
+        public List findElements(By by) {
             return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElements(by);
         }
 
         @Override
-        default AndroidElement findElement(By by) {
+        public AndroidElement findElement(By by) {
             return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElement(by);
         }
 
-        //TODO Override MobileDriver interface after it's been implemented in 5.0.0
-        default AndroidElement findElementById(String id) {
+        //TODO Override MobileDriver class after it's been implemented in 5.0.0
+        public AndroidElement findElementById(String id) {
             return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElementById(id);
         }
 
-        default List findElementsById(String id) {
+        public List findElementsById(String id) {
             return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).findElementsById(id);
         }
 
 
     }
 
-    interface IHasAppStrings extends HasAppStrings, IContext {
+    public class HasAppStrings implements io.appium.java_client.HasAppStrings, IContext {
 
         @Override
-        default Map<String, String> getAppStringMap() {
+        public Map<String, String> getAppStringMap() {
             return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).getAppStringMap();
         }
 
         @Override
-        default Map<String, String> getAppStringMap(String language) {
+        public Map<String, String> getAppStringMap(String language) {
             return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).getAppStringMap(language);
         }
 
         @Override
-        default Map<String, String> getAppStringMap(String language, String stringFile) {
+        public Map<String, String> getAppStringMap(String language, String stringFile) {
             return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver()).getAppStringMap(language, stringFile);
         }
 
     }
 
-    interface IInteractsWithApps extends InteractsWithApps, IContext {
+    public class InteractsWithApps implements io.appium.java_client.InteractsWithApps, IContext {
 
         @Override
-        default void launchApp() {
+        public void launchApp() {
             ((AndroidDriver) context().getCurrentContext().getDriver()).launchApp();
         }
 
         @Override
-        default void installApp(String appPath) {
+        public void installApp(String appPath) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).installApp(appPath);
         }
 
         @Override
-        default boolean isAppInstalled(String bundleId) {
+        public boolean isAppInstalled(String bundleId) {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).isAppInstalled(bundleId);
         }
 
         @Override
-        default void resetApp() {
+        public void resetApp() {
             ((AndroidDriver) context().getCurrentContext().getDriver()).resetApp();
         }
 
         @Override
-        default void runAppInBackground(int seconds) {
+        public void runAppInBackground(int seconds) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).runAppInBackground(seconds);
         }
 
         @Override
-        default void removeApp(String bundleId) {
+        public void removeApp(String bundleId) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).resetApp();
         }
 
         @Override
-        default void closeApp() {
+        public void closeApp() {
             ((AndroidDriver) context().getCurrentContext().getDriver()).closeApp();
         }
     }
 
-    interface ILocationContext extends LocationContext, IContext {
+    public class LocationContext implements org.openqa.selenium.html5.LocationContext, IContext {
 
         @Override
-        default Location location() {
+        public Location location() {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).location();
         }
 
         @Override
-        default void setLocation(Location location) {
+        public void setLocation(Location location) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).setLocation(location);
         }
     }
 
-    interface IRotatable extends Rotatable, IContext {
+    public class Rotatable implements org.openqa.selenium.Rotatable, IContext {
 
         @Override
-        default void rotate(ScreenOrientation orientation) {
+        public void rotate(ScreenOrientation orientation) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).rotate(orientation);
         }
 
         @Override
-        default ScreenOrientation getOrientation() {
+        public ScreenOrientation getOrientation() {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).getOrientation();
         }
     }
 
-    interface IContextAware extends ContextAware, IContext {
+    public class ContextAware implements org.openqa.selenium.ContextAware, IContext {
 
         @Override
-        default WebDriver context(String name) {
+        public WebDriver context(String name) {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).context(name);
         }
 
         @Override
-        default Set<String> getContextHandles() {
+        public Set<String> getContextHandles() {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).getContextHandles();
         }
 
         @Override
-        default String getContext() {
+        public String getContext() {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).getContext();
         }
     }
 
-    interface IHasNetworkConnection extends HasNetworkConnection, IContext {
+    public class HasNetworkConnection implements io.appium.java_client.android.HasNetworkConnection, IContext {
 
         @Override
-        default void setConnection(Connection connection) {
+        public void setConnection(Connection connection) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).setConnection(connection);
         }
 
         @Override
-        default Connection getConnection() {
+        public Connection getConnection() {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).getConnection();
         }
 
-        // TODO Remove deprecated methods ones removed from the interface
+        // TODO Remove deprecated methods ones removed from the class
 
         @Override
-        default NetworkConnectionSetting getNetworkConnection() {
+        public NetworkConnectionSetting getNetworkConnection() {
             return null;
         }
 
         @Override
-        default void setNetworkConnection(NetworkConnectionSetting connection) {
+        public void setNetworkConnection(NetworkConnectionSetting connection) {
 
         }
     }
 
-    interface IAppiumDriverMethods extends IContext {
+    public class AppiumDriverMethods implements IContext {
 
-        default boolean isLocked() {
+        public boolean isLocked() {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).isLocked();
         }
 
-        default void lockDevice() {
+        public void lockDevice() {
             ((AndroidDriver) context().getCurrentContext().getDriver()).lockDevice();
         }
 
-        default void unlockDevice() {
+        public void unlockDevice() {
             ((AndroidDriver) context().getCurrentContext().getDriver()).unlockDevice();
         }
 
-        default void toggleLocationServices() {
+        public void toggleLocationServices() {
             ((AndroidDriver) context().getCurrentContext().getDriver()).toggleLocationServices();
         }
 
-        default void openNotifications() {
+        public void openNotifications() {
             ((AndroidDriver) context().getCurrentContext().getDriver()).openNotifications();
         }
 
-        default String currentActivity() {
+        public String currentActivity() {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).currentActivity();
         }
 
-        default void ignoreUnimportantViews(boolean compress) {
+        public void ignoreUnimportantViews(boolean compress) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).ignoreUnimportantViews(compress);
         }
 
-        default void endTestCoverage(String intent, String path) {
+        public void endTestCoverage(String intent, String path) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).endTestCoverage(intent, path);
         }
 
     }
 
-    interface IPerformsTouchActions extends PerformsTouchActions,IContext{
+    public class PerformsTouchActions implements io.appium.java_client.PerformsTouchActions, IContext {
 
         @Override
-        default TouchAction performTouchAction(TouchAction touchAction) {
+        public TouchAction performTouchAction(TouchAction touchAction) {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).performTouchAction(touchAction);
         }
 
         @Override
-        default void performMultiTouchAction(MultiTouchAction multiAction) {
+        public void performMultiTouchAction(MultiTouchAction multiAction) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).performMultiTouchAction(multiAction);
         }
     }

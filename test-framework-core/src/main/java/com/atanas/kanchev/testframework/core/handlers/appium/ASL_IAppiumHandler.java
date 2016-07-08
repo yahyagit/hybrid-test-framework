@@ -3,22 +3,22 @@ package com.atanas.kanchev.testframework.core.handlers.appium;
 /**
  * @author Atanas Ksnchev
  */
-public interface IAppiumHandler {
+public interface ASL_IAppiumHandler {
 
-    IAppiumHandler startDevice();
+    ASL_IAppiumHandler startDevice();
 
-    IAppiumHandler startDevice(String... options);
+    ASL_IAppiumHandler startDevice(String... options);
 
-    IAppiumHandler installApp(String appPath);
+    ASL_IAppiumHandler installApp(String appPath);
 
-    IAppiumHandler openApp(String... appArguments);
+    ASL_IAppiumHandler openApp(String... appArguments);
 
     /**
      * Reset the currently running app for this session.
      *
      * @return this
      */
-    IAppiumHandler resetApp();
+    ASL_IAppiumHandler resetApp();
 
     boolean deviceSwitchToContextNativeApp();
 
@@ -46,9 +46,9 @@ public interface IAppiumHandler {
     boolean deviceFindImage(String imagePath);
 
     /**
-     * Captures a Screenshot on the Appium Driver (Real Device or Emulator)
+     * Captures a Screenshot on the AppiumInit Driver (Real Device or Emulator)
      * Compares with a given sub image and takes the Coordinates X,Y using
-     * Sikuli Taps on coordinates X,Y on the Appium Driver
+     * Sikuli Taps on coordinates X,Y on the AppiumInit Driver
      */
     boolean deviceTapImage(String imagePath);
 

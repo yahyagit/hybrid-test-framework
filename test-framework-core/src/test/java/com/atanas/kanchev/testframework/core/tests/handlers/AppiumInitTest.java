@@ -11,7 +11,7 @@ import org.openqa.selenium.ScreenOrientation;
 /**
  * @author Atanas Ksnchev
  */
-public class AppiumTest implements IWrapper {
+public class AppiumInitTest implements IWrapper {
     @After
     public void tearDown() throws Exception {
         context().tearDownContexts();
@@ -20,35 +20,35 @@ public class AppiumTest implements IWrapper {
     @Test
     public void androidChromeTest() throws Exception {
 
-        setup()
+        appiumInit()
                 .setupDevice()
                 .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
                 .setDeviceName("ZY22398GL7")
                 .setPlatformVersion("6.0.1");
 
-        setup()
+        appiumInit()
                 .setupDeviceServer()
                 .setBrowserName(MobileBrowserType.CHROME)
                 .setFullReset(false)
                 .setAutoLaunch(false);
 
-        setup()
+        appiumInit()
                 .setupAndroidDriver()
                 .setAndroidDeviceReadyTimeout(60)
                 .setEnablePerformanceLogging(true);
 
-        setup()
+        appiumInit()
                 .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
         goTo("https://bbc.co.uk");
         find().elementBy(By.id("idcta-link"));
 
-        appium().deviceTap();
+
         interact().click();
 
 
         Thread.sleep(10000);
 
-        appium().methods().rotate().rotate(ScreenOrientation.PORTRAIT);
+        android().orientation().rotate(ScreenOrientation.PORTRAIT);
 
 
     }
@@ -57,8 +57,8 @@ public class AppiumTest implements IWrapper {
     public void setupDeviceTest() throws Exception {
 
 //        File classpathRoot = new File(System.getProperty("user.dir"));
-//        //File appDir = new File(classpathRoot, "D:\\IdeaProjects\\personal\\test-framework\\test-framework-appium\\src\\test\\java\\com\\atanas\\kanchev\\testframework\\appium\\tests\\ContactManager.apk");
-//        File app = new File("D:\\IdeaProjects\\personal\\test-framework\\test-framework-appium\\src\\test\\java\\com\\atanas\\kanchev\\testframework\\appium\\tests\\ContactManager.apk");
+//        //File appDir = new File(classpathRoot, "D:\\IdeaProjects\\personal\\test-framework\\test-framework-APPIUM_INIT\\src\\test\\java\\com\\atanas\\kanchev\\testframework\\APPIUM_INIT\\tests\\ContactManager.apk");
+//        File app = new File("D:\\IdeaProjects\\personal\\test-framework\\test-framework-APPIUM_INIT\\src\\test\\java\\com\\atanas\\kanchev\\testframework\\APPIUM_INIT\\tests\\ContactManager.apk");
 //
 //        setupDevice()
 //                .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)

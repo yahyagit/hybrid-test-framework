@@ -1,22 +1,19 @@
 package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.native_app_tests;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 import io.appium.java_client.android.AndroidKeyCode;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class AndroidActivityTest extends BaseTest implements IWrapper {
+public class AndroidActivityTest extends BaseTest {
 
     @Test
     public void startActivityInThisAppTestCase() {
 
-        appium()
-                .methods()
-                .startActivity()
-                .startActivity("io.appium.android.apis", ".accessibility.AccessibilityNodeProviderActivity");
-        assertEquals(appium()
-                .methods()
+        android()
+                .activity()
+                .startActivity("io.APPIUM_INIT.android.apis", ".accessibility.AccessibilityNodeProviderActivity");
+        assertEquals(android()
                 .appiumDriverMethods()
                 .currentActivity(), ".accessibility.AccessibilityNodeProviderActivity");
     }
@@ -24,13 +21,11 @@ public class AndroidActivityTest extends BaseTest implements IWrapper {
     @Test
     public void startActivityWithWaitingAppTestCase() {
 
-        appium()
-                .methods()
-                .startActivity()
-                .startActivity("io.appium.android.apis", ".accessibility.AccessibilityNodeProviderActivity",
-                        "io.appium.android.apis", ".accessibility.AccessibilityNodeProviderActivity");
-        assertEquals(appium()
-                .methods()
+        android()
+                .activity()
+                .startActivity("io.APPIUM_INIT.android.apis", ".accessibility.AccessibilityNodeProviderActivity",
+                        "io.APPIUM_INIT.android.apis", ".accessibility.AccessibilityNodeProviderActivity");
+        assertEquals(android()
                 .appiumDriverMethods()
                 .currentActivity(), ".accessibility.AccessibilityNodeProviderActivity");
     }
@@ -38,22 +33,40 @@ public class AndroidActivityTest extends BaseTest implements IWrapper {
     @Test
     public void startActivityInNewAppTestCase() {
 
-        appium().methods().startActivity().startActivity("com.android.contacts", ".ContactsListActivity");
-        assertEquals(appium().methods().appiumDriverMethods().currentActivity(), ".ContactsListActivity");
-        appium().methods().actionShortcuts().pressKeyCode(AndroidKeyCode.BACK);
-        assertEquals(appium().methods().appiumDriverMethods().currentActivity(), ".ContactsListActivity");
+        android().
+                activity().startActivity("com.android.contacts", ".ContactsListActivity");
+        assertEquals(android()
+                .appiumDriverMethods()
+                .currentActivity(), ".ContactsListActivity");
+        android()
+                .actionShortcuts()
+                .pressKeyCode(AndroidKeyCode.BACK);
+        assertEquals(android()
+                .appiumDriverMethods()
+                .currentActivity(), ".ContactsListActivity");
     }
 
     @Test
     public void startActivityInNewAppTestCaseWithoutClosingApp() {
-        appium().methods().startActivity().startActivity("io.appium.android.apis",
-                ".accessibility.AccessibilityNodeProviderActivity");
-        assertEquals(appium().methods().appiumDriverMethods().currentActivity(), ".accessibility.AccessibilityNodeProviderActivity");
-        appium().methods().startActivity().startActivity("com.android.contacts", ".ContactsListActivity",
-                "com.android.contacts", ".ContactsListActivity", false);
-        assertEquals(appium().methods().appiumDriverMethods().currentActivity(), ".ContactsListActivity");
-        appium().methods().actionShortcuts().pressKeyCode(AndroidKeyCode.BACK);
-        assertEquals(appium().methods().appiumDriverMethods().currentActivity(),
-                ".accessibility.AccessibilityNodeProviderActivity");
+        android().
+                activity()
+                .startActivity("io.APPIUM_INIT.android.apis",
+                        ".accessibility.AccessibilityNodeProviderActivity");
+        assertEquals(android().
+                appiumDriverMethods()
+                .currentActivity(), ".accessibility.AccessibilityNodeProviderActivity");
+        android().
+                activity()
+                .startActivity("com.android.contacts", ".ContactsListActivity",
+                        "com.android.contacts", ".ContactsListActivity", false);
+        assertEquals(android().
+                appiumDriverMethods()
+                .currentActivity(), ".ContactsListActivity");
+        android().
+                actionShortcuts()
+                .pressKeyCode(AndroidKeyCode.BACK);
+        assertEquals(android().
+                appiumDriverMethods()
+                .currentActivity(), ".accessibility.AccessibilityNodeProviderActivity");
     }
 }

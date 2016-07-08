@@ -17,43 +17,43 @@ public class IntentTest implements IAppium {
      */
     @BeforeClass
     public static void beforeClass() throws Exception {
-        File appDir = new File("src\\test\\java\\com\\atanas\\kanchev\\testframework\\core\\tests\\handlers\\appium\\android");
+        File appDir = new File("src\\test\\java\\com\\atanas\\kanchev\\testframework\\core\\tests\\handlers\\APPIUM_INIT\\android");
         File app = new File(appDir, "IntentExample.apk");
 
-        DEVICE_BASED_HANDLER
+        APPIUM_INIT
                 .setupDevice()
                 .setApp(app.getAbsolutePath())
                 .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
                 .setDeviceName("ZY22398GL7")
                 .setPlatformVersion("6.0.1");
 
-        DEVICE_BASED_HANDLER
+        APPIUM_INIT
                 .setupDeviceServer()
                 .setNewCommandTimeout(10)
                 .setFullReset(false)
                 .setAutoLaunch(false);
 
-        DEVICE_BASED_HANDLER
+        APPIUM_INIT
                 .setupAndroidDriver()
                 .setAndroidDeviceReadyTimeout(10)
                 .setEnablePerformanceLogging(true);
 
-        DEVICE_BASED_HANDLER
+        APPIUM_INIT
                 .startAppiumServer();
 
-        DEVICE_BASED_HANDLER
+        APPIUM_INIT
                 .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
     }
 
     @AfterClass
     public static void tearDown() throws Exception {
-        DEVICE_BASED_HANDLER.stopAppiumServer();
+        APPIUM_INIT.stopAppiumServer();
 
     }
 
     @Test
     public void startActivityWithIntent() {
-        appium().methods().startActivity().startActivity("com.android.mms", ".ui.ComposeMessageActivity", null, null,
+        android().activity().startActivity("com.android.mms", ".ui.ComposeMessageActivity", null, null,
                 "android.intent.action.SEND", "android.intent.category.DEFAULT", "0x4000000",
                 "-d \"TestIntent\" -t \"text/plain\"");
         try {
@@ -65,10 +65,10 @@ public class IntentTest implements IAppium {
 
     @Test
     public void startActivityWithDefaultIntentAndDefaultCategoryWithOptionalArgs() {
-        appium().methods().startActivity().startActivity("com.prgguru.android", ".GreetingActivity", null, null,
+        android().activity().startActivity("com.prgguru.android", ".GreetingActivity", null, null,
                 "android.intent.action.MAIN", "android.intent.category.DEFAULT", "0x4000000",
                 "--es \"USERNAME\" \"AppiumIntentTest\" -t \"text/plain\"");
-        assertEquals(appium().methods().find().findElementById("com.prgguru.android:id/textView1").getText(),
+        assertEquals(android().find().findElementById("com.prgguru.android:id/textView1").getText(),
                 "Welcome AppiumIntentTest");
     }
 }
