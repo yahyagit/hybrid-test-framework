@@ -129,6 +129,7 @@ public class AppiumInit implements IContext {
     }
 
     public void startAppiumServer() {
+
         String deviceUnderExecution = "oneplusone";
 
         String osName = System.getProperty("os.name");

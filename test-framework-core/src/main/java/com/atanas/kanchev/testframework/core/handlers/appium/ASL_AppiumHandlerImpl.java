@@ -4,7 +4,7 @@ import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDeviceTypesEn
 import com.atanas.kanchev.testframework.core.context.AppiumContext;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IAppium;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
-import com.atanas.kanchev.testframework.core.handlers.wrappers.INavigate;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.ISelenium;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.SwipeElementDirection;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * @author Atanas Ksnchev
  */
-public class ASL_AppiumHandlerImpl extends ASL_DeviceMethods implements ASL_IAppiumHandler, IAppium, INavigate, IContext {
+public class ASL_AppiumHandlerImpl extends ASL_DeviceMethods implements ASL_IAppiumHandler, IAppium, ISelenium, IContext {
 
     private final static Logger logger = LoggerFactory.getLogger(ASL_AppiumHandlerImpl.class);
 

@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.core.handlers.appium;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IInteract;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.ISelenium;
 import io.appium.java_client.*;
 import io.appium.java_client.NoSuchContextException;
 import io.appium.java_client.android.AndroidDriver;
@@ -28,7 +28,7 @@ import java.io.IOException;
 /**
  * @author Atanas Ksnchev
  */
-public class ASL_DeviceMethods implements IInteract {
+public class ASL_DeviceMethods implements ISelenium {
 
     boolean mobileBrowser;
 

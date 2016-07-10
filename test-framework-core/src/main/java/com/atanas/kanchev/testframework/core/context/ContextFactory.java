@@ -61,8 +61,7 @@ public class ContextFactory implements IContextFactory {
 
         if (!contextMap.containsKey(contextName))
             throw new CustomExceptions.Common.IllegalArgumentException("The map ContextFactory#contextMap doesn't contain a key with value " + contextName);
-        T context = (T) contextMap.get(contextName);
-        currentContext = context;
+        currentContext = contextMap.get(contextName);
 
         return (T) currentContext;
     }
