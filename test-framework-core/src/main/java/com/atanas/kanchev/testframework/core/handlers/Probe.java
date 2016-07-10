@@ -3,6 +3,7 @@ package com.atanas.kanchev.testframework.core.handlers;
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.core.context.SeleniumContext;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.ISelenium;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.Color;
 import org.slf4j.Logger;
@@ -15,7 +16,7 @@ import java.util.Arrays;
  *
  * @author Atanas Ksnchev
  */
-public final class Probe implements IProbe, IContext {
+public final class Probe implements IProbe, ISelenium, IContext {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Probe.class);
@@ -25,13 +26,13 @@ public final class Probe implements IProbe, IContext {
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else {
+
+            logger.debug("Trying to locate element using " + locator);
             try {
-                logger.debug("Trying to locate element using " + locator);
-                ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
-                        new LocatorFactory().findElement(locator));
+                find().elementBy(locator);
                 logger.debug("Element found, setting as the current element pointer SeleniumContext#currentElement");
             } catch (NoSuchElementException e) {
-                logger.error("Unable to locate element by " + locator, e.getMessage());
+                logger.debug("Unable to locate element by " + locator, e.getMessage());
             }
         }
     }

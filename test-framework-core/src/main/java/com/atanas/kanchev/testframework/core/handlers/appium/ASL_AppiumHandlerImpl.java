@@ -354,9 +354,9 @@ public class ASL_AppiumHandlerImpl extends ASL_DeviceMethods implements ASL_IApp
     @Override
     public boolean deviceScrollToElementByText(String value) {
 //        if (driver instanceof AppiumDriver) {
-//            return scrollToElementByText((AppiumDriver) driver, value);
+//            return byScrollingByText((AppiumDriver) driver, value);
 //        } else {
-//            return scrollToElementByText(value);
+//            return byScrollingByText(value);
 //        }
         return false;
     }
