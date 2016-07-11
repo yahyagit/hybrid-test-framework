@@ -2,6 +2,7 @@ package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.core.context.SeleniumContext;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.ISelenium;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -152,7 +153,7 @@ public final class Wait implements IWait, IContext {
 /**
  * Wait Factory Interface
  */
-interface IWait {
+interface IWait extends ISelenium {
 
     /**
      * Wait for presence of an element
@@ -253,7 +254,5 @@ interface IWait {
 //    boolean isTextPresentInElement(By locator, String text, long wait);
 
     boolean isFrameAvailable(By locator, long wait);
-
-
 
 }

@@ -2,6 +2,7 @@ package com.atanas.kanchev.testframework.core.handlers;
 
 import com.atanas.kanchev.testframework.core.context.SeleniumContext;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.ISelenium;
 import com.atanas.kanchev.testframework.selenium.driver_factory.DriverConfig;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -240,7 +241,7 @@ public class Interact implements IInteract, IContext {
 /**
  * Created by atanas on 02/07/2016.
  */
-interface IInteract {
+interface IInteract extends ISelenium {
 
     <T> IInteract typeIn(CharSequence... keys);
 

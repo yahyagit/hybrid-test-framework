@@ -3,6 +3,7 @@ package com.atanas.kanchev.testframework.core.handlers;
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.core.context.SeleniumContext;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.ISelenium;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -262,7 +263,7 @@ public final class Finder implements IFinder, IContext {
 
 }
 
-interface IFinder {
+interface IFinder extends ISelenium {
 
     /**
      * Sets the current element pointer {@link SeleniumContext#currentElement}

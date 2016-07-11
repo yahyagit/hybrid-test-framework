@@ -1,20 +1,15 @@
 package com.atanas.kanchev.testframework.core.tests.handlers.selenium;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
-import org.junit.After;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IAppium;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.ISelenium;
 import org.junit.Test;
 
 /**
  * Created by atanas on 10/07/2016.
  */
-public class NavigateSeleniumTest implements IWrapper {
+public class NavigateSeleniumTest extends BaseTest implements IAppium, ISelenium {
 
     public static final String url = "https://bbc.co.uk";
-
-    @After
-    public void tearDown() throws Exception {
-        context().tearDownContexts();
-    }
 
     @Test
     public void getPage() throws Exception {
@@ -23,7 +18,7 @@ public class NavigateSeleniumTest implements IWrapper {
 
     @Test
     public void back() throws Exception {
-        goTo(url).back();
+        navigateToActivateFrame();goTo(url).back();
     }
 
     @Test

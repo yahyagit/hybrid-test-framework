@@ -3,7 +3,7 @@ package com.atanas.kanchev.testframework.core.handlers;
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.core.context.SeleniumContext;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.ISelenium;
 import com.atanas.kanchev.testframework.selenium.driver_factory.DriverFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,7 +19,7 @@ import java.util.Set;
 /**
  * Created by atanas on 02/07/2016.
  */
-public class NavigateSelenium implements IWrapper, INavigate, IContext {
+public class NavigateSelenium implements INavigateSelenium, IContext {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(NavigateSelenium.class);
@@ -40,7 +40,7 @@ public class NavigateSelenium implements IWrapper, INavigate, IContext {
     }
 
     @Override
-    public INavigate getPage(URL url) {
+    public INavigateSelenium getPage(URL url) {
         if (url == null)
             throw new CustomExceptions.Common.NullArgumentException("Null method argument: URL");
         else {
@@ -67,28 +67,28 @@ public class NavigateSelenium implements IWrapper, INavigate, IContext {
     }
 
     @Override
-    public INavigate back() {
+    public INavigateSelenium back() {
         logger.debug("Navigating back");
         driver.navigate().back();
         return this;
     }
 
     @Override
-    public INavigate forward() {
+    public INavigateSelenium forward() {
         logger.debug("Navigating forward");
         driver.navigate().forward();
         return this;
     }
 
     @Override
-    public INavigate refresh() {
+    public INavigateSelenium refresh() {
         logger.debug("Refreshing page");
         driver.navigate().refresh();
         return this;
     }
 
     @Override
-    public INavigate navigateToWindowByPartialTitle(String title) {
+    public INavigateSelenium navigateToWindowByPartialTitle(String title) {
         try {
             WebDriver popup;
             Iterator<String> windowIterator = driver.getWindowHandles().iterator();
@@ -110,7 +110,7 @@ public class NavigateSelenium implements IWrapper, INavigate, IContext {
     }
 
     @Override
-    public INavigate navigateToWindow(String windowIdentifier) {
+    public INavigateSelenium navigateToWindow(String windowIdentifier) {
         try {
             driver.switchTo().window(windowIdentifier);
         } catch (NoSuchWindowException nswe) {
@@ -120,7 +120,7 @@ public class NavigateSelenium implements IWrapper, INavigate, IContext {
     }
 
     @Override
-    public INavigate navigateToOtherWindow() {
+    public INavigateSelenium navigateToOtherWindow() {
         Set<String> handles = driver.getWindowHandles();
         String currentWindow = driver.getWindowHandle();
         for (String handle : handles) {
@@ -133,7 +133,7 @@ public class NavigateSelenium implements IWrapper, INavigate, IContext {
     }
 
     @Override
-    public INavigate navigateToActivateFrame() {
+    public INavigateSelenium navigateToActivateFrame() {
         try {
             driver.switchTo().frame(0);
             logger.debug("Switched to Active Frame");
@@ -146,7 +146,7 @@ public class NavigateSelenium implements IWrapper, INavigate, IContext {
     }
 
     @Override
-    public INavigate navigateToFrameById(String id) {
+    public INavigateSelenium navigateToFrameById(String id) {
         try {
             driver.switchTo().frame(id);
             logger.debug("Switched to Active Frame by Id");
@@ -159,7 +159,7 @@ public class NavigateSelenium implements IWrapper, INavigate, IContext {
     }
 
     @Override
-    public INavigate navigateToFrameBy(By by) {
+    public INavigateSelenium navigateToFrameBy(By by) {
         try {
             driver.switchTo().frame(driver.findElement(by));
             logger.debug("Switched to Active Frame by className");
@@ -172,7 +172,7 @@ public class NavigateSelenium implements IWrapper, INavigate, IContext {
     }
 
     @Override
-    public INavigate waitForFrameByIdToBeAvailableAndSwitch(String frameId) {
+    public INavigateSelenium waitForFrameByIdToBeAvailableAndSwitch(String frameId) {
         try {
             new WebDriverWait(driver, 5)
                     .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameId));
@@ -185,14 +185,14 @@ public class NavigateSelenium implements IWrapper, INavigate, IContext {
     }
 
     @Override
-    public INavigate returnToDefaultWindow() {
+    public INavigateSelenium returnToDefaultWindow() {
         driver.switchTo().defaultContent();
         return this;
     }
 
 
     @Override
-    public INavigate deleteCookies() {
+    public INavigateSelenium deleteCookies() {
         try {
             driver.manage().deleteAllCookies();
         } catch (NoSuchWindowException nsw) {
@@ -202,7 +202,7 @@ public class NavigateSelenium implements IWrapper, INavigate, IContext {
     }
 
     @Override
-    public INavigate deleteCookie(String cookieName) {
+    public INavigateSelenium deleteCookie(String cookieName) {
         try {
             driver.manage().deleteCookieNamed(cookieName);
         } catch (NoSuchWindowException nsw) {
@@ -212,7 +212,7 @@ public class NavigateSelenium implements IWrapper, INavigate, IContext {
     }
 
     @Override
-    public INavigate setCookie(String cookieName, String cookieValue) {
+    public INavigateSelenium setCookie(String cookieName, String cookieValue) {
         try {
             driver.manage().addCookie(new Cookie(cookieName, cookieValue));
         } catch (NoSuchWindowException nsw) {
@@ -222,38 +222,38 @@ public class NavigateSelenium implements IWrapper, INavigate, IContext {
     }
 }
 
-interface INavigate {
+interface INavigateSelenium extends ISelenium {
 
-    INavigate getPage(final URL url);
+    INavigateSelenium getPage(final URL url);
 
-    INavigate getPage(final String url);
+    INavigateSelenium getPage(final String url);
 
-    INavigate back();
+    INavigateSelenium back();
 
-    INavigate forward();
+    INavigateSelenium forward();
 
-    INavigate refresh();
+    INavigateSelenium refresh();
 
-    INavigate navigateToWindowByPartialTitle(String title);
+    INavigateSelenium navigateToWindowByPartialTitle(String title);
 
-    INavigate navigateToWindow(String windowIdentifier);
+    INavigateSelenium navigateToWindow(String windowIdentifier);
 
-    INavigate navigateToOtherWindow();
+    INavigateSelenium navigateToOtherWindow();
 
-    INavigate navigateToActivateFrame();
+    INavigateSelenium navigateToActivateFrame();
 
-    INavigate navigateToFrameById(String id);
+    INavigateSelenium navigateToFrameById(String id);
 
-    INavigate navigateToFrameBy(By by);
+    INavigateSelenium navigateToFrameBy(By by);
 
-    INavigate waitForFrameByIdToBeAvailableAndSwitch(String frameId);
+    INavigateSelenium waitForFrameByIdToBeAvailableAndSwitch(String frameId);
 
-    INavigate returnToDefaultWindow();
+    INavigateSelenium returnToDefaultWindow();
 
-    INavigate deleteCookies();
+    INavigateSelenium deleteCookies();
 
-    INavigate deleteCookie(String cookieName);
+    INavigateSelenium deleteCookie(String cookieName);
 
-    INavigate setCookie(String cookieName, String cookieValue);
+    INavigateSelenium setCookie(String cookieName, String cookieValue);
 
 }

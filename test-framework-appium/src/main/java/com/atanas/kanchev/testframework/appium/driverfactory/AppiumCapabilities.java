@@ -101,6 +101,7 @@ public final class AppiumCapabilities {
          */
         public AppiumServerCapabilities setBrowserName(String browserName) {
             this.browserName = browserName;
+            System.setProperty("browser", browserName);
             return this;
         }
 

@@ -16,7 +16,7 @@ import java.util.Arrays;
  *
  * @author Atanas Ksnchev
  */
-public final class Probe implements IProbe, ISelenium, IContext {
+public final class Probe implements IProbe, IContext {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Probe.class);
@@ -280,7 +280,7 @@ public final class Probe implements IProbe, ISelenium, IContext {
 
 }
 
-interface IProbe {
+interface IProbe extends ISelenium {
     /**
      * Check if the element locator passed to the constructor exists
      *

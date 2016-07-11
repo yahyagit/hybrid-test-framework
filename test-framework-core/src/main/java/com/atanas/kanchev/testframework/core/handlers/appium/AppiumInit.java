@@ -136,21 +136,21 @@ public class AppiumInit implements IContext {
         if (osName.contains("Mac")) {
             service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
                     .usingDriverExecutable(new File("/Applications/AppiumInit.app/Contents/Resources/node/bin/node"))
-                    .withAppiumJS(new File("D:\\APPIUM_INIT\\APPIUM_INIT\\build\\lib\\APPIUM_INIT.js"))
+                    .withAppiumJS(new File("D:\\appium\\appium\\build\\lib\\appium.js"))
                     .withIPAddress("127.0.0.1")
                     .usingAnyFreePort()
                     .withLogFile(new File("target/" + deviceUnderExecution + ".log")));
         } else if (osName.contains("Windows")) {
             service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
                     .usingAnyFreePort()
-                    .withAppiumJS(new File("D:\\APPIUM_INIT\\APPIUM_INIT\\build\\lib\\main.js"))
+                    .withAppiumJS(new File("D:\\appium\\appium\\build\\lib\\main.js"))
                     .withArgument(GeneralServerFlag.LOG_LEVEL, "info")
                     .withLogFile(new File("target/" + deviceUnderExecution + ".log")));
         } else {
-            Assert.fail("Unspecified OS found, AppiumInit can't run");
+            Assert.fail("Unspecified OS found, Appium can't run");
         }
 
-        System.out.println("- - - - - - - - Starting AppiumInit Server- - - - - - - - ");
+        System.out.println("- - - - - - - - Starting Appium Server- - - - - - - - ");
         service.start();
         if (service == null || !service.isRunning()) {
             throw new RuntimeException("An APPIUM_INIT server node is not started!");
@@ -158,13 +158,13 @@ public class AppiumInit implements IContext {
     }
 
     public void stopAppiumServer() {
-        System.out.println("- - - - - - - - Stopping AppiumInit Server- - - - - - - - ");
+        System.out.println("- - - - - - - - Stopping Appium Server- - - - - - - - ");
 
         if (service != null && service.isRunning())
             try {
                 service.stop();
             } catch (Exception e) {
-                logger.debug("Error shutting down APPIUM_INIT server " + e.getMessage());
+                System.out.println("Error shutting down Appium server " + e.getMessage());
             }
 
     }
