@@ -1,18 +1,37 @@
 package com.atanas.kanchev.testframework.core.tests.handlers.appium.android;
 
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IAppium;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
+import io.appium.java_client.remote.MobileCapabilityType;
 import org.junit.Test;
 
-import java.net.URL;
+import java.io.File;
 
 /**
  * Created by atanas on 13/07/2016.
  */
-public class InitRefactoTest implements IAppium{
+public class InitRefactoTest implements IAppium {
 
-    @Test public void name() throws Exception {
+    @Test
+    public void name() throws Exception {
 
-        initAppium(new URL("localhost:4723")).
+        File appDir = new File("src/test/java/com/atanas/kanchev/testframework/core/tests/handlers/APPIUM_INIT/android/native_app_tests");
+        File app = new File(appDir, "ApiDemos-debug.apk");
+
+        appiumService().buildService();
+        appiumService().startServer();
+
+        initAppium()
+                .setCap(MobileCapabilityType.APP, app.getAbsolutePath())
+                .setCap(MobileCapabilityType.DEVICE_NAME, "device")
+                .setCap(MobileCapabilityType.DEVICE_NAME, "ZY22398GL7")
+                .setCap(MobileCapabilityType.PLATFORM_VERSION, "6.0.1")
+
+                .setCap(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 10)
+                .setCap(MobileCapabilityType.FULL_RESET, false)
+                .setCap(AndroidMobileCapabilityType.ANDROID_DEVICE_READY_TIMEOUT, 10)
+                .setCap(AndroidMobileCapabilityType.ENABLE_PERFORMANCE_LOGGING, true)
+                .getAndroidDriver();
 
     }
 }

@@ -47,46 +47,46 @@ public class IWrapperWrapperTest {
             goTo("https://bbc.co.uk");
 
         }
-//    @Test
+//    @Caps
 //    public void goToURLTest() throws Exception {
 //        goTo(url);
 //    }
 //
-//    @Test
+//    @Caps
 //    public void refreshTest() throws Exception {
 //        goTo(url).
 //                refresh();
 //    }
 //
-//    @Test
+//    @Caps
 //    public void methodChainingTest() throws Exception {
 //        goTo(url).refresh();
 //    }
 //
-//    @Test
+//    @Caps
 //    public void loc() throws Exception {
 //        goTo(url).findElement().elementBy(Locator.XPATH, "//*[@id=\"tsf\"]/div[2]/div[3]/center/input[1]");
 //    }
 //
-//    @Test
+//    @Caps
 //    public void locs() throws Exception {
 //        goTo(url).findElement().elementBy(Locator.TAG_NAME, "tr");
 //    }
 //
-//    @Test
+//    @Caps
 //    public void multiple() throws Exception {
 //        goTo(url);
 //        goTo("HTTPS://BBC.CO.UK");
 //    }
 //
 //
-//    @Test
+//    @Caps
 //    public void findElementByNameTest() throws Exception {
 //        goTo(url).
 //                findElement().elementBy(Locator.XPATH, "w");
 //    }
 //
-//    @Test
+//    @Caps
 //    public void waitingTest() throws Exception {
 //
 //        goTo(url)
@@ -96,7 +96,7 @@ public class IWrapperWrapperTest {
 //
 //    }
 //
-//    @Test
+//    @Caps
 //    public void probeEl() throws Exception {
 //
 //        Assert.assertTrue(
@@ -106,7 +106,7 @@ public class IWrapperWrapperTest {
 //
 //    }
 //
-//    @Test
+//    @Caps
 //    public void driver() throws Exception {
 //        DriverFactory driverFactory = setupSelenium().configureBrowser();
 //        //driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
@@ -114,7 +114,7 @@ public class IWrapperWrapperTest {
 //        goTo(url);
 //    }
 //
-//    @Test
+//    @Caps
 //    public void prop() throws Exception {
 ////        System.setProperty("env", "dev");
 ////        System.out.println(new PropertyReader().getValidProperty("url"));
@@ -123,12 +123,12 @@ public class IWrapperWrapperTest {
 //
 //    }
 //
-//    @Test
+//    @Caps
 //    public void APPIUM_INIT() throws Exception {
 //
 //    }
 //
-//    @Test
+//    @Caps
 //    public void conf() throws Exception {
 //
 //

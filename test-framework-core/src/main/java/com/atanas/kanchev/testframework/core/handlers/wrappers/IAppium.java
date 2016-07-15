@@ -1,6 +1,7 @@
 package com.atanas.kanchev.testframework.core.handlers.wrappers;
 
 import com.atanas.kanchev.testframework.appium.driverfactory.refacto.AppiumDriverFactory;
+import com.atanas.kanchev.testframework.appium.driverfactory.refacto.AppiumLocalServiceBuilder;
 import com.atanas.kanchev.testframework.core.handlers.appium.AppiumInit;
 import com.atanas.kanchev.testframework.core.handlers.appium.AppiumNative;
 import org.openqa.selenium.Capabilities;
@@ -32,7 +33,11 @@ interface IAndroid {
 
 interface RefactoInit {
 
-    default AppiumDriverFactory initAppium(URL url, Capabilities caps) {
-        return new AppiumDriverFactory(url, caps);
+    default AppiumDriverFactory initAppium() {
+        return new AppiumDriverFactory();
+    }
+
+    default AppiumLocalServiceBuilder appiumService() {
+        return new AppiumLocalServiceBuilder();
     }
 }

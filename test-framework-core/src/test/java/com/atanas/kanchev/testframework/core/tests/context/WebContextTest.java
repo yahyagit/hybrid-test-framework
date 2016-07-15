@@ -22,7 +22,7 @@ public class WebContextTest {
 //
 //    }
 //
-//    @Test
+//    @Caps
 //    public void getCurrentElementTest() throws Exception {
 //        WebElement el = mock(WebElement.class);
 //        seleniumContext.setCurrentElement(el);
@@ -30,13 +30,13 @@ public class WebContextTest {
 //
 //    }
 //
-//    @Test(expected = CustomExceptions.Common.NullReferenceException.class)
+//    @Caps(expected = CustomExceptions.Common.NullReferenceException.class)
 //    public void getCurrentElementNullTest() throws Exception {
 //        assertNull(seleniumContext.getCurrentElement());
 //
 //    }
 //
-//    @Test
+//    @Caps
 //    public void getWebElementsListTest() throws Exception {
 //        List<WebElement> el = mock(ArrayList.class);
 //        seleniumContext.setWebElementsList(el);
@@ -44,14 +44,14 @@ public class WebContextTest {
 //        assertTrue(seleniumContext.getWebElementsList() instanceof ArrayList);
 //    }
 //
-//    @Test(expected = CustomExceptions.Common.NullReferenceException.class)
+//    @Caps(expected = CustomExceptions.Common.NullReferenceException.class)
 //    public void getWebElementsListNull() throws Exception {
 //        assertNull(seleniumContext.getWebElementsList());
 //
 //    }
 //
 //
-//    @Test
+//    @Caps
 //    public void setCurrentElementTest() throws Exception {
 //        WebElement el = mock(WebElement.class);
 //        seleniumContext.setCurrentElement(el);
@@ -59,13 +59,13 @@ public class WebContextTest {
 //        assertTrue(seleniumContext.getCurrentElement() instanceof WebElement);
 //    }
 //
-//    @Test(expected = CustomExceptions.Common.NullArgumentException.class)
+//    @Caps(expected = CustomExceptions.Common.NullArgumentException.class)
 //    public void setCurrentElementNullTest() throws Exception {
 //        seleniumContext.setCurrentElement(null);
 //        assertNull(seleniumContext.getCurrentElement());
 //    }
 //
-//    @Test
+//    @Caps
 //    public void setWebElementsListTest() throws Exception {
 //        List<WebElement> el = mock(ArrayList.class);
 //        seleniumContext.setWebElementsList(el);
@@ -73,7 +73,7 @@ public class WebContextTest {
 //        assertTrue(seleniumContext.getWebElementsList() instanceof ArrayList);
 //    }
 //
-//    @Test(expected = CustomExceptions.Common.NullArgumentException.class)
+//    @Caps(expected = CustomExceptions.Common.NullArgumentException.class)
 //    public void setWebElementsListNullTest() throws Exception {
 //        seleniumContext.setWebElementsList(null);
 //        assertNull(seleniumContext.getWebElementsList());

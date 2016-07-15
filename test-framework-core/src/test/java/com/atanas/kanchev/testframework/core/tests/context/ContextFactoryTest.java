@@ -3,13 +3,13 @@ package com.atanas.kanchev.testframework.core.tests.context;
 import com.atanas.kanchev.testframework.core.context.ContextFactory;
 
 /**
- * Test for {@link ContextFactory}
+ * Caps for {@link ContextFactory}
  *
  * @author Atanas Ksnchev
  */
 public class ContextFactoryTest extends ContextFactory {
 
-//    @Test
+//    @Caps
 //    public void addContextTest() throws Exception {
 //
 //        AbstractContext context = new SeleniumContext();
@@ -19,7 +19,7 @@ public class ContextFactoryTest extends ContextFactory {
 //
 //    }
 //
-//    @Test
+//    @Caps
 //    public void addContextWithDuplicatedNameTest() throws Exception {
 //
 //        AbstractContext context1 = new SeleniumContext();
@@ -31,7 +31,7 @@ public class ContextFactoryTest extends ContextFactory {
 //
 //    }
 //
-//    @Test(expected = CustomExceptions.Common.NullArgumentException.class)
+//    @Caps(expected = CustomExceptions.Common.NullArgumentException.class)
 //    public void addNullContextTest() throws Exception {
 //
 //        super.addContext(null);
@@ -40,7 +40,7 @@ public class ContextFactoryTest extends ContextFactory {
 //
 //    }
 //
-//    @Test
+//    @Caps
 //    public void switchContextTest() throws Exception {
 //
 //        AbstractContext context1 = new SeleniumContext();
@@ -57,21 +57,21 @@ public class ContextFactoryTest extends ContextFactory {
 //        assertTrue(getCurrentContext() == context1);
 //    }
 //
-//    @Test(expected = CustomExceptions.Common.NullArgumentException.class)
+//    @Caps(expected = CustomExceptions.Common.NullArgumentException.class)
 //    public void switchContextNullTest() throws Exception {
 //
 //        assertNull(switchContext(null));
 //
 //    }
 //
-//    @Test(expected = CustomExceptions.Common.EmptyArgumentException.class)
+//    @Caps(expected = CustomExceptions.Common.EmptyArgumentException.class)
 //    public void switchContextEmptyTest() throws Exception {
 //
 //        assertNull(switchContext(""));
 //
 //    }
 //
-//    @Test
+//    @Caps
 //    public void getContextMapTest() throws Exception {
 //
 //        assertTrue(getContextMap() != null);
@@ -79,7 +79,7 @@ public class ContextFactoryTest extends ContextFactory {
 //
 //    }
 //
-//    @Test
+//    @Caps
 //    public void getCurrentContextTest() throws Exception {
 //        AbstractContext context = new SeleniumContext();
 //        super.addContext(context);
@@ -88,12 +88,12 @@ public class ContextFactoryTest extends ContextFactory {
 //        assertTrue(getCurrentContext() instanceof SeleniumContext);
 //    }
 //
-//    @Test(expected = CustomExceptions.Common.NullArgumentException.class)
+//    @Caps(expected = CustomExceptions.Common.NullArgumentException.class)
 //    public void getCurrentContextNullTest() throws Exception {
 //        assertNull(getCurrentContext());
 //    }
 //
-//    @Test
+//    @Caps
 //    public void tearDownContextTest() throws Exception {
 //
 //    }
