@@ -14,7 +14,7 @@ import java.io.File;
 public class AppiumLocalServiceBuilder {
 
     protected static AppiumDriverLocalService service;
-    private static AppiumServiceBuilder builder;
+//    private static final AppiumServiceBuilder builder = new AppiumServiceBuilder();
 
     private static final File LOG_FILE_NAME = new File("target/" + RandomStringUtils.randomAlphabetic(10) + ".log");
 
@@ -24,20 +24,18 @@ public class AppiumLocalServiceBuilder {
             "D:\\appium\\appium\\build\\lib\\appium.js";
 
     public static final String APPIUM_JS_EXECUTABLE_LINUX =
-            "/opt/appium/build/lib/appium.js";
+            "/opt/appium/build/lib/main.js";
 
-    public static AppiumServiceBuilder configureService() {
-        return builder;
-    }
+//    public static AppiumServiceBuilder configureService() {
+//        return builder;
+//    }
 
     public static void buildService() {
-
-        builder = new AppiumServiceBuilder();
 
         if (SystemUtils.IS_OS_MAC) {
             System.out.println("Running on MAC");
             service = AppiumDriverLocalService.buildService(
-                    builder.usingDriverExecutable(new File(NODE_JS_EXECUTABLE_PATH))
+                    new AppiumServiceBuilder().usingDriverExecutable(new File(NODE_JS_EXECUTABLE_PATH))
                             .withAppiumJS(new File(APPIUM_JS_EXECUTABLE_PATH))
                             .withIPAddress("127.0.0.1")
                             .usingAnyFreePort()
@@ -45,14 +43,14 @@ public class AppiumLocalServiceBuilder {
         } else if (SystemUtils.IS_OS_LINUX) {
             System.out.println("Running on LINUX");
             service = AppiumDriverLocalService.buildService(
-                    builder
+                    new AppiumServiceBuilder()
                             .withAppiumJS(new File(APPIUM_JS_EXECUTABLE_LINUX))
                             .withIPAddress("127.0.0.1")
-                            .usingAnyFreePort()
-                            .withLogFile(LOG_FILE_NAME));
+                            .usingAnyFreePort());
+//                            .withLogFile(LOG_FILE_NAME));
         } else if (SystemUtils.IS_OS_WINDOWS) {
             service = AppiumDriverLocalService.buildService(
-                    builder.usingAnyFreePort().withAppiumJS(new File(APPIUM_JS_EXECUTABLE_PATH))
+                    new AppiumServiceBuilder().usingAnyFreePort().withAppiumJS(new File(APPIUM_JS_EXECUTABLE_PATH))
                             .withArgument(GeneralServerFlag.LOG_LEVEL, "info")
                             .withLogFile(LOG_FILE_NAME));
         } else {

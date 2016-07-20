@@ -133,11 +133,20 @@ public class AppiumInit implements IContext {
         String deviceUnderExecution = "oneplusone";
 
         String osName = System.getProperty("os.name");
+        System.out.println(osName);
         if (osName.contains("Mac")) {
             service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
                     .usingDriverExecutable(new File("/Applications/AppiumInit.app/Contents/Resources/node/bin/node"))
-                    .withAppiumJS(new File("D:\\appium\\appium\\build\\lib\\appium.js"))
+                    .withAppiumJS(new File("D:\\appium\\appium\\build\\lib\\main.js"))
                     .withIPAddress("127.0.0.1")
+                    .usingAnyFreePort()
+                    .withLogFile(new File("target/" + deviceUnderExecution + ".log")));
+        } else if (osName.contains("Linux")) {
+            service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+
+//                    .withAppiumJS(new File("/opt/appium/lib/appium.js"))
+                    .withAppiumJS(new File("/opt/appium/build/lib/main.js"))
+//                    .withIPAddress("127.0.0.1")
                     .usingAnyFreePort()
                     .withLogFile(new File("target/" + deviceUnderExecution + ".log")));
         } else if (osName.contains("Windows")) {
