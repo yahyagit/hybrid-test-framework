@@ -32,27 +32,27 @@ public class PropertyReaderTest {
 
         @Test
         public void getValidProperty() throws Exception {
-            assertEquals(new PropertyReader().getProperty(VALID_KEY), VALID_VALUE);
+            assertEquals(PropertyReader.getProp(VALID_KEY), VALID_VALUE);
         }
 
         @Test(expected = CustomExceptions.Common.NullArgumentException.class)
         public void getPropertyWithNullArgument() throws Exception {
-            assertNull(new PropertyReader().getProperty(null));
+            assertNull(PropertyReader.getProp(null));
         }
 
         @Test(expected = CustomExceptions.Common.EmptyArgumentException.class)
         public void getPropertyWithEmptyArgument() throws Exception {
-            assertNull(new PropertyReader().getProperty(""));
+            assertNull(PropertyReader.getProp(""));
         }
 
         @Test(expected = CustomExceptions.Properties.InvalidKeyException.class)
         public void getPropertyWithInvalidKey() throws Exception {
-            assertNull(new PropertyReader().getProperty(INVALID_KEY));
+            assertNull(PropertyReader.getProp(INVALID_KEY));
         }
 
         @Test(expected = CustomExceptions.Properties.EmptyValueException.class)
         public void getPropertyWithEmptyValue() throws Exception {
-            assertNull(new PropertyReader().getProperty(KEY_WITH_EMPTY_VALUE));
+            assertNull(PropertyReader.getProp(KEY_WITH_EMPTY_VALUE));
         }
 
     }
@@ -61,33 +61,32 @@ public class PropertyReaderTest {
 
         @Test
         public void getValidProperty() throws Exception {
-            assertEquals(new PropertyReader(CUSTOM_PROP_FILE_NAME).getProperty(VALID_KEY), VALID_VALUE);
-        }
-
-
-        @Test(expected = CustomExceptions.Common.NullArgumentException.class)
-        public void getValidPropertyNullFileRef() throws Exception {
-            assertEquals(new PropertyReader(null).getProperty(VALID_KEY), VALID_VALUE);
+            PropertyReader.readFile(CUSTOM_PROP_FILE_NAME);
+            assertEquals(PropertyReader.getProp(VALID_KEY), VALID_VALUE);
         }
 
         @Test(expected = CustomExceptions.Common.NullArgumentException.class)
         public void getPropertyWithNullArgument() throws Exception {
-            assertNull(new PropertyReader(CUSTOM_PROP_FILE_NAME).getProperty(null));
+            PropertyReader.readFile(CUSTOM_PROP_FILE_NAME);
+            assertNull(PropertyReader.getProp(null));
         }
 
         @Test(expected = CustomExceptions.Common.EmptyArgumentException.class)
         public void getPropertyWithEmptyArgument() throws Exception {
-            assertNull(new PropertyReader(CUSTOM_PROP_FILE_NAME).getProperty(""));
+            PropertyReader.readFile(CUSTOM_PROP_FILE_NAME);
+            assertNull(PropertyReader.getProp(""));
         }
 
         @Test(expected = CustomExceptions.Properties.InvalidKeyException.class)
         public void getPropertyWithInvalidKey() throws Exception {
-            assertNull(new PropertyReader(CUSTOM_PROP_FILE_NAME).getProperty(INVALID_KEY));
+            PropertyReader.readFile(CUSTOM_PROP_FILE_NAME);
+            assertNull(PropertyReader.getProp(INVALID_KEY));
         }
 
         @Test(expected = CustomExceptions.Properties.EmptyValueException.class)
         public void getPropertyWithEmptyValue() throws Exception {
-            assertNull(new PropertyReader(CUSTOM_PROP_FILE_NAME).getProperty(KEY_WITH_EMPTY_VALUE));
+            PropertyReader.readFile(CUSTOM_PROP_FILE_NAME);
+            assertNull(PropertyReader.getProp(KEY_WITH_EMPTY_VALUE));
         }
 
     }
