@@ -5,92 +5,73 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
 import java.util.Properties;
 
-import static com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions.Properties.*;
+import static com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions.Properties.EmptyValueException;
+import static com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions.Properties.InvalidKeyException;
 
 /**
  * Property Reader
  *
  * @author Atanas Ksnchev
  */
-public final class PropertyReader {
+public abstract class PropertyReader {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(PropertyReader.class);
 
-    private Properties propFile = null;
-    private static String propFilePath;
-
-    private static final String ENV_PROP_FILE_ROOT = "src/test/resources/";
+    private static Properties properties = null;
     private static final String ENV_PROP_FILE_SUFFIX = ".env.properties";
     private static final String ENV_JVM_ARG = "env";
 
-    public PropertyReader() {
+    private static void loadProperties() {
 
-        final String environment = System.getProperty(ENV_JVM_ARG);
-
-        if (environment != null) {
-            if (environment.isEmpty())
+        final String env = System.getProperty(ENV_JVM_ARG);
+        if (env != null) {
+            if (env.isEmpty())
                 throw new CustomExceptions.Common.EmptyArgumentException("Empty JVM arg " + ENV_JVM_ARG);
             else {
-                propFilePath = ENV_PROP_FILE_ROOT + environment.toLowerCase().trim() + ENV_PROP_FILE_SUFFIX;
-                if (isPropFileThere(propFilePath)) {
-                    propFile = new Properties();
-                    loadPropFile(propFilePath);
-                } else throw new PropFileNotFoundException("Property file doesn't exist in path " + propFilePath);
+                String propFileName = env.toLowerCase().trim() + ENV_PROP_FILE_SUFFIX;
+                properties = new Properties();
+                loadPropFile(propFileName);
             }
         } else throw new CustomExceptions.Common.NullArgumentException("Null JVM argument \"env\"");
-    }
 
-    public PropertyReader(final String propertyFileName) {
-
-        if (propertyFileName == null) throw new CustomExceptions.Common.NullArgumentException("Null argument propertyFileName");
-        if (propertyFileName.isEmpty()) throw new CustomExceptions.Common.EmptyArgumentException("Empty argument propertyFileName");
-
-        propFile = new Properties();
-        propFilePath = ENV_PROP_FILE_ROOT + propertyFileName;
-        if (isPropFileThere(propFilePath)) loadPropFile(propFilePath);
-        else throw new PropFileNotFoundException("Property file doesn't exist in path " + propFilePath);
     }
 
     /**
-     * Check if file exists in given path
+     * Read from a properties fule by given {@code param propFileName}
      *
-     * @param path file path
-     * @return boolean
+     * @param propFileName the name of the properties file, e.g. test.env.properties
      */
-    private static boolean isPropFileThere(final String path) {
+    public static void readFile(final String propFileName) {
+        if (propFileName == null)
+            throw new CustomExceptions.Common.NullArgumentException("Null argument propFileName");
+        if (propFileName.isEmpty())
+            throw new CustomExceptions.Common.EmptyArgumentException("Empty argument propFileName");
 
-        if (Files.exists(Paths.get(path))) {
-            logger.debug("Property file exists in path: " + propFilePath);
-            return true;
-        } else {
-            logger.debug("****** Property file not found in path: " + propFilePath);
-            return false;
-        }
-
+        loadPropFile(propFileName);
     }
 
     /**
      * Load property file
      */
-    private PropertyReader loadPropFile(String propFilePath) {
+    private static void loadPropFile(String propFilePath) {
 
-        try (FileReader fileReader = new FileReader(propFilePath)) {
-            propFile.load(fileReader);
-            logger.debug("Loaded property file from path " + propFilePath);
+        try (InputStream inputStream = PropertyReader.class.getClassLoader().getResourceAsStream(propFilePath)) {
+            if (inputStream != null) {
+                if (properties == null) properties = new Properties();
+                properties.load(inputStream);
+                logger.debug("Loaded property file " + propFilePath);
+            }
         } catch (FileNotFoundException e) {
-            logger.error("****** Unable to find property file " + propFilePath, e);
+            logger.error("****** Unable to find property file " + propFilePath);
         } catch (IOException e) {
             logger.error("****** Unable to read Property file " + propFilePath, e);
         }
 
-        return this;
     }
 
     /**
@@ -99,7 +80,9 @@ public final class PropertyReader {
      * @param propKey String property key
      * @return propValue String property value
      */
-    public final String getProperty(final String propKey) {
+    public static String getProp(final String propKey) {
+
+        if (properties == null) loadProperties();
 
         String key, value;
 
@@ -110,7 +93,7 @@ public final class PropertyReader {
         else
             key = propKey;
 
-        value = propFile.getProperty(key);
+        value = properties.getProperty(key);
         if (value == null)
             throw new InvalidKeyException("The property file doesn't contain property with key " + propKey);
         else if (value.isEmpty())
