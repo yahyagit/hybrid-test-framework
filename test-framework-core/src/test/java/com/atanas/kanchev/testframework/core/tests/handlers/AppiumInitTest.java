@@ -1,8 +1,6 @@
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
-import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDeviceTypesEnum;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
-import io.appium.java_client.remote.MobileBrowserType;
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -20,25 +18,25 @@ public class AppiumInitTest implements IWrapper {
     @Test
     public void androidChromeTest() throws Exception {
 
-        appiumInit()
-                .setupDevice()
-                .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
-                .setDeviceName("ZY22398GL7")
-                .setPlatformVersion("6.0.1");
-
-        appiumInit()
-                .setupDeviceServer()
-                .setBrowserName(MobileBrowserType.CHROME)
-                .setFullReset(false)
-                .setAutoLaunch(false);
-
-        appiumInit()
-                .setupAndroidDriver()
-                .setAndroidDeviceReadyTimeout(60)
-                .setEnablePerformanceLogging(true);
-
-        appiumInit()
-                .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
+//        appiumInit()
+//                .setupDevice()
+//                .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
+//                .setDeviceName("ZY22398GL7")
+//                .setPlatformVersion("6.0.1");
+//
+//        appiumInit()
+//                .setupDeviceServer()
+//                .setBrowserName(MobileBrowserType.CHROME)
+//                .setFullReset(false)
+//                .setAutoLaunch(false);
+//
+//        appiumInit()
+//                .setupAndroidDriver()
+//                .setAndroidDeviceReadyTimeout(60)
+//                .setEnablePerformanceLogging(true);
+//
+//        appiumInit()
+//                .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
         goTo("https://bbc.co.uk");
         find().elementBy(By.id("idcta-link"));
 
@@ -56,7 +54,7 @@ public class AppiumInitTest implements IWrapper {
     @Test
     public void setupDeviceTest() throws Exception {
 
-//        File classpathRoot = new File(System.getProperty("user.dir"));
+//        File classpathRoot = new File(System.getProp("user.dir"));
 //        //File appDir = new File(classpathRoot, "D:\\IdeaProjects\\personal\\test-framework\\test-framework-APPIUM_INIT\\src\\test\\java\\com\\atanas\\kanchev\\testframework\\APPIUM_INIT\\tests\\ContactManager.apk");
 //        File app = new File("D:\\IdeaProjects\\personal\\test-framework\\test-framework-APPIUM_INIT\\src\\test\\java\\com\\atanas\\kanchev\\testframework\\APPIUM_INIT\\tests\\ContactManager.apk");
 //

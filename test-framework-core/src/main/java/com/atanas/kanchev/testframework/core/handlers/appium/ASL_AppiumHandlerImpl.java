@@ -1,6 +1,5 @@
 package com.atanas.kanchev.testframework.core.handlers.appium;
 
-import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDeviceTypesEnum;
 import com.atanas.kanchev.testframework.core.context.AppiumContext;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IAppium;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
@@ -35,44 +34,44 @@ public class ASL_AppiumHandlerImpl extends ASL_DeviceMethods implements ASL_IApp
         try {
 
             if (ASL_DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("Android")) {
-                appiumInit()
-                        .setupDevice()
-                        .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
-                        .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatformName())
-                        .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
-                        .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName())
-                        .setDeviceUDID(ASL_DeviceSetupFromPropFile.getUdid());
-                appiumInit()
-                        .setupDeviceServer()
-                        .setBrowserName("Chrome")
-                        .setFullReset(false)
-                        .setAutoLaunch(false);
+//                appiumInit()
+//                        .setupDevice()
+//                        .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
+//                        .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatformName())
+//                        .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
+//                        .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName())
+//                        .setDeviceUDID(ASL_DeviceSetupFromPropFile.getUdid());
+//                appiumInit()
+//                        .setupDeviceServer()
+//                        .setBrowserName("Chrome")
+//                        .setFullReset(false)
+//                        .setAutoLaunch(false);
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("disable-translate");
                 options.addArguments("disable-popup-blocking");
                 options.addArguments("disable-save-password-bubble");
                 options.addArguments("enable-automatic-password-saving");
-                appiumInit()
-                        .setupAndroidDriver()
-                        .setChromeOptions(options)
-                        .setAndroidDeviceReadyTimeout(60)
-                        .setEnablePerformanceLogging(true);
-                appiumInit()
-                        .initAndroidDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
+//                appiumInit()
+//                        .setupAndroidDriver()
+//                        .setChromeOptions(options)
+//                        .setAndroidDeviceReadyTimeout(60)
+//                        .setEnablePerformanceLogging(true);
+//                appiumInit()
+//                        .initAndroidDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
             } else if (ASL_DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("iOS")) {
-                appiumInit()
-                        .setupDevice()
-                        .setDeviceType(AppiumDeviceTypesEnum.IPHONE_DEVICE)
-                        .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
-                        .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
-                        .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName());
-                appiumInit()
-                        .setupDeviceServer()
-                        .setBrowserName("Safari")
-                        .setFullReset(false)
-                        .setAutoLaunch(false);
-                appiumInit()
-                        .initIOSDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
+//                appiumInit()
+//                        .setupDevice()
+//                        .setDeviceType(AppiumDeviceTypesEnum.IPHONE_DEVICE)
+//                        .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
+//                        .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
+//                        .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName());
+//                appiumInit()
+//                        .setupDeviceServer()
+//                        .setBrowserName("Safari")
+//                        .setFullReset(false)
+//                        .setAutoLaunch(false);
+//                appiumInit()
+//                        .initIOSDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
                 try {
                     String[] launchCommand = {"osascript", "-e", "if application \"Simulator\" is running then \n tell application \"Simulator\" to activate\n" +
                             "end if"};
@@ -116,45 +115,45 @@ public class ASL_AppiumHandlerImpl extends ASL_DeviceMethods implements ASL_IApp
         try {
 
             if (ASL_DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("Android")) {
-                appiumInit()
-                        .setupDevice()
-                        .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
-                        .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatformName())
-                        .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
-                        .setApp("Chrome")
-                        .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName())
-                        .setDeviceUDID(ASL_DeviceSetupFromPropFile.getUdid());
-
-                appiumInit()
-                        .setupDeviceServer()
-                        .setBrowserName("Chrome")
-                        .setFullReset(false)
-                        .setAutoLaunch(false);
+//                appiumInit()
+//                        .setupDevice()
+//                        .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
+//                        .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatformName())
+//                        .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
+//                        .setApp("Chrome")
+//                        .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName())
+//                        .setDeviceUDID(ASL_DeviceSetupFromPropFile.getUdid());
+//
+//                appiumInit()
+//                        .setupDeviceServer()
+//                        .setBrowserName("Chrome")
+//                        .setFullReset(false)
+//                        .setAutoLaunch(false);
                 ChromeOptions chromeOptions = new ChromeOptions();
                 for (int i = 0; i < options.length; i++) {
                     chromeOptions.addArguments(options[i]);
                 }
-                appiumInit()
-                        .setupAndroidDriver()
-                        .setChromeOptions(chromeOptions)
-                        .setAndroidDeviceReadyTimeout(60)
-                        .setEnablePerformanceLogging(true);
-                appiumInit().initAndroidDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
+//                appiumInit()
+//                        .setupAndroidDriver()
+//                        .setChromeOptions(chromeOptions)
+//                        .setAndroidDeviceReadyTimeout(60)
+//                        .setEnablePerformanceLogging(true);
+//                appiumInit().initAndroidDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
             } else {
                 if (ASL_DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("iOS")) {
-                    appiumInit()
-                            .setupDevice()
-                            .setDeviceType(AppiumDeviceTypesEnum.IPHONE_DEVICE)
-                            .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
-                            .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
-                            .setApp("Safari")
-                            .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName());
-                    appiumInit()
-                            .setupDeviceServer()
-                            .setBrowserName("Safari")
-                            .setFullReset(false)
-                            .setAutoLaunch(false);
-                    appiumInit().initIOSDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
+//                    appiumInit()
+//                            .setupDevice()
+//                            .setDeviceType(AppiumDeviceTypesEnum.IPHONE_DEVICE)
+//                            .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
+//                            .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
+//                            .setApp("Safari")
+//                            .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName());
+//                    appiumInit()
+//                            .setupDeviceServer()
+//                            .setBrowserName("Safari")
+//                            .setFullReset(false)
+//                            .setAutoLaunch(false);
+//                    appiumInit().initIOSDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
                 } else {
 
                     Map<String, String> mobileEmulation = new HashMap<>();
@@ -195,51 +194,51 @@ public class ASL_AppiumHandlerImpl extends ASL_DeviceMethods implements ASL_IApp
         } catch (Exception e) {
 
         }
-        try {
-
-            if (ASL_DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("Android")) {
-                appiumInit()
-                        .setupDevice()
-                        .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
-                        .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatformName())
-                        .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
-                        .setApp(appArguments[0])
-                        .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName())
-                        .setDeviceUDID(ASL_DeviceSetupFromPropFile.getUdid());
-                try {
-                    appiumInit()
-                            .setupAndroidDriver()
-                            .setAndroidDeviceReadyTimeout(60)
-                            .setAppActivity(appArguments[1]);
-                } catch (IndexOutOfBoundsException e) {
-                    logger.error("When launching an android app you need to provide the app launch activity as the second argument");
-
-                }
-                appiumInit()
-                        .initAndroidDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
-            } else {
-                appiumInit()
-                        .setupDevice()
-                        .setDeviceType(AppiumDeviceTypesEnum.IPHONE_DEVICE)
-                        .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
-                        .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
-                        .setApp(appArguments[0])
-                        .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName());
-                appiumInit()
-                        .setupDeviceServer()
-                        .setBrowserName("");
-                appiumInit().initIOSDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
-                try {
-                    String[] launchCommand = {"osascript", "-e", "if application \"Simulator\" is running then \n tell application \"Simulator\" to activate\n" +
-                            "end if"};
-                    Runtime.getRuntime().exec(launchCommand);
-                } catch (IOException e) {
-                }
-            }
-        } catch (UnreachableBrowserException e) {
-            logger.error(e.getMessage());
-
-        }
+//        try {
+//
+//            if (ASL_DeviceSetupFromPropFile.getPlatformName().equalsIgnoreCase("Android")) {
+//                appiumInit()
+//                        .setupDevice()
+//                        .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
+//                        .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatformName())
+//                        .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
+//                        .setApp(appArguments[0])
+//                        .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName())
+//                        .setDeviceUDID(ASL_DeviceSetupFromPropFile.getUdid());
+//                try {
+//                    appiumInit()
+//                            .setupAndroidDriver()
+//                            .setAndroidDeviceReadyTimeout(60)
+//                            .setAppActivity(appArguments[1]);
+//                } catch (IndexOutOfBoundsException e) {
+//                    logger.error("When launching an android app you need to provide the app launch activity as the second argument");
+//
+//                }
+//                appiumInit()
+//                        .initAndroidDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
+//            } else {
+//                appiumInit()
+//                        .setupDevice()
+//                        .setDeviceType(AppiumDeviceTypesEnum.IPHONE_DEVICE)
+//                        .setPlatformName(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
+//                        .setPlatformVersion(ASL_DeviceSetupFromPropFile.getPlatFormVersion())
+//                        .setApp(appArguments[0])
+//                        .setDeviceName(ASL_DeviceSetupFromPropFile.getDeviceName());
+//                appiumInit()
+//                        .setupDeviceServer()
+//                        .setBrowserName("");
+//                appiumInit().initIOSDriver("http://" + ASL_DeviceSetupFromPropFile.getAppiumServerIP() + ":" + ASL_DeviceSetupFromPropFile.getAppiumServerPort() + "/wd/hub");
+//                try {
+//                    String[] launchCommand = {"osascript", "-e", "if application \"Simulator\" is running then \n tell application \"Simulator\" to activate\n" +
+//                            "end if"};
+//                    Runtime.getRuntime().exec(launchCommand);
+//                } catch (IOException e) {
+//                }
+//            }
+//        } catch (UnreachableBrowserException e) {
+//            logger.error(e.getMessage());
+//
+//        }
         return this;
     }
 

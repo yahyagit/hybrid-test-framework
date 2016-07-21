@@ -1,12 +1,14 @@
 package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.browser_tests;
 
-import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDeviceTypesEnum;
-import com.atanas.kanchev.testframework.core.handlers.wrappers.*;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IAppium;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.ISelenium;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileBrowserType;
+import io.appium.java_client.remote.MobileCapabilityType;
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ScreenOrientation;
 
 /**
  * Created by atanas on 09/07/2016.
@@ -21,25 +23,42 @@ public class ChromeTest implements IContext, IAppium, ISelenium {
     @Test
     public void androidChromeTest() throws Exception {
 
-        appiumInit()
-                .setupDevice()
-                .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
-                .setDeviceName("ZY22398GL7")
-                .setPlatformVersion("6.0.1");
+//        appiumInit()
+//                .setupDevice()
+//                .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
+//                .setDeviceName("ZY22398GL7")
+//                .setPlatformVersion("6.0.1");
+//
+//        appiumInit()
+//                .setupDeviceServer()
+//                .setBrowserName(MobileBrowserType.CHROME)
+//                .setFullReset(false)
+//                .setAutoLaunch(false);
+//
+//        appiumInit()
+//                .setupAndroidDriver()
+//                .setAndroidDeviceReadyTimeout(60)
+//                .setEnablePerformanceLogging(true);
+//
+//        appiumInit()
+//                .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
+
+        appiumService().getAppiumDriverFactory().buildService();
+        appiumService().getAppiumDriverFactory().startServer();
 
         appiumInit()
-                .setupDeviceServer()
-                .setBrowserName(MobileBrowserType.CHROME)
-                .setFullReset(false)
-                .setAutoLaunch(false);
+                .getAppiumDriverFactory()
+                .setCap(MobileCapabilityType.BROWSER_NAME, MobileBrowserType.CHROME)
+                .setCap(MobileCapabilityType.DEVICE_NAME, "ZY22398GL7")
+                .setCap(MobileCapabilityType.PLATFORM_VERSION, "6.0.1")
 
-        appiumInit()
-                .setupAndroidDriver()
-                .setAndroidDeviceReadyTimeout(60)
-                .setEnablePerformanceLogging(true);
+                .setCap(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 60)
+                .setCap(MobileCapabilityType.FULL_RESET, false)
+                .setCap(AndroidMobileCapabilityType.ANDROID_DEVICE_READY_TIMEOUT, 60)
+                .setCap(AndroidMobileCapabilityType.ENABLE_PERFORMANCE_LOGGING, true)
+                ;
 
-        appiumInit()
-                .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
+        appiumInit().initAndroidDriver();
 
         goTo("https://bbc.co.uk");
 
@@ -49,9 +68,9 @@ public class ChromeTest implements IContext, IAppium, ISelenium {
         interact()
                 .click();
 
-        android()
-                .orientation()
-                .rotate(ScreenOrientation.LANDSCAPE);
+//        android()
+//                .orientation()
+//                .rotate(ScreenOrientation.LANDSCAPE);
 
 
     }

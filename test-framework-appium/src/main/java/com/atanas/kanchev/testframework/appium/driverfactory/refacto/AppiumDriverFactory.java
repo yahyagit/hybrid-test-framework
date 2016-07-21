@@ -4,32 +4,14 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
-import io.appium.java_client.service.local.AppiumServiceBuilder;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * Created by atanas on 13/07/2016.
  */
 public class AppiumDriverFactory extends AppiumLocalServiceBuilder {
 
-    private URL remoteAddress;
     private final DesiredCapabilities caps = new DesiredCapabilities();
-
-    public AppiumDriverFactory(URL remoteAddress) {
-        this.remoteAddress = remoteAddress;
-    }
-
-    public AppiumDriverFactory() {
-        try {
-            this.remoteAddress = new URL("http://"+AppiumServiceBuilder.DEFAULT_LOCAL_IP_ADDRESS.concat(RandomStringUtils.randomNumeric(4)));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Set an Appium  compatibility

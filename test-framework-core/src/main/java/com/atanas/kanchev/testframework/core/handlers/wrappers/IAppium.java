@@ -1,27 +1,22 @@
 package com.atanas.kanchev.testframework.core.handlers.wrappers;
 
-import com.atanas.kanchev.testframework.appium.driverfactory.refacto.AppiumDriverFactory;
-import com.atanas.kanchev.testframework.appium.driverfactory.refacto.AppiumLocalServiceBuilder;
-import com.atanas.kanchev.testframework.core.handlers.appium.AppiumInit;
+import com.atanas.kanchev.testframework.core.handlers.appium.AppiumInitRefacto;
 import com.atanas.kanchev.testframework.core.handlers.appium.AppiumNative;
-import org.openqa.selenium.Capabilities;
-
-import java.net.URL;
 
 /**
  * @author Atanas Ksnchev
  */
-public interface IAppium extends IAppiumInit, IAndroid, RefactoInit {
+public interface IAppium extends IAndroid, RefactoInit {
 }
 
 
-interface IAppiumInit {
-    AppiumInit APPIUM_INIT = new AppiumInit();
-
-    default AppiumInit appiumInit() {
-        return APPIUM_INIT;
-    }
-}
+//interface IAppiumInit {
+//    AppiumInit APPIUM_INIT = new AppiumInit();
+//
+//    default AppiumInit appiumInit() {
+//        return APPIUM_INIT;
+//    }
+//}
 
 
 interface IAndroid {
@@ -33,11 +28,13 @@ interface IAndroid {
 
 interface RefactoInit {
 
-    default AppiumDriverFactory initAppium() {
-        return new AppiumDriverFactory();
+    AppiumInitRefacto APPIUM_INIT_REFACTO = new AppiumInitRefacto();
+
+    default AppiumInitRefacto appiumInit() {
+        return APPIUM_INIT_REFACTO;
     }
 
-    default AppiumLocalServiceBuilder appiumService() {
-        return new AppiumLocalServiceBuilder();
+    default AppiumInitRefacto appiumService() {
+        return APPIUM_INIT_REFACTO;
     }
 }

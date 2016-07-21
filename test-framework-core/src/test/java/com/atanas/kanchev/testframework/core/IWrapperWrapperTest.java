@@ -118,7 +118,7 @@ public class IWrapperWrapperTest {
 //    public void prop() throws Exception {
 ////        System.setProperty("env", "dev");
 ////        System.out.println(new PropertyReader().getValidProperty("url"));
-//       // System.out.println(new PropertyReader("dev.env.properties").getProperty("url"));
+//       // System.out.println(new PropertyReader("dev.env.properties").getProp("url"));
 //        System.out.println(new BigInteger(130, new SecureRandom()).toString(32));
 //
 //    }

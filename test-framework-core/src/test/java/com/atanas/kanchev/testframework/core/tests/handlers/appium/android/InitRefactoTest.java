@@ -18,13 +18,12 @@ public class InitRefactoTest implements IAppium {
         File appDir = new File("src/test/java/com/atanas/kanchev/testframework/core/tests/handlers/APPIUM_INIT/android/native_app_tests");
         File app = new File(appDir, "ApiDemos-debug.apk");
 
-        appiumService().buildService();
-        appiumService().startServer();
+        appiumService().getAppiumDriverFactory().buildService();
+        appiumService().getAppiumDriverFactory().startServer();
 
-        initAppium()
+        appiumInit().getAppiumDriverFactory()
                 .setCap(MobileCapabilityType.APP, app.getAbsolutePath())
-                .setCap(MobileCapabilityType.DEVICE_NAME, "device")
-                .setCap(MobileCapabilityType.DEVICE_NAME, "ZY22398GL7")
+                .setCap(MobileCapabilityType.DEVICE_NAME, "8adea98f")
                 .setCap(MobileCapabilityType.PLATFORM_VERSION, "6.0.1")
 
                 .setCap(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 10)

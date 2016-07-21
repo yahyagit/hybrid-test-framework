@@ -44,13 +44,15 @@ public class AppiumLocalServiceBuilder {
             System.out.println("Running on LINUX");
             service = AppiumDriverLocalService.buildService(
                     new AppiumServiceBuilder()
+                            .usingAnyFreePort()
                             .withAppiumJS(new File(APPIUM_JS_EXECUTABLE_LINUX))
                             .withIPAddress("127.0.0.1")
-                            .usingAnyFreePort());
-//                            .withLogFile(LOG_FILE_NAME));
+                            .withLogFile(LOG_FILE_NAME));
         } else if (SystemUtils.IS_OS_WINDOWS) {
             service = AppiumDriverLocalService.buildService(
-                    new AppiumServiceBuilder().usingAnyFreePort().withAppiumJS(new File(APPIUM_JS_EXECUTABLE_PATH))
+                    new AppiumServiceBuilder()
+                            .usingAnyFreePort()
+                            .withAppiumJS(new File(APPIUM_JS_EXECUTABLE_PATH))
                             .withArgument(GeneralServerFlag.LOG_LEVEL, "info")
                             .withLogFile(LOG_FILE_NAME));
         } else {
