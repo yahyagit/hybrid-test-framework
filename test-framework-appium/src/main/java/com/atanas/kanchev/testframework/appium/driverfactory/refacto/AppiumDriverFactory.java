@@ -7,7 +7,8 @@ import io.appium.java_client.ios.IOSElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
- * Created by atanas on 13/07/2016.
+ * @author Atanas Kanchev
+ *         Appium Driver Factory
  */
 public class AppiumDriverFactory extends AppiumLocalServiceBuilder {
 

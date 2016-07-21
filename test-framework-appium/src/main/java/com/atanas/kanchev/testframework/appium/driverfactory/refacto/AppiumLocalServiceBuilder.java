@@ -1,5 +1,6 @@
 package com.atanas.kanchev.testframework.appium.driverfactory.refacto;
 
+import com.atanas.kanchev.testframework.commons.properties.PropertyReader;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
@@ -9,48 +10,57 @@ import org.apache.commons.lang3.SystemUtils;
 import java.io.File;
 
 /**
- * Created by atanas on 13/07/2016.
+ * @author Atanas Kanchev
+ *         Appium Local Service Builder
  */
 public class AppiumLocalServiceBuilder {
 
-    protected static AppiumDriverLocalService service;
-//    private static final AppiumServiceBuilder builder = new AppiumServiceBuilder();
+    static AppiumDriverLocalService service;
+    private static final AppiumServiceBuilder builder =
+            new AppiumServiceBuilder();
 
-    private static final File LOG_FILE_NAME = new File("target/" + RandomStringUtils.randomAlphabetic(10) + ".log");
+    private static final File LOG_FILE_NAME =
+            new File("target/" + RandomStringUtils.randomAlphabetic(10) + ".log");
 
-    public static final String NODE_JS_EXECUTABLE_PATH =
-            "/Applications/AppiumInit.app/Contents/Resources/node/bin/node";
-    public static final String APPIUM_JS_EXECUTABLE_PATH =
-            "D:\\appium\\appium\\build\\lib\\appium.js";
+    private static final String NODE_JS_EXECUTABLE_PATH =
+            PropertyReader.getProp("appium.propeties", "NODE_JS_EXECUTABLE_PATH");
+    private static final String APPIUM_JS_EXECUTABLE_PATH =
+            PropertyReader.getProp("appium.propeties", "APPIUM_JS_EXECUTABLE_PATH");
+    private static final String APPIUM_JS_EXECUTABLE_LINUX =
+            PropertyReader.getProp("appium.propeties", "APPIUM_JS_EXECUTABLE_LINUX");
 
-    public static final String APPIUM_JS_EXECUTABLE_LINUX =
-            "/opt/appium/build/lib/main.js";
+    public static AppiumServiceBuilder configureService() {
+        return builder;
+    }
 
-//    public static AppiumServiceBuilder configureService() {
-//        return builder;
-//    }
+    /**
+     * Build default Appium local service
+     */
+    public static void buildDefaultService() {
 
-    public static void buildService() {
+        System.out.print("- - - - - - - -Building Appium Local Service on ");
 
         if (SystemUtils.IS_OS_MAC) {
-            System.out.println("Running on MAC");
+            System.out.println("MacOS- - - - - - - -");
             service = AppiumDriverLocalService.buildService(
-                    new AppiumServiceBuilder().usingDriverExecutable(new File(NODE_JS_EXECUTABLE_PATH))
+                    builder
+                            .usingDriverExecutable(new File(NODE_JS_EXECUTABLE_PATH))
                             .withAppiumJS(new File(APPIUM_JS_EXECUTABLE_PATH))
                             .withIPAddress("127.0.0.1")
                             .usingAnyFreePort()
                             .withLogFile(LOG_FILE_NAME));
         } else if (SystemUtils.IS_OS_LINUX) {
-            System.out.println("Running on LINUX");
+            System.out.println("Linux- - - - - - - -");
             service = AppiumDriverLocalService.buildService(
-                    new AppiumServiceBuilder()
+                    builder
                             .usingAnyFreePort()
                             .withAppiumJS(new File(APPIUM_JS_EXECUTABLE_LINUX))
                             .withIPAddress("127.0.0.1")
                             .withLogFile(LOG_FILE_NAME));
         } else if (SystemUtils.IS_OS_WINDOWS) {
+            System.out.println("Windows- - - - - - - -");
             service = AppiumDriverLocalService.buildService(
-                    new AppiumServiceBuilder()
+                    builder
                             .usingAnyFreePort()
                             .withAppiumJS(new File(APPIUM_JS_EXECUTABLE_PATH))
                             .withArgument(GeneralServerFlag.LOG_LEVEL, "info")
@@ -62,8 +72,6 @@ public class AppiumLocalServiceBuilder {
     }
 
     public static void startServer() {
-
-//        service = AppiumDriverLocalService.buildService(builder);
 
         if (service != null) {
             System.out.println("- - - - - - - - Starting Appium Server - - - - - - - - ");

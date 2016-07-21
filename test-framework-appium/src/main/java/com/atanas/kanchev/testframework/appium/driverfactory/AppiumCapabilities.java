@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
  * @author Atanas Kanchev
  *         Appium capabilites wrappers
  */
+@Deprecated
 public final class AppiumCapabilities {
 
     /**

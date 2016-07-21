@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
  * @author Atanas Kanchev
  *         Appium Capabilities Factory
  */
+@Deprecated
 public final class AppiumCapabilitiesFactory {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());

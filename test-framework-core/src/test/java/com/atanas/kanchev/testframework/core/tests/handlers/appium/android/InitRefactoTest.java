@@ -18,7 +18,7 @@ public class InitRefactoTest implements IAppium {
         File appDir = new File("src/test/java/com/atanas/kanchev/testframework/core/tests/handlers/APPIUM_INIT/android/native_app_tests");
         File app = new File(appDir, "ApiDemos-debug.apk");
 
-        appiumService().getAppiumDriverFactory().buildService();
+        appiumService().getAppiumDriverFactory().buildDefaultService();
         appiumService().getAppiumDriverFactory().startServer();
 
         appiumInit().getAppiumDriverFactory()

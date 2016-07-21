@@ -13,6 +13,7 @@ import java.net.URL;
  * @author Atanas Kanchev
  *         Appium driver factory
  */
+@Deprecated
 public final class AppiumDriverFactory {
 
     private final URL remoteAddress;

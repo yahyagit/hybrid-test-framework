@@ -12,6 +12,7 @@ import java.net.URL;
  * @author Atanas Kanchev Inner class CreateAppiumDriver Handles Appium
  *         iOSDriver and Android driver initalization
  */
+@Deprecated
 public final class DeviceDriverFactory {
 
     private AppiumDevice device;

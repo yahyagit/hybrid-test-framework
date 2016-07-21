@@ -17,7 +17,7 @@ import static com.atanas.kanchev.testframework.commons.exceptions.CustomExceptio
  *
  * @author Atanas Ksnchev
  */
-public abstract class PropertyReader {
+public final class PropertyReader {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(PropertyReader.class);
@@ -42,34 +42,25 @@ public abstract class PropertyReader {
     }
 
     /**
-     * Read from a properties fule by given {@code param propFileName}
-     *
-     * @param propFileName the name of the properties file, e.g. test.env.properties
+     * Load property file
      */
-    public static void readFile(final String propFileName) {
+    private static void loadPropFile(String propFileName) {
+
         if (propFileName == null)
             throw new CustomExceptions.Common.NullArgumentException("Null argument propFileName");
         if (propFileName.isEmpty())
             throw new CustomExceptions.Common.EmptyArgumentException("Empty argument propFileName");
 
-        loadPropFile(propFileName);
-    }
-
-    /**
-     * Load property file
-     */
-    private static void loadPropFile(String propFilePath) {
-
-        try (InputStream inputStream = PropertyReader.class.getClassLoader().getResourceAsStream(propFilePath)) {
+        try (InputStream inputStream = PropertyReader.class.getClassLoader().getResourceAsStream(propFileName)) {
             if (inputStream != null) {
                 if (properties == null) properties = new Properties();
                 properties.load(inputStream);
-                logger.debug("Loaded property file " + propFilePath);
+                logger.debug("Loaded property file " + propFileName);
             }
         } catch (FileNotFoundException e) {
-            logger.error("****** Unable to find property file " + propFilePath);
+            logger.error("****** Unable to find property file " + propFileName);
         } catch (IOException e) {
-            logger.error("****** Unable to read Property file " + propFilePath, e);
+            logger.error("****** Unable to read Property file " + propFileName, e);
         }
 
     }
@@ -83,6 +74,34 @@ public abstract class PropertyReader {
     public static String getProp(final String propKey) {
 
         if (properties == null) loadProperties();
+
+        String key, value;
+
+        if (propKey == null)
+            throw new CustomExceptions.Common.NullArgumentException("Null argument: property key");
+        else if (propKey.isEmpty())
+            throw new CustomExceptions.Common.EmptyArgumentException("Empty argument: property key");
+        else
+            key = propKey;
+
+        value = properties.getProperty(key);
+        if (value == null)
+            throw new InvalidKeyException("The property file doesn't contain property with key " + propKey);
+        else if (value.isEmpty())
+            throw new EmptyValueException("The value for property key " + propKey + " is empty");
+        else
+            return value;
+    }
+
+    /**
+     * Get property by key
+     *
+     * @param propKey String property key
+     * @return propValue String property value
+     */
+    public static String getProp(String propFileName, final String propKey) {
+
+        loadPropFile(propFileName);
 
         String key, value;
 

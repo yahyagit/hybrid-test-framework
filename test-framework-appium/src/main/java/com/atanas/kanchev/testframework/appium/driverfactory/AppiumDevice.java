@@ -4,6 +4,7 @@ package com.atanas.kanchev.testframework.appium.driverfactory;
  * @author Atanas Kanchev
  *         Appium device capabilities pojo
  */
+@Deprecated
 public final class AppiumDevice {
 
     private AppiumDeviceTypesEnum deviceType;

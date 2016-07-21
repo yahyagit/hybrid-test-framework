@@ -43,7 +43,7 @@ public class ChromeTest implements IContext, IAppium, ISelenium {
 //        appiumInit()
 //                .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
 
-        appiumService().getAppiumDriverFactory().buildService();
+        appiumService().getAppiumDriverFactory().buildDefaultService();
         appiumService().getAppiumDriverFactory().startServer();
 
         appiumInit()

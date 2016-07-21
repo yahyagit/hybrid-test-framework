@@ -13,6 +13,7 @@ import java.net.URL;
  *         <p/>
  *         Appium driver initialisation
  */
+@Deprecated
 public final class AppiumDriverInit {
 
     private final AppiumDevice appiumDevice;

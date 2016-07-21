@@ -10,6 +10,7 @@ package com.atanas.kanchev.testframework.appium.driverfactory;
  *         <p/>
  *         Appium Android specific capabilities {@link Android}
  */
+@Deprecated
 public final class AppiumCapabilitiesEnums {
 
     /**
