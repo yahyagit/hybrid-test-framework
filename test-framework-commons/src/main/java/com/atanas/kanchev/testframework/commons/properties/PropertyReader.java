@@ -4,7 +4,6 @@ import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -34,7 +33,6 @@ public final class PropertyReader {
                 throw new CustomExceptions.Common.EmptyArgumentException("Empty JVM arg " + ENV_JVM_ARG);
             else {
                 String propFileName = env.toLowerCase().trim() + ENV_PROP_FILE_SUFFIX;
-                properties = new Properties();
                 loadPropFile(propFileName);
             }
         } else throw new CustomExceptions.Common.NullArgumentException("Null JVM argument \"env\"");
@@ -52,13 +50,13 @@ public final class PropertyReader {
             throw new CustomExceptions.Common.EmptyArgumentException("Empty argument propFileName");
 
         try (InputStream inputStream = PropertyReader.class.getClassLoader().getResourceAsStream(propFileName)) {
-            if (inputStream != null) {
-                if (properties == null) properties = new Properties();
-                properties.load(inputStream);
-                logger.debug("Loaded property file " + propFileName);
+            if (inputStream == null) {
+                logger.error("****** Unable to find property file " + propFileName);
+                return;
             }
-        } catch (FileNotFoundException e) {
-            logger.error("****** Unable to find property file " + propFileName);
+            properties = new Properties();
+            properties.load(inputStream);
+
         } catch (IOException e) {
             logger.error("****** Unable to read Property file " + propFileName, e);
         }
