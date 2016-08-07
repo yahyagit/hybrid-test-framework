@@ -1,13 +1,12 @@
 package com.atanas.kanchev.testframework.core.tests.handlers.selenium;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IAppium;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.ISelenium;
 import org.junit.Test;
 
 /**
  * Created by atanas on 10/07/2016.
  */
-public class NavigateSeleniumTest extends BaseTest implements IAppium, ISelenium {
+public class NavigateSeleniumTest extends BaseTest implements ISelenium {
 
     public static final String url = "https://bbc.co.uk";
 
