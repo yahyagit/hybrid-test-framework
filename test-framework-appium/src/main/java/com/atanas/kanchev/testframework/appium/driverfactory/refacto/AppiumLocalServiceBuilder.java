@@ -23,11 +23,11 @@ public class AppiumLocalServiceBuilder {
             new File("target/" + RandomStringUtils.randomAlphabetic(10) + ".log");
 
     private static final String NODE_JS_EXECUTABLE_PATH =
-            PropertyReader.getProp("appium.properties", "NODE_JS_EXECUTABLE_PATH");
+            PropertyReader.getProp("appium.properties", "node.js.executable.path");
     private static final String APPIUM_JS_EXECUTABLE_PATH =
-            PropertyReader.getProp("appium.properties", "APPIUM_JS_EXECUTABLE_PATH");
+            PropertyReader.getProp("appium.properties", "appium.js.executable.path");
     private static final String APPIUM_JS_EXECUTABLE_LINUX =
-            PropertyReader.getProp("appium.properties", "APPIUM_JS_EXECUTABLE_LINUX");
+            PropertyReader.getProp("appium.properties", "appium.js.executable.linux");
 
     public static AppiumServiceBuilder configureService() {
         return builder;

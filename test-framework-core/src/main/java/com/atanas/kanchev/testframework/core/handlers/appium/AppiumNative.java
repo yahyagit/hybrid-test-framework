@@ -319,6 +319,15 @@ public class AppiumNative {
         public ScreenOrientation getOrientation() {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).getOrientation();
         }
+
+        @Override public void rotate(DeviceRotation deviceRotation) {
+            //TODO Implement me!
+        }
+
+        @Override public DeviceRotation rotation() {
+            //TODO Implement me!
+            return null;
+        }
     }
 
     public class ContextAware implements org.openqa.selenium.ContextAware, IContext {
@@ -349,18 +358,6 @@ public class AppiumNative {
         @Override
         public Connection getConnection() {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).getConnection();
-        }
-
-        // TODO Remove deprecated methods ones removed from the class
-
-        @Override
-        public NetworkConnectionSetting getNetworkConnection() {
-            return null;
-        }
-
-        @Override
-        public void setNetworkConnection(NetworkConnectionSetting connection) {
-
         }
     }
 

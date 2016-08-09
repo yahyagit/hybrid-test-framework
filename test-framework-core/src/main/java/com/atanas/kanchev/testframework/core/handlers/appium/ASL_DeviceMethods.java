@@ -161,22 +161,6 @@ public class ASL_DeviceMethods implements ISelenium {
         }
     }
 
-    boolean scrollToElementByText(AppiumDriver driver, String value) {
-        currentContext = getCurrentContext(driver);
-        if (!currentContext.equals("NATIVE_APP")) {
-            switchToContextNativeApp(driver);
-        }
-        try {
-            driver.scrollTo(value);
-            switchToContext(driver, currentContext);
-            return true;
-        } catch (Exception var2) {
-            logger.error("Not possible to Scroll to element by text: " + value);
-            switchToContext(driver, currentContext);
-            return false;
-        }
-    }
-
     // Capture an image in the AppiumInit Driver, compare that image using
     // sikuli to get X and Y coordinates, and use them
     // With the Tap() function on the AppiumInit Driver.
