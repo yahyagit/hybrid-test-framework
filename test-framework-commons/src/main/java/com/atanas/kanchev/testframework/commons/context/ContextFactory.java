@@ -110,7 +110,7 @@ public final class ContextFactory implements IContextFactory {
         for (AbstractContext context : getContextMap().values()) {
             logger.debug("Tearing down context type " + context.toString());
             context.tearDownContext(context);
-            logger.debug("Removing context from map" + context.getContextName());
+            logger.debug("Removing context from map " + context.getContextName());
             getContextMap().remove(context.getContextName());
             setCurrentContext(null);
 

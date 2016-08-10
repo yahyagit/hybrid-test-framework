@@ -1,8 +1,9 @@
-package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.native_app_tests;
+package com.atanas.kanchev.testframework.appium.tests.android.native_app_tests;
 
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidElement;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
@@ -10,8 +11,16 @@ import static org.junit.Assert.*;
 
 public class AndroidElementTest extends BaseTest {
 
+    @Before
+    public void setup() throws Exception {
+
+        android().activity().startActivity("io.appium.android.apis", ".ApiDemos");
+
+    }
+
     @Test
     public void findByAccessibilityIdTest() {
+
         assertNotEquals(android()
                 .find()
                 .findElementById("android:id/content")
@@ -26,6 +35,7 @@ public class AndroidElementTest extends BaseTest {
 
     @Test
     public void findByAndroidUIAutomatorTest() {
+
         assertNotEquals(android()
                 .find()
                 .findElementById("android:id/content")
@@ -41,15 +51,16 @@ public class AndroidElementTest extends BaseTest {
 
     @Test
     public void replaceValueTest() {
+
         String originalValue = "original value";
 
         android()
                 .activity()
-                .startActivity("io.APPIUM_INIT.android.apis", ".view.Controls1");
+                .startActivity("io.appium.android.apis", ".view.Controls1");
         AndroidElement editElement =
                 android()
                         .find()
-                        .findElementByAndroidUIAutomator("resourceId(\"io.APPIUM_INIT.android.apis:id/edit\")");
+                        .findElementByAndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")");
         editElement.sendKeys(originalValue);
         assertEquals(originalValue, editElement.getText());
         String replacedValue = "replaced value";
@@ -59,6 +70,7 @@ public class AndroidElementTest extends BaseTest {
 
     @Test
     public void scrollingToSubElement() {
+
         android()
                 .find()
                 .findElementByAccessibilityId("Views").click();
@@ -69,5 +81,17 @@ public class AndroidElementTest extends BaseTest {
                 .findElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView("
                         + "new UiSelector().text(\"Radio Group\"));"));
         assertNotNull(radioGroup.getLocation());
+    }
+
+    @Test
+    public void setValueTest() {
+
+        String value = "new value";
+
+        android().activity().startActivity("io.appium.android.apis", ".view.Controls1");
+        AndroidElement editElement = android().find()
+                .findElementByAndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")");
+        editElement.setValue(value);
+        assertEquals(value, editElement.getText());
     }
 }

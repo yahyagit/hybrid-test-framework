@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.native_app_tests;
+package com.atanas.kanchev.testframework.appium.tests.android.native_app_tests;
 
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
@@ -14,7 +14,7 @@ public class AndroidSearchingTest extends BaseTest {
     public void before() throws Exception {
         android()
                 .activity()
-                .startActivity("io.APPIUM_INIT.android.apis", ".ApiDemos");
+                .startActivity("io.appium.android.apis", ".ApiDemos");
     }
 
     @Test

@@ -36,7 +36,12 @@ public final class AppiumContext<T> extends AbstractContext<T> {
             if (((AppiumContext<AndroidDriver>) context).getDriver() != null) {
 
                 if (context.getDriver() instanceof AndroidDriver)
-                    ((AppiumContext<AndroidDriver>) context).getDriver().quit();
+                    try {
+                        ((AppiumContext<AndroidDriver>) context).getDriver().closeApp();
+                        ((AppiumContext<AndroidDriver>) context).getDriver().quit();
+                    } catch (Exception e) {
+                       logger.error(e.getMessage());
+                    }
 
                 if (context.getDriver() instanceof IOSDriver)
                     ((AppiumContext<IOSDriver>) context).getDriver().quit();

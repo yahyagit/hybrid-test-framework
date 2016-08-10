@@ -1,21 +1,27 @@
-package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.native_app_tests;
+package com.atanas.kanchev.testframework.appium.tests.android.native_app_tests;
 
 import io.appium.java_client.android.AndroidKeyCode;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class AndroidActivityTest extends BaseTest {
 
+    @Before
+    public void setUp() throws Exception {
+        android()
+                .activity()
+                .startActivity("io.appium.android.apis", ".ApiDemos");
+    }
+
     @Test
     public void startActivityInThisAppTestCase() {
 
-        android()
-                .activity()
-                .startActivity("io.APPIUM_INIT.android.apis", ".accessibility.AccessibilityNodeProviderActivity");
-        assertEquals(android()
-                .appiumDriverMethods()
-                .currentActivity(), ".accessibility.AccessibilityNodeProviderActivity");
+        android().activity().startActivity("io.appium.android.apis",
+                ".accessibility.AccessibilityNodeProviderActivity");
+        assertEquals(android().appiumDriverMethods().currentActivity(),
+                ".accessibility.AccessibilityNodeProviderActivity");
     }
 
     @Test
@@ -23,8 +29,8 @@ public class AndroidActivityTest extends BaseTest {
 
         android()
                 .activity()
-                .startActivity("io.APPIUM_INIT.android.apis", ".accessibility.AccessibilityNodeProviderActivity",
-                        "io.APPIUM_INIT.android.apis", ".accessibility.AccessibilityNodeProviderActivity");
+                .startActivity("io.appium.android.apis", ".accessibility.AccessibilityNodeProviderActivity",
+                        "io.appium.android.apis", ".accessibility.AccessibilityNodeProviderActivity");
         assertEquals(android()
                 .appiumDriverMethods()
                 .currentActivity(), ".accessibility.AccessibilityNodeProviderActivity");
@@ -50,7 +56,7 @@ public class AndroidActivityTest extends BaseTest {
     public void startActivityInNewAppTestCaseWithoutClosingApp() {
         android().
                 activity()
-                .startActivity("io.APPIUM_INIT.android.apis",
+                .startActivity("io.appium.android.apis",
                         ".accessibility.AccessibilityNodeProviderActivity");
         assertEquals(android().
                 appiumDriverMethods()

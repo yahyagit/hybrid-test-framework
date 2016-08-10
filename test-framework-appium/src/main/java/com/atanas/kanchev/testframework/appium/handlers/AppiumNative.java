@@ -1,6 +1,7 @@
 package com.atanas.kanchev.testframework.appium.handlers;
 
 import com.atanas.kanchev.testframework.appium.context.AppiumContext;
+import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDriverFactory;
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import io.appium.java_client.*;
@@ -22,12 +23,12 @@ import java.util.Set;
  */
 public class AppiumNative implements IContext {
 
-    public AppiumNative(AppiumDriver driver) {
+    public AppiumNative(AppiumDriverFactory factory) {
 
         try {
             context().getCurrentContext();
         } catch (CustomExceptions.Common.NullArgumentException e) {
-            AppiumContext<WebDriver> context = new AppiumContext<>(driver);
+            AppiumContext<WebDriver> context = new AppiumContext<>(factory.getAndroidDriver());
             context().addContext(context);
         }
     }
@@ -407,6 +408,10 @@ public class AppiumNative implements IContext {
 
         public void endTestCoverage(String intent, String path) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).endTestCoverage(intent, path);
+        }
+
+        public Map<String, Object> getSessionDetails(){
+            return ((AndroidDriver) context().getCurrentContext().getDriver()).getSessionDetails();
         }
 
     }

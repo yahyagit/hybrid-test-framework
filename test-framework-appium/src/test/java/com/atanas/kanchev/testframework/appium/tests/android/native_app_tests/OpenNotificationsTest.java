@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.native_app_tests;
+package com.atanas.kanchev.testframework.appium.tests.android.native_app_tests;
 
 import org.junit.Test;
 

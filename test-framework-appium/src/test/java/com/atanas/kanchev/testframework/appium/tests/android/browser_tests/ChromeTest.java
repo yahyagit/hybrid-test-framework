@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.browser_tests;
+package com.atanas.kanchev.testframework.appium.tests.android.browser_tests;
 
 import com.atanas.kanchev.testframework.appium.wrappers.IAppium;
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;

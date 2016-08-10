@@ -18,7 +18,7 @@ interface IRefactoInit {
     }
 
     default AppiumNative android() {
-        return new AppiumNative(APPIUM_DRIVER_FACTORY.getAndroidDriver());
+        return new AppiumNative(APPIUM_DRIVER_FACTORY);
     }
 
 }

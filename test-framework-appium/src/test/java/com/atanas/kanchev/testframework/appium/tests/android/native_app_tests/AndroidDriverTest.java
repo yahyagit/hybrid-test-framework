@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.native_app_tests;
+package com.atanas.kanchev.testframework.appium.tests.android.native_app_tests;
 
 import io.appium.java_client.AppiumSetting;
 import io.appium.java_client.android.AndroidDriver;
@@ -9,6 +9,7 @@ import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.html5.Location;
 
 import java.io.File;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -16,13 +17,6 @@ import static org.junit.Assert.*;
  * @author Atanas Ksnchev
  */
 public class AndroidDriverTest extends BaseTest {
-
-    @Test
-    public void isAppInstalledTest() {
-        assertTrue(android()
-                .interactsWithApps()
-                .isAppInstalled("io.APPIUM_INIT.android.apis"));
-    }
 
     @Test
     public void getDeviceTimeTest() {
@@ -33,11 +27,19 @@ public class AndroidDriverTest extends BaseTest {
     }
 
     @Test
+    public void isAppInstalledTest() {
+        assertTrue(android()
+                .interactsWithApps()
+                .isAppInstalled("io.appium.android.apis"));
+    }
+
+    @Test
     public void isAppNotInstalledTest() {
         assertFalse(android()
                 .interactsWithApps()
                 .isAppInstalled("foo"));
     }
+
 
     @Test
     public void closeAppTest() throws InterruptedException {
@@ -166,6 +168,18 @@ public class AndroidDriverTest extends BaseTest {
         android()
                 .appiumDriverMethods()
                 .endTestCoverage("android.intent.action.MAIN", "");
+    }
+
+    @Test public void getDeviceUDIDTest() {
+        String deviceSerial = android()
+                .appiumDriverMethods().getSessionDetails().get("deviceUDID").toString();
+        assertNotNull(deviceSerial);
+    }
+
+    @Test public void getSessionMapData() {
+        Map<?,?> map = (Map<?, ?>) android()
+                .appiumDriverMethods().getSessionDetails().get("desired");
+        assertNotEquals(map.size(), 0);
     }
 
 }

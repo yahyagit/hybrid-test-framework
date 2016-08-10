@@ -1,12 +1,15 @@
-package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.native_app_tests;
+package com.atanas.kanchev.testframework.appium.tests.android.native_app_tests;
 
 import com.atanas.kanchev.testframework.appium.wrappers.IAppium;
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import io.appium.java_client.NoSuchContextException;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
+import io.appium.java_client.remote.MobileCapabilityType;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openqa.selenium.Platform;
 
 import java.io.File;
 
@@ -19,46 +22,37 @@ public class AndroidContextTest implements IAppium, IContext {
      */
     @BeforeClass
     public static void beforeClass() throws Exception {
-        File appDir = new File("src\\test\\java\\com\\atanas\\kanchev\\testframework\\core\\tests\\handlers\\APPIUM_INIT\\android");
-        File app = new File(appDir, "IntentExample.apk");
+        File appDir = new File("src/test/java/com/atanas/kanchev/testframework/appium/tests/android/native_app_tests");
+        File app = new File(appDir, "ApiDemos-debug.apk");
 
-//        APPIUM_INIT
-//                .setupDevice()
-//                .setApp(app.getAbsolutePath())
-//                .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
-//                .setDeviceName("ZY22398GL7")
-//                .setPlatformVersion("6.0.1");
-//
-//        APPIUM_INIT
-//                .setupDeviceServer()
-//                .setNewCommandTimeout(10)
-//                .setFullReset(false)
-//                .setAutoLaunch(false);
-//
-//        APPIUM_INIT
-//                .setupAndroidDriver()
-//                .setAndroidDeviceReadyTimeout(10)
-//                .setEnablePerformanceLogging(true);
-//
-//        APPIUM_INIT
-//                .startAppiumServer();
-//
-//        APPIUM_INIT
-//                .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
+        APPIUM_DRIVER_FACTORY
+                .buildDefaultService()
+                .startServer();
+
+        APPIUM_DRIVER_FACTORY
+                .setCap(MobileCapabilityType.BROWSER_NAME, "")
+                .setCap(MobileCapabilityType.APP, app.getAbsoluteFile())
+                .setCap(MobileCapabilityType.DEVICE_NAME, "8adea98f")
+                .setCap(MobileCapabilityType.PLATFORM_VERSION, "6.0.1")
+                .setCap(MobileCapabilityType.PLATFORM, Platform.ANDROID)
+
+                .setCap(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 120)
+                .setCap(MobileCapabilityType.FULL_RESET, false)
+                .setCap(MobileCapabilityType.NO_RESET, true)
+                .setCap(AndroidMobileCapabilityType.ANDROID_DEVICE_READY_TIMEOUT, 10)
+                .setCap(AndroidMobileCapabilityType.ENABLE_PERFORMANCE_LOGGING, true);
     }
 
     @Before
     public void setUp() throws Exception {
-        android()
-                .activity()
-                .startActivity("io.APPIUM_INIT.android.apis", ".view.WebView1");
-        Thread.sleep(20000);
+        android().activity().startActivity("io.appium.android.apis", ".view.WebView1");
+        Thread.sleep(5000);
 
     }
 
     @AfterClass
     public static void tearDown() throws Exception {
-//        APPIUM_INIT.stopAppiumServer();
+        APPIUM_DRIVER_FACTORY.stopServer();
         CONTEXT_FACTORY.tearDownContexts();
 
     }
@@ -79,15 +73,16 @@ public class AndroidContextTest implements IAppium, IContext {
 
     @Test
     public void testSwitchContext() {
+
         android()
                 .contextAware()
                 .getContextHandles();
         android()
                 .contextAware()
-                .context("WEBVIEW_io.APPIUM_INIT.android.apis");
+                .context("WEBVIEW_io.appium.android.apis");
         assertEquals(android()
                 .contextAware()
-                .getContext(), "WEBVIEW_io.APPIUM_INIT.android.apis");
+                .getContext(), "WEBVIEW_io.appium.android.apis");
         android()
                 .contextAware()
                 .context("NATIVE_APP");
