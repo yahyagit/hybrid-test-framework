@@ -11,7 +11,10 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * Web Context
+ * Selenium Context
+ *
+ * @param <T>
+ * @author Atanas Ksnchev
  */
 public class SeleniumContext<T> extends AbstractContext<T> {
 
@@ -25,7 +28,7 @@ public class SeleniumContext<T> extends AbstractContext<T> {
     private List<WebElement> webElementsList;
 
     public SeleniumContext(T driver) {
-        this(driver, "webContext_");
+        this(driver, "seleniumCtx_");
     }
 
     public SeleniumContext(T driver, String contextName) {
@@ -35,6 +38,9 @@ public class SeleniumContext<T> extends AbstractContext<T> {
 
     @Override
     public void tearDownContext(AbstractContext context) {
+
+        logger.debug("Tearing down context " + context.getContextName());
+
         if (context instanceof SeleniumContext) {
             if (context.getDriver() instanceof WebDriver)
                 ((SeleniumContext<WebDriver>) context).getDriver().quit();

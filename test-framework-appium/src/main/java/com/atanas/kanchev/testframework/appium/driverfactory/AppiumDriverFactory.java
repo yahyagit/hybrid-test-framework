@@ -6,13 +6,15 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.net.URL;
+
 /**
  * @author Atanas Kanchev
  *         Appium Driver Factory
  */
 public class AppiumDriverFactory extends AppiumLocalServiceBuilder {
 
-    private final DesiredCapabilities caps = DesiredCapabilities.android();
+    private final DesiredCapabilities caps = new DesiredCapabilities();
 
     /**
      * Set an Appium  compatibility
@@ -38,5 +40,9 @@ public class AppiumDriverFactory extends AppiumLocalServiceBuilder {
 
     public AndroidDriver<AndroidElement> getAndroidDriver() {
         return new AndroidDriver<>(service, this.caps);
+    }
+
+    public AndroidDriver getAndroidDriverVanilla(URL node) {
+        return new AndroidDriver(node, this.caps);
     }
 }

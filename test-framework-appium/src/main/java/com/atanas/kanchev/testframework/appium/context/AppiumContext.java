@@ -18,7 +18,7 @@ public final class AppiumContext<T> extends AbstractContext<T> {
     private static final Logger logger = LoggerFactory.getLogger(AppiumContext.class);
 
     public AppiumContext(T driver) {
-        this(driver, "appiumContext_");
+        this(driver, "appiumCtx_");
     }
 
     public AppiumContext(T driver, String contextName) {
@@ -28,6 +28,8 @@ public final class AppiumContext<T> extends AbstractContext<T> {
 
     @Override
     public void tearDownContext(AbstractContext context) {
+
+        logger.debug("Tearing down context " + context.getContextName());
 
         if (context instanceof AppiumContext) {
 

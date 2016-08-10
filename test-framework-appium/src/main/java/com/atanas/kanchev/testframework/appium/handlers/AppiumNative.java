@@ -1,10 +1,9 @@
 package com.atanas.kanchev.testframework.appium.handlers;
 
+import com.atanas.kanchev.testframework.appium.context.AppiumContext;
+import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
-import io.appium.java_client.FindsByAccessibilityId;
-import io.appium.java_client.FindsByAndroidUIAutomator;
-import io.appium.java_client.MultiTouchAction;
-import io.appium.java_client.TouchAction;
+import io.appium.java_client.*;
 import io.appium.java_client.android.AndroidDeviceActionShortcuts;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -22,6 +21,16 @@ import java.util.Set;
  * @author Atanas Ksnchev
  */
 public class AppiumNative implements IContext {
+
+    public AppiumNative(AppiumDriver driver) {
+
+        try {
+            context().getCurrentContext();
+        } catch (CustomExceptions.Common.NullArgumentException e) {
+            AppiumContext<WebDriver> context = new AppiumContext<>(driver);
+            context().addContext(context);
+        }
+    }
 
     public StartsActivity activity() {
         return new StartsActivity();
