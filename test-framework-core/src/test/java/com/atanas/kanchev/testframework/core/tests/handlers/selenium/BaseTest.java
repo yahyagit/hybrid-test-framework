@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.core.tests.handlers.selenium;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
+import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 

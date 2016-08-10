@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
-import com.atanas.kanchev.testframework.core.handlers.Finder;
+import com.atanas.kanchev.testframework.selenium.handlers.Finder;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 
 import org.junit.After;

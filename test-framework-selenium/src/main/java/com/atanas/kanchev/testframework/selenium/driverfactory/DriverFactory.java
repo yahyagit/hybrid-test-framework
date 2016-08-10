@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.selenium.driver_factory;
+package com.atanas.kanchev.testframework.selenium.driverfactory;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Proxy;
@@ -11,7 +11,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
-import static com.atanas.kanchev.testframework.selenium.driver_factory.DriverType.valueOf;
+import static com.atanas.kanchev.testframework.selenium.driverfactory.DriverType.valueOf;
 import static org.openqa.selenium.Proxy.ProxyType.MANUAL;
 
 public class DriverFactory extends DriverConfig{

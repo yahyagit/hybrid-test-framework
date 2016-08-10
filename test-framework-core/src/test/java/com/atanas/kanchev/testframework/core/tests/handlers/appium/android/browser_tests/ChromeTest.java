@@ -1,14 +1,14 @@
 package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.browser_tests;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IAppium;
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
-import com.atanas.kanchev.testframework.core.handlers.wrappers.ISelenium;
+import com.atanas.kanchev.testframework.appium.wrappers.IAppium;
+import com.atanas.kanchev.testframework.commons.wrappers.IContext;
+import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
-import io.appium.java_client.remote.MobileBrowserType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
 
 /**
  * Created by atanas on 09/07/2016.
@@ -43,12 +43,13 @@ public class ChromeTest implements IContext, IAppium, ISelenium {
 //        appiumInit()
 //                .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
 
-        appiumService().getAppiumDriverFactory().buildDefaultService();
-        appiumService().getAppiumDriverFactory().startServer();
+        appiumInit().buildDefaultService();
+        appiumInit().startServer();
 
         appiumInit()
-                .getAppiumDriverFactory()
-                .setCap(MobileCapabilityType.BROWSER_NAME, MobileBrowserType.CHROME)
+
+//                .setCap(MobileCapabilityType.BROWSER_NAME, MobileBrowserType.CHROME)
+                .setCap(MobileCapabilityType.PLATFORM, Platform.ANDROID)
                 .setCap(MobileCapabilityType.DEVICE_NAME, "ZY22398GL7")
                 .setCap(MobileCapabilityType.PLATFORM_VERSION, "6.0.1")
 
@@ -58,7 +59,7 @@ public class ChromeTest implements IContext, IAppium, ISelenium {
                 .setCap(AndroidMobileCapabilityType.ENABLE_PERFORMANCE_LOGGING, true)
                 ;
 
-        appiumInit().initAndroidDriver();
+        appiumInit().getAndroidDriver();
 
         goTo("https://bbc.co.uk");
 

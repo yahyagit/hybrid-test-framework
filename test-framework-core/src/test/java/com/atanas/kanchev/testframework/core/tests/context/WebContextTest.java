@@ -1,6 +1,7 @@
 package com.atanas.kanchev.testframework.core.tests.context;
 
-import com.atanas.kanchev.testframework.core.context.SeleniumContext;
+
+import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 
 /**
  * Tests for {@link SeleniumContext}

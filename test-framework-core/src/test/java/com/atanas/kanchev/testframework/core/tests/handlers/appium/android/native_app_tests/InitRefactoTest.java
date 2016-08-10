@@ -1,6 +1,6 @@
-package com.atanas.kanchev.testframework.core.tests.handlers.appium.android;
+package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.native_app_tests;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IAppium;
+import com.atanas.kanchev.testframework.appium.wrappers.IAppium;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.junit.Test;
@@ -15,13 +15,14 @@ public class InitRefactoTest implements IAppium {
     @Test
     public void name() throws Exception {
 
-        File appDir = new File("src/test/java/com/atanas/kanchev/testframework/core/tests/handlers/APPIUM_INIT/android/native_app_tests");
+        File appDir = new File("src/test/java/com/atanas/kanchev/testframework/core/tests/handlers/appium/android/native_app_tests");
         File app = new File(appDir, "ApiDemos-debug.apk");
 
-        appiumService().getAppiumDriverFactory().buildDefaultService();
-        appiumService().getAppiumDriverFactory().startServer();
+        appiumInit()
+                .buildDefaultService()
+                .startServer();
 
-        appiumInit().getAppiumDriverFactory()
+        appiumInit()
                 .setCap(MobileCapabilityType.APP, app.getAbsolutePath())
                 .setCap(MobileCapabilityType.DEVICE_NAME, "8adea98f")
                 .setCap(MobileCapabilityType.PLATFORM_VERSION, "6.0.1")

@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.selenium.driver_factory;
+package com.atanas.kanchev.testframework.selenium.driverfactory;
 
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.remote.DesiredCapabilities;

@@ -117,7 +117,7 @@ public final class AppiumCapabilities {
         }
 
         /**
-         * Move directly into Webview context.
+         * Move directly into Webview com.atanas.kanchev.testframework.selenium.context.
          * Default false
          *
          * @param autoWebview true, false
@@ -750,7 +750,7 @@ public final class AppiumCapabilities {
         }
 
         /**
-         * Amount of time to wait for Webview context to become active, in ms. Defaults to 2000
+         * Amount of time to wait for Webview com.atanas.kanchev.testframework.selenium.context to become active, in ms. Defaults to 2000
          *
          * @param autoWebviewTimeout e.g. 4
          */

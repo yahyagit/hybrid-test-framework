@@ -1,17 +1,18 @@
-package com.atanas.kanchev.testframework.core.context;
+package com.atanas.kanchev.testframework.appium.context;
 
+import com.atanas.kanchev.testframework.commons.context.AbstractContext;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * AppiumInit Context
+ * Appium Context
  *
  * @param <T>
  * @author Atanas Ksnchev
  */
-public final class AppiumContext<T> extends SeleniumContext<T> {
+public final class AppiumContext<T> extends AbstractContext<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(AppiumContext.class);
@@ -21,7 +22,8 @@ public final class AppiumContext<T> extends SeleniumContext<T> {
     }
 
     public AppiumContext(T driver, String contextName) {
-        super(driver, contextName);
+        super(contextName);
+        super.setDriver(driver);
     }
 
     @Override
@@ -30,8 +32,6 @@ public final class AppiumContext<T> extends SeleniumContext<T> {
         if (context instanceof AppiumContext) {
 
             if (((AppiumContext<AndroidDriver>) context).getDriver() != null) {
-
-//                ((AppiumContext<AndroidDriver>) context).getDriver().setConnection(Connection.DATA);
 
                 if (context.getDriver() instanceof AndroidDriver)
                     ((AppiumContext<AndroidDriver>) context).getDriver().quit();

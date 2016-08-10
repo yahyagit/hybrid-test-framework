@@ -3,6 +3,7 @@ package com.atanas.kanchev.testframework.core.handlers.appium;
 /**
  * @author Atanas Ksnchev
  */
+@Deprecated
 public interface ASL_IAppiumHandler {
 
     ASL_IAppiumHandler startDevice();

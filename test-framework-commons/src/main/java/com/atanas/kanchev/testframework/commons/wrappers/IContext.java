@@ -1,6 +1,6 @@
-package com.atanas.kanchev.testframework.core.handlers.wrappers;
+package com.atanas.kanchev.testframework.commons.wrappers;
 
-import com.atanas.kanchev.testframework.core.context.ContextFactory;
+import com.atanas.kanchev.testframework.commons.context.ContextFactory;
 
 /**
  * Created by atanas on 02/07/2016.

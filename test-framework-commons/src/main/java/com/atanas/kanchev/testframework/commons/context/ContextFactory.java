@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.core.context;
+package com.atanas.kanchev.testframework.commons.context;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import org.slf4j.Logger;
@@ -10,12 +10,12 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Context Factory
  */
-public class ContextFactory implements IContextFactory {
+public final class ContextFactory implements IContextFactory {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(ContextFactory.class);
 
-    // Current context
+    // Current com.atanas.kanchev.testframework.selenium.context
     private AbstractContext currentContext;
 
     // Context map
@@ -23,41 +23,47 @@ public class ContextFactory implements IContextFactory {
 
     @Override
     public <T extends AbstractContext> IContextFactory addContext(T context) {
-        if (context == null) throw new CustomExceptions.Common.NullArgumentException("Null method argument context");
+
+        if (context == null) throw new CustomExceptions.Common.NullArgumentException("Null method argument com.atanas.kanchev.testframework.selenium.context");
 
         if (contextMap.containsKey(context.getContextName())) {
             context.setContextName(context.getContextName() + contextMap.size());
             logger.warn("Duplicated key in ContextFactory#contextMap, renaming to " + context.getContextName());
         }
 
-        logger.warn("Adding context " + context.getContextName() + " to the map");
+        logger.debug("Adding com.atanas.kanchev.testframework.selenium.context " + context.getContextName() + " to the map");
         contextMap.put(context.getContextName(), context);
         currentContext = context;
+
         return this;
+
     }
 
     @Override
     public <T extends AbstractContext> IContextFactory removeContext(T context) {
-        if (context == null) throw new CustomExceptions.Common.NullArgumentException("Null method argument context");
+
+        if (context == null) throw new CustomExceptions.Common.NullArgumentException("Null method argument com.atanas.kanchev.testframework.selenium.context");
 
         if (contextMap.containsKey(context.getContextName())) {
             contextMap.remove(context.getContextName());
-            logger.debug("Removing context " + context.getContextName() + " from ContextFactory#contextMap");
+            logger.debug("Removing com.atanas.kanchev.testframework.selenium.context " + context.getContextName() + " from ContextFactory#contextMap");
             if (currentContext == context)
                 currentContext = null;
         } else {
-            logger.error("Error removing context " + context.getContextName() + " from ContextFactory#contextMap");
-            throw new RuntimeException("Error removing context " + context.getContextName() + " from ContextFactory#contextMap");
+            logger.error("Error removing com.atanas.kanchev.testframework.selenium.context " + context.getContextName() + " from ContextFactory#contextMap");
+            throw new RuntimeException("Error removing com.atanas.kanchev.testframework.selenium.context " + context.getContextName() + " from ContextFactory#contextMap");
         }
+
         return this;
     }
 
     @Override
     public <T extends AbstractContext> T switchContext(String contextName) {
+
         if (contextName == null)
-            throw new CustomExceptions.Common.NullArgumentException("Null method argument context");
+            throw new CustomExceptions.Common.NullArgumentException("Null method argument com.atanas.kanchev.testframework.selenium.context");
         if (contextName.isEmpty())
-            throw new CustomExceptions.Common.EmptyArgumentException("Empty method argument context");
+            throw new CustomExceptions.Common.EmptyArgumentException("Empty method argument com.atanas.kanchev.testframework.selenium.context");
 
         if (!contextMap.containsKey(contextName))
             throw new CustomExceptions.Common.IllegalArgumentException("The map ContextFactory#contextMap doesn't contain a key with value " + contextName);
@@ -68,17 +74,21 @@ public class ContextFactory implements IContextFactory {
 
     @Override
     public <T extends AbstractContext> IContextFactory setCurrentContext(T context) {
-        logger.debug("Setting current context to " + (context == null ? "null" : context.getContextName()));
+
+        logger.debug("Setting current com.atanas.kanchev.testframework.selenium.context to " + (context == null ? "null" : context.getContextName()));
         currentContext = context;
+
         return this;
     }
 
     @Override
     public <T extends AbstractContext> T getCurrentContext() {
+
         if (currentContext == null)
-            throw new CustomExceptions.Common.NullArgumentException("The current context is null");
+            throw new CustomExceptions.Common.NullArgumentException("The current com.atanas.kanchev.testframework.selenium.context is null");
         else
             return (T) currentContext;
+
     }
 
     @Override
@@ -94,12 +104,13 @@ public class ContextFactory implements IContextFactory {
 
     @Override
     public IContextFactory tearDownContexts() {
-        logger.debug("Tearing down contexts " + getContextMap().values().size());
+
+        logger.debug("Tearing down " + getContextMap().size() + " contexts");
 
         for (AbstractContext context : getContextMap().values()) {
-            logger.debug("Tearing down context type " + context.toString());
+            logger.debug("Tearing down com.atanas.kanchev.testframework.selenium.context type " + context.toString());
             context.tearDownContext(context);
-            logger.debug("Removing context from map" + context.getContextName());
+            logger.debug("Removing com.atanas.kanchev.testframework.selenium.context from map" + context.getContextName());
             getContextMap().remove(context.getContextName());
             setCurrentContext(null);
 

@@ -1,21 +1,22 @@
 package com.atanas.kanchev.testframework.core.tests.context;
 
-import com.atanas.kanchev.testframework.core.context.ContextFactory;
+
+import com.atanas.kanchev.testframework.commons.context.ContextFactory;
 
 /**
  * Caps for {@link ContextFactory}
  *
  * @author Atanas Ksnchev
  */
-public class ContextFactoryTest extends ContextFactory {
+public class ContextFactoryTest /*extends ContextFactory*/ {
 
 //    @Caps
 //    public void addContextTest() throws Exception {
 //
-//        AbstractContext context = new SeleniumContext();
-//        super.addContext(context);
-//        assertTrue(getContextMap().containsValue(context));
-//        assertTrue(getCurrentContext() == context);
+//        AbstractContext com.atanas.kanchev.testframework.selenium.context = new SeleniumContext();
+//        super.addContext(com.atanas.kanchev.testframework.selenium.context);
+//        assertTrue(getContextMap().containsValue(com.atanas.kanchev.testframework.selenium.context));
+//        assertTrue(getCurrentContext() == com.atanas.kanchev.testframework.selenium.context);
 //
 //    }
 //
@@ -81,10 +82,10 @@ public class ContextFactoryTest extends ContextFactory {
 //
 //    @Caps
 //    public void getCurrentContextTest() throws Exception {
-//        AbstractContext context = new SeleniumContext();
-//        super.addContext(context);
-//        assertTrue(getContextMap().containsValue(context));
-//        assertTrue(getCurrentContext() == context);
+//        AbstractContext com.atanas.kanchev.testframework.selenium.context = new SeleniumContext();
+//        super.addContext(com.atanas.kanchev.testframework.selenium.context);
+//        assertTrue(getContextMap().containsValue(com.atanas.kanchev.testframework.selenium.context));
+//        assertTrue(getCurrentContext() == com.atanas.kanchev.testframework.selenium.context);
 //        assertTrue(getCurrentContext() instanceof SeleniumContext);
 //    }
 //

@@ -29,19 +29,19 @@ public class AppiumLocalServiceBuilder {
     private static final String APPIUM_JS_EXECUTABLE_LINUX =
             PropertyReader.getProp("appium.properties", "appium.js.executable.linux");
 
-    public static AppiumServiceBuilder configureService() {
+    public AppiumServiceBuilder configureService() {
         return builder;
     }
 
     /**
      * Build default Appium local service
      */
-    public static void buildDefaultService() {
+    public AppiumLocalServiceBuilder buildDefaultService() {
 
-        System.out.print("- - - - - - - -Building Appium Local Service on ");
+        System.out.print(">>>>>>>>>>>>>> Building Appium Local Service on ");
 
         if (SystemUtils.IS_OS_MAC) {
-            System.out.println("MacOS- - - - - - - -");
+            System.out.println("MacOS <<<<<<<<<<<<<<");
             service = AppiumDriverLocalService.buildService(
                     builder
                             .usingDriverExecutable(new File(NODE_JS_EXECUTABLE_PATH))
@@ -50,7 +50,7 @@ public class AppiumLocalServiceBuilder {
                             .usingAnyFreePort()
                             .withLogFile(LOG_FILE_NAME));
         } else if (SystemUtils.IS_OS_LINUX) {
-            System.out.println("Linux- - - - - - - -");
+            System.out.println("Linux <<<<<<<<<<<<<<");
             service = AppiumDriverLocalService.buildService(
                     builder
                             .usingAnyFreePort()
@@ -58,7 +58,7 @@ public class AppiumLocalServiceBuilder {
                             .withIPAddress("127.0.0.1")
                             .withLogFile(LOG_FILE_NAME));
         } else if (SystemUtils.IS_OS_WINDOWS) {
-            System.out.println("Windows- - - - - - - -");
+            System.out.println("Windows <<<<<<<<<<<<<<");
             service = AppiumDriverLocalService.buildService(
                     builder
                             .usingAnyFreePort()
@@ -69,21 +69,23 @@ public class AppiumLocalServiceBuilder {
             throw new RuntimeException("Unspecified OS found, Appium can't run");
         }
 
+        return this;
     }
 
-    public static void startServer() {
+    public AppiumLocalServiceBuilder startServer() {
 
         if (service != null) {
-            System.out.println("- - - - - - - - Starting Appium Server - - - - - - - - ");
+            System.out.println("< < < Starting Appium Server > > >");
             service.start();
             if (!service.isRunning()) {
                 throw new RuntimeException("An Appium server node is not started!");
             }
         }
+        return this;
     }
 
-    public static void stopServer() {
-        System.out.println("- - - - - - - - Stopping Appium Server - - - - - - - - ");
+    public AppiumLocalServiceBuilder stopServer() {
+        System.out.println("> > > Stopping Appium Server < < <");
 
         if (service != null && service.isRunning())
             try {
@@ -92,5 +94,6 @@ public class AppiumLocalServiceBuilder {
                 System.out.println("Error shutting down Appium server " + e.getMessage());
             }
 
+        return this;
     }
 }

@@ -1,7 +1,7 @@
-package com.atanas.kanchev.testframework.core.handlers.wrappers;
+package com.atanas.kanchev.testframework.selenium.wrappers;
 
-import com.atanas.kanchev.testframework.core.handlers.*;
-import com.atanas.kanchev.testframework.selenium.driver_factory.DriverFactory;
+import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
+import com.atanas.kanchev.testframework.selenium.handlers.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

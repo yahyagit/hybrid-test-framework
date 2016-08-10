@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.core.context;
+package com.atanas.kanchev.testframework.commons.context;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ public abstract class AbstractContext<T> implements IAbstractContext<T> {
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(AbstractContext.class);
 
-    // the context name
+    // the com.atanas.kanchev.testframework.selenium.context name
     private String contextName;
 
     private boolean isContextReusable;
@@ -34,7 +34,7 @@ public abstract class AbstractContext<T> implements IAbstractContext<T> {
      */
     public AbstractContext(String contextName) {
         this.contextName = contextName + new BigInteger(130, new SecureRandom()).toString(32);
-        logger.debug("Setting current context name to " + this.contextName);
+        logger.debug("Setting current com.atanas.kanchev.testframework.selenium.context name to " + this.contextName);
     }
 
     @Override
@@ -82,7 +82,8 @@ public abstract class AbstractContext<T> implements IAbstractContext<T> {
 /**
  * Abstract Context Interface
  *
- * @author Atanas Ksnchev
+ * @param <T>
+ * @author Atanas Kanchev
  */
 interface IAbstractContext<T> {
 
@@ -91,6 +92,7 @@ interface IAbstractContext<T> {
      *
      * @return reference of {@link AbstractContext#driver}
      */
+
     T getDriver();
 
     /**
@@ -101,7 +103,7 @@ interface IAbstractContext<T> {
     void setDriver(T driver);
 
     /**
-     * Get context name
+     * Get com.atanas.kanchev.testframework.selenium.context name
      *
      * @return the value of {@link AbstractContext#contextName}
      */

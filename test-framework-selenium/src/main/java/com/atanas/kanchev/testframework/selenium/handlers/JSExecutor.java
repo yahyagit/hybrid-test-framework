@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.core.handlers;
+package com.atanas.kanchev.testframework.selenium.handlers;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -51,7 +51,7 @@ public class JSExecutor implements IJSExecutor {
 
 }
 /**
- * Execute Javascript, with optional argument list, in current page context
+ * Execute Javascript, with optional argument list, in current page com.atanas.kanchev.testframework.selenium.context
  *
  * @param script
  *            : text

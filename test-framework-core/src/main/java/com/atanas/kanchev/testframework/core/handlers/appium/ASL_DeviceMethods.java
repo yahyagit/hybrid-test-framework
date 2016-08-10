@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.core.handlers.appium;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.ISelenium;
+import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import io.appium.java_client.*;
 import io.appium.java_client.NoSuchContextException;
 import io.appium.java_client.android.AndroidDriver;
@@ -28,6 +28,7 @@ import java.io.IOException;
 /**
  * @author Atanas Ksnchev
  */
+@Deprecated
 public class ASL_DeviceMethods implements ISelenium {
 
     boolean mobileBrowser;
@@ -50,10 +51,10 @@ public class ASL_DeviceMethods implements ISelenium {
         try {
 
             driver.context("NATIVE_APP");
-            logger.info("Switched to context: " + "NATIVE_APP");
+            logger.info("Switched to com.atanas.kanchev.testframework.selenium.context: " + "NATIVE_APP");
             return true;
         } catch (NoSuchContextException var2) {
-            logger.error("Wrong context: " + "NATIVE_APP");
+            logger.error("Wrong com.atanas.kanchev.testframework.selenium.context: " + "NATIVE_APP");
             return false;
         }
     }
@@ -61,10 +62,10 @@ public class ASL_DeviceMethods implements ISelenium {
     boolean switchToContext(AppiumDriver driver, String context) {
         try {
             driver.context(context);
-            logger.info("Switched to context: " + context);
+            logger.info("Switched to com.atanas.kanchev.testframework.selenium.context: " + context);
             return true;
         } catch (NoSuchContextException var2) {
-            logger.error("Wrong context: " + context);
+            logger.error("Wrong com.atanas.kanchev.testframework.selenium.context: " + context);
             return false;
         }
     }

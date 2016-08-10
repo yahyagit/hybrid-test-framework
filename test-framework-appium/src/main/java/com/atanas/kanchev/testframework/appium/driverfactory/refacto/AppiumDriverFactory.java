@@ -12,7 +12,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  */
 public class AppiumDriverFactory extends AppiumLocalServiceBuilder {
 
-    private final DesiredCapabilities caps = new DesiredCapabilities();
+    private final DesiredCapabilities caps = DesiredCapabilities.android();
 
     /**
      * Set an Appium  compatibility
@@ -28,8 +28,12 @@ public class AppiumDriverFactory extends AppiumLocalServiceBuilder {
         return this;
     }
 
+    public DesiredCapabilities getCaps() {
+        return caps;
+    }
+
     public IOSDriver<IOSElement> getIOSDriver() {
-        return new IOSDriver<>(service, this.caps);
+        return new IOSDriver<>(service, caps);
     }
 
     public AndroidDriver<AndroidElement> getAndroidDriver() {

@@ -1,9 +1,9 @@
-package com.atanas.kanchev.testframework.core.handlers;
+package com.atanas.kanchev.testframework.selenium.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.core.context.SeleniumContext;
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
-import com.atanas.kanchev.testframework.core.handlers.wrappers.ISelenium;
+import com.atanas.kanchev.testframework.commons.wrappers.IContext;
+import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
+import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;

@@ -1,7 +1,10 @@
-package com.atanas.kanchev.testframework.core.handlers.appium;
+package com.atanas.kanchev.testframework.appium.handlers;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
-import io.appium.java_client.*;
+import com.atanas.kanchev.testframework.commons.wrappers.IContext;
+import io.appium.java_client.FindsByAccessibilityId;
+import io.appium.java_client.FindsByAndroidUIAutomator;
+import io.appium.java_client.MultiTouchAction;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDeviceActionShortcuts;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -18,7 +21,7 @@ import java.util.Set;
 /**
  * @author Atanas Ksnchev
  */
-public class AppiumNative {
+public class AppiumNative implements IContext {
 
     public StartsActivity activity() {
         return new StartsActivity();
@@ -320,11 +323,13 @@ public class AppiumNative {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).getOrientation();
         }
 
-        @Override public void rotate(DeviceRotation deviceRotation) {
+        @Override
+        public void rotate(DeviceRotation deviceRotation) {
             //TODO Implement me!
         }
 
-        @Override public DeviceRotation rotation() {
+        @Override
+        public DeviceRotation rotation() {
             //TODO Implement me!
             return null;
         }

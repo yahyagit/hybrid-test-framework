@@ -1,5 +1,6 @@
-package com.atanas.kanchev.testframework.core.context;
+package com.atanas.kanchev.testframework.selenium.context;
 
+import com.atanas.kanchev.testframework.commons.context.AbstractContext;
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

@@ -1,17 +1,15 @@
-package com.atanas.kanchev.testframework.core.handlers;
+package com.atanas.kanchev.testframework.selenium.handlers;
 
-import com.atanas.kanchev.testframework.core.context.SeleniumContext;
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
-import com.atanas.kanchev.testframework.core.handlers.wrappers.ISelenium;
-import com.atanas.kanchev.testframework.selenium.driver_factory.DriverConfig;
+import com.atanas.kanchev.testframework.commons.wrappers.IContext;
+import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
+import com.atanas.kanchev.testframework.selenium.driverfactory.DriverConfig;
+import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.atanas.kanchev.testframework.core.handlers.CommonPageDefinitions.HTML.*;
 
 /**
  * @author Atanas Ksnchev
@@ -25,10 +23,10 @@ public class Interact implements IInteract, IContext {
     public Interact typeIn(CharSequence... keys) {
 
         String tag = ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getTagName();
-        if (tag.equals(INPUT.getDefinition()) ||
-                tag.equals(TEXTAREA.getDefinition()) ||
-                tag.equals(UIA_SECURETEXTFIELD.getDefinition()) ||
-                tag.equals(UIA_TEXTFIELD.getDefinition()) ||
+        if (tag.equals(CommonPageDefinitions.HTML.INPUT.getDefinition()) ||
+                tag.equals(CommonPageDefinitions.HTML.TEXTAREA.getDefinition()) ||
+                tag.equals(CommonPageDefinitions.HTML.UIA_SECURETEXTFIELD.getDefinition()) ||
+                tag.equals(CommonPageDefinitions.HTML.UIA_TEXTFIELD.getDefinition()) ||
                 tag.equals("android.widget.EditText")) {
             ((SeleniumContext) context().getCurrentContext()).getCurrentElement().sendKeys(keys);
         } else {

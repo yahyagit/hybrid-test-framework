@@ -1,13 +1,11 @@
 package com.atanas.kanchev.testframework.core.handlers.appium;
 
-import com.atanas.kanchev.testframework.core.context.AppiumContext;
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IAppium;
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
-import com.atanas.kanchev.testframework.core.handlers.wrappers.ISelenium;
+import com.atanas.kanchev.testframework.appium.wrappers.IAppium;
+import com.atanas.kanchev.testframework.commons.wrappers.IContext;
+import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.SwipeElementDirection;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +17,7 @@ import java.util.Map;
 /**
  * @author Atanas Ksnchev
  */
+@Deprecated
 public class ASL_AppiumHandlerImpl extends ASL_DeviceMethods implements ASL_IAppiumHandler, IAppium, ISelenium, IContext {
 
     private final static Logger logger = LoggerFactory.getLogger(ASL_AppiumHandlerImpl.class);
@@ -179,8 +178,8 @@ public class ASL_AppiumHandlerImpl extends ASL_DeviceMethods implements ASL_IApp
 
 //    @Override
 //    public ASL_IAppiumHandler installApp(String appPath) {
-//        ((AppiumContext<AndroidDriver>) context().getCurrentContext()).getDriver().installApp(appPath);
-//        if (((AppiumContext<AndroidDriver>) context().getCurrentContext()).getDriver().isAppInstalled(appPath))
+//        ((AppiumContext<AndroidDriver>) com.atanas.kanchev.testframework.selenium.context().getCurrentContext()).getDriver().installApp(appPath);
+//        if (((AppiumContext<AndroidDriver>) com.atanas.kanchev.testframework.selenium.context().getCurrentContext()).getDriver().isAppInstalled(appPath))
 //            logger.debug("App installed");
 //        else
 //            logger.error("App was not installed");
@@ -244,7 +243,7 @@ public class ASL_AppiumHandlerImpl extends ASL_DeviceMethods implements ASL_IApp
 
 //    @Override
 //    public ASL_IAppiumHandler resetApp() {
-//        ((AppiumContext<AndroidDriver>) context().getCurrentContext()).getDriver().resetApp();
+//        ((AppiumContext<AndroidDriver>) com.atanas.kanchev.testframework.selenium.context().getCurrentContext()).getDriver().resetApp();
 //        return this;
 //    }
 //
@@ -305,7 +304,7 @@ public class ASL_AppiumHandlerImpl extends ASL_DeviceMethods implements ASL_IApp
 //            return tapAndroid((RemoteWebDriver) driver, currentElement);
 //        }
 
-        tapAndroid(((AppiumContext<RemoteWebDriver>) context().getCurrentContext()).getDriver(), ((AppiumContext) context().getCurrentContext()).getCurrentElement());
+//        tapAndroid(((AppiumContext<RemoteWebDriver>) com.atanas.kanchev.testframework.selenium.context().getCurrentContext()).getDriver(), ((AppiumContext) com.atanas.kanchev.testframework.selenium.context().getCurrentContext()).getCurrentElement());
 
         return false;
     }

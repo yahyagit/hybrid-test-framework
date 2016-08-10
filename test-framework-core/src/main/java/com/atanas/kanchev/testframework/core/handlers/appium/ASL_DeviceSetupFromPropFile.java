@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * @author Atanas Ksnchev
  */
+@Deprecated
 public class ASL_DeviceSetupFromPropFile {
     // the logger
     private final static Logger logger = LoggerFactory.getLogger(ASL_DeviceSetupFromPropFile.class);

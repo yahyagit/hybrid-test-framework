@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.selenium.driver_factory;
+package com.atanas.kanchev.testframework.selenium.driverfactory;
 
 import io.github.bonigarcia.wdm.*;
 import org.openqa.selenium.Proxy;

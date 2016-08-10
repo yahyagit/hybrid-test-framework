@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.core.tests.handlers.appium.android.native_app_tests;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IContext;
+import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import io.appium.java_client.*;
 import io.appium.java_client.android.AndroidElement;
 import org.junit.Test;
