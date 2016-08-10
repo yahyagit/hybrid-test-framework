@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.appium.driverfactory.refacto;
+package com.atanas.kanchev.testframework.appium.driverfactory;
 
 import com.atanas.kanchev.testframework.commons.properties.PropertyReader;
 import io.appium.java_client.service.local.AppiumDriverLocalService;

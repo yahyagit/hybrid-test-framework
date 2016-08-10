@@ -1,6 +1,6 @@
-package com.atanas.kanchev.testframework.core.handlers.wrappers;
+package com.atanas.kanchev.testframework.sikuli.wrappers;
 
-import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
+import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
 
 /**
  * @author Atanas Ksnchev

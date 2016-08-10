@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.sikuli;
+package com.atanas.kanchev.testframework.sikuli.handlers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

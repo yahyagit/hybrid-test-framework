@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.appium.wrappers;
 
-import com.atanas.kanchev.testframework.appium.driverfactory.refacto.AppiumDriverFactory;
+import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDriverFactory;
 import com.atanas.kanchev.testframework.appium.handlers.AppiumNative;
 
 /**

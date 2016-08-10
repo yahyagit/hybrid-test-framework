@@ -4,41 +4,39 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
-import io.appium.java_client.service.local.AppiumDriverLocalService;
-import org.openqa.selenium.Capabilities;
-
-import java.net.URL;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
  * @author Atanas Kanchev
- *         Appium driver factory
+ *         Appium Driver Factory
  */
-@Deprecated
-public final class AppiumDriverFactory {
+public class AppiumDriverFactory extends AppiumLocalServiceBuilder {
 
-    private final URL remoteAddress;
-    private final Capabilities desiredCapabilities;
+    private final DesiredCapabilities caps = DesiredCapabilities.android();
 
     /**
-     * Constructor
+     * Set an Appium  compatibility
      *
-     * @param remoteAddress       URL
-     * @param desiredCapabilities Capabilities
+     * @param capabilityType  Compatibility type to set. Value from:
+     *                        Android compatibility {@link io.appium.java_client.remote.AndroidMobileCapabilityType}
+     *                        IOS compatibility {@link io.appium.java_client.remote.IOSMobileCapabilityType}
+     *                        Appium server capabilities {@link io.appium.java_client.remote.MobileCapabilityType}
+     * @param capabilityValue Compatibility value
      */
-    public AppiumDriverFactory(URL remoteAddress, Capabilities desiredCapabilities) {
-        this.remoteAddress = remoteAddress;
-        this.desiredCapabilities = desiredCapabilities;
+    public AppiumDriverFactory setCap(final String capabilityType, final Object capabilityValue) {
+        caps.setCapability(capabilityType, capabilityValue);
+        return this;
+    }
+
+    public DesiredCapabilities getCaps() {
+        return caps;
     }
 
     public IOSDriver<IOSElement> getIOSDriver() {
-        return new IOSDriver<>(this.remoteAddress, this.desiredCapabilities);
+        return new IOSDriver<>(service, caps);
     }
 
     public AndroidDriver<AndroidElement> getAndroidDriver() {
-        return new AndroidDriver<>(this.remoteAddress, this.desiredCapabilities);
-    }
-
-    public AndroidDriver<AndroidElement> getAndroidDriver(AppiumDriverLocalService service) {
-        return new AndroidDriver<>(service, this.desiredCapabilities);
+        return new AndroidDriver<>(service, this.caps);
     }
 }

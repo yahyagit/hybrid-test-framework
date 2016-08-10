@@ -1,6 +1,6 @@
 package com.atanas.kanchev.testframework.sikuli.tests;
 
-import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
+import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

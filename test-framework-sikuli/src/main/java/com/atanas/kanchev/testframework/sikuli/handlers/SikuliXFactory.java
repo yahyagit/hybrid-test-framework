@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.sikuli;
+package com.atanas.kanchev.testframework.sikuli.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import org.sikuli.basics.Settings;
