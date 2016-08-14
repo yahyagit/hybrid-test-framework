@@ -4,6 +4,7 @@ import com.atanas.kanchev.testframework.appium.wrappers.IAppium;
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
+import io.appium.java_client.remote.MobileBrowserType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.junit.After;
 import org.junit.Test;
@@ -48,7 +49,7 @@ public class ChromeTest implements IContext, IAppium, ISelenium {
 
         appiumInit()
 
-//                .setCap(MobileCapabilityType.BROWSER_NAME, MobileBrowserType.CHROME)
+                .setCap(MobileCapabilityType.BROWSER_NAME, MobileBrowserType.CHROME)
                 .setCap(MobileCapabilityType.PLATFORM, Platform.ANDROID)
                 .setCap(MobileCapabilityType.DEVICE_NAME, "ZY22398GL7")
                 .setCap(MobileCapabilityType.PLATFORM_VERSION, "6.0.1")
