@@ -15,19 +15,21 @@ i.e. `\src\test\resources` or `\src\main\resources`.
 
 ## Locating an image match ##
 There are two ways you can locate an image:
-- `findImage(String imageFileName)` - locating an image on the current screen area
+- `findImage(String fileName)` - locating an image on the current screen area
 ```java
 sikulix().findImage("search-button.png");
 ```
-   > * `@param imageFileName` - the image file name
+   > * `@param fileName` - the image file name
 
-- `findImageByScrolling(final String imagePath, final int iterations, final Directions direction)` - by scrolling
+- `findImageByScrolling(final String fileName, final int iterations, final Directions direction)` - by scrolling
 ```java
 sikulix().findImageByScrolling("rm-select.png", 15, SikuliXFactory.Directions.BELOW);
 ```
-   > * @param imagePath  image to getImageFilePath
-   > * @param iterations number of swipes
-   > * @param direction  direction of swipes
+```
+@param fileName  image to file name
+@param iterations number of swipes
+@param direction  direction of swipes
+```
 If the image match is found the mouse pointer hovers over the matched sikulix location on the screen
 
 ## Interacting with an image ##
@@ -61,12 +63,13 @@ sikulix("search-field.png").doubleClick(SikuliXFactory.Directions.LEFT, 2);
 sikulix("search-field.png").doubleClick(SikuliXFactory.Directions.RIGHT, 999);
 ```
 
--  `captureImage(final String imageName, final int pixelSize, final Directions direction)` - capture image in a file from the current screen region
+-  `captureImage(final String fileName, final int pixelSize, final Directions direction)` - capture image in a file from the current screen region
 based on
-
-    > * @param imageName file name for the saved image
-    > * @param pixelSize size of the image to be captured in px
-    > * @param direction direction
+```
+@param fileName file name for the saved image
+@param pixelSize size of the image to be captured in px
+@param direction direction
+```
     
     The images will be saved in `"./target/sikuli-screenshots/";`
 ```java
@@ -86,9 +89,11 @@ sikulix().findImage("search-field.png").type("text");
 ```java
 sikulix().findImage("search-field.png").type("text", 5, SikuliXFactory.Directions.RIGHT);
 ```
-   > * @param text      value to be typed in
-   > * @param pixelSize px to shift
-   > * @param direction relative to the current position
+```
+@param text      value to be typed in
+@param pixelSize px to shift
+@param direction relative to the current position
+```
     
 - `swipeBetweenImages(String startPointImagePath, String endPointImagePath)` - From the current screen create a swipe/click and drag motion relative from Img1 to Img2. 
 Drag from a position and drop to another using left mouse button
