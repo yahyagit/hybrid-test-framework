@@ -5,7 +5,7 @@ import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.MarionetteDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
@@ -16,6 +16,12 @@ import org.slf4j.LoggerFactory;
 
 import static org.openqa.selenium.remote.CapabilityType.PROXY;
 
+/**
+ * <p>DriverType class.</p>
+ *
+ * @author atanas
+ * @version 1.0
+ */
 public enum DriverType implements DriverSetup {
 
     FIREFOX {
@@ -25,7 +31,7 @@ public enum DriverType implements DriverSetup {
 
         public WebDriver getWebDriverObject(DesiredCapabilities capabilities) {
             MarionetteDriverManager.getInstance().setup();
-            return new MarionetteDriver(capabilities);
+            return new FirefoxDriver(capabilities);
         }
     },
 
@@ -95,6 +101,7 @@ public enum DriverType implements DriverSetup {
     };
 
     // the logger
+    /** Constant <code>logger</code> */
     private static final Logger logger = LoggerFactory.getLogger(DriverType.class);
 
     DesiredCapabilities addProxySettings(DesiredCapabilities capabilities, Proxy proxySettings) {
@@ -110,7 +117,19 @@ public enum DriverType implements DriverSetup {
 
 interface DriverSetup {
 
+    /**
+     * <p>getWebDriverObject.</p>
+     *
+     * @param desiredCapabilities a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
+     * @return a {@link org.openqa.selenium.WebDriver} object.
+     */
     WebDriver getWebDriverObject(DesiredCapabilities desiredCapabilities);
 
+    /**
+     * <p>getDesiredCapabilities.</p>
+     *
+     * @param proxySettings a {@link org.openqa.selenium.Proxy} object.
+     * @return a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
+     */
     DesiredCapabilities getDesiredCapabilities(Proxy proxySettings);
 }

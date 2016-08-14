@@ -7,11 +7,11 @@ import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
  */
 public interface ISikulix {
 
-    default SikuliXFactory image(final String image) {
+    default SikuliXFactory sikulix(final String image) {
         return new SikuliXFactory(image);
     }
 
-    default SikuliXFactory image() {
+    default SikuliXFactory sikulix() {
         return new SikuliXFactory();
     }
 }

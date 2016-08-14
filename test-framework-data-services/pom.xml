@@ -10,6 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>test-framework-data-services</artifactId>
+    <name>data-services</name>
+    <description>Data services</description>
 
     <dependencies>
         <dependency>

@@ -1,7 +1,10 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
 /**
+ * <p>CommonPageDefinitions class.</p>
+ *
  * @author Atanas Ksnchev
+ * @version 1.0
  */
 public class CommonPageDefinitions {
 

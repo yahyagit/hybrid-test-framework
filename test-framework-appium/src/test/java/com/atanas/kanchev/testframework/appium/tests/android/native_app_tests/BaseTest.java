@@ -10,9 +10,6 @@ import org.openqa.selenium.Platform;
 
 import java.io.File;
 
-/**
- * @author Atanas Ksnchev
- */
 public class BaseTest implements IAppium, IContext {
 
     @BeforeClass

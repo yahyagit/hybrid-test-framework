@@ -11,12 +11,21 @@ import java.net.URL;
 
 
 /**
+ * <p>RemoteWebDriverFactory class.</p>
+ *
  * @author Atanas Ksnchev
+ * @version 1.0
  */
 public class RemoteWebDriverFactory extends DriverConfig{
 
     private static final Logger logger = LoggerFactory.getLogger(RemoteWebDriverFactory.class);
 
+    /**
+     * <p>getRemoteWebDriver.</p>
+     *
+     * @param desiredCapabilities a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
+     * @return a {@link org.openqa.selenium.remote.RemoteWebDriver} object.
+     */
     public RemoteWebDriver getRemoteWebDriver(DesiredCapabilities desiredCapabilities) {
 
         URL url = null;

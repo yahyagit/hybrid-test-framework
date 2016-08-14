@@ -15,6 +15,7 @@ import java.util.List;
  *
  * @param <T>
  * @author Atanas Ksnchev
+ * @version 1.0
  */
 public class SeleniumContext<T> extends AbstractContext<T> {
 
@@ -27,17 +28,30 @@ public class SeleniumContext<T> extends AbstractContext<T> {
     // Current WebElement pointer
     private List<WebElement> webElementsList;
 
+    /**
+     * <p>Constructor for SeleniumContext.</p>
+     *
+     * @param driver a T object.
+     */
     public SeleniumContext(T driver) {
         this(driver, "seleniumCtx_");
     }
 
+    /**
+     * <p>Constructor for SeleniumContext.</p>
+     *
+     * @param driver      a T object.
+     * @param contextName a {@link java.lang.String} object.
+     */
     public SeleniumContext(T driver, String contextName) {
         super(contextName);
         super.setDriver(driver);
     }
 
-    @Override
-    public void tearDownContext(AbstractContext context) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public void tearDownContext(AbstractContext context) {
 
         logger.debug("Tearing down context " + context.getContextName());
 
@@ -56,12 +70,13 @@ public class SeleniumContext<T> extends AbstractContext<T> {
     /**
      * Get current WebElement
      *
-     * @return reference to {@link SeleniumContext#currentElement}
+     * @return reference to {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement}
      */
     public WebElement getCurrentElement() {
 
         if (this.currentElement == null)
-            throw new CustomExceptions.Common.NullReferenceException("Null SeleniumContext#currentElement");
+            throw new CustomExceptions.Common.NullReferenceException(
+                "Null SeleniumContext#currentElement");
         else
             return currentElement;
     }
@@ -69,12 +84,13 @@ public class SeleniumContext<T> extends AbstractContext<T> {
     /**
      * Get current WebElement list
      *
-     * @return reference to {@link  SeleniumContext#webElementsList}
+     * @return reference to {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#webElementsList}
      */
     public List<WebElement> getWebElementsList() {
 
         if (this.webElementsList == null)
-            throw new CustomExceptions.Common.NullReferenceException("Null SeleniumContext#webElementsList");
+            throw new CustomExceptions.Common.NullReferenceException(
+                "Null SeleniumContext#webElementsList");
         else
             return webElementsList;
     }
@@ -84,7 +100,7 @@ public class SeleniumContext<T> extends AbstractContext<T> {
     /////////////
 
     /**
-     * Set the current WebElement {@link SeleniumContext#currentElement}
+     * Set the current WebElement {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement}
      *
      * @param currentElement instance of WebElement
      */
@@ -92,12 +108,13 @@ public class SeleniumContext<T> extends AbstractContext<T> {
         if (currentElement != null)
             this.currentElement = currentElement;
         else
-            throw new CustomExceptions.Common.NullArgumentException("Null WebElement instance passed as method argument");
+            throw new CustomExceptions.Common.NullArgumentException(
+                "Null WebElement instance passed as method argument");
 
     }
 
     /**
-     * Set the current WebElement List {@link SeleniumContext#webElementsList}
+     * Set the current WebElement List {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#webElementsList}
      *
      * @param webElementsList instance of List<WebElement>
      */
@@ -105,12 +122,15 @@ public class SeleniumContext<T> extends AbstractContext<T> {
         if (webElementsList != null)
             this.webElementsList = webElementsList;
         else
-            throw new CustomExceptions.Common.NullArgumentException("Null WebElement instance passed as method argument");
+            throw new CustomExceptions.Common.NullArgumentException(
+                "Null WebElement instance passed as method argument");
 
     }
 
-    @Override
-    public String toString() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public String toString() {
         return getClass().getSimpleName();
     }
 

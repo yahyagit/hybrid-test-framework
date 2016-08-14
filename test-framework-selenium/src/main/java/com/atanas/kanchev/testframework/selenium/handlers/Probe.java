@@ -15,12 +15,18 @@ import java.util.Arrays;
  * Probe
  *
  * @author Atanas Ksnchev
+ * @version $Id: $Id
  */
 public final class Probe implements IProbe, IContext {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Probe.class);
 
+    /**
+     * <p>Constructor for Probe.</p>
+     *
+     * @param locator a {@link org.openqa.selenium.By} object.
+     */
     public Probe(By locator) {
 
         if (locator == null)
@@ -37,6 +43,7 @@ public final class Probe implements IProbe, IContext {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean exist() {
         try {
@@ -46,6 +53,7 @@ public final class Probe implements IProbe, IContext {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasAnyText() {
 
@@ -55,6 +63,7 @@ public final class Probe implements IProbe, IContext {
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasText(boolean isCaseSensitiveMatch, boolean isPreciseMatch, String... textElements) {
 
@@ -103,6 +112,7 @@ public final class Probe implements IProbe, IContext {
         return matchFound;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasAttribute(boolean preciseMatch, String attributeName, String attributeText) {
 
@@ -129,6 +139,7 @@ public final class Probe implements IProbe, IContext {
         return matchFound;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isOfTagType(String tag) {
 
@@ -138,26 +149,31 @@ public final class Probe implements IProbe, IContext {
         return tagName.equals(tag);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isEnabled() {
         return ((SeleniumContext) context().getCurrentContext()).getCurrentElement().isEnabled();
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isSelected() {
         return ((SeleniumContext) context().getCurrentContext()).getCurrentElement().isSelected();
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isActive() {
         return ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getAttribute("class").contains("active");
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isDisplayed() {
         return ((SeleniumContext) context().getCurrentContext()).getCurrentElement().isDisplayed();
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasColour(CommonPageDefinitions.CSS css, String expectedColorHexCode) {
 
@@ -187,6 +203,7 @@ public final class Probe implements IProbe, IContext {
         return false;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasURL(String expectedURL, boolean isPreciseMatch) {
         String actualURL = ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().getCurrentUrl();
@@ -195,6 +212,7 @@ public final class Probe implements IProbe, IContext {
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasTitle(String expectedTitle, boolean isPreciseMatch) {
         String actualURL = ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().getTitle();
@@ -203,6 +221,7 @@ public final class Probe implements IProbe, IContext {
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasPartialImagePath(String imagePath) {
         boolean contains = false;
@@ -214,6 +233,7 @@ public final class Probe implements IProbe, IContext {
         return contains;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasLinkToURL(String url) {
         boolean hasAnchorAndHref = false;
@@ -229,6 +249,7 @@ public final class Probe implements IProbe, IContext {
         return hasAnchorAndHref;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean followLinkToURL(String link) {
         boolean canFollow = false;
@@ -239,6 +260,7 @@ public final class Probe implements IProbe, IContext {
         return canFollow;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean titleHasText(String text, boolean isPreciseMatch) {
 
@@ -257,6 +279,7 @@ public final class Probe implements IProbe, IContext {
         return matchFound;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasPartialCookieValue(String cookieName, String cookieValue) {
 
@@ -289,7 +312,7 @@ interface IProbe extends ISelenium {
     boolean exist();
 
     /**
-     * Probe if {@link SeleniumContext#currentElement} has any text i.e. </br>
+     * Probe if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} has any text i.e. </br>
      * {@code <div>Text</div>} match will return <b>true</b>.
      * The text to be found can be anywhere in the element text string
      *
@@ -298,7 +321,7 @@ interface IProbe extends ISelenium {
     boolean hasAnyText();
 
     /**
-     * Probe if {@link SeleniumContext#currentElement} has partial text match e.g.
+     * Probe if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} has partial text match e.g.
      * {@code hasPartialText("hello");} matching against {@code <div>hello there<\div>}
      * will return <b>true</b> The text to be found can be a subset of
      * element text string </br> The method can also be used for multiple String elements
@@ -313,7 +336,7 @@ interface IProbe extends ISelenium {
     boolean hasText(boolean isCaseSensitiveMatch, boolean isPreciseMatch, String... textElements);
 
     /**
-     * Check if {@link SeleniumContext#currentElement} contains specified identifier.
+     * Check if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} contains specified identifier.
      * The identifier to be found can be a subset of element identifier
      *
      * @param preciseMatch  {@code boolean}
@@ -324,7 +347,7 @@ interface IProbe extends ISelenium {
     boolean hasAttribute(boolean preciseMatch, String attributeName, String attributeText);
 
     /**
-     * Checks if {@link SeleniumContext#currentElement} of specified HTML tag type.
+     * Checks if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} of specified HTML tag type.
      *
      * @param tag the tag name to check
      * @return {@code true}, if element of specified tag type
@@ -332,14 +355,14 @@ interface IProbe extends ISelenium {
     boolean isOfTagType(String tag);
 
     /**
-     * Checks if {@link SeleniumContext#currentElement} is enabled i.e. can receive focus.
+     * Checks if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} is enabled i.e. can receive focus.
      *
      * @return {@code true} if element is enabled
      */
     boolean isEnabled();
 
     /**
-     * Checks if {@link SeleniumContext#currentElement} is selected.
+     * Checks if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} is selected.
      * Checkboxes, options in select and radio buttons.
      *
      * @return {@code true} if element is selected
@@ -347,23 +370,23 @@ interface IProbe extends ISelenium {
     boolean isSelected();
 
     /**
-     * Checks {@link SeleniumContext#currentElement} is active.
+     * Checks {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} is active.
      *
      * @return {@code true} if element is active
      */
     boolean isActive();
 
     /**
-     * Checks {@link SeleniumContext#currentElement} is displayed.
+     * Checks {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} is displayed.
      *
      * @return {@code true} if element is displayed
      */
     boolean isDisplayed();
 
     /**
-     * Check if {@link SeleniumContext#currentElement} has color as expected
+     * Check if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} has color as expected
      *
-     * @param css                  CSS definition {@link CommonPageDefinitions.CSS}
+     * @param css                  CSS definition {@link com.atanas.kanchev.testframework.selenium.handlers.CommonPageDefinitions.CSS}
      * @param expectedColorHexCode HEX color code
      * @return {@code true} if the color matches
      */
@@ -380,7 +403,7 @@ interface IProbe extends ISelenium {
 
 
     /**
-     * Check if {@link SeleniumContext#currentElement} has a title as expected
+     * Check if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} has a title as expected
      *
      * @param expectedTitle  String
      * @param isPreciseMatch boolean
@@ -399,7 +422,7 @@ interface IProbe extends ISelenium {
     boolean hasPartialImagePath(String imagePath);
 
     /**
-     * Check if {@link SeleniumContext#currentElement} has link to url
+     * Check if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} has link to url
      *
      * @param url expected url
      * @return {@code true} if it has link to url
@@ -407,7 +430,7 @@ interface IProbe extends ISelenium {
     boolean hasLinkToURL(String url);
 
     /**
-     * Check if {@link SeleniumContext#currentElement} has link to url
+     * Check if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} has link to url
      * and if it does - navigate to it
      *
      * @param link URL
@@ -416,7 +439,7 @@ interface IProbe extends ISelenium {
     boolean followLinkToURL(String link);
 
     /**
-     * Check if {@link SeleniumContext#currentElement} has title with text
+     * Check if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} has title with text
      *
      * @param text           expected text
      * @param isPreciseMatch boolean
@@ -427,9 +450,9 @@ interface IProbe extends ISelenium {
     /**
      * Check if the cookie has text
      *
-     * @param cookieName
-     * @param cookieValue
-     * @return
+     * @param cookieName a {@link java.lang.String} object.
+     * @param cookieValue a {@link java.lang.String} object.
+     * @return a boolean.
      */
     boolean hasPartialCookieValue(String cookieName, String cookieValue);
 

@@ -12,20 +12,35 @@ import org.slf4j.LoggerFactory;
  *
  * @param <T> driver type, e.g. AndroidDriver, IOSDriver
  * @author Atanas Ksnchev
+ * @version 1.0
  */
 public final class AppiumContext<T> extends SeleniumContext<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(AppiumContext.class);
 
+    /**
+     * <p>Constructor for AppiumContext.</p>
+     *
+     * @param driver a T object.
+     */
     public AppiumContext(T driver) {
         this(driver, "appiumCtx_");
     }
 
+    /**
+     * <p>Constructor for AppiumContext.</p>
+     *
+     * @param driver      a T object.
+     * @param contextName a {@link java.lang.String} object.
+     */
     public AppiumContext(T driver, String contextName) {
         super(driver, contextName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override public void tearDownContext(AbstractContext context) {
 
         logger.debug("Tearing down context " + context.getContextName());
@@ -48,6 +63,9 @@ public final class AppiumContext<T> extends SeleniumContext<T> {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override public String toString() {
         return getClass().getSimpleName();
     }

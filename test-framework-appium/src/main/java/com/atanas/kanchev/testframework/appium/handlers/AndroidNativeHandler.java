@@ -22,57 +22,123 @@ import java.util.Set;
  * Android native app Appium implementation
  *
  * @author Atanas Ksnchev
+ * @version 1.0
  */
 public class AndroidNativeHandler {
 
+    /**
+     * <p>activity.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.StartsActivity} object.
+     */
     public StartsActivity activity() {
         return new StartsActivity();
     }
 
+    /**
+     * <p>orientation.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.Rotatable} object.
+     */
     public Rotatable orientation() {
         return new Rotatable();
     }
 
+    /**
+     * <p>pushFiles.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.PushesFiles} object.
+     */
     public PushesFiles pushFiles() {
         return new PushesFiles();
     }
 
+    /**
+     * <p>actionShortcuts.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.ActionShortcuts} object.
+     */
     public ActionShortcuts actionShortcuts() {
         return new ActionShortcuts();
     }
 
+    /**
+     * <p>touchShortcuts.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.TouchShortcuts} object.
+     */
     public TouchShortcuts touchShortcuts() {
         return new TouchShortcuts();
     }
 
+    /**
+     * <p>find.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.Finds} object.
+     */
     public Finds find() {
         return new Finds();
     }
 
+    /**
+     * <p>appStrings.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.HasAppStrings} object.
+     */
     public HasAppStrings appStrings() {
         return new HasAppStrings();
     }
 
+    /**
+     * <p>interactsWithApps.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.InteractsWithApps} object.
+     */
     public InteractsWithApps interactsWithApps() {
         return new InteractsWithApps();
     }
 
+    /**
+     * <p>locationContext.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.LocationContext} object.
+     */
     public LocationContext locationContext() {
         return new LocationContext();
     }
 
+    /**
+     * <p>contextAware.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.ContextAware} object.
+     */
     public ContextAware contextAware() {
         return new ContextAware();
     }
 
+    /**
+     * <p>appiumDriverMethods.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.AppiumDriverMethods} object.
+     */
     public AppiumDriverMethods appiumDriverMethods() {
         return new AppiumDriverMethods();
     }
 
+    /**
+     * <p>touchActions.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.PerformsTouchActions} object.
+     */
     public PerformsTouchActions touchActions() {
         return new PerformsTouchActions();
     }
 
+    /**
+     * <p>networkConnection.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.HasNetworkConnection} object.
+     */
     public HasNetworkConnection networkConnection() {
         return new HasNetworkConnection();
     }

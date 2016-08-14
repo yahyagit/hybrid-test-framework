@@ -1,12 +1,11 @@
 package com.atanas.kanchev.testframework.sikuli.tests;
 
+import com.atanas.kanchev.testframework.commons.wrappers.IContext;
+import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.sikuli.script.Key;
 
 /**
@@ -14,40 +13,33 @@ import org.sikuli.script.Key;
  *
  * @author Atanas Ksnchev
  */
-public class SikuliXFactoryTest {
+public class SikuliXFactoryTest implements ISelenium, IContext {
 
     private SikuliXFactory sikuliXFactory;
-    private WebDriver driver;
 
-    @Before
-    public void setUp() throws Exception {
-        ChromeDriverManager.getInstance().setup();
-        driver = new ChromeDriver();
-        driver.get("https://www.google.co.uk");
-        sikuliXFactory = new SikuliXFactory("search-field.png");
+    @Before public void setUp() throws Exception {
+        setupSelenium().setBrowser("chrome");
+        sikuliXFactory = new SikuliXFactory();
+        goTo("https://www.google.co.uk");
     }
 
-    @After
-    public void tearDown() throws Exception {
-        driver.quit();
+    @After public void tearDown() throws Exception {
+        context().tearDownContexts();
     }
 
-    @Test
-    public void findImage() throws Exception {
+    @Test public void findImage() throws Exception {
 
         sikuliXFactory.findImage("search-button.png");
 
     }
 
-    @Test
-    public void click() throws Exception {
+    @Test public void click() throws Exception {
 
         sikuliXFactory.click();
 
     }
 
-    @Test
-    public void click1() throws Exception {
+    @Test public void click1() throws Exception {
 
         sikuliXFactory.click(SikuliXFactory.Directions.ABOVE, 1);
         sikuliXFactory.click(SikuliXFactory.Directions.BELOW, 333);
@@ -57,15 +49,13 @@ public class SikuliXFactoryTest {
 
     }
 
-    @Test
-    public void doubleClick() throws Exception {
+    @Test public void doubleClick() throws Exception {
 
         sikuliXFactory.doubleClick();
 
     }
 
-    @Test
-    public void doubleClick1() throws Exception {
+    @Test public void doubleClick1() throws Exception {
 
         sikuliXFactory.doubleClick(SikuliXFactory.Directions.ABOVE, 1);
         sikuliXFactory.doubleClick(SikuliXFactory.Directions.BELOW, 333);
@@ -75,8 +65,7 @@ public class SikuliXFactoryTest {
 
     }
 
-    @Test
-    public void captureImage() throws Exception {
+    @Test public void captureImage() throws Exception {
 
         sikuliXFactory.captureImage("image1", 101, SikuliXFactory.Directions.ABOVE);
         sikuliXFactory.captureImage("image2", 999, SikuliXFactory.Directions.BELOW);
@@ -86,42 +75,37 @@ public class SikuliXFactoryTest {
 
     }
 
-    @Test
-    public void type() throws Exception {
+    @Test public void type() throws Exception {
 
         sikuliXFactory.findImage("search-field.png").type("text");
 
     }
 
-    @Test
-    public void type1() throws Exception {
+    @Test public void type1() throws Exception {
 
-        sikuliXFactory.findImage("search-field.png").type("text", 5, SikuliXFactory.Directions.RIGHT);
+        sikuliXFactory.findImage("search-field.png")
+            .type("text", 5, SikuliXFactory.Directions.RIGHT);
     }
 
-    @Test
-    public void swipeBetweenImages() throws Exception {
+    @Test public void swipeBetweenImages() throws Exception {
 
         sikuliXFactory.swipeBetweenImages("search-field.png", "search-button.png");
 
     }
 
-    @Test
-    public void findImageByScrolling() throws Exception {
+    @Test public void findImageByScrolling() throws Exception {
 
-        driver.get("https://www.rightmove.co.uk");
+        goTo("https://www.rightmove.co.uk");
         sikuliXFactory.findImageByScrolling("rm-select.png", 15, SikuliXFactory.Directions.BELOW);
 
     }
 
-    @Test
-    public void sendKey() throws Exception {
+    @Test public void sendKey() throws Exception {
 
         sikuliXFactory.sendKey(Key.F5);
     }
 
-    @Test
-    public void setMinimumSimilarityForImage() throws Exception {
+    @Test public void setMinimumSimilarityForImage() throws Exception {
 
         sikuliXFactory.setMinimumSimilarityForImage(0.5);
 

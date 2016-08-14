@@ -6,13 +6,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 /**
- * Created by atanas on 10/07/2016.
+ * @author Atanas Ksnchev
  */
 public interface ISelenium extends IFind, IInteract, INavigate, IProbe, IWait {}
 
-/**
- * @author Atanas Ksnchev
- */
 interface IFind {
 
     default Finder find() {
@@ -28,9 +25,6 @@ interface IFind {
     }
 }
 
-/**
- * @author Atanas Ksnchev
- */
 interface IInteract {
 
     default Interact interact() {
@@ -42,9 +36,6 @@ interface IInteract {
     }
 }
 
-/**
- * @author Atanas Ksnchev
- */
 interface INavigate {
     DriverFactory DRIVER_FACTORY = new DriverFactory();
 
@@ -57,9 +48,6 @@ interface INavigate {
     }
 }
 
-/**
- * @author Atanas Ksnchev
- */
 interface IProbe {
 
     default Probe probe(By locator) {
@@ -67,9 +55,6 @@ interface IProbe {
     }
 }
 
-/**
- * @author Atanas Ksnchev
- */
 interface IWait {
 
     default Wait waitFor(long wait) {

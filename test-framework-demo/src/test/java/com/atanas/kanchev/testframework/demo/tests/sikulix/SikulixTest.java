@@ -1,7 +1,9 @@
 package com.atanas.kanchev.testframework.demo.tests.sikulix;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
+import com.atanas.kanchev.testframework.commons.wrappers.IContext;
+import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
+import com.atanas.kanchev.testframework.sikuli.wrappers.ISikulix;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +14,7 @@ import org.sikuli.script.Key;
  *
  * @author Atanas Ksnchev
  */
-public class SikulixTest implements IWrapper {
+public class SikulixTest implements ISelenium, ISikulix, IContext {
 
     @Before
     public void setUp() throws Exception {
@@ -30,74 +32,74 @@ public class SikulixTest implements IWrapper {
     @Test
     public void findImage() throws Exception {
 
-        image().findImage("search-button.png");
+        sikulix().findImage("search-button.png");
 
     }
 
     @Test
     public void click() throws Exception {
 
-        image("search-button.png").click();
+        sikulix("search-button.png").click();
 
     }
 
     @Test
     public void click1() throws Exception {
 
-        image("search-field.png").click(SikuliXFactory.Directions.ABOVE, 1);
-        image("search-field.png").click(SikuliXFactory.Directions.BELOW, 333);
-        image("search-field.png").click(SikuliXFactory.Directions.CENTER, 0);
-        image("search-field.png").click(SikuliXFactory.Directions.LEFT, 2);
-        image("search-field.png").click(SikuliXFactory.Directions.RIGHT, 999);
+        sikulix("search-field.png").click(SikuliXFactory.Directions.ABOVE, 1);
+        sikulix("search-field.png").click(SikuliXFactory.Directions.BELOW, 333);
+        sikulix("search-field.png").click(SikuliXFactory.Directions.CENTER, 0);
+        sikulix("search-field.png").click(SikuliXFactory.Directions.LEFT, 2);
+        sikulix("search-field.png").click(SikuliXFactory.Directions.RIGHT, 999);
 
     }
 
     @Test
     public void doubleClick() throws Exception {
 
-        image("search-field.png").doubleClick();
+        sikulix("search-field.png").doubleClick();
 
     }
 
     @Test
     public void doubleClick1() throws Exception {
 
-        image("search-field.png").doubleClick(SikuliXFactory.Directions.ABOVE, 1);
-        image("search-field.png").doubleClick(SikuliXFactory.Directions.BELOW, 333);
-        image("search-field.png").doubleClick(SikuliXFactory.Directions.CENTER, 0);
-        image("search-field.png").doubleClick(SikuliXFactory.Directions.LEFT, 2);
-        image("search-field.png").doubleClick(SikuliXFactory.Directions.RIGHT, 999);
+        sikulix("search-field.png").doubleClick(SikuliXFactory.Directions.ABOVE, 1);
+        sikulix("search-field.png").doubleClick(SikuliXFactory.Directions.BELOW, 333);
+        sikulix("search-field.png").doubleClick(SikuliXFactory.Directions.CENTER, 0);
+        sikulix("search-field.png").doubleClick(SikuliXFactory.Directions.LEFT, 2);
+        sikulix("search-field.png").doubleClick(SikuliXFactory.Directions.RIGHT, 999);
 
     }
 
     @Test
     public void captureImage() throws Exception {
 
-        image("search-field.png").captureImage("image1", 101, SikuliXFactory.Directions.ABOVE);
-        image("search-field.png").captureImage("image2", 999, SikuliXFactory.Directions.BELOW);
-        image("search-field.png").captureImage("image3", 0, SikuliXFactory.Directions.CENTER);
-        image("search-field.png").captureImage("image4", 22, SikuliXFactory.Directions.LEFT);
-        image("search-field.png").captureImage("image5", 1, SikuliXFactory.Directions.RIGHT);
+        sikulix("search-field.png").captureImage("image1", 101, SikuliXFactory.Directions.ABOVE);
+        sikulix("search-field.png").captureImage("image2", 999, SikuliXFactory.Directions.BELOW);
+        sikulix("search-field.png").captureImage("image3", 0, SikuliXFactory.Directions.CENTER);
+        sikulix("search-field.png").captureImage("image4", 22, SikuliXFactory.Directions.LEFT);
+        sikulix("search-field.png").captureImage("image5", 1, SikuliXFactory.Directions.RIGHT);
 
     }
 
     @Test
     public void type() throws Exception {
 
-        image().findImage("search-field.png").type("text");
+        sikulix().findImage("search-field.png").type("text");
 
     }
 
     @Test
     public void type1() throws Exception {
 
-        image().findImage("search-field.png").type("text", 5, SikuliXFactory.Directions.RIGHT);
+        sikulix().findImage("search-field.png").type("text", 5, SikuliXFactory.Directions.RIGHT);
     }
 
     @Test
     public void swipeBetweenImages() throws Exception {
 
-        image().swipeBetweenImages("search-field.png", "search-button.png");
+        sikulix().swipeBetweenImages("search-field.png", "search-button.png");
 
     }
 
@@ -105,20 +107,20 @@ public class SikulixTest implements IWrapper {
     public void findImageByScrolling() throws Exception {
 
         goTo("https://www.rightmove.co.uk");
-        image().findImageByScrolling("rm-select.png", 15, SikuliXFactory.Directions.BELOW);
+        sikulix().findImageByScrolling("rm-select.png", 15, SikuliXFactory.Directions.BELOW);
 
     }
 
     @Test
     public void sendKey() throws Exception {
 
-        image("search-field.png").sendKey(Key.F5);
+        sikulix("search-field.png").sendKey(Key.F5);
     }
 
     @Test
     public void setMinimumSimilarityForImage() throws Exception {
 
-        image().setMinimumSimilarityForImage(0.5);
+        sikulix().setMinimumSimilarityForImage(0.5);
 
     }
 }

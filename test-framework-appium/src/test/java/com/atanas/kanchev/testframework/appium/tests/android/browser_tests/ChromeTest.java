@@ -12,9 +12,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.ScreenOrientation;
 
-/**
- * Created by atanas on 09/07/2016.
- */
 public class ChromeTest implements IContext, IAppium, ISelenium {
 
     @After public void tearDown() throws Exception {

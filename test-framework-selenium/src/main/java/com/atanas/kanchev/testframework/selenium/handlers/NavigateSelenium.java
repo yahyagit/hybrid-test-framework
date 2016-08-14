@@ -18,6 +18,9 @@ import java.util.Set;
 
 /**
  * Created by atanas on 02/07/2016.
+ *
+ * @author atanas
+ * @version $Id: $Id
  */
 public class NavigateSelenium implements INavigateSelenium, IContext {
 
@@ -26,6 +29,11 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
 
     private final WebDriver driver;
 
+    /**
+     * <p>Constructor for NavigateSelenium.</p>
+     *
+     * @param driverFactory a {@link com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory} object.
+     */
     public NavigateSelenium(DriverFactory driverFactory) {
 
         try {
@@ -39,6 +47,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         driver = (WebDriver) context().getCurrentContext().getDriver();
     }
 
+    /** {@inheritDoc} */
     @Override
     public INavigateSelenium getPage(URL url) {
         if (url == null)
@@ -52,6 +61,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
+    /** {@inheritDoc} */
     @Override
     public NavigateSelenium getPage(String url) {
         if (url == null)
@@ -66,6 +76,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
+    /** {@inheritDoc} */
     @Override
     public INavigateSelenium back() {
         logger.debug("Navigating back");
@@ -73,6 +84,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
+    /** {@inheritDoc} */
     @Override
     public INavigateSelenium forward() {
         logger.debug("Navigating forward");
@@ -80,6 +92,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
+    /** {@inheritDoc} */
     @Override
     public INavigateSelenium refresh() {
         logger.debug("Refreshing page");
@@ -87,6 +100,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
+    /** {@inheritDoc} */
     @Override
     public INavigateSelenium navigateToWindowByPartialTitle(String title) {
         try {
@@ -109,6 +123,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
+    /** {@inheritDoc} */
     @Override
     public INavigateSelenium navigateToWindow(String windowIdentifier) {
         try {
@@ -119,6 +134,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
+    /** {@inheritDoc} */
     @Override
     public INavigateSelenium navigateToOtherWindow() {
         Set<String> handles = driver.getWindowHandles();
@@ -132,6 +148,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
+    /** {@inheritDoc} */
     @Override
     public INavigateSelenium navigateToActivateFrame() {
         try {
@@ -145,6 +162,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
+    /** {@inheritDoc} */
     @Override
     public INavigateSelenium navigateToFrameById(String id) {
         try {
@@ -158,6 +176,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
+    /** {@inheritDoc} */
     @Override
     public INavigateSelenium navigateToFrameBy(By by) {
         try {
@@ -171,6 +190,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
+    /** {@inheritDoc} */
     @Override
     public INavigateSelenium waitForFrameByIdToBeAvailableAndSwitch(String frameId) {
         try {
@@ -184,6 +204,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
+    /** {@inheritDoc} */
     @Override
     public INavigateSelenium returnToDefaultWindow() {
         driver.switchTo().defaultContent();
@@ -191,6 +212,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public INavigateSelenium deleteCookies() {
         try {
@@ -201,6 +223,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
+    /** {@inheritDoc} */
     @Override
     public INavigateSelenium deleteCookie(String cookieName) {
         try {
@@ -211,6 +234,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
+    /** {@inheritDoc} */
     @Override
     public INavigateSelenium setCookie(String cookieName, String cookieValue) {
         try {
@@ -224,36 +248,126 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
 
 interface INavigateSelenium extends ISelenium {
 
+    /**
+     * <p>getPage.</p>
+     *
+     * @param url a {@link java.net.URL} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium getPage(final URL url);
 
+    /**
+     * <p>getPage.</p>
+     *
+     * @param url a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium getPage(final String url);
 
+    /**
+     * <p>back.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium back();
 
+    /**
+     * <p>forward.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium forward();
 
+    /**
+     * <p>refresh.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium refresh();
 
+    /**
+     * <p>navigateToWindowByPartialTitle.</p>
+     *
+     * @param title a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium navigateToWindowByPartialTitle(String title);
 
+    /**
+     * <p>navigateToWindow.</p>
+     *
+     * @param windowIdentifier a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium navigateToWindow(String windowIdentifier);
 
+    /**
+     * <p>navigateToOtherWindow.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium navigateToOtherWindow();
 
+    /**
+     * <p>navigateToActivateFrame.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium navigateToActivateFrame();
 
+    /**
+     * <p>navigateToFrameById.</p>
+     *
+     * @param id a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium navigateToFrameById(String id);
 
+    /**
+     * <p>navigateToFrameBy.</p>
+     *
+     * @param by a {@link org.openqa.selenium.By} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium navigateToFrameBy(By by);
 
+    /**
+     * <p>waitForFrameByIdToBeAvailableAndSwitch.</p>
+     *
+     * @param frameId a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium waitForFrameByIdToBeAvailableAndSwitch(String frameId);
 
+    /**
+     * <p>returnToDefaultWindow.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium returnToDefaultWindow();
 
+    /**
+     * <p>deleteCookies.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium deleteCookies();
 
+    /**
+     * <p>deleteCookie.</p>
+     *
+     * @param cookieName a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium deleteCookie(String cookieName);
 
+    /**
+     * <p>setCookie.</p>
+     *
+     * @param cookieName a {@link java.lang.String} object.
+     * @param cookieValue a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
+     */
     INavigateSelenium setCookie(String cookieName, String cookieValue);
 
 }

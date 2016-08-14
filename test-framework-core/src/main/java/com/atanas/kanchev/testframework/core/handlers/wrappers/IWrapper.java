@@ -7,6 +7,9 @@ import com.atanas.kanchev.testframework.sikuli.wrappers.ISikulix;
 
 /**
  * Web Handler Wrapper Interface
+ *
+ * @author atanas
+ * @version 1.0
  */
 public interface IWrapper extends IContext, ISikulix, IAppium, ISelenium {
 }

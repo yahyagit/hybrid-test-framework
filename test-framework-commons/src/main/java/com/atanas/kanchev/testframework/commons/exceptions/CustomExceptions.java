@@ -4,6 +4,7 @@ package com.atanas.kanchev.testframework.commons.exceptions;
  * Custom Exceptions
  *
  * @author Atanas Kanchev
+ * @version 1.0
  */
 public final class CustomExceptions {
 
@@ -34,6 +35,7 @@ public final class CustomExceptions {
             }
         }
 
+
         /**
          * The type Null reference exception.
          */
@@ -55,6 +57,7 @@ public final class CustomExceptions {
                 super("Null Reference Exception");
             }
         }
+
 
         /**
          * The type Illegal argument exception.
@@ -78,6 +81,7 @@ public final class CustomExceptions {
             }
         }
 
+
         /**
          * Custom exception - empty argument
          */
@@ -88,6 +92,7 @@ public final class CustomExceptions {
             }
         }
     }
+
 
     /**
      * The type Web handler.
@@ -111,6 +116,7 @@ public final class CustomExceptions {
             }
         }
 
+
         /**
          * Custom exception - null value
          */
@@ -120,6 +126,7 @@ public final class CustomExceptions {
                 super(message);
             }
         }
+
 
         /**
          * Custom exception - empty key
@@ -132,6 +139,7 @@ public final class CustomExceptions {
         }
 
     }
+
 
     /**
      * The type Sikuli related custom exceptions
@@ -151,6 +159,7 @@ public final class CustomExceptions {
                 super(message, cause);
             }
         }
+
 
         /**
          * Unable to interact exception

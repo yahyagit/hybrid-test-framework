@@ -32,6 +32,7 @@ public class FinderTest implements IWrapper {
         } catch (MalformedURLException e) {
 
         }
+        setupSelenium().setBrowser("chrome");
     }
 
     @After
