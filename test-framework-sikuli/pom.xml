@@ -28,10 +28,6 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.sikulix</groupId>
             <artifactId>sikulixapi</artifactId>
         </dependency>
@@ -58,8 +54,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
+            <groupId>com.atanas.kanchev</groupId>
+            <artifactId>test-framework-selenium</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
