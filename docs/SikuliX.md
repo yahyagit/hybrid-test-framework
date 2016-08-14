@@ -1,12 +1,19 @@
 SikuliX
 =======
 
+# Overview #
+SikuliX automates anything you see on the screen of your desktop computer running Windows, Mac or some Linux/Unix. 
+It uses image recognition powered by OpenCV to identify and control GUI components. 
+This is handy in cases when there is no easy access to a GUI's internals or web page you want to act on.
+Though SikuliX is currently not available on any mobile device, it can be used with the respective emulators on a desktop browser.
+
 # Usage #
 
-- Save your images in a folder under the current working directory, i.e. \src\test\resources or \src\main\resources
-- Implement the interface _`com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory.ISikulix`_
+- Save the images of the screen elements you want to interact with in a folder under the current working directory, 
+i.e. `\src\test\resources` or `\src\main\resources`.
+- Implement the interface _`com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory.ISikulix`_ in your test class.
 
-## Finding an image ##
+## Locating an image match ##
 There are two ways you can locate an image:
 - `findImage(String imageFileName)` - locating an image on the current screen area based on `@param imageFileName` - the image file name
 ```java
@@ -17,17 +24,20 @@ sikulix().findImage("search-button.png");
 ```java
 sikulix().findImageByScrolling("rm-select.png", 15, SikuliXFactory.Directions.BELOW);
 ```
+   > * @param imagePath  image to getImageFilePath
+   > * @param iterations number of swipes
+   > * @param direction  direction of swipes
 If the image match is found the mouse pointer hovers over the matched sikulix location on the screen
 
 ## Interacting with an image ##
 Available methods:
 
-- `click()` - left click at the screen region's match
+- `click()` - left click at the center of the screen region's match
 ```java
 sikulix("search-button.png").click();
 ```
 
-- `click(final Directions direction, final int px)` - navigate to screen region's match and click in x px in the specified direction
+- `click(final Directions direction, final int px)` - navigate to the match and click in x px in the specified direction
 ```java
 sikulix("search-field.png").click(SikuliXFactory.Directions.ABOVE, 1);
 sikulix("search-field.png").click(SikuliXFactory.Directions.BELOW, 333);
@@ -36,7 +46,7 @@ sikulix("search-field.png").click(SikuliXFactory.Directions.LEFT, 2);
 sikulix("search-field.png").click(SikuliXFactory.Directions.RIGHT, 999);
 ```
 
-- `doubleClick()` - left double click at the screen region's match
+- `doubleClick()` - double left click at the screen region's match
 ```java
 sikulix("search-button.png").click();
 ```
@@ -75,10 +85,10 @@ sikulix().findImage("search-field.png").type("text");
 ```java
 sikulix().findImage("search-field.png").type("text", 5, SikuliXFactory.Directions.RIGHT);
 ```
-    > * @param text      value to be typed in
-    > * @param pixelSize px to shift
-    > * @param direction relative to the current position
-
+   > * @param text      value to be typed in
+   > * @param pixelSize px to shift
+   > * @param direction relative to the current position
+    
 - `swipeBetweenImages(String startPointImagePath, String endPointImagePath)` - From the current screen create a swipe/click and drag motion relative from Img1 to Img2. 
 Drag from a position and drop to another using left mouse button
 ```java
