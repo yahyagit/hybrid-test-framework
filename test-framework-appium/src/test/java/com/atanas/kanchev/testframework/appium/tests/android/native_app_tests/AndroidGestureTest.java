@@ -118,11 +118,11 @@ public class AndroidGestureTest extends BaseTest implements IContext {
         AndroidElement element = android().find().findElementById("io.appium.android.apis:id/button_toggle");
         TouchAction tap = new TouchAction((AppiumDriver) context().getCurrentContext().getDriver()).tap(element);
 
-        android().performsTouchActions().performTouchAction(tap);
+        android().touchActions().performTouchAction(tap);
         assertEquals("ON", android().find()
                 .findElementById("io.appium.android.apis:id/button_toggle").getText());
 
-        android().performsTouchActions().performTouchAction(tap);
+        android().touchActions().performTouchAction(tap);
         assertEquals("OFF", android().find()
                 .findElementById("io.appium.android.apis:id/button_toggle").getText());
     }

@@ -10,40 +10,40 @@ public class AndroidConnectionTest extends BaseTest {
     @Test
     public void setWiFi() {
         android()
-                .hasNetworkConnection()
+                .networkConnection()
                 .setConnection(Connection.WIFI);
         assertEquals(Connection.WIFI,
                 android()
-                        .hasNetworkConnection()
+                        .networkConnection()
                         .getConnection());
     }
 
     @Test
     public void setNoneAndAirplane() {
         android()
-                .hasNetworkConnection()
+                .networkConnection()
                 .setConnection(Connection.NONE);
         assertEquals(Connection.NONE,
                 android()
-                        .hasNetworkConnection()
+                        .networkConnection()
                         .getConnection());
         android()
-                .hasNetworkConnection()
+                .networkConnection()
                 .setConnection(Connection.AIRPLANE);
         assertEquals(Connection.AIRPLANE,
                 android()
-                        .hasNetworkConnection()
+                        .networkConnection()
                         .getConnection());
     }
 
     @Test
     public void setAll() {
         android()
-                .hasNetworkConnection()
+                .networkConnection()
                 .setConnection(Connection.ALL);
         assertEquals(Connection.ALL,
                 android()
-                        .hasNetworkConnection()
+                        .networkConnection()
                         .getConnection());
     }
 }

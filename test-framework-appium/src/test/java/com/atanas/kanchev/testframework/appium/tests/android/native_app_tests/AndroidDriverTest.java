@@ -59,10 +59,10 @@ public class AndroidDriverTest extends BaseTest {
         byte[] data = Base64.encodeBase64("The eventual code is no more than the deposit of your understanding. ~E. W. Dijkstra"
                 .getBytes());
         android()
-                .pushesFiles()
+                .pushFiles()
                 .pushFile("/data/local/tmp/remote.txt", data);
         byte[] returnData = android()
-                .pushesFiles()
+                .pushFiles()
                 .pullFile("/data/local/tmp/remote.txt");
         String returnDataDecoded = new String(Base64.decodeBase64(returnData));
         assertEquals("The eventual code is no more than the deposit of your understanding. ~E. W. Dijkstra",
@@ -76,10 +76,10 @@ public class AndroidDriverTest extends BaseTest {
             FileUtils.writeStringToFile(temp, "The eventual code is no "
                     + "more than the deposit of your understanding. ~E. W. Dijkstra", "UTF-8", true);
             android()
-                    .pushesFiles()
+                    .pushFiles()
                     .pushFile("/data/local/tmp/remote2.txt", temp);
             byte[] returnData = android()
-                    .pushesFiles()
+                    .pushFiles()
                     .pullFile("/data/local/tmp/remote2.txt");
             String returnDataDecoded = new String(Base64.decodeBase64(returnData));
             assertEquals(
@@ -151,7 +151,7 @@ public class AndroidDriverTest extends BaseTest {
     public void pullFileTest() {
         byte[] data =
                 android()
-                        .pushesFiles()
+                        .pushFiles()
                         .pullFile("data/system/registered_services/android.content.SyncAdapter.xml");
         assert (data.length > 0);
     }

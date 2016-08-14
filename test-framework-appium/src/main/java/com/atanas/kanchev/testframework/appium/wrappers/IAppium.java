@@ -1,7 +1,7 @@
 package com.atanas.kanchev.testframework.appium.wrappers;
 
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDriverFactory;
-import com.atanas.kanchev.testframework.appium.handlers.AppiumNative;
+import com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler;
 
 /**
  * @author Atanas Ksnchev
@@ -17,8 +17,8 @@ interface IRefactoInit {
         return APPIUM_DRIVER_FACTORY;
     }
 
-    default AppiumNative android() {
-        return new AppiumNative(APPIUM_DRIVER_FACTORY);
+    default AndroidNativeHandler android() {
+        return new AndroidNativeHandler();
     }
 
 }

@@ -9,14 +9,14 @@ public class AndroidAppStringsTest extends BaseTest {
     @Test
     public void getAppStrings() {
         assertNotEquals(0, android()
-                .hasAppStrings()
+                .appStrings()
                 .getAppStringMap().size());
     }
 
     @Test
     public void getGetAppStringsUsingLang() {
         assertNotEquals(0, android()
-                .hasAppStrings()
+                .appStrings()
                 .getAppStringMap("en").size());
     }
 }
