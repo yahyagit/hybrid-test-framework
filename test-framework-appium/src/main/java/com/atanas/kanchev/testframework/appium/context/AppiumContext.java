@@ -1,6 +1,7 @@
 package com.atanas.kanchev.testframework.appium.context;
 
 import com.atanas.kanchev.testframework.commons.context.AbstractContext;
+import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.slf4j.Logger;
@@ -12,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * @param <T>
  * @author Atanas Ksnchev
  */
-public final class AppiumContext<T> extends AbstractContext<T> {
+public final class AppiumContext<T> extends SeleniumContext<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(AppiumContext.class);
@@ -22,8 +23,8 @@ public final class AppiumContext<T> extends AbstractContext<T> {
     }
 
     public AppiumContext(T driver, String contextName) {
-        super(contextName);
-        super.setDriver(driver);
+        super(driver, contextName);
+//        super.setDriver(driver);
     }
 
     @Override
