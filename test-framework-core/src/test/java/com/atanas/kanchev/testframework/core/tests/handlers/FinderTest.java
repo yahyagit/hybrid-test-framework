@@ -1,7 +1,7 @@
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
-import com.atanas.kanchev.testframework.core.handlers.Finder;
-import com.atanas.kanchev.testframework.core.handlers.IWrapper;
+import com.atanas.kanchev.testframework.selenium.handlers.Finder;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 
 import org.junit.After;
 import org.junit.Before;
@@ -51,7 +51,7 @@ goTo("https://www.google.co.uk/");
     @Test
     public void test() throws Exception {
 
-        goTo("https://bbc.co.uk").waitFor(5L).elementToBeClickable(By.id("orb-modules"));
+//        goTo("https://bbc.co.uk").waitFor(5L).elementToBeClickable(By.id("orb-modules"));
 
     }
 }

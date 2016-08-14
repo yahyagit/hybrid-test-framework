@@ -11,15 +11,6 @@
 
     <artifactId>test-framework-core</artifactId>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
     <dependencies>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -43,14 +34,13 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.atanas.kanchev</groupId>
             <artifactId>test-framework-commons</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>io.appium</groupId>
-            <artifactId>java-client</artifactId>
-            <version>4.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.atanas.kanchev</groupId>
@@ -68,6 +58,5 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
 
 </project>

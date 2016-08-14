@@ -1,0 +1,131 @@
+package com.atanas.kanchev.testframework.commons.context;
+
+import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
+/**
+ * Abstract Context
+ *
+ * @param <T> Context type
+ * @author Atanas Kanchev
+ */
+public abstract class AbstractContext<T> implements IAbstractContext<T> {
+
+    // the logger
+    private static final Logger logger = LoggerFactory.getLogger(AbstractContext.class);
+
+    // the com.atanas.kanchev.testframework.selenium.context name
+    private String contextName;
+
+    private boolean isContextReusable;
+
+    // the driver object
+    private T driver;
+
+    /**
+     * Constructor
+     * Sets the value of {@link AbstractContext#contextName}
+     *
+     * @param contextName String
+     */
+    public AbstractContext(String contextName) {
+        this.contextName = contextName + new BigInteger(130, new SecureRandom()).toString(32);
+        logger.debug("Setting current com.atanas.kanchev.testframework.selenium.context name to " + this.contextName);
+    }
+
+    @Override
+    public T getDriver() {
+        if (this.driver == null)
+            throw new CustomExceptions.Common.NullReferenceException("Null driver object AbstractContext#driver");
+        else
+            return this.driver;
+    }
+
+    @Override
+    public void setDriver(T driver) {
+        if (driver != null)
+            this.driver = driver;
+        else
+            throw new CustomExceptions.Common.NullArgumentException("Null driver instance passed as method argument");
+    }
+
+    @Override
+    public String getContextName() {
+        return contextName;
+    }
+
+    @Override
+    public void setContextName(String contextName) {
+        if (contextName == null)
+            throw new CustomExceptions.Common.NullArgumentException("Null argument contextName");
+        if (contextName.isEmpty())
+            throw new CustomExceptions.Common.EmptyArgumentException("Empty argument contextName");
+        this.contextName = contextName;
+    }
+
+    @Override
+    public boolean isContextReusable() {
+        return isContextReusable;
+    }
+
+    @Override
+    public void setContextReusable(boolean contextReusable) {
+        isContextReusable = contextReusable;
+    }
+
+}
+
+/**
+ * Abstract Context Interface
+ *
+ * @param <T>
+ * @author Atanas Kanchev
+ */
+interface IAbstractContext<T> {
+
+    /**
+     * Get driver reference
+     *
+     * @return reference of {@link AbstractContext#driver}
+     */
+
+    T getDriver();
+
+    /**
+     * Set the {@link AbstractContext#driver}
+     *
+     * @param driver T
+     */
+    void setDriver(T driver);
+
+    /**
+     * Get com.atanas.kanchev.testframework.selenium.context name
+     *
+     * @return the value of {@link AbstractContext#contextName}
+     */
+    String getContextName();
+
+    /**
+     * Set the value of {@link AbstractContext#contextName}
+     *
+     * @param contextName String
+     */
+    void setContextName(String contextName);
+
+    boolean isContextReusable();
+
+    void setContextReusable(boolean contextReusable);
+
+    /**
+     * Tear down all active contexts stored in {@link ContextFactory#contextMap}
+     *
+     * @param context
+     * @param <U>
+     */
+    <U extends AbstractContext> void tearDownContext(U context);
+
+}

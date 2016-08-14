@@ -1,27 +1,27 @@
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
-import com.atanas.kanchev.testframework.core.context.ContextFactory;
-import com.atanas.kanchev.testframework.core.handlers.CommonPageDefinitions;
-import com.atanas.kanchev.testframework.core.handlers.IWrapper;
-import org.junit.*;
+import com.atanas.kanchev.testframework.selenium.handlers.CommonPageDefinitions;
+import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openqa.selenium.By;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by atanas on 26/06/2016.
  */
-public class ProbeTest implements IWrapper{
+public class ProbeTest implements IWrapper {
 
     @Before
     public void setUp() throws Exception {
-        setupBrowser()
+        setupSelenium()
                 .setBrowser("chrome");
     }
 
     @After
     public void tearDown() throws Exception {
-        ContextFactory.tearDownContexts();
+        context().tearDownContexts();
     }
 
     @Test

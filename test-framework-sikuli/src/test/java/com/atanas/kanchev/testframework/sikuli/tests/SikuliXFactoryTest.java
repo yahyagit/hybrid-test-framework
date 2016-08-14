@@ -1,11 +1,12 @@
 package com.atanas.kanchev.testframework.sikuli.tests;
 
-import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
+import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.sikuli.script.Key;
 
 /**
@@ -20,7 +21,8 @@ public class SikuliXFactoryTest {
 
     @Before
     public void setUp() throws Exception {
-        driver = new FirefoxDriver();
+        ChromeDriverManager.getInstance().setup();
+        driver = new ChromeDriver();
         driver.get("https://www.google.co.uk");
         sikuliXFactory = new SikuliXFactory("search-field.png");
     }
