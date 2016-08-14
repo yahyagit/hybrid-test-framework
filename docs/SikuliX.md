@@ -2,7 +2,7 @@ SikuliX
 =======
 
 # Overview #
-SikuliX automates anything you see on the screen of your desktop computer running Windows, Mac or some Linux/Unix. 
+[SikuliX](https://github.com/RaiMan/SikuliX-2014) automates anything you see on the screen of your desktop computer running Windows, Mac or some Linux/Unix. 
 It uses image recognition powered by OpenCV to identify and control GUI components. 
 This is handy in cases when there is no easy access to a GUI's internals or web page you want to act on.
 Though SikuliX is currently not available on any mobile device, it can be used with the respective emulators on a desktop browser.
