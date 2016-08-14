@@ -13,7 +13,7 @@ import java.io.IOException;
  * SukuliX Implementation
  *
  * @author Atanas Ksnchev
- * @version $Id: $Id
+ * @version 1.0
  */
 public final class SikuliXFactory {
 

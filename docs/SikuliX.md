@@ -15,10 +15,11 @@ i.e. `\src\test\resources` or `\src\main\resources`.
 
 ## Locating an image match ##
 There are two ways you can locate an image:
-- `findImage(String imageFileName)` - locating an image on the current screen area based on `@param imageFileName` - the image file name
+- `findImage(String imageFileName)` - locating an image on the current screen area
 ```java
 sikulix().findImage("search-button.png");
 ```
+   > * `@param imageFileName` - the image file name
 
 - `findImageByScrolling(final String imagePath, final int iterations, final Directions direction)` - by scrolling
 ```java
