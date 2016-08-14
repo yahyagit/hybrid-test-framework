@@ -13,6 +13,7 @@ import java.io.IOException;
  * SukuliX Implementation
  *
  * @author Atanas Ksnchev
+ * @version $Id: $Id
  */
 public final class SikuliXFactory {
 
@@ -25,6 +26,9 @@ public final class SikuliXFactory {
     //holds the result of the getImageFilePath operation
     private Match match;
 
+    /**
+     * <p>Constructor for SikuliXFactory.</p>
+     */
     public SikuliXFactory() {
 
         Settings.ActionLogs = true;
@@ -33,6 +37,11 @@ public final class SikuliXFactory {
 
     }
 
+    /**
+     * <p>Constructor for SikuliXFactory.</p>
+     *
+     * @param path a {@link java.lang.String} object.
+     */
     public SikuliXFactory(final String path) {
 
         this();
@@ -114,7 +123,7 @@ public final class SikuliXFactory {
     }
 
     /**
-     * Double click at the given target location {@link Region#doubleClick()}
+     * Double click at the given target location {@link org.sikuli.script.Region#doubleClick()}
      *
      * @return this
      */
@@ -170,7 +179,7 @@ public final class SikuliXFactory {
     }
 
     /**
-     * From the current screen get the Image {@link Screen#capture(org.sikuli.script.Region)}
+     * From the current screen get the Image {@link org.sikuli.script.Screen#capture(org.sikuli.script.Region)}
      *
      * @param imageName file name for the saved image
      * @param pixelSize size of the image to be captured in px
@@ -211,7 +220,7 @@ public final class SikuliXFactory {
     }
 
     /**
-     * From the current screen type in a string param {@link Region#type(java.lang.Object, java.lang.String, int)}
+     * From the current screen type in a string param {@link org.sikuli.script.Region#type(java.lang.Object, java.lang.String, int)}
      *
      * @param text Text to enter in the
      * @return this
@@ -231,7 +240,7 @@ public final class SikuliXFactory {
     }
 
     /**
-     * Type in text in the current {@link SikuliXFactory#match}
+     * Type in text in the current {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory#match}
      *
      * @param text      value to be typed in
      * @param pixelSize px to shift
@@ -266,8 +275,8 @@ public final class SikuliXFactory {
      * from Img1 to Img2
      * Drag from a position and drop to another using left mouse button
      *
-     * @param startPointImagePath
-     * @param endPointImagePath
+     * @param startPointImagePath a {@link java.lang.String} object.
+     * @param endPointImagePath a {@link java.lang.String} object.
      * @return this
      */
     public SikuliXFactory swipeBetweenImages(String startPointImagePath, String endPointImagePath) {
@@ -337,7 +346,7 @@ public final class SikuliXFactory {
 
     /**
      * From the existing Screen press a set of generic shortcut keys i.e. SPACE, F12, ESC
-     * {@link Key}
+     * {@link org.sikuli.script.Key}
      * <p>
      * Example usage: press(Key.F12) or press(Key.SPACE)
      *

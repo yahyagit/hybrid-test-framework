@@ -1,6 +1,6 @@
 # **Hybrid Test Framework**
 
-# [Selenium] docs/Selenium.md)
+# [Selenium](docs/Selenium.md)
 
 # [SikuliX](docs/SikuliX.md)
 

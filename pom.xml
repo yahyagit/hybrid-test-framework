@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <name>parent</name>
     <description>Hybrid Test Framework</description>
     <url>https://github.com/atanaskanchev/test-framework</url>
 

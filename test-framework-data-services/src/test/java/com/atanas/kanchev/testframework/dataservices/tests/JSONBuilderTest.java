@@ -4,9 +4,6 @@ import com.atanas.kanchev.testframework.dataservices.api.json.JsonMessageBuilder
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Created by sudhakar on 01/06/15.
- */
 public class JSONBuilderTest {
 
     @Test

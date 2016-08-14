@@ -1,12 +1,11 @@
 package com.atanas.kanchev.testframework.sikuli.tests;
 
+import com.atanas.kanchev.testframework.commons.wrappers.IContext;
+import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.sikuli.script.Key;
 
 /**
@@ -14,22 +13,21 @@ import org.sikuli.script.Key;
  *
  * @author Atanas Ksnchev
  */
-public class SikuliXFactoryTest {
+public class SikuliXFactoryTest implements ISelenium, IContext {
 
     private SikuliXFactory sikuliXFactory;
-    private WebDriver driver;
+//    private WebDriver driver;
 
     @Before
     public void setUp() throws Exception {
-        ChromeDriverManager.getInstance().setup();
-        driver = new ChromeDriver();
-        driver.get("https://www.google.co.uk");
+        DRIVER_FACTORY.setBrowser("chrome");
+        goTo("https://www.google.co.uk");
         sikuliXFactory = new SikuliXFactory("search-field.png");
     }
 
     @After
     public void tearDown() throws Exception {
-        driver.quit();
+        context().tearDownContexts();
     }
 
     @Test
@@ -109,7 +107,7 @@ public class SikuliXFactoryTest {
     @Test
     public void findImageByScrolling() throws Exception {
 
-        driver.get("https://www.rightmove.co.uk");
+       goTo("https://www.rightmove.co.uk");
         sikuliXFactory.findImageByScrolling("rm-select.png", 15, SikuliXFactory.Directions.BELOW);
 
     }

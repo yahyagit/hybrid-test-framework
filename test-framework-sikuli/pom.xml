@@ -11,6 +11,8 @@
     </parent>
 
     <artifactId>test-framework-sikuli</artifactId>
+    <name>sikulix</name>
+    <description>SikuliX implementation</description>
 
     <build>
         <plugins>

@@ -13,16 +13,20 @@ import java.util.List;
  * CSV File Parser
  *
  * @author Atanas Kanchev
+ * @version 1.0
  */
 public final class CSVParser {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private String csvFilePath;
     private CSVReader reader;
 
+    /**
+     * <p>Constructor for CSVParser.</p>
+     *
+     * @param csvFilePath a {@link java.lang.String} object.
+     */
     public CSVParser(String csvFilePath) {
-        this.csvFilePath = csvFilePath;
         try {
             this.reader = new CSVReader(new FileReader(csvFilePath), ',', '"', 0);
         } catch (FileNotFoundException e) {

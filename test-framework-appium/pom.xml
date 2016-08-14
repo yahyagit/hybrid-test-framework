@@ -11,7 +11,7 @@
 
     <artifactId>test-framework-appium</artifactId>
     <name>appium</name>
-    <description>Test Framework Appium Implementation</description>
+    <description>Appium Implementation</description>
 
     <dependencies>
         <dependency>

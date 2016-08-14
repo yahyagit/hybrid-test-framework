@@ -14,6 +14,12 @@ import java.util.concurrent.TimeUnit;
 import static com.atanas.kanchev.testframework.selenium.driverfactory.DriverType.valueOf;
 import static org.openqa.selenium.Proxy.ProxyType.MANUAL;
 
+/**
+ * <p>DriverFactory class.</p>
+ *
+ * @author atanas
+ * @version 1.0
+ */
 public class DriverFactory extends DriverConfig{
 
     // the logger
@@ -21,6 +27,11 @@ public class DriverFactory extends DriverConfig{
     private DriverType selectedDriverType;
     private Proxy proxy;
 
+    /**
+     * <p>getDriver.</p>
+     *
+     * @return a {@link org.openqa.selenium.WebDriver} object.
+     */
     public WebDriver getDriver() {
         this.selectedDriverType = determineEffectiveDriverType();
         return instantiateWebDriver(selectedDriverType.getDesiredCapabilities(proxy));

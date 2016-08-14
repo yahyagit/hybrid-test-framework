@@ -15,7 +15,10 @@ import static java.nio.file.FileVisitResult.CONTINUE;
 import static java.nio.file.FileVisitResult.TERMINATE;
 
 /**
+ * <p>ImageFinder class.</p>
+ *
  * @author Atanas Ksnchev
+ * @version $Id: $Id
  */
 public final class ImageFinder extends SimpleFileVisitor<Path> {
 
@@ -26,6 +29,11 @@ public final class ImageFinder extends SimpleFileVisitor<Path> {
     private final String pattern;
     private File file;
 
+    /**
+     * <p>Constructor for ImageFinder.</p>
+     *
+     * @param pattern a {@link java.lang.String} object.
+     */
     public ImageFinder(String pattern) {
         this.matcher = FileSystems.getDefault().getPathMatcher("glob:" + pattern);
         this.pattern = pattern;
@@ -43,6 +51,7 @@ public final class ImageFinder extends SimpleFileVisitor<Path> {
     }
 
     // Invoke the pattern matching    method on each file.
+    /** {@inheritDoc} */
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
         boolean isFound = find(file);
@@ -53,17 +62,25 @@ public final class ImageFinder extends SimpleFileVisitor<Path> {
     }
 
     // Invoke the pattern matching method on each directory.
+    /** {@inheritDoc} */
     @Override
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
         find(dir);
         return CONTINUE;
     }
 
+    /** {@inheritDoc} */
     @Override
     public FileVisitResult visitFileFailed(Path file, IOException exc) {
         return TERMINATE;
     }
 
+    /**
+     * <p>Getter for the field <code>file</code>.</p>
+     *
+     * @return a {@link java.io.File} object.
+     * @throws java.io.IOException if any.
+     */
     public File getFile() throws IOException {
 
         Path startingDir = Paths.get(System.getProperty("user.dir"));

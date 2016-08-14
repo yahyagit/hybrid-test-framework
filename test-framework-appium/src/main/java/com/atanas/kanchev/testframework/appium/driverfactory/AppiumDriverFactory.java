@@ -12,8 +12,10 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.net.URL;
 
 /**
+ * <p>AppiumDriverFactory class.</p>
+ *
  * @author Atanas Kanchev
- *         Appium Driver Factory
+ * @version 1.0
  */
 public class AppiumDriverFactory extends AppiumLocalServiceBuilder implements IContext {
 
@@ -26,21 +28,37 @@ public class AppiumDriverFactory extends AppiumLocalServiceBuilder implements IC
      *                        Android compatibility {@link io.appium.java_client.remote.AndroidMobileCapabilityType}
      *                        IOS compatibility {@link io.appium.java_client.remote.IOSMobileCapabilityType}
      *                        Appium server capabilities {@link io.appium.java_client.remote.MobileCapabilityType}
-     * @param capabilityValue Compatibility value
+     * @param capabilityValue a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.appium.driverfactory.AppiumDriverFactory} object.
      */
     public AppiumDriverFactory setCap(final String capabilityType, final Object capabilityValue) {
         caps.setCapability(capabilityType, capabilityValue);
         return this;
     }
 
+    /**
+     * <p>Getter for the field <code>caps</code>.</p>
+     *
+     * @return a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
+     */
     public DesiredCapabilities getCaps() {
         return caps;
     }
 
+    /**
+     * <p>getIOSDriver.</p>
+     *
+     * @return a {@link io.appium.java_client.ios.IOSDriver} object.
+     */
     public IOSDriver<IOSElement> getIOSDriver() {
         return new IOSDriver<>(service, caps);
     }
 
+    /**
+     * <p>getAndroidDriver.</p>
+     *
+     * @return a {@link io.appium.java_client.android.AndroidDriver} object.
+     */
     public AndroidDriver<AndroidElement> getAndroidDriver() {
 
         AndroidDriver<AndroidElement> driver = null;
@@ -54,6 +72,12 @@ public class AppiumDriverFactory extends AppiumLocalServiceBuilder implements IC
         return driver;
     }
 
+    /**
+     * <p>getAndroidDriverVanilla.</p>
+     *
+     * @param node a {@link java.net.URL} object.
+     * @return a {@link io.appium.java_client.android.AndroidDriver} object.
+     */
     public AndroidDriver getAndroidDriverVanilla(URL node) {
         return new AndroidDriver(node, this.caps);
     }

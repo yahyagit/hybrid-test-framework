@@ -10,8 +10,10 @@ import org.apache.commons.lang3.SystemUtils;
 import java.io.File;
 
 /**
+ * <p>AppiumLocalServiceBuilder class.</p>
+ *
  * @author Atanas Kanchev
- *         Appium Local Service Builder
+ * @version 1.0
  */
 public class AppiumLocalServiceBuilder {
 
@@ -29,12 +31,19 @@ public class AppiumLocalServiceBuilder {
     private static final String APPIUM_JS_EXECUTABLE_LINUX =
             PropertyReader.getProp("appium.properties", "appium.js.executable.linux");
 
+    /**
+     * <p>configureService.</p>
+     *
+     * @return a {@link io.appium.java_client.service.local.AppiumServiceBuilder} object.
+     */
     public AppiumServiceBuilder configureService() {
         return builder;
     }
 
     /**
      * Build default Appium local service
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.driverfactory.AppiumLocalServiceBuilder} object.
      */
     public AppiumLocalServiceBuilder buildDefaultService() {
 
@@ -72,6 +81,11 @@ public class AppiumLocalServiceBuilder {
         return this;
     }
 
+    /**
+     * <p>startServer.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.driverfactory.AppiumLocalServiceBuilder} object.
+     */
     public AppiumLocalServiceBuilder startServer() {
 
         if (service != null) {
@@ -84,6 +98,11 @@ public class AppiumLocalServiceBuilder {
         return this;
     }
 
+    /**
+     * <p>stopServer.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.appium.driverfactory.AppiumLocalServiceBuilder} object.
+     */
     public AppiumLocalServiceBuilder stopServer() {
         System.out.println("\t\t\t\t> > > Stopping Appium Server < < <");
 

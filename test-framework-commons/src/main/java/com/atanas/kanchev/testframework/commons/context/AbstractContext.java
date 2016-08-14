@@ -12,13 +12,14 @@ import java.security.SecureRandom;
  *
  * @param <T> Context type
  * @author Atanas Kanchev
+ * @version 1.0
  */
 public abstract class AbstractContext<T> implements IAbstractContext<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(AbstractContext.class);
 
-    // the com.atanas.kanchev.testframework.selenium.context name
+    // the context name
     private String contextName;
 
     private boolean isContextReusable;
@@ -28,38 +29,49 @@ public abstract class AbstractContext<T> implements IAbstractContext<T> {
 
     /**
      * Constructor
-     * Sets the value of {@link AbstractContext#contextName}
+     * Sets the value of {@link com.atanas.kanchev.testframework.commons.context.AbstractContext#contextName}
      *
      * @param contextName String
      */
     public AbstractContext(String contextName) {
         this.contextName = contextName + new BigInteger(130, new SecureRandom()).toString(32);
-        logger.debug("Setting current com.atanas.kanchev.testframework.selenium.context name to " + this.contextName);
+        logger.debug("Setting current com.atanas.kanchev.testframework.selenium.context name to "
+            + this.contextName);
     }
 
-    @Override
-    public T getDriver() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public T getDriver() {
         if (this.driver == null)
-            throw new CustomExceptions.Common.NullReferenceException("Null driver object AbstractContext#driver");
+            throw new CustomExceptions.Common.NullReferenceException(
+                "Null driver object AbstractContext#driver");
         else
             return this.driver;
     }
 
-    @Override
-    public void setDriver(T driver) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public void setDriver(T driver) {
         if (driver != null)
             this.driver = driver;
         else
-            throw new CustomExceptions.Common.NullArgumentException("Null driver instance passed as method argument");
+            throw new CustomExceptions.Common.NullArgumentException(
+                "Null driver instance passed as method argument");
     }
 
-    @Override
-    public String getContextName() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public String getContextName() {
         return contextName;
     }
 
-    @Override
-    public void setContextName(String contextName) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public void setContextName(String contextName) {
         if (contextName == null)
             throw new CustomExceptions.Common.NullArgumentException("Null argument contextName");
         if (contextName.isEmpty())
@@ -67,13 +79,17 @@ public abstract class AbstractContext<T> implements IAbstractContext<T> {
         this.contextName = contextName;
     }
 
-    @Override
-    public boolean isContextReusable() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean isContextReusable() {
         return isContextReusable;
     }
 
-    @Override
-    public void setContextReusable(boolean contextReusable) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public void setContextReusable(boolean contextReusable) {
         isContextReusable = contextReusable;
     }
 
@@ -83,41 +99,43 @@ public abstract class AbstractContext<T> implements IAbstractContext<T> {
  * Abstract Context Interface
  *
  * @param <T>
- * @author Atanas Kanchev
  */
 interface IAbstractContext<T> {
 
     /**
-     * Get driver reference
-     *
-     * @return reference of {@link AbstractContext#driver}
+     * Get the driver reference
      */
-
     T getDriver();
 
     /**
-     * Set the {@link AbstractContext#driver}
-     *
-     * @param driver T
+     * Set the {@link com.atanas.kanchev.testframework.commons.context.AbstractContext#driver}
      */
     void setDriver(T driver);
 
     /**
-     * Get com.atanas.kanchev.testframework.selenium.context name
+     * Get {@link com.atanas.kanchev.testframework.commons.context.AbstractContext#contextName}
      *
-     * @return the value of {@link AbstractContext#contextName}
+     * @return contextName a {@link java.lang.String} object.
      */
     String getContextName();
 
     /**
-     * Set the value of {@link AbstractContext#contextName}
+     * Set the value of {@link com.atanas.kanchev.testframework.commons.context.AbstractContext#contextName}
      *
-     * @param contextName String
+     * @param contextName a {@link java.lang.String} object.
      */
     void setContextName(String contextName);
 
+    /**
+     * <p>isContextReusable.</p>
+     *
+     * @return a boolean.
+     */
     boolean isContextReusable();
 
+    /**
+     * @param contextReusable a {co}
+     */
     void setContextReusable(boolean contextReusable);
 
     /**

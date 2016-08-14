@@ -6,10 +6,7 @@ import com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler;
 /**
  * @author Atanas Ksnchev
  */
-public interface IAppium extends IRefactoInit {
-}
-
-interface IRefactoInit {
+public interface IAppium {
 
     AppiumDriverFactory APPIUM_DRIVER_FACTORY = new AppiumDriverFactory();
 
@@ -20,5 +17,4 @@ interface IRefactoInit {
     default AndroidNativeHandler android() {
         return new AndroidNativeHandler();
     }
-
 }

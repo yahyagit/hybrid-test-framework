@@ -14,7 +14,10 @@ import java.io.IOException;
 import java.util.*;
 
 /**
+ * <p>DesiredCapsFactory class.</p>
+ *
  * @author Atanas Ksnchev
+ * @version 1.0
  */
 public class DesiredCapsFactory {
 
@@ -52,6 +55,11 @@ public class DesiredCapsFactory {
         return caps;
     }
 
+    /**
+     * <p>getDefaultIECaps.</p>
+     *
+     * @return a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
+     */
     public DesiredCapabilities getDefaultIECaps() {
 
         caps = DesiredCapabilities.internetExplorer();
@@ -64,6 +72,11 @@ public class DesiredCapsFactory {
         return caps;
     }
 
+    /**
+     * <p>getDefaultEdgeCaps.</p>
+     *
+     * @return a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
+     */
     public DesiredCapabilities getDefaultEdgeCaps() {
 
         caps = DesiredCapabilities.edge();
@@ -87,12 +100,23 @@ public class DesiredCapsFactory {
         return caps;
     }
 
+    /**
+     * <p>getDefaultOperaCaps.</p>
+     *
+     * @return a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
+     */
     public DesiredCapabilities getDefaultOperaCaps() {
         caps = DesiredCapabilities.operaBlink();
         logger.debug("Configured default Opera DesiredCapabilities: " + caps.toString());
         return caps;
     }
 
+    /**
+     * <p>getDefaultPhantomJSCaps.</p>
+     *
+     * @param proxySettings a {@link org.openqa.selenium.Proxy} object.
+     * @return a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
+     */
     public DesiredCapabilities getDefaultPhantomJSCaps(Proxy proxySettings) {
         caps = DesiredCapabilities.phantomjs();
         final List<String> cliArguments = new ArrayList<String>();
@@ -134,7 +158,7 @@ public class DesiredCapsFactory {
     /**
      * Merge capabilities
      *
-     * @param newCaps instance of the capabilities to be merged to the {@link DesiredCapsFactory#caps}
+     * @param newCaps instance of the capabilities to be merged to the {@link com.atanas.kanchev.testframework.selenium.driverfactory.DesiredCapsFactory#caps}
      * @return DesiredCapabilities instance
      */
     public DesiredCapabilities mergeCapabilities(DesiredCapabilities newCaps) {

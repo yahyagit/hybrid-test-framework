@@ -9,6 +9,7 @@ import java.sql.*;
  * Oracle DB Connector boilerplate
  *
  * @author Atanas Ksnchev
+ * @version 1.0
  */
 public class OracleDBConnector {
 
@@ -20,34 +21,42 @@ public class OracleDBConnector {
 
     /**
      * Constructor
-     * Sets the value of {@link OracleDBConnector#jdbcURL}
+     * Sets the value of {@link com.atanas.kanchev.testframework.dataservices.dao.OracleDBConnector#jdbcURL}
      *
-     * @param IP      Database IP address
-     * @param port    Database port
-     * @param service Service name
+     * @param IP         Database IP address
+     * @param port       Database port
+     * @param service    Service name
+     * @param dbUserName a {@link java.lang.String} object.
+     * @param dbPassword a {@link java.lang.String} object.
      */
-    public OracleDBConnector(String IP, String port, String service, String dbUserName, String dbPassword) {
-        this.jdbcURL = "jdbc:oracle:thin:@//"
-                .concat(IP)
-                .concat(":")
-                .concat(port)
-                .concat("/")
-                .concat(service);
+    public OracleDBConnector(String IP, String port, String service, String dbUserName,
+        String dbPassword) {
+        this.jdbcURL =
+            "jdbc:oracle:thin:@//".concat(IP).concat(":").concat(port).concat("/").concat(service);
         this.dbUserName = dbUserName;
         this.dbPassword = dbPassword;
     }
 
+    /**
+     * <p>queryDB.</p>
+     *
+     * @param selectQuery a {@link java.lang.String} object.
+     * @throws java.lang.ClassNotFoundException if any.
+     * @throws java.sql.SQLException            if any.
+     */
     public void queryDB(String selectQuery) throws ClassNotFoundException, SQLException {
 
         Connection connection;
 
         Class.forName("oracle.jdbc.pool.OracleConnectionPoolDataSource");
         long lStartTime = new java.util.Date().getTime(); // start time
-        logger.debug("Getting Database connection using : " + jdbcURL + " " + dbUserName + "/" + dbPassword);
+        logger.debug(
+            "Getting Database connection using : " + jdbcURL + " " + dbUserName + "/" + dbPassword);
 
         connection = DriverManager.getConnection(jdbcURL, dbUserName, dbPassword);
 
-        logger.debug("Database connection succeeded for : " + jdbcURL + " " + dbUserName + "/" + dbPassword);
+        logger.debug(
+            "Database connection succeeded for : " + jdbcURL + " " + dbUserName + "/" + dbPassword);
 
         Statement statement = connection.createStatement();
 
