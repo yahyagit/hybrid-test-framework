@@ -47,7 +47,7 @@ public class APIResourceContext extends AbstractContext {
     /**
      * Sets resource {@link APIResourceContext#resource}.
      *
-     * @param resource the resource {@code com.atanas.kanchev.testframework.dataservices.api.factory.Resource}
+     * @param resource the resource {@code com.atanas.kanchev.testframework.dataservices.apiResource.factory.Resource}
      * @return the resource
      */
     public APIResourceContext setResource(Resource resource) {

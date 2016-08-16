@@ -2,6 +2,7 @@ package com.atanas.kanchev.testframework.dataservices.tests.api;
 
 import com.atanas.kanchev.testframework.commons.properties.PropertyReader;
 import com.atanas.kanchev.testframework.dataservices.api.factory.Resource;
+import com.mashape.unirest.http.HttpMethod;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -24,7 +25,7 @@ public class JSONPlaceholderPutResource extends Resource {
     }
 
     public JSONPlaceholderPutResource(URL url, String endpoint) {
-        super(HttpMethodsEnum.PUT);
+        super(HttpMethod.PUT);
         super.url.append(url);
         super.endpoint.append(endpoint);
     }

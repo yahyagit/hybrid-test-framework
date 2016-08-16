@@ -56,7 +56,6 @@
             <groupId>com.atanas.kanchev</groupId>
             <artifactId>test-framework-commons</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

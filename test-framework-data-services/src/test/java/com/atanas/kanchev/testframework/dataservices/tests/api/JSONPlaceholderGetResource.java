@@ -2,6 +2,7 @@ package com.atanas.kanchev.testframework.dataservices.tests.api;
 
 import com.atanas.kanchev.testframework.commons.properties.PropertyReader;
 import com.atanas.kanchev.testframework.dataservices.api.factory.Resource;
+import com.mashape.unirest.http.HttpMethod;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -12,7 +13,8 @@ import java.net.URL;
 public class JSONPlaceholderGetResource extends Resource {
 
     public JSONPlaceholderGetResource() throws MalformedURLException {
-        this(new URL(PropertyReader.getProp("test.env.properties", "root")), PropertyReader.getProp("endpoints.properties", "get"));
+        this(new URL(PropertyReader.getProp("test.env.properties", "root")),
+            PropertyReader.getProp("endpoints.properties", "get"));
     }
 
     public JSONPlaceholderGetResource(URL url) {
@@ -24,7 +26,7 @@ public class JSONPlaceholderGetResource extends Resource {
     }
 
     public JSONPlaceholderGetResource(URL url, String endpoint) {
-        super(HttpMethodsEnum.GET);
+        super(HttpMethod.GET);
         super.url.append(url);
         super.endpoint.append(endpoint);
     }

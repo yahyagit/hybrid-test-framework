@@ -1,59 +1,60 @@
 package com.atanas.kanchev.testframework.dataservices.tests.api;
 
+import com.atanas.kanchev.testframework.dataservices.wrappers.IAPIResource;
 import com.google.gson.JsonObject;
 import org.jglue.fluentjson.JsonBuilderFactory;
+import org.junit.After;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-
 /**
  * Created by atanas on 15/08/16.
  */
-public class APITest {
+public class APITest implements IAPIResource {
 
-    @Test
-    public void showingResource_GET_Test() throws Exception {
+    @After public void tearDown() throws Exception {
+        context().tearDownContexts();
+    }
 
-        JSONPlaceholderGetResource resource = new JSONPlaceholderGetResource();
-        resource.exec();
+    @Test public void showingResource_GET_Test() throws Exception {
 
-        assertThat(resource.getResponse().getStatusCode(), equalTo(200));
-        assertThat(resource.getResponse().getReason(), equalTo("OK"));
+        apiResource(new JSONPlaceholderGetResource()).exec();
+
+        assertThat(apiResource().getResponse().getStatusCode(), equalTo(200));
+        assertThat(apiResource().getResponse().getReason(), equalTo("OK"));
 
     }
 
-    @Test
-    public void listingResources_GET_Test() throws Exception {
+    @Test public void listingResources_GET_Test() throws Exception {
 
-        JSONPlaceholderGetResource resource = new JSONPlaceholderGetResource("/posts");
-        resource.appendToEndpoint("/1");
-        resource.exec();
+        apiResource(new JSONPlaceholderGetResource("/posts"));
+        apiResource().appendToEndpoint("/1").exec();
 
-        assertThat(resource.getResponse().getStatusCode(), equalTo(200));
-        assertThat(resource.getResponse().getReason(), equalTo("OK"));
+        assertThat(apiResource().getResponse().getStatusCode(), equalTo(200));
+        assertThat(apiResource().getResponse().getReason(), equalTo("OK"));
 
     }
 
-    @Test
-    public void putTest() throws Exception {
+    @Test public void putTest() throws Exception {
 
-        JsonObject jsonObject = JsonBuilderFactory.buildObject()
+        JsonObject jsonObject =
+            JsonBuilderFactory.buildObject()
                 .addObject("data")
                 .add("title", "foo")
                 .add("body", "bar")
                 .add("userID", 1)
                 .getJson();
 
-        JSONPlaceholderPutResource resource = new JSONPlaceholderPutResource();
+        apiResource(new JSONPlaceholderPutResource())
+            .getRequest()
+            .setBody(jsonObject.toString());
 
-        resource.getRequest().setBody(jsonObject.toString());
-        resource.appendToEndpoint("/2");
-        resource.exec();
+        apiResource().appendToEndpoint("/2").exec();
 
-        assertThat(resource.getResponse().getStatusCode(), equalTo(200));
-        assertThat(resource.getResponse().getReason(), equalTo("OK"));
+        assertThat(apiResource().getResponse().getStatusCode(), equalTo(200));
+        assertThat(apiResource().getResponse().getReason(), equalTo("OK"));
 
     }
 }

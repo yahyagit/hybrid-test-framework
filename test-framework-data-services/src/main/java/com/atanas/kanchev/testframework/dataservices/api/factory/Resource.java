@@ -7,12 +7,14 @@ import com.mashape.unirest.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.atanas.kanchev.testframework.dataservices.api.factory.Executor.*;
+
 /**
  * The type Resource.
  *
  * @author Atanas Kanchev
  */
-public class Resource extends Executor implements IContext {
+public class Resource implements IContext {
 
     private static final Logger logger = LoggerFactory.getLogger(Resource.class);
 
@@ -120,7 +122,7 @@ public class Resource extends Executor implements IContext {
                 response = DELETE(url.toString(), getRequest().getHeaders(), getRequest().getBody());
                 break;
             default:
-                throw new RuntimeException(" implement me " + httpMethod);
+                throw new RuntimeException("Implement me " + httpMethod);
         }
         if (response != null) {
             setRespStatus(response);
