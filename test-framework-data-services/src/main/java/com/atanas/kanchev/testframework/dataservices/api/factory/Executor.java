@@ -218,7 +218,6 @@ public class Executor {
         } catch (UnirestException e) {
             logger.error("Unirest exception ", e);
         }
-        shutdown();
 
         return null;
     }
@@ -227,7 +226,7 @@ public class Executor {
      * Close the asynchronous client and its event loop.
      * Use this method to close all the threads and allow an application to exit.
      */
-    private static void shutdown() {
+    public static void shutdown() {
         try {
             Unirest.shutdown();
         } catch (IOException e) {
