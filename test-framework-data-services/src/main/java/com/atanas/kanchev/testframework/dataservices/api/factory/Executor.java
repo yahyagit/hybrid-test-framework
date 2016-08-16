@@ -1,8 +1,12 @@
 package com.atanas.kanchev.testframework.dataservices.api.factory;
 
+import com.mashape.unirest.http.HttpMethod;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.request.GetRequest;
+import com.mashape.unirest.request.HttpRequest;
+import com.mashape.unirest.request.HttpRequestWithBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
@@ -24,9 +28,183 @@ public class Executor {
     private static HttpClientBuilder httpClientBuilder;
 
     /**
-     * Instantiates a new executor.
+     * Configure http client.
+     *
+     * @return the http client builder {@link HttpClientBuilder}
      */
-    public Executor() {
+    public static HttpClientBuilder confClient() {
+
+        return httpClientBuilder = HttpClients.custom();
+    }
+
+    /**
+     * GET http rest request.
+     *
+     * @param endpoint the endpoint {@code java.lang.String}
+     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     */
+    public static HttpResponse<String> GET(String endpoint) {
+
+        return GET(endpoint, null);
+    }
+
+    /**
+     * GET http rest request.
+     *
+     * @param endpoint the endpoint {@code java.lang.String}
+     * @param headers  the headers {@code java.util.HashMap}
+     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     */
+    public static HttpResponse<String> GET(String endpoint, HashMap<String, String> headers) {
+
+        return exec(HttpMethod.GET, endpoint, headers, null);
+    }
+
+    /**
+     * POST http rest request.
+     *
+     * @param endpoint the endpoint {@code java.lang.String}
+     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     */
+    public static HttpResponse<String> POST(String endpoint) {
+
+        return POST(endpoint, null, null);
+    }
+
+    /**
+     * POST http rest request.
+     *
+     * @param endpoint the endpoint {@code java.lang.String}
+     * @param payload  the payload {@code java.lang.String}
+     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     */
+    public static HttpResponse<String> POST(String endpoint, String payload) {
+
+        return POST(endpoint, null, payload);
+    }
+
+    /**
+     * POST http rest request.
+     *
+     * @param endpoint the endpoint {@code java.lang.String}
+     * @param headers  the headers {@code java.util.HashMap}
+     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     */
+    public static HttpResponse<String> POST(String endpoint, HashMap<String, String> headers) {
+
+        return POST(endpoint, headers, null);
+    }
+
+    /**
+     * POST http rest request with headers and a payload.
+     *
+     * @param endpoint the endpoint {@code java.lang.String}
+     * @param headers  the headers {@code java.util.HashMap}
+     * @param payload  the payload {@code java.lang.String}
+     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     */
+    public static HttpResponse<String> POST(String endpoint, HashMap<String, String> headers, String payload) {
+
+        return exec(HttpMethod.POST, endpoint, headers, payload);
+    }
+
+    /**
+     * PUT http rest request.
+     *
+     * @param endpoint the endpoint {@code java.lang.String}
+     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     */
+    public static HttpResponse<String> PUT(String endpoint) {
+
+        return PUT(endpoint, null, null);
+    }
+
+    /**
+     * PUT http rest request.
+     *
+     * @param endpoint the endpoint {@code java.lang.String}
+     * @param payload  the payload {@code java.lang.String}
+     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     */
+    public static HttpResponse<String> PUT(String endpoint, String payload) {
+
+        return PUT(endpoint, null, payload);
+    }
+
+    /**
+     * PUT http rest request.
+     *
+     * @param endpoint the endpoint {@code java.lang.String}
+     * @param headers  the headers {@code java.util.HashMap}
+     * @param payload  the payload {@code java.lang.String}
+     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     */
+    public static HttpResponse<String> PUT(String endpoint, HashMap<String, String> headers, String payload) {
+
+        return exec(HttpMethod.PUT, endpoint, headers, payload);
+    }
+
+    /**
+     * DELETE http rest request.
+     *
+     * @param endpoint the endpoint {@code java.lang.String}
+     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     */
+    public static HttpResponse<String> DELETE(String endpoint) {
+
+        return DELETE(endpoint, null, null);
+    }
+
+    /**
+     * DELETE http rest request.
+     *
+     * @param endpoint the endpoint {@code java.lang.String}
+     * @param payload  the payload {@code java.lang.String}
+     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     */
+    public static HttpResponse<String> DELETE(String endpoint, String payload) {
+
+        return DELETE(endpoint, null, payload);
+    }
+
+    /**
+     * DELETE http rest request.
+     *
+     * @param endpoint the endpoint {@code java.lang.String}
+     * @param headers  the headers {@code java.util.HashMap}
+     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     */
+    public static HttpResponse<String> DELETE(String endpoint, HashMap<String, String> headers) {
+
+        return DELETE(endpoint, headers, null);
+    }
+
+    /**
+     * DELETE http rest request.
+     *
+     * @param endpoint the endpoint {@code java.lang.String}
+     * @param headers  the headers {@code java.util.HashMap}
+     * @param payload  the payload {@code java.lang.String}
+     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     */
+    public static HttpResponse<String> DELETE(String endpoint, HashMap<String, String> headers, String payload) {
+
+        return exec(HttpMethod.DELETE, endpoint, headers, payload);
+    }
+
+    private static HttpResponse<String> exec(HttpMethod httpMethod, String endpoint, HashMap<String, String> headers, String payload) {
+
+        HttpRequest req;
+
+        if (httpMethod == HttpMethod.GET)
+            req = new GetRequest(httpMethod, endpoint);
+        else
+            req = new HttpRequestWithBody(httpMethod, endpoint);
+        if (headers != null)
+            req.headers(headers);
+        if (payload != null)
+            ((HttpRequestWithBody) req).body(payload);
+
 
         if (httpClientBuilder == null)
             httpClientBuilder = HttpClients.custom()
@@ -34,203 +212,14 @@ public class Executor {
 
         CloseableHttpClient httpClient = httpClientBuilder.build();
         Unirest.setHttpClient(httpClient);
-    }
 
-    /**
-     * Configure http client.
-     *
-     * @return the http client builder
-     */
-    public static HttpClientBuilder confClient() {
-        return httpClientBuilder = HttpClients.custom();
-    }
-
-    /**
-     * GET http rest request.
-     *
-     * @param endpoint the endpoint
-     * @return the http response
-     */
-    public static HttpResponse<String> GET(String endpoint) {
         try {
-            return Unirest.get(endpoint).asString();
+            return req.asString();
         } catch (UnirestException e) {
             logger.error("Unirest exception ", e);
         }
         shutdown();
-        return null;
-    }
 
-    /**
-     * GET http rest request.
-     *
-     * @param endpoint the endpoint
-     * @param headers  the headers
-     * @return the http response
-     */
-    public static HttpResponse<String> GET(String endpoint, HashMap<String, String> headers) {
-        try {
-            return Unirest.get(endpoint)
-                    .headers(headers)
-                    .asString();
-        } catch (UnirestException e) {
-            logger.error("Unirest exception ", e);
-        }
-        shutdown();
-        return null;
-    }
-
-    /**
-     * POST http rest request.
-     *
-     * @param endpoint the endpoint
-     * @param payload  the payload
-     * @return the http response
-     */
-    public static HttpResponse<String> POST(String endpoint, String payload) {
-        try {
-            return Unirest.post(endpoint)
-                    .body(payload)
-                    .asString();
-        } catch (UnirestException e) {
-            logger.error("Unirest exception ", e);
-        }
-        shutdown();
-        return null;
-    }
-
-    /**
-     * POST http rest request.
-     *
-     * @param endpoint the endpoint
-     * @param headers  the headers
-     * @return the http response
-     */
-    public static HttpResponse<String> POST(String endpoint, HashMap<String, String> headers) {
-        try {
-            return Unirest.post(endpoint)
-                    .headers(headers)
-                    .asString();
-        } catch (UnirestException e) {
-            logger.error("Unirest exception ", e);
-        }
-        shutdown();
-        return null;
-    }
-
-    /**
-     * POST http rest request.
-     *
-     * @param endpoint the endpoint
-     * @param headers  the headers
-     * @param payload  the payload
-     * @return the http response
-     */
-    public static HttpResponse<String> POST(String endpoint, HashMap<String, String> headers, String payload) {
-        try {
-            return Unirest.post(endpoint).headers(headers)
-                    .body(payload)
-                    .asString();
-        } catch (UnirestException e) {
-            logger.error("Unirest exception ", e);
-        }
-        shutdown();
-        return null;
-    }
-
-    /**
-     * POST http rest request.
-     *
-     * @param endpoint the endpoint
-     * @return the http response
-     */
-    public static HttpResponse<String> POST(String endpoint) {
-        try {
-            return Unirest.post(endpoint)
-                    .asString();
-
-        } catch (Exception e) {
-            logger.error("Unirest exception ", e);
-        }
-        shutdown();
-        return null;
-    }
-
-    /**
-     * PUT http rest request.
-     *
-     * @param endpoint the endpoint
-     * @param payload  the payload
-     * @return the http response
-     */
-    public static HttpResponse<String> PUT(String endpoint, String payload) {
-        try {
-            return Unirest.put(endpoint)
-                    .body(payload)
-                    .asString();
-        } catch (UnirestException e) {
-            logger.error("Unirest exception ", e);
-        }
-        shutdown();
-        return null;
-    }
-
-    /**
-     * PUT http rest request.
-     *
-     * @param endpoint the endpoint
-     * @param headers  the headers
-     * @param payload  the payload
-     * @return the http response
-     */
-    public static HttpResponse<String> PUT(String endpoint, HashMap<String, String> headers, String payload) {
-        try {
-            return Unirest.put(endpoint)
-                    .headers(headers)
-                    .body(payload)
-                    .asString();
-        } catch (UnirestException e) {
-            logger.error("Unirest exception ", e);
-        }
-        shutdown();
-        return null;
-    }
-
-    /**
-     * PUT http rest request.
-     *
-     * @param endpoint the endpoint
-     * @return the http response
-     */
-    public static HttpResponse<String> PUT(String endpoint) {
-        try {
-            return Unirest.put(endpoint)
-                    .asString();
-        } catch (UnirestException e) {
-            logger.error("Unirest exception ", e);
-        }
-        shutdown();
-        return null;
-    }
-
-    /**
-     * DELETE http rest request.
-     *
-     * @param endpoint the endpoint
-     * @param headers  the headers
-     * @param payload  the payload
-     * @return the http response
-     */
-    public static HttpResponse<String> DELETE(String endpoint, HashMap<String, String> headers, String payload) {
-        try {
-            return Unirest.delete(endpoint)
-                    .headers(headers)
-                    .body(payload)
-                    .asString();
-        } catch (UnirestException e) {
-            logger.error("Unirest exception ", e);
-        }
-        shutdown();
         return null;
     }
 
