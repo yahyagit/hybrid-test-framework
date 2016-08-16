@@ -1,5 +1,8 @@
 package com.atanas.kanchev.testframework.dataservices.api.factory;
 
+import com.atanas.kanchev.testframework.commons.wrappers.IContext;
+import com.atanas.kanchev.testframework.dataservices.context.APIResourceContext;
+import com.mashape.unirest.http.HttpMethod;
 import com.mashape.unirest.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Atanas Kanchev
  */
-public class Resource extends Executor {
+public class Resource extends Executor implements IContext {
 
     private static final Logger logger = LoggerFactory.getLogger(Resource.class);
 
@@ -19,18 +22,20 @@ public class Resource extends Executor {
     private Request request;
     private Response response;
 
-    private HttpMethodsEnum methodEnum;
+    private HttpMethod httpMethod;
 
     /**
      * Instantiates a new Resource.
      *
-     * @param methodEnum the http method type {@link HttpMethodsEnum}
+     * @param httpMethod the http method type {@code com.mashape.unirest.http.HttpMethod}
      */
-    public Resource(HttpMethodsEnum methodEnum) {
+    public Resource(HttpMethod httpMethod) {
 
-        this.methodEnum = methodEnum;
+        this.httpMethod = httpMethod;
         this.request = new Request();
         this.response = new Response();
+        APIResourceContext apiResourceContext = new APIResourceContext(this);
+        context().addContext(apiResourceContext);
 
     }
 
@@ -100,8 +105,8 @@ public class Resource extends Executor {
         logger.debug("> Request cookies: " + getRequest().getCookies());
         logger.debug("> Request body: " + getRequest().getBody());
 
-        HttpResponse<String> response = null;
-        switch (methodEnum) {
+        HttpResponse<String> response;
+        switch (httpMethod) {
             case GET:
                 response = GET(url.toString(), getRequest().getHeaders());
                 break;
@@ -114,6 +119,8 @@ public class Resource extends Executor {
             case DELETE:
                 response = DELETE(url.toString(), getRequest().getHeaders(), getRequest().getBody());
                 break;
+            default:
+                throw new RuntimeException(" implement me " + httpMethod);
         }
         if (response != null) {
             setRespStatus(response);
@@ -139,17 +146,5 @@ public class Resource extends Executor {
             this.response.setBody(response.getBody());
         }
         logger.debug("> Response body: " + this.response.getBody());
-    }
-
-    /**
-     * The enum http method types.
-     */
-    protected enum HttpMethodsEnum {
-
-        GET,
-        POST,
-        PUT,
-        DELETE
-
     }
 }
