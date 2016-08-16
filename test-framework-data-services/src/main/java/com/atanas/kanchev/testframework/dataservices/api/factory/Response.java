@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.dataservices.api.message;
+package com.atanas.kanchev.testframework.dataservices.api.factory;
 
 /**
  * The type Response.

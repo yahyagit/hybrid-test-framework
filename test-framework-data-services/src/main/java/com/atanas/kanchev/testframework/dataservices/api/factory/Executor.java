@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.dataservices.api.connector;
+package com.atanas.kanchev.testframework.dataservices.api.factory;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -18,15 +18,15 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Atanas Kanchev
  */
-public class APIExecutor {
+public class Executor {
 
-    private static final Logger logger = LoggerFactory.getLogger(APIExecutor.class);
+    private static final Logger logger = LoggerFactory.getLogger(Executor.class);
     private static HttpClientBuilder httpClientBuilder;
 
     /**
-     * Instantiates a new Api connector.
+     * Instantiates a new executor.
      */
-    public APIExecutor() {
+    public Executor() {
 
         if (httpClientBuilder == null)
             httpClientBuilder = HttpClients.custom()

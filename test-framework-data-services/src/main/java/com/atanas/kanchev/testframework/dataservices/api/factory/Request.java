@@ -1,4 +1,4 @@
-package com.atanas.kanchev.testframework.dataservices.api.message;
+package com.atanas.kanchev.testframework.dataservices.api.factory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

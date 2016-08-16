@@ -1,7 +1,7 @@
 package com.atanas.kanchev.testframework.dataservices.tests.api;
 
 import com.atanas.kanchev.testframework.commons.properties.PropertyReader;
-import com.atanas.kanchev.testframework.dataservices.api.message.Resource;
+import com.atanas.kanchev.testframework.dataservices.api.factory.Resource;
 
 /**
  * Created by atanas on 15/08/16.

@@ -1,6 +1,5 @@
-package com.atanas.kanchev.testframework.dataservices.api.message;
+package com.atanas.kanchev.testframework.dataservices.api.factory;
 
-import com.atanas.kanchev.testframework.dataservices.api.connector.APIExecutor;
 import com.mashape.unirest.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +9,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Atanas Kanchev
  */
-public class Resource extends APIExecutor {
+public class Resource extends Executor {
 
     private static final Logger logger = LoggerFactory.getLogger(Resource.class);
 
