@@ -34,6 +34,8 @@ public class Resource extends Executor {
 
     }
 
+    // GETTERS //
+
     /**
      * Gets request
      *
@@ -55,6 +57,12 @@ public class Resource extends Executor {
         return this.response;
     }
 
+    public String getEndpoint() {
+        return endpoint.toString();
+    }
+
+    // SETTERS //
+
     /**
      * Sets request {@link Resource#request}.
      *
@@ -63,6 +71,19 @@ public class Resource extends Executor {
     public Resource setRequest(Request request) {
 
         this.request = request;
+
+        return this;
+    }
+
+    /**
+     * Append to {@link Resource#endpoint}
+     *
+     * @param append {@code java.lang.String}
+     * @return this
+     */
+    public Resource appendToEndpoint(String append) {
+
+        this.endpoint.append(append);
 
         return this;
     }
@@ -85,10 +106,7 @@ public class Resource extends Executor {
                 response = GET(url.toString(), getRequest().getHeaders());
                 break;
             case POST:
-                if (getRequest().getBody() == null)
-                    response = POST(url.toString(), getRequest().getHeaders());
-                else
-                    response = POST(url.toString(), getRequest().getHeaders(), getRequest().getBody());
+                response = POST(url.toString(), getRequest().getHeaders(), getRequest().getBody());
                 break;
             case PUT:
                 response = PUT(url.toString(), getRequest().getHeaders(), getRequest().getBody());
