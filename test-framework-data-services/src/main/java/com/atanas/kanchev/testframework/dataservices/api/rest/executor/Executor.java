@@ -1,17 +1,14 @@
 /*
  * Copyright 2016 Atanas Stoychev Kanchev
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package com.atanas.kanchev.testframework.dataservices.api.rest.executor;
@@ -34,7 +31,7 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
- * The type Api executor.
+ * <p>Executor class.</p>
  *
  * @author Atanas Kanchev
  */
@@ -44,9 +41,9 @@ public class Executor {
     static HttpClientBuilder httpClientBuilder;
 
     /**
-     * Configure http client.
+     * <p>Configure custom cClient.</p>
      *
-     * @return the http client builder {@link HttpClientBuilder}
+     * @return a {@link org.apache.http.impl.client.HttpClientBuilder} object.
      */
     public static HttpClientBuilder confClient() {
 
@@ -54,10 +51,10 @@ public class Executor {
     }
 
     /**
-     * GET http rest request.
+     * <p>GET.</p>
      *
-     * @param endpoint the endpoint {@code java.lang.String}
-     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     * @param endpoint a {@link java.lang.String} object.
+     * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
     public HttpResponse<String> GET(String endpoint) {
 
@@ -65,11 +62,11 @@ public class Executor {
     }
 
     /**
-     * GET http rest request.
+     * <p>GET.</p>
      *
-     * @param endpoint the endpoint {@code java.lang.String}
-     * @param headers  the headers {@code java.util.HashMap}
-     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     * @param endpoint a {@link java.lang.String} object.
+     * @param headers  a {@link java.util.HashMap} object.
+     * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
     public HttpResponse<String> GET(String endpoint, HashMap<String, String> headers) {
 
@@ -77,10 +74,10 @@ public class Executor {
     }
 
     /**
-     * POST http rest request.
+     * <p>POST.</p>
      *
-     * @param endpoint the endpoint {@code java.lang.String}
-     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     * @param endpoint a {@link java.lang.String} object.
+     * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
     public HttpResponse<String> POST(String endpoint) {
 
@@ -88,11 +85,11 @@ public class Executor {
     }
 
     /**
-     * POST http rest request.
+     * <p>POST.</p>
      *
-     * @param endpoint the endpoint {@code java.lang.String}
-     * @param payload  the payload {@code java.lang.String}
-     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     * @param endpoint a {@link java.lang.String} object.
+     * @param payload  a {@link java.lang.String} object.
+     * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
     public HttpResponse<String> POST(String endpoint, String payload) {
 
@@ -100,11 +97,11 @@ public class Executor {
     }
 
     /**
-     * POST http rest request.
+     * <p>POST.</p>
      *
-     * @param endpoint the endpoint {@code java.lang.String}
-     * @param headers  the headers {@code java.util.HashMap}
-     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     * @param endpoint a {@link java.lang.String} object.
+     * @param headers  a {@link java.util.HashMap} object.
+     * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
     public HttpResponse<String> POST(String endpoint, HashMap<String, String> headers) {
 
@@ -112,23 +109,24 @@ public class Executor {
     }
 
     /**
-     * POST http rest request with headers and a payload.
+     * <p>POST.</p>
      *
-     * @param endpoint the endpoint {@code java.lang.String}
-     * @param headers  the headers {@code java.util.HashMap}
-     * @param payload  the payload {@code java.lang.String}
-     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     * @param endpoint a {@link java.lang.String} object.
+     * @param headers  a {@link java.util.HashMap} object.
+     * @param payload  a {@link java.lang.String} object.
+     * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> POST(String endpoint, HashMap<String, String> headers, String payload) {
+    public HttpResponse<String> POST(String endpoint, HashMap<String, String> headers,
+        String payload) {
 
         return exec(HttpMethod.POST, endpoint, headers, payload);
     }
 
     /**
-     * PUT http rest request.
+     * <p>PUT.</p>
      *
-     * @param endpoint the endpoint {@code java.lang.String}
-     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     * @param endpoint a {@link java.lang.String} object.
+     * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
     public HttpResponse<String> PUT(String endpoint) {
 
@@ -136,11 +134,11 @@ public class Executor {
     }
 
     /**
-     * PUT http rest request.
+     * <p>PUT.</p>
      *
-     * @param endpoint the endpoint {@code java.lang.String}
-     * @param payload  the payload {@code java.lang.String}
-     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     * @param endpoint a {@link java.lang.String} object.
+     * @param payload  a {@link java.lang.String} object.
+     * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
     public HttpResponse<String> PUT(String endpoint, String payload) {
 
@@ -148,23 +146,24 @@ public class Executor {
     }
 
     /**
-     * PUT http rest request.
+     * <p>PUT.</p>
      *
-     * @param endpoint the endpoint {@code java.lang.String}
-     * @param headers  the headers {@code java.util.HashMap}
-     * @param payload  the payload {@code java.lang.String}
-     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     * @param endpoint a {@link java.lang.String} object.
+     * @param headers  a {@link java.util.HashMap} object.
+     * @param payload  a {@link java.lang.String} object.
+     * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> PUT(String endpoint, HashMap<String, String> headers, String payload) {
+    public HttpResponse<String> PUT(String endpoint, HashMap<String, String> headers,
+        String payload) {
 
         return exec(HttpMethod.PUT, endpoint, headers, payload);
     }
 
     /**
-     * DELETE http rest request.
+     * <p>DELETE.</p>
      *
-     * @param endpoint the endpoint {@code java.lang.String}
-     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     * @param endpoint a {@link java.lang.String} object.
+     * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
     public HttpResponse<String> DELETE(String endpoint) {
 
@@ -172,11 +171,11 @@ public class Executor {
     }
 
     /**
-     * DELETE http rest request.
+     * <p>DELETE.</p>
      *
-     * @param endpoint the endpoint {@code java.lang.String}
-     * @param payload  the payload {@code java.lang.String}
-     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     * @param endpoint a {@link java.lang.String} object.
+     * @param payload  a {@link java.lang.String} object.
+     * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
     public HttpResponse<String> DELETE(String endpoint, String payload) {
 
@@ -184,11 +183,11 @@ public class Executor {
     }
 
     /**
-     * DELETE http rest request.
+     * <p>DELETE.</p>
      *
-     * @param endpoint the endpoint {@code java.lang.String}
-     * @param headers  the headers {@code java.util.HashMap}
-     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     * @param endpoint a {@link java.lang.String} object.
+     * @param headers  a {@link java.util.HashMap} object.
+     * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
     public HttpResponse<String> DELETE(String endpoint, HashMap<String, String> headers) {
 
@@ -196,19 +195,21 @@ public class Executor {
     }
 
     /**
-     * DELETE http rest request.
+     * <p>DELETE.</p>
      *
-     * @param endpoint the endpoint {@code java.lang.String}
-     * @param headers  the headers {@code java.util.HashMap}
-     * @param payload  the payload {@code java.lang.String}
-     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     * @param endpoint a {@link java.lang.String} object.
+     * @param headers  a {@link java.util.HashMap} object.
+     * @param payload  a {@link java.lang.String} object.
+     * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> DELETE(String endpoint, HashMap<String, String> headers, String payload) {
+    public HttpResponse<String> DELETE(String endpoint, HashMap<String, String> headers,
+        String payload) {
 
         return exec(HttpMethod.DELETE, endpoint, headers, payload);
     }
 
-    private static HttpResponse<String> exec(HttpMethod httpMethod, String endpoint, HashMap<String, String> headers, String payload) {
+    private static HttpResponse<String> exec(HttpMethod httpMethod, String endpoint,
+        HashMap<String, String> headers, String payload) {
 
         HttpRequest req;
 
@@ -223,8 +224,7 @@ public class Executor {
 
 
         if (httpClientBuilder == null)
-            httpClientBuilder = HttpClients.custom()
-                    .setConnectionTimeToLive(30, TimeUnit.SECONDS);
+            httpClientBuilder = HttpClients.custom().setConnectionTimeToLive(30, TimeUnit.SECONDS);
 
         CloseableHttpClient httpClient = httpClientBuilder.build();
         Unirest.setHttpClient(httpClient);
@@ -239,10 +239,9 @@ public class Executor {
     }
 
     /**
-     * Close the asynchronous client and its event loop.
-     * Use this method to close all the threads and allow an application to exit.
+     * <p>shutdown.</p>
      */
-    static void shutdown() {
+    public static void shutdown() {
         try {
             Unirest.shutdown();
         } catch (IOException e) {

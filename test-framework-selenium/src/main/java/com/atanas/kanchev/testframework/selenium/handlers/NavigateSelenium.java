@@ -1,3 +1,16 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.selenium.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
@@ -17,10 +30,9 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * Created by atanas on 02/07/2016.
+ * <p>NavigateSelenium class.</p>
  *
- * @author atanas
- * @version $Id: $Id
+ * @author Atanas Kanchev
  */
 public class NavigateSelenium implements INavigateSelenium, IContext {
 
@@ -47,9 +59,10 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         driver = (WebDriver) context().getCurrentContext().getDriver();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public INavigateSelenium getPage(URL url) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public INavigateSelenium getPage(URL url) {
         if (url == null)
             throw new CustomExceptions.Common.NullArgumentException("Null method argument: URL");
         else {
@@ -61,9 +74,10 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public NavigateSelenium getPage(String url) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public NavigateSelenium getPage(String url) {
         if (url == null)
             throw new CustomExceptions.Common.NullArgumentException("Null method argument: URL");
         else {
@@ -76,33 +90,37 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public INavigateSelenium back() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public INavigateSelenium back() {
         logger.debug("Navigating back");
         driver.navigate().back();
         return this;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public INavigateSelenium forward() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public INavigateSelenium forward() {
         logger.debug("Navigating forward");
         driver.navigate().forward();
         return this;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public INavigateSelenium refresh() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public INavigateSelenium refresh() {
         logger.debug("Refreshing page");
         driver.navigate().refresh();
         return this;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public INavigateSelenium navigateToWindowByPartialTitle(String title) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public INavigateSelenium navigateToWindowByPartialTitle(String title) {
         try {
             WebDriver popup;
             Iterator<String> windowIterator = driver.getWindowHandles().iterator();
@@ -123,9 +141,10 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public INavigateSelenium navigateToWindow(String windowIdentifier) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public INavigateSelenium navigateToWindow(String windowIdentifier) {
         try {
             driver.switchTo().window(windowIdentifier);
         } catch (NoSuchWindowException nswe) {
@@ -134,9 +153,10 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public INavigateSelenium navigateToOtherWindow() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public INavigateSelenium navigateToOtherWindow() {
         Set<String> handles = driver.getWindowHandles();
         String currentWindow = driver.getWindowHandle();
         for (String handle : handles) {
@@ -148,9 +168,10 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public INavigateSelenium navigateToActivateFrame() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public INavigateSelenium navigateToActivateFrame() {
         try {
             driver.switchTo().frame(0);
             logger.debug("Switched to Active Frame");
@@ -162,9 +183,10 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public INavigateSelenium navigateToFrameById(String id) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public INavigateSelenium navigateToFrameById(String id) {
         try {
             driver.switchTo().frame(id);
             logger.debug("Switched to Active Frame by Id");
@@ -176,9 +198,10 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public INavigateSelenium navigateToFrameBy(By by) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public INavigateSelenium navigateToFrameBy(By by) {
         try {
             driver.switchTo().frame(driver.findElement(by));
             logger.debug("Switched to Active Frame by className");
@@ -190,12 +213,13 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public INavigateSelenium waitForFrameByIdToBeAvailableAndSwitch(String frameId) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public INavigateSelenium waitForFrameByIdToBeAvailableAndSwitch(String frameId) {
         try {
             new WebDriverWait(driver, 5)
-                    .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameId));
+                .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameId));
 
         } catch (NoSuchFrameException nsfe) {
             logger.error("Unable to Switch Frame - No Such Frame");
@@ -204,17 +228,19 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public INavigateSelenium returnToDefaultWindow() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public INavigateSelenium returnToDefaultWindow() {
         driver.switchTo().defaultContent();
         return this;
     }
 
 
-    /** {@inheritDoc} */
-    @Override
-    public INavigateSelenium deleteCookies() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public INavigateSelenium deleteCookies() {
         try {
             driver.manage().deleteAllCookies();
         } catch (NoSuchWindowException nsw) {
@@ -223,9 +249,10 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public INavigateSelenium deleteCookie(String cookieName) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public INavigateSelenium deleteCookie(String cookieName) {
         try {
             driver.manage().deleteCookieNamed(cookieName);
         } catch (NoSuchWindowException nsw) {
@@ -234,9 +261,10 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public INavigateSelenium setCookie(String cookieName, String cookieValue) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public INavigateSelenium setCookie(String cookieName, String cookieValue) {
         try {
             driver.manage().addCookie(new Cookie(cookieName, cookieValue));
         } catch (NoSuchWindowException nsw) {
@@ -245,6 +273,7 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
         return this;
     }
 }
+
 
 interface INavigateSelenium extends ISelenium {
 
@@ -364,7 +393,7 @@ interface INavigateSelenium extends ISelenium {
     /**
      * <p>setCookie.</p>
      *
-     * @param cookieName a {@link java.lang.String} object.
+     * @param cookieName  a {@link java.lang.String} object.
      * @param cookieValue a {@link java.lang.String} object.
      * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.INavigateSelenium} object.
      */

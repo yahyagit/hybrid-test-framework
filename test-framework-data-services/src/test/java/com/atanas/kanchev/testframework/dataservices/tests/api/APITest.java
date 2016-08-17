@@ -1,17 +1,14 @@
 /*
  * Copyright 2016 Atanas Stoychev Kanchev
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package com.atanas.kanchev.testframework.dataservices.tests.api;
@@ -25,9 +22,6 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-/**
- * Created by atanas on 15/08/16.
- */
 public class APITest implements IAPIResource {
 
     @After public void tearDown() throws Exception {
@@ -46,7 +40,7 @@ public class APITest implements IAPIResource {
     @Test public void listingResources_GET_Test() throws Exception {
 
         apiResource(new JSONPlaceholderGetResource("/posts"));
-        apiResource().appendToEndpoint("/1").exec();
+        apiResource().setEndpoint("/1").exec();
 
         assertThat(apiResource().getResponse().getStatusCode(), equalTo(200));
         assertThat(apiResource().getResponse().getReason(), equalTo("OK"));
@@ -67,7 +61,7 @@ public class APITest implements IAPIResource {
             .getRequest()
             .setBody(jsonObject.toString());
 
-        apiResource().appendToEndpoint("/2").exec();
+        apiResource().setEndpoint("/2").exec();
 
         assertThat(apiResource().getResponse().getStatusCode(), equalTo(200));
         assertThat(apiResource().getResponse().getReason(), equalTo("OK"));

@@ -1,3 +1,16 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.commons.context;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
@@ -8,10 +21,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Context Factory
+ * <p>ContextFactory class.</p>
  *
- * @author atanas
- * @version 1.0
+ * @author Atanas Kanchev
  */
 public final class ContextFactory implements IContextFactory {
 
@@ -56,8 +68,8 @@ public final class ContextFactory implements IContextFactory {
 
         if (contextMap.containsKey(context.getContextName())) {
             contextMap.remove(context.getContextName());
-            logger.debug(
-                "Removing context " + context.getContextName() + " from ContextFactory#contextMap");
+            logger.debug("Removing context " + context.getContextName() +
+                " from ContextFactory#contextMap");
             if (currentContext == context)
                 currentContext = null;
         } else {
@@ -146,9 +158,9 @@ public final class ContextFactory implements IContextFactory {
     }
 
     /**
-     * Get the contents map
+     * <p>Getter for the field <code>contextMap</code>.</p>
      *
-     * @return reference of {@link com.atanas.kanchev.testframework.commons.context.ContextFactory#contextMap}
+     * @return a {@link java.util.Map} object.
      */
     public static Map<String, AbstractContext> getContextMap() {
         return contextMap;
@@ -156,10 +168,6 @@ public final class ContextFactory implements IContextFactory {
 
 }
 
-
-/**
- * @author Atanas Ksnchev
- */
 interface IContextFactory {
 
     /**

@@ -1,3 +1,16 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.selenium.handlers;
 
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
@@ -12,22 +25,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Atanas Ksnchev
+ * <p>Interact class.</p>
+ *
+ * @author Atanas Kanchev
  */
 public class Interact implements IInteract, IContext {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Interact.class);
 
-    @Override
-    public Interact typeIn(CharSequence... keys) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Interact typeIn(CharSequence... keys) {
 
-        String tag = ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getTagName();
-        if (tag.equals(CommonPageDefinitions.HTML.INPUT.getDefinition()) ||
-                tag.equals(CommonPageDefinitions.HTML.TEXTAREA.getDefinition()) ||
-                tag.equals(CommonPageDefinitions.HTML.UIA_SECURETEXTFIELD.getDefinition()) ||
-                tag.equals(CommonPageDefinitions.HTML.UIA_TEXTFIELD.getDefinition()) ||
-                tag.equals("android.widget.EditText")) {
+        String tag =
+            ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getTagName();
+        if (tag.equals(CommonPageDefinitions.HTML.INPUT.getDefinition()) || tag
+            .equals(CommonPageDefinitions.HTML.TEXTAREA.getDefinition()) || tag
+            .equals(CommonPageDefinitions.HTML.UIA_SECURETEXTFIELD.getDefinition()) || tag
+            .equals(CommonPageDefinitions.HTML.UIA_TEXTFIELD.getDefinition()) || tag
+            .equals("android.widget.EditText")) {
             ((SeleniumContext) context().getCurrentContext()).getCurrentElement().sendKeys(keys);
         } else {
             logger.error("elementWriteable() : Cannot write to this element ");
@@ -36,15 +54,14 @@ public class Interact implements IInteract, IContext {
     }
 
     /**
-     * Clear the text or textarea. Throws an exception if the current element
-     * not an input field.
+     * {@inheritDoc}
      */
-    @Override
-    public Interact clear() {
+    @Override public Interact clear() {
         try {
             ((SeleniumContext) context().getCurrentContext()).getCurrentElement().clear();
             // Fire change event
-            ((SeleniumContext) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.BACK_SPACE);
+            ((SeleniumContext) context().getCurrentContext()).getCurrentElement()
+                .sendKeys(Keys.BACK_SPACE);
         } catch (NoSuchElementException nsee) {
             logger.error("Clear() : Element not, or within FORM, element");
         }
@@ -52,14 +69,9 @@ public class Interact implements IInteract, IContext {
     }
 
     /**
-     * If the current element is a form or has a form as parent, submit it.
-     * Otherwise throw an exception.
-     *
-     * @return true if submission successful or false if element is not, or
-     * within, a FORM
+     * {@inheritDoc}
      */
-    @Override
-    public Interact submit() {
+    @Override public Interact submit() {
         boolean submitted = false;
         try {
             ((SeleniumContext) context().getCurrentContext()).getCurrentElement().submit();
@@ -70,8 +82,10 @@ public class Interact implements IInteract, IContext {
         return this;
     }
 
-    @Override
-    public Interact click() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Interact click() {
         try {
             if (((SeleniumContext) context().getCurrentContext()).getCurrentElement() != null) {
 
@@ -91,8 +105,10 @@ public class Interact implements IInteract, IContext {
         return this;
     }
 
-    @Override
-    public Interact sleep(int duration) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Interact sleep(int duration) {
 
         try {
             Thread.sleep(duration * 1000);
@@ -104,19 +120,19 @@ public class Interact implements IInteract, IContext {
     }
 
     /**
-     * Click and hold a specific amount of time in milliseconds before release
-     *
-     * @param duration in milliseconds
-     * @return false if no Element Present
+     * {@inheritDoc}
      */
-    @Override
-    public Interact clickAndHold(int duration) {
+    @Override public Interact clickAndHold(int duration) {
         if (((SeleniumContext) context().getCurrentContext()).getCurrentElement() != null) {
             logger.debug("Click and Hold Element");
-            Actions actions = new Actions(((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver());
-            actions.clickAndHold(((SeleniumContext) context().getCurrentContext()).getCurrentElement()).perform();
+            Actions actions = new Actions(
+                ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver());
+            actions
+                .clickAndHold(((SeleniumContext) context().getCurrentContext()).getCurrentElement())
+                .perform();
             sleep(duration);
-            actions.release(((SeleniumContext) context().getCurrentContext()).getCurrentElement()).perform();
+            actions.release(((SeleniumContext) context().getCurrentContext()).getCurrentElement())
+                .perform();
 
         } else {
             logger.error("clickAndHold() : Element is Null");
@@ -125,26 +141,17 @@ public class Interact implements IInteract, IContext {
         return this;
     }
 
-    @Override
-    public Interact doubleClick() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Interact doubleClick() {
         if (((SeleniumContext) context().getCurrentContext()).getCurrentElement() != null) {
             logger.debug("Double Clicking Element");
-            Actions actions = new Actions(((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver());
-            actions.doubleClick(((SeleniumContext) context().getCurrentContext()).getCurrentElement()).perform();
-
-        } else {
-            logger.error("doubleClick() : Element is Null");
-
-        }
-        return this;
-    }
-
-    @Override
-    public Interact hover() {
-        if (((SeleniumContext) context().getCurrentContext()).getCurrentElement() != null) {
-            logger.debug("Double Clicking Element");
-            Actions actions = new Actions(((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver());
-            actions.moveToElement(((SeleniumContext) context().getCurrentContext()).getCurrentElement()).perform();
+            Actions actions = new Actions(
+                ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver());
+            actions
+                .doubleClick(((SeleniumContext) context().getCurrentContext()).getCurrentElement())
+                .perform();
 
         } else {
             logger.error("doubleClick() : Element is Null");
@@ -154,17 +161,38 @@ public class Interact implements IInteract, IContext {
     }
 
     /**
-     * Navigate the current Alert and Accept
-     *
-     * @return false if no Alert Present
+     * {@inheritDoc}
      */
-    @Override
-    public Interact handleAlert(boolean accept) {
+    @Override public Interact hover() {
+        if (((SeleniumContext) context().getCurrentContext()).getCurrentElement() != null) {
+            logger.debug("Double Clicking Element");
+            Actions actions = new Actions(
+                ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver());
+            actions.moveToElement(
+                ((SeleniumContext) context().getCurrentContext()).getCurrentElement()).perform();
+
+        } else {
+            logger.error("doubleClick() : Element is Null");
+
+        }
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Interact handleAlert(boolean accept) {
         try {
-            new WebDriverWait(((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver(), DriverConfig.DEFAULT_IMPL_WAIT).until(ExpectedConditions.alertIsPresent());
-            Alert alert = ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().switchTo().alert();
-            if (accept) alert.accept();
-            else alert.dismiss();
+            new WebDriverWait(
+                ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver(),
+                DriverConfig.DEFAULT_IMPL_WAIT).until(ExpectedConditions.alertIsPresent());
+            Alert alert =
+                ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().switchTo()
+                    .alert();
+            if (accept)
+                alert.accept();
+            else
+                alert.dismiss();
 
         } catch (NoAlertPresentException e) {
 
@@ -174,146 +202,174 @@ public class Interact implements IInteract, IContext {
     }
 
     /**
-     * Select all the text or textarea.
-     * Sends the keys Ctrl + a
+     * {@inheritDoc}
      */
-    @Override
-    public Interact selectAll() {
-        ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.chord(Keys.CONTROL, "a"));
+    @Override public Interact selectAll() {
+        ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement()
+            .sendKeys(Keys.chord(Keys.CONTROL, "a"));
         return this;
     }
 
     /**
-     * Copies the selected the text or textarea.
-     * Sends the keys Ctrl + c
+     * {@inheritDoc}
      */
-    @Override
-    public Interact copy() {
-        ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.chord(Keys.CONTROL, "c"));
+    @Override public Interact copy() {
+        ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement()
+            .sendKeys(Keys.chord(Keys.CONTROL, "c"));
         return this;
     }
 
     /**
-     * Pastes the copied the text or textarea.
-     * Sends the keys Ctrl + v
+     * {@inheritDoc}
      */
-    @Override
-    public Interact paste() {
-        ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement().sendKeys(Keys.chord(Keys.CONTROL, "v"));
+    @Override public Interact paste() {
+        ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement()
+            .sendKeys(Keys.chord(Keys.CONTROL, "v"));
         return this;
     }
 
     /**
-     * Pastes the copied the text or textarea.
-     * Sends the keys Ctrl + v
+     * {@inheritDoc}
      */
-    @Override
-    public String getCssAttribute(String attribute) {
+    @Override public String getCssAttribute(String attribute) {
 
-        return ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement().getCssValue(attribute);
+        return ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement()
+            .getCssValue(attribute);
     }
 
     /**
-     * Pastes the copied the text or textarea.
-     * Sends the keys Ctrl + v
+     * {@inheritDoc}
      */
-    @Override
-    public String getttribute(String attribute) {
+    @Override public String getttribute(String attribute) {
 
-        return ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement().getAttribute(attribute);
+        return ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement()
+            .getAttribute(attribute);
     }
 
     /**
-     * Pastes the copied the text or textarea.
-     * Sends the keys Ctrl + v
+     * {@inheritDoc}
      */
-    @Override
-    public String getText() {
+    @Override public String getText() {
 
-        return ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement().getText();
+        return ((SeleniumContext<WebDriver>) context().getCurrentContext()).getCurrentElement()
+            .getText();
     }
 
 
 }
 
-/**
- * Created by atanas on 02/07/2016.
- */
+
 interface IInteract extends ISelenium {
 
+    /**
+     * <p>typeIn.</p>
+     *
+     * @param keys a {@link java.lang.CharSequence} object.
+     * @param <T>  a T object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IInteract} object.
+     */
     <T> IInteract typeIn(CharSequence... keys);
 
     /**
-     * Clear the text or text area. Throws an exception if the current element
-     * not an input field.
+     * <p>clear.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IInteract} object.
      */
     IInteract clear();
 
     /**
-     * If the current element is a form or has a form as parent, submit it.
-     * Otherwise throw an exception.
+     * <p>submit.</p>
      *
-     * @return true if submission successful or false if element is not, or
-     * within, a FORM
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IInteract} object.
      */
     IInteract submit();
 
+    /**
+     * <p>click.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IInteract} object.
+     */
     IInteract click();
 
+    /**
+     * <p>sleep.</p>
+     *
+     * @param duration a int.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IInteract} object.
+     */
     IInteract sleep(int duration);
 
     /**
-     * Click and hold a specific amount of time in milliseconds before release
+     * <p>clickAndHold.</p>
      *
-     * @param duration in milliseconds
-     * @return false if no Element Present
+     * @param duration a int.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IInteract} object.
      */
     IInteract clickAndHold(int duration);
 
+    /**
+     * <p>doubleClick.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IInteract} object.
+     */
     IInteract doubleClick();
 
+    /**
+     * <p>hover.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IInteract} object.
+     */
     IInteract hover();
 
     /**
-     * Navigate the current Alert and Accept
+     * <p>handleAlert.</p>
      *
-     * @return false if no Alert Present
+     * @param accept a boolean.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IInteract} object.
      */
     IInteract handleAlert(boolean accept);
 
     /**
-     * Select all the text or textarea.
-     * Sends the keys Ctrl + a
+     * <p>selectAll.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IInteract} object.
      */
     IInteract selectAll();
 
     /**
-     * Copies the selected the text or textarea.
-     * Sends the keys Ctrl + c
+     * <p>copy.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IInteract} object.
      */
     IInteract copy();
 
     /**
-     * Pastes the copied the text or textarea.
-     * Sends the keys Ctrl + v
+     * <p>paste.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IInteract} object.
      */
     IInteract paste();
 
     /**
-     * Pastes the copied the text or textarea.
-     * Sends the keys Ctrl + v
+     * <p>getCssAttribute.</p>
+     *
+     * @param attribute a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
      */
     String getCssAttribute(String attribute);
 
     /**
-     * Pastes the copied the text or textarea.
-     * Sends the keys Ctrl + v
+     * <p>getttribute.</p>
+     *
+     * @param attribute a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
      */
     String getttribute(String attribute);
 
     /**
-     * Pastes the copied the text or textarea.
-     * Sends the keys Ctrl + v
+     * <p>getText.</p>
+     *
+     * @return a {@link java.lang.String} object.
      */
     String getText();
 

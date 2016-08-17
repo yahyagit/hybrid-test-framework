@@ -1,17 +1,14 @@
 /*
  * Copyright 2016 Atanas Stoychev Kanchev
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory;
@@ -19,7 +16,7 @@ package com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory;
 import java.util.HashMap;
 
 /**
- * The type Message.
+ * <p>Message class.</p>
  *
  * @author Atanas Kanchev
  */
@@ -31,18 +28,19 @@ public class Message {
     private String body;
 
     /**
-     * Gets the message body.
+     * <p>Getter for the field <code>body</code>.</p>
      *
-     * @return the body {@link Message#body}
+     * @return a {@link java.lang.String} object.
      */
     public String getBody() {
         return body;
     }
 
     /**
-     * Sets the message body {@link Message#body}.
+     * <p>Setter for the field <code>body</code>.</p>
      *
-     * @param body the body
+     * @param body a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Message} object.
      */
     public Message setBody(String body) {
 
@@ -52,27 +50,28 @@ public class Message {
     }
 
     /**
-     * Get shallow copy of {@link Message#HEADERS}
+     * <p>getHeaders.</p>
      *
-     * @return headers
+     * @return a {@link java.util.HashMap} object.
      */
     public HashMap<String, String> getHeaders() {
         return new HashMap<>(HEADERS);
     }
 
     /**
-     * Get shallow copy of {@link Message#COOKIES}
+     * <p>getCookies.</p>
      *
-     * @return cookies
+     * @return a {@link java.util.HashMap} object.
      */
     public HashMap<String, String> getCookies() {
         return new HashMap<>(COOKIES);
     }
 
     /**
-     * Sets headers.
+     * <p>setHeaders.</p>
      *
-     * @param headers the headers
+     * @param headers a {@link java.util.HashMap} object.
+     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Message} object.
      */
     public Message setHeaders(HashMap<String, String> headers) {
 
@@ -82,9 +81,10 @@ public class Message {
     }
 
     /**
-     * Sets cookies.
+     * <p>setCookies.</p>
      *
-     * @param cookies the cookies
+     * @param cookies a {@link java.util.HashMap} object.
+     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Message} object.
      */
     public Message setCookies(HashMap<String, String> cookies) {
 
@@ -94,10 +94,11 @@ public class Message {
     }
 
     /**
-     * Sets a header.
+     * <p>setHeader.</p>
      *
-     * @param key   the key
-     * @param value the value
+     * @param key a {@link java.lang.String} object.
+     * @param value a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Message} object.
      */
     public Message setHeader(String key, String value) {
 
@@ -107,10 +108,11 @@ public class Message {
     }
 
     /**
-     * Sets a cookie.
+     * <p>setCookie.</p>
      *
-     * @param key   the key
-     * @param value the value
+     * @param key a {@link java.lang.String} object.
+     * @param value a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Message} object.
      */
     public Message setCookie(String key, String value) {
 

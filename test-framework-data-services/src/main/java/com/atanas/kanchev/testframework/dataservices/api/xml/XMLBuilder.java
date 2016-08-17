@@ -1,3 +1,16 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.dataservices.api.xml;
 
 import org.w3c.dom.Document;
@@ -22,6 +35,11 @@ public final class XMLBuilder implements IXMLBuilder {
     private final Deque<Element> stack;
     private String encoding = "UTF-8";
 
+    /**
+     * <p>Constructor for XMLBuilder.</p>
+     *
+     * @param tagName a {@link java.lang.String} object.
+     */
     public XMLBuilder(String tagName)  {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;
@@ -36,6 +54,7 @@ public final class XMLBuilder implements IXMLBuilder {
         stack.push(element);
     }
     
+    /** {@inheritDoc} */
     public IXMLBuilder addElement(String tagName, String value) {
         Element element = document.createElement(tagName);
         element.appendChild(document.createTextNode(value));
@@ -44,6 +63,7 @@ public final class XMLBuilder implements IXMLBuilder {
         return this;
     }
 
+    /** {@inheritDoc} */
     public IXMLBuilder addElement(String tagName) {
         Element element = document.createElement(tagName);
         currentElement = element;
@@ -51,6 +71,7 @@ public final class XMLBuilder implements IXMLBuilder {
         return this;
     }
 
+    /** {@inheritDoc} */
     public IXMLBuilder addElementGroup(String name) {
         Element element = document.createElement(name);
         stack.push(element);
@@ -58,12 +79,22 @@ public final class XMLBuilder implements IXMLBuilder {
         return this;
     }
 
+    /**
+     * <p>endElementGroup.</p>
+     *
+     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.xml.IXMLBuilder} object.
+     */
     public IXMLBuilder endElementGroup() {
         Element element = stack.pop();
         stack.peek().appendChild(element);
         return this;
     }
 
+    /**
+     * <p>getXML.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getXML()  {
 
         document.appendChild(stack.pop());
@@ -84,6 +115,11 @@ public final class XMLBuilder implements IXMLBuilder {
         }
     }
 
+    /**
+     * <p>getXMLAsPretty.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getXMLAsPretty()  {
 
         document.appendChild(stack.pop());
@@ -107,6 +143,7 @@ public final class XMLBuilder implements IXMLBuilder {
         }
     }
     
+    /** {@inheritDoc} */
     public IXMLBuilder withAttribute(String attributeName, String attributeValue) {
         if (currentElement == null)
             stack.peek().setAttribute(attributeName, attributeValue);
@@ -116,6 +153,7 @@ public final class XMLBuilder implements IXMLBuilder {
     }
 
     
+    /** {@inheritDoc} */
     public IXMLBuilder withNamespace(String namespacePrefix, String namespaceURI) {
         if (currentElement == null)
             stack.peek().setAttribute("xmlns:" + namespacePrefix, namespaceURI);
@@ -124,6 +162,7 @@ public final class XMLBuilder implements IXMLBuilder {
         return this;
     }
 
+    /** {@inheritDoc} */
     public IXMLBuilder withNamespace(String namespaceURI) {
         if (currentElement == null)
             stack.peek().setAttribute("xmlns", namespaceURI);
@@ -132,6 +171,7 @@ public final class XMLBuilder implements IXMLBuilder {
         return this;
     }
 
+    /** {@inheritDoc} */
     public IXMLBuilder withEncoding(String encoding) {
         this.encoding = encoding;
         return this;

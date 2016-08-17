@@ -1,3 +1,16 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.commons.properties;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
@@ -13,7 +26,9 @@ import static com.atanas.kanchev.testframework.commons.exceptions.CustomExceptio
 import static com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions.Properties.InvalidKeyException;
 
 /**
- * The type Property reader.
+ * <p>PropertyReader class.</p>
+ *
+ * @author Atanas Kanchev
  */
 public final class PropertyReader {
 
@@ -64,10 +79,10 @@ public final class PropertyReader {
     }
 
     /**
-     * Gets prop.
+     * <p>Get property.</p>
      *
-     * @param propKey the prop key
-     * @return the prop
+     * @param propKey a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
      */
     public static String getProp(final String propKey) {
 
@@ -94,11 +109,11 @@ public final class PropertyReader {
     }
 
     /**
-     * Gets prop.
+     * <p>Get Property.</p>
      *
-     * @param propFileName the prop file name
-     * @param propKey      the prop key
-     * @return the prop
+     * @param propFileName a {@link java.lang.String} object.
+     * @param propKey      a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
      */
     public static String getProp(final String propFileName, final String propKey) {
 
