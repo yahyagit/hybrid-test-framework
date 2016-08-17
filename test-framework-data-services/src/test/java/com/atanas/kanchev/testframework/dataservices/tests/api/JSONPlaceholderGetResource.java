@@ -17,7 +17,7 @@
 package com.atanas.kanchev.testframework.dataservices.tests.api;
 
 import com.atanas.kanchev.testframework.commons.properties.PropertyReader;
-import com.atanas.kanchev.testframework.dataservices.api.factory.Resource;
+import com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Resource;
 import com.mashape.unirest.http.HttpMethod;
 
 import java.net.MalformedURLException;

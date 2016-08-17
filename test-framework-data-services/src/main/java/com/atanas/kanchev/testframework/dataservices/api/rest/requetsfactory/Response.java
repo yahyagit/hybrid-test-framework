@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.dataservices.api.factory;
+package com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory;
 
 /**
  * The type Response.

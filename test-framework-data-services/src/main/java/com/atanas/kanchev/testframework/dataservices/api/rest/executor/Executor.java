@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.dataservices.api.factory;
+package com.atanas.kanchev.testframework.dataservices.api.rest.executor;
 
 import com.mashape.unirest.http.HttpMethod;
 import com.mashape.unirest.http.HttpResponse;

@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.dataservices.api.factory;
+package com.atanas.kanchev.testframework.dataservices.api.rest.objectmapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

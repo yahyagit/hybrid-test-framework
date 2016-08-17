@@ -14,8 +14,9 @@
  *    limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.dataservices.api.factory;
+package com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory;
 
+import com.atanas.kanchev.testframework.dataservices.api.rest.executor.ResourceExecutor;
 import com.mashape.unirest.http.HttpMethod;
 import com.mashape.unirest.http.HttpResponse;
 import org.slf4j.Logger;

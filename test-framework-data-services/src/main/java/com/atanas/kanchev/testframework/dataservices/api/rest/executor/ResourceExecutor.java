@@ -14,8 +14,9 @@
  *    limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.dataservices.api.factory;
+package com.atanas.kanchev.testframework.dataservices.api.rest.executor;
 
+import com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Resource;
 import com.mashape.unirest.http.HttpMethod;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by atanas on 17/08/16.
+ * The type Resource executor.
  */
 public class ResourceExecutor extends Executor{
 
@@ -39,10 +40,20 @@ public class ResourceExecutor extends Executor{
 
     private final Resource resource;
 
+    /**
+     * Instantiates a new Resource executor.
+     *
+     * @param resource the resource
+     */
     public ResourceExecutor(Resource resource) {
         this.resource = resource;
     }
 
+    /**
+     * Execute resource
+     *
+     * @return the http response {@code com.mashape.unirest.http.HttpResponse}
+     */
     public HttpResponse<String> executeResource() {
 
         HttpRequest req;
