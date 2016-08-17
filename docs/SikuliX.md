@@ -7,6 +7,21 @@ It uses image recognition powered by OpenCV to identify and control GUI componen
 This is handy in cases when there is no easy access to a GUI's internals or web page you want to act on.
 Though SikuliX is currently not available on any mobile device, it can be used with the respective emulators on a desktop browser.
 
+# Setup on Linux #
+When running on a linux machine there are some extra dependencies that need to be installed for image based testing to work correctly.
+The following components need to be installed:
+[tesseract-ocr](https://code.google.com/p/tesseract-ocr/)
+[wmctrl](https://sites.google.com/site/tstyblo//wmctrl/)
+[xdotool](http://www.semicomplete.com/projects/xdotool/)
+[libopencv-dev](http://packages.ubuntu.com/precise/libopencv-dev)
+When running Ubuntu these can be installed using apt-get
+```
+sudo apt-get install tesseract-ocr
+sudo apt-get install wmctrl
+sudo apt-get install xdotool
+sudo apt-get install libopencv-dev
+```
+
 # Usage #
 
 - Save the images of the screen elements you want to interact with in a folder under the current working directory, 
