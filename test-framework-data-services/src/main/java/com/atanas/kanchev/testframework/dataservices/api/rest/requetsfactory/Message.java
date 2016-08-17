@@ -25,26 +25,26 @@ public class Message {
     private static final HashMap<String, String> HEADERS = new HashMap<>();
     private static final HashMap<String, String> COOKIES = new HashMap<>();
 
-    private String body;
+    private String payload;
 
     /**
-     * <p>Getter for the field <code>body</code>.</p>
+     * <p>Getter for the field <code>payload</code>.</p>
      *
      * @return a {@link java.lang.String} object.
      */
-    public String getBody() {
-        return body;
+    public String getPayload() {
+        return payload;
     }
 
     /**
-     * <p>Setter for the field <code>body</code>.</p>
+     * <p>Setter for the field <code>payload</code>.</p>
      *
-     * @param body a {@link java.lang.String} object.
+     * @param payload a {@link java.lang.String} object.
      * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Message} object.
      */
-    public Message setBody(String body) {
+    public Message setPayload(String payload) {
 
-        this.body = body;
+        this.payload = payload;
 
         return this;
     }

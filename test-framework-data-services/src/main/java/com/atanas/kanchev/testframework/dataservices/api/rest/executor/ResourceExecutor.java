@@ -63,8 +63,8 @@ public class ResourceExecutor extends Executor{
             req = new HttpRequestWithBody(resource.getHttpMethod(), resource.getUrl());
         if (resource.getRequest().getHeaders() != null)
             req.headers(resource.getRequest().getHeaders());
-        if (resource.getRequest().getBody() != null)
-            ((HttpRequestWithBody) req).body(resource.getRequest().getBody());
+        if (resource.getRequest().getPayload() != null)
+            ((HttpRequestWithBody) req).body(resource.getRequest().getPayload());
 
 
         if (httpClientBuilder == null)

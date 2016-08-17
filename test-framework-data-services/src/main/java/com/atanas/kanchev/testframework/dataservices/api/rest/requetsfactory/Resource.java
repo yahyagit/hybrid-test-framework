@@ -154,7 +154,7 @@ public class Resource implements IContext {
         logger.debug("> Request URL: " + url);
         logger.debug("> Request headers: " + getRequest().getHeaders());
         logger.debug("> Request cookies: " + getRequest().getCookies());
-        logger.debug("> Request body: " + getRequest().getBody());
+        logger.debug("> Request body: " + getRequest().getPayload());
 
         HttpResponse<String> response = new ResourceExecutor(this).executeResource();
         if (response != null)
@@ -178,8 +178,8 @@ public class Resource implements IContext {
 
         if (response.getHeaders().getFirst("Content-Type") != null && response.getHeaders()
             .getFirst("Content-Type").contains("application/json")) {
-            this.response.setBody(response.getBody());
+            this.response.setPayload(response.getBody());
         }
-        logger.debug("> Response body: " + this.response.getBody());
+        logger.debug("> Response body: " + this.response.getPayload());
     }
 }

@@ -40,7 +40,8 @@ public class APITest implements IAPIResource {
     @Test public void listingResources_GET_Test() throws Exception {
 
         apiResource(new JSONPlaceholderGetResource("/posts"));
-        apiResource().setEndpoint("/1").exec();
+        apiResource().setEndpoint("/1");
+        apiResource().exec();
 
         assertThat(apiResource().getResponse().getStatusCode(), equalTo(200));
         assertThat(apiResource().getResponse().getReason(), equalTo("OK"));
@@ -50,16 +51,10 @@ public class APITest implements IAPIResource {
     @Test public void putTest() throws Exception {
 
         JsonObject jsonObject =
-            JsonBuilderFactory.buildObject()
-                .addObject("data")
-                .add("title", "foo")
-                .add("body", "bar")
-                .add("userID", 1)
-                .getJson();
+            JsonBuilderFactory.buildObject().addObject("data").add("title", "foo")
+                .add("body", "bar").add("userID", 1).getJson();
 
-        apiResource(new JSONPlaceholderPutResource())
-            .getRequest()
-            .setBody(jsonObject.toString());
+        apiResource(new JSONPlaceholderPutResource()).getRequest().setPayload(jsonObject.toString());
 
         apiResource().setEndpoint("/2").exec();
 
