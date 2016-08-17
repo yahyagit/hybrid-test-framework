@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.dataservices.tests.api;
 
 import com.google.gson.JsonObject;
@@ -24,11 +40,26 @@ public class APITest {
 
     }
 
+
+    @Test
+    public void showingResource_GET_Add_QueryTest() throws Exception {
+
+        JSONPlaceholderGetResource resource = new JSONPlaceholderGetResource();
+        resource.getRequest().addQueryParameter("query", "value");
+        resource.exec();
+
+        assertThat(resource.getResponse().getStatusCode(), equalTo(200));
+        assertThat(resource.getResponse().getReason(), equalTo("OK"));
+
+    }
+
+
+
     @Test
     public void listingResources_GET_Test() throws Exception {
 
         JSONPlaceholderGetResource resource = new JSONPlaceholderGetResource("/posts");
-        resource.appendToEndpoint("/1");
+        resource.setEndpoint("/1");
         resource.exec();
 
         assertThat(resource.getResponse().getStatusCode(), equalTo(200));
@@ -49,7 +80,7 @@ public class APITest {
         JSONPlaceholderPutResource resource = new JSONPlaceholderPutResource();
 
         resource.getRequest().setBody(jsonObject.toString());
-        resource.appendToEndpoint("/2");
+        resource.setEndpoint("/2");
         resource.exec();
 
         assertThat(resource.getResponse().getStatusCode(), equalTo(200));

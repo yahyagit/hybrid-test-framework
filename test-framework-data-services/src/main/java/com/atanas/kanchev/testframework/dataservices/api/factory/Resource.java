@@ -1,5 +1,22 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.dataservices.api.factory;
 
+import com.mashape.unirest.http.HttpMethod;
 import com.mashape.unirest.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,26 +26,26 @@ import org.slf4j.LoggerFactory;
  *
  * @author Atanas Kanchev
  */
-public class Resource extends Executor {
+public class Resource {
 
     private static final Logger logger = LoggerFactory.getLogger(Resource.class);
 
-    protected final StringBuilder endpoint = new StringBuilder();
-    protected final StringBuilder url = new StringBuilder();
+    private final StringBuilder endpoint = new StringBuilder();
+    private final StringBuilder url = new StringBuilder();
 
     private Request request;
     private Response response;
 
-    private HttpMethodsEnum methodEnum;
+    private HttpMethod httpMethod;
 
     /**
      * Instantiates a new Resource.
      *
-     * @param methodEnum the http method type {@link HttpMethodsEnum}
+     * @param httpMethod the http method type {@code com.mashape.unirest.http.HttpMethod}
      */
-    public Resource(HttpMethodsEnum methodEnum) {
+    public Resource(HttpMethod httpMethod) {
 
-        this.methodEnum = methodEnum;
+        this.httpMethod = httpMethod;
         this.request = new Request();
         this.response = new Response();
 
@@ -42,9 +59,7 @@ public class Resource extends Executor {
      * @return the request {@link Resource#request}
      */
     public Request getRequest() {
-
         return this.request;
-
     }
 
     /**
@@ -53,12 +68,19 @@ public class Resource extends Executor {
      * @return the response {@link Resource#response}
      */
     public Response getResponse() {
-
         return this.response;
     }
 
     public String getEndpoint() {
         return endpoint.toString();
+    }
+
+    public String getUrl() {
+        return url.toString();
+    }
+
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
     }
 
     // SETTERS //
@@ -75,16 +97,21 @@ public class Resource extends Executor {
         return this;
     }
 
+    public Resource setURL(String url) {
+        this.url.append(url);
+        logger.debug("Setting url to " + this.url.toString());
+        return this;
+    }
+
     /**
      * Append to {@link Resource#endpoint}
      *
      * @param append {@code java.lang.String}
      * @return this
      */
-    public Resource appendToEndpoint(String append) {
-
+    public Resource setEndpoint(String append) {
         this.endpoint.append(append);
-
+        logger.debug("Setting endpoint to " + this.endpoint.toString());
         return this;
     }
 
@@ -100,40 +127,20 @@ public class Resource extends Executor {
         logger.debug("> Request cookies: " + getRequest().getCookies());
         logger.debug("> Request body: " + getRequest().getBody());
 
-        HttpResponse<String> response = null;
-        switch (methodEnum) {
-            case GET:
-                response = GET(url.toString(), getRequest().getHeaders());
-                break;
-            case POST:
-                response = POST(url.toString(), getRequest().getHeaders(), getRequest().getBody());
-                break;
-            case PUT:
-                response = PUT(url.toString(), getRequest().getHeaders(), getRequest().getBody());
-                break;
-            case DELETE:
-                response = DELETE(url.toString(), getRequest().getHeaders(), getRequest().getBody());
-                break;
-        }
-        if (response != null) {
-            setRespStatus(response);
-            setRespMessage(response);
-        } else {
-            logger.debug("Null response");
-        }
+        HttpResponse<String> response = new ResourceExecutor(this).executeResource();
+        if (response != null) setResponse(response);
+        else logger.debug("Null response");
+
         return this;
     }
 
-    private void setRespStatus(HttpResponse<String> response) {
-
+    private void setResponse(HttpResponse<String> response) {
+        // set response status code
         this.response.setStatusCode(response.getStatus());
         this.response.setReason(response.getStatusText());
         logger.debug("> Response status and text: " + "{" + response.getStatus() + "," + response.getStatusText() + "}");
 
-    }
-
-    private void setRespMessage(HttpResponse<String> response) {
-
+        // set response body
         if (response.getHeaders().getFirst("Content-Type") != null &&
                 response.getHeaders().getFirst("Content-Type").contains("application/json")) {
             this.response.setBody(response.getBody());
@@ -141,15 +148,4 @@ public class Resource extends Executor {
         logger.debug("> Response body: " + this.response.getBody());
     }
 
-    /**
-     * The enum http method types.
-     */
-    protected enum HttpMethodsEnum {
-
-        GET,
-        POST,
-        PUT,
-        DELETE
-
-    }
 }
