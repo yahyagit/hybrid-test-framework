@@ -1,4 +1,20 @@
-package com.atanas.kanchev.testframework.dataservices.api.factory;
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+package com.atanas.kanchev.testframework.dataservices.api.rest.executor;
 
 import com.mashape.unirest.http.HttpMethod;
 import com.mashape.unirest.http.HttpResponse;
@@ -25,7 +41,7 @@ import java.util.concurrent.TimeUnit;
 public class Executor {
 
     private static final Logger logger = LoggerFactory.getLogger(Executor.class);
-    private static HttpClientBuilder httpClientBuilder;
+    static HttpClientBuilder httpClientBuilder;
 
     /**
      * Configure http client.
@@ -43,7 +59,7 @@ public class Executor {
      * @param endpoint the endpoint {@code java.lang.String}
      * @return the http response {@code com.mashape.unirest.http.HttpResponse}
      */
-    public static HttpResponse<String> GET(String endpoint) {
+    public HttpResponse<String> GET(String endpoint) {
 
         return GET(endpoint, null);
     }
@@ -55,7 +71,7 @@ public class Executor {
      * @param headers  the headers {@code java.util.HashMap}
      * @return the http response {@code com.mashape.unirest.http.HttpResponse}
      */
-    public static HttpResponse<String> GET(String endpoint, HashMap<String, String> headers) {
+    public HttpResponse<String> GET(String endpoint, HashMap<String, String> headers) {
 
         return exec(HttpMethod.GET, endpoint, headers, null);
     }
@@ -66,7 +82,7 @@ public class Executor {
      * @param endpoint the endpoint {@code java.lang.String}
      * @return the http response {@code com.mashape.unirest.http.HttpResponse}
      */
-    public static HttpResponse<String> POST(String endpoint) {
+    public HttpResponse<String> POST(String endpoint) {
 
         return POST(endpoint, null, null);
     }
@@ -78,7 +94,7 @@ public class Executor {
      * @param payload  the payload {@code java.lang.String}
      * @return the http response {@code com.mashape.unirest.http.HttpResponse}
      */
-    public static HttpResponse<String> POST(String endpoint, String payload) {
+    public HttpResponse<String> POST(String endpoint, String payload) {
 
         return POST(endpoint, null, payload);
     }
@@ -90,7 +106,7 @@ public class Executor {
      * @param headers  the headers {@code java.util.HashMap}
      * @return the http response {@code com.mashape.unirest.http.HttpResponse}
      */
-    public static HttpResponse<String> POST(String endpoint, HashMap<String, String> headers) {
+    public HttpResponse<String> POST(String endpoint, HashMap<String, String> headers) {
 
         return POST(endpoint, headers, null);
     }
@@ -103,7 +119,7 @@ public class Executor {
      * @param payload  the payload {@code java.lang.String}
      * @return the http response {@code com.mashape.unirest.http.HttpResponse}
      */
-    public static HttpResponse<String> POST(String endpoint, HashMap<String, String> headers, String payload) {
+    public HttpResponse<String> POST(String endpoint, HashMap<String, String> headers, String payload) {
 
         return exec(HttpMethod.POST, endpoint, headers, payload);
     }
@@ -114,7 +130,7 @@ public class Executor {
      * @param endpoint the endpoint {@code java.lang.String}
      * @return the http response {@code com.mashape.unirest.http.HttpResponse}
      */
-    public static HttpResponse<String> PUT(String endpoint) {
+    public HttpResponse<String> PUT(String endpoint) {
 
         return PUT(endpoint, null, null);
     }
@@ -126,7 +142,7 @@ public class Executor {
      * @param payload  the payload {@code java.lang.String}
      * @return the http response {@code com.mashape.unirest.http.HttpResponse}
      */
-    public static HttpResponse<String> PUT(String endpoint, String payload) {
+    public HttpResponse<String> PUT(String endpoint, String payload) {
 
         return PUT(endpoint, null, payload);
     }
@@ -139,7 +155,7 @@ public class Executor {
      * @param payload  the payload {@code java.lang.String}
      * @return the http response {@code com.mashape.unirest.http.HttpResponse}
      */
-    public static HttpResponse<String> PUT(String endpoint, HashMap<String, String> headers, String payload) {
+    public HttpResponse<String> PUT(String endpoint, HashMap<String, String> headers, String payload) {
 
         return exec(HttpMethod.PUT, endpoint, headers, payload);
     }
@@ -150,7 +166,7 @@ public class Executor {
      * @param endpoint the endpoint {@code java.lang.String}
      * @return the http response {@code com.mashape.unirest.http.HttpResponse}
      */
-    public static HttpResponse<String> DELETE(String endpoint) {
+    public HttpResponse<String> DELETE(String endpoint) {
 
         return DELETE(endpoint, null, null);
     }
@@ -162,7 +178,7 @@ public class Executor {
      * @param payload  the payload {@code java.lang.String}
      * @return the http response {@code com.mashape.unirest.http.HttpResponse}
      */
-    public static HttpResponse<String> DELETE(String endpoint, String payload) {
+    public HttpResponse<String> DELETE(String endpoint, String payload) {
 
         return DELETE(endpoint, null, payload);
     }
@@ -174,7 +190,7 @@ public class Executor {
      * @param headers  the headers {@code java.util.HashMap}
      * @return the http response {@code com.mashape.unirest.http.HttpResponse}
      */
-    public static HttpResponse<String> DELETE(String endpoint, HashMap<String, String> headers) {
+    public HttpResponse<String> DELETE(String endpoint, HashMap<String, String> headers) {
 
         return DELETE(endpoint, headers, null);
     }
@@ -187,7 +203,7 @@ public class Executor {
      * @param payload  the payload {@code java.lang.String}
      * @return the http response {@code com.mashape.unirest.http.HttpResponse}
      */
-    public static HttpResponse<String> DELETE(String endpoint, HashMap<String, String> headers, String payload) {
+    public HttpResponse<String> DELETE(String endpoint, HashMap<String, String> headers, String payload) {
 
         return exec(HttpMethod.DELETE, endpoint, headers, payload);
     }
@@ -226,7 +242,7 @@ public class Executor {
      * Close the asynchronous client and its event loop.
      * Use this method to close all the threads and allow an application to exit.
      */
-    public static void shutdown() {
+    static void shutdown() {
         try {
             Unirest.shutdown();
         } catch (IOException e) {

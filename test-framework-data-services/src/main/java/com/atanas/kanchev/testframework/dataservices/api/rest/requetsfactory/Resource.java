@@ -1,5 +1,23 @@
-package com.atanas.kanchev.testframework.dataservices.api.factory;
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
 
+package com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory;
+
+import com.atanas.kanchev.testframework.dataservices.api.rest.executor.ResourceExecutor;
+import com.mashape.unirest.http.HttpMethod;
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.dataservices.context.APIResourceContext;
 import com.mashape.unirest.http.HttpMethod;
@@ -7,13 +25,12 @@ import com.mashape.unirest.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.atanas.kanchev.testframework.dataservices.api.factory.Executor.*;
-
 /**
  * The type Resource.
  *
  * @author Atanas Kanchev
  */
+public class Resource {
 public class Resource implements IContext {
 
     private static final Logger logger = LoggerFactory.getLogger(Resource.class);
@@ -68,6 +85,14 @@ public class Resource implements IContext {
         return endpoint.toString();
     }
 
+    public String getUrl() {
+        return url.toString();
+    }
+
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
+    }
+
     // SETTERS //
 
     /**
@@ -82,16 +107,21 @@ public class Resource implements IContext {
         return this;
     }
 
+    public Resource setURL(String url) {
+        this.url.append(url);
+        logger.debug("Setting url to " + this.url.toString());
+        return this;
+    }
+
     /**
      * Append to {@link Resource#endpoint}
      *
      * @param append {@code java.lang.String}
      * @return this
      */
-    public Resource appendToEndpoint(String append) {
-
+    public Resource setEndpoint(String append) {
         this.endpoint.append(append);
-
+        logger.debug("Setting endpoint to " + this.endpoint.toString());
         return this;
     }
 
@@ -107,34 +137,15 @@ public class Resource implements IContext {
         logger.debug("> Request cookies: " + getRequest().getCookies());
         logger.debug("> Request body: " + getRequest().getBody());
 
-        HttpResponse<String> response;
-        switch (httpMethod) {
-            case GET:
-                response = GET(url.toString(), getRequest().getHeaders());
-                break;
-            case POST:
-                response = POST(url.toString(), getRequest().getHeaders(), getRequest().getBody());
-                break;
-            case PUT:
-                response = PUT(url.toString(), getRequest().getHeaders(), getRequest().getBody());
-                break;
-            case DELETE:
-                response = DELETE(url.toString(), getRequest().getHeaders(), getRequest().getBody());
-                break;
-            default:
-                throw new RuntimeException("Implement me " + httpMethod);
-        }
-        if (response != null) {
-            setRespStatus(response);
-            setRespMessage(response);
-        } else {
-            logger.debug("Null response");
-        }
+        HttpResponse<String> response = new ResourceExecutor(this).executeResource();
+        if (response != null) setResponse(response);
+        else logger.debug("Null response");
+
         return this;
     }
 
-    private void setRespStatus(HttpResponse<String> response) {
-
+    private void setResponse(HttpResponse<String> response) {
+        // set response status code
         this.response.setStatusCode(response.getStatus());
         this.response.setReason(response.getStatusText());
         logger.debug("> Response status and text: " + "{" + response.getStatus() + "," + response.getStatusText() + "}");
