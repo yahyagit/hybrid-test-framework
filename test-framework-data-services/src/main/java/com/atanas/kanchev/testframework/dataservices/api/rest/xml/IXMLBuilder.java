@@ -1,17 +1,20 @@
 /*
  * Copyright 2016 Atanas Stoychev Kanchev
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.dataservices.api.xml;
+package com.atanas.kanchev.testframework.dataservices.api.rest.xml;
 
 public interface IXMLBuilder {
 
@@ -20,7 +23,7 @@ public interface IXMLBuilder {
      *
      * @param tagName a {@link java.lang.String} object.
      * @param value a {@link java.lang.String} object.
-     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.xml.IXMLBuilder} object.
+     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.xml.IXMLBuilder} object.
      */
     IXMLBuilder addElement(String tagName, String value);
 
@@ -28,7 +31,7 @@ public interface IXMLBuilder {
      * <p>addElement.</p>
      *
      * @param tagName a {@link java.lang.String} object.
-     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.xml.IXMLBuilder} object.
+     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.xml.IXMLBuilder} object.
      */
     IXMLBuilder addElement(String tagName);
 
@@ -36,14 +39,14 @@ public interface IXMLBuilder {
      * <p>addElementGroup.</p>
      *
      * @param name a {@link java.lang.String} object.
-     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.xml.IXMLBuilder} object.
+     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.xml.IXMLBuilder} object.
      */
     IXMLBuilder addElementGroup(String name);
 
     /**
      * <p>endElementGroup.</p>
      *
-     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.xml.IXMLBuilder} object.
+     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.xml.IXMLBuilder} object.
      */
     IXMLBuilder endElementGroup();
 
@@ -66,7 +69,7 @@ public interface IXMLBuilder {
      *
      * @param attributeName a {@link java.lang.String} object.
      * @param attributeValue a {@link java.lang.String} object.
-     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.xml.IXMLBuilder} object.
+     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.xml.IXMLBuilder} object.
      */
     IXMLBuilder withAttribute(String attributeName, String attributeValue);
 
@@ -75,7 +78,7 @@ public interface IXMLBuilder {
      *
      * @param namespacePrefix a {@link java.lang.String} object.
      * @param namespaceURI a {@link java.lang.String} object.
-     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.xml.IXMLBuilder} object.
+     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.xml.IXMLBuilder} object.
      */
     IXMLBuilder withNamespace(String namespacePrefix, String namespaceURI);
 
@@ -83,7 +86,7 @@ public interface IXMLBuilder {
      * <p>withNamespace.</p>
      *
      * @param namespaceURI a {@link java.lang.String} object.
-     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.xml.IXMLBuilder} object.
+     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.xml.IXMLBuilder} object.
      */
     IXMLBuilder withNamespace(String namespaceURI);
 
@@ -91,7 +94,7 @@ public interface IXMLBuilder {
      * <p>withEncoding.</p>
      *
      * @param encoding a {@link java.lang.String} object.
-     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.xml.IXMLBuilder} object.
+     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.xml.IXMLBuilder} object.
      */
     IXMLBuilder withEncoding(String encoding);
 }
