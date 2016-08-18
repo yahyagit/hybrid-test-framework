@@ -154,7 +154,7 @@ public class Resource implements IContext {
         logger.debug("> Request URL: " + url);
         logger.debug("> Request headers: " + getRequest().getHeaders());
         logger.debug("> Request cookies: " + getRequest().getCookies());
-        logger.debug("> Request body: " + getRequest().getPayload());
+        logger.debug("> Request body: \n" + getRequest().getPayload());
 
         HttpResponse<String> response = new ResourceExecutor(this).executeResource();
         if (response != null)
@@ -171,6 +171,10 @@ public class Resource implements IContext {
         this.response.setReason(response.getStatusText());
         logger.debug("> Response status and text: " + "{" + response.getStatus() + "," + response
             .getStatusText() + "}");
+
+        logger.debug("> Response body: " + response.getBody());
+
+        setRespMessage(response);
 
     }
 

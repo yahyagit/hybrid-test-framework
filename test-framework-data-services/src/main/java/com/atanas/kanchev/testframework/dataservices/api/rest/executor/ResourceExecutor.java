@@ -79,7 +79,6 @@ public class ResourceExecutor extends Executor{
         } catch (UnirestException e) {
             logger.error("Unirest exception ", e);
         }
-        shutdown();
 
         return null;
     }
