@@ -1,5 +1,8 @@
 **Hybrid Test Framework**
 =========================
+## Requirements ##
+* Java 8
+* Maven 3
 ## Components ##
 
 ### [Selenium](docs/Selenium.md) ###
