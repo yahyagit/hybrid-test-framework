@@ -45,7 +45,7 @@ public final class CSVParser {
         try {
             this.reader = new CSVReader(new FileReader(csvFilePath), ',', '"', 0);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("Unable to find file in path " + csvFilePath);
         }
     }
 
@@ -59,9 +59,8 @@ public final class CSVParser {
         try {
             return reader.readAll();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Unable to read file");
             return null;
-
         }
     }
 }
