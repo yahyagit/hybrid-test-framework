@@ -27,11 +27,13 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class APITest implements IDataResource {
 
-    @After public void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         context().tearDownContexts();
     }
 
-    @Test public void showingResource_GET_Test() throws Exception {
+    @Test
+    public void showingResource_GET_Test() throws Exception {
 
         apiResource(new JSONPlaceholderGetResource()).exec();
 
@@ -40,7 +42,8 @@ public class APITest implements IDataResource {
 
     }
 
-    @Test public void listingResources_GET_Test() throws Exception {
+    @Test
+    public void listingResources_GET_Test() throws Exception {
 
         apiResource(new JSONPlaceholderGetResource("/posts"));
         apiResource().setEndpoint("/1");
@@ -51,11 +54,12 @@ public class APITest implements IDataResource {
 
     }
 
-    @Test public void putTest() throws Exception {
+    @Test
+    public void putTest() throws Exception {
 
         JsonObject jsonObject =
-            JsonBuilderFactory.buildObject().addObject("data").add("title", "foo")
-                .add("body", "bar").add("userID", 1).getJson();
+                JsonBuilderFactory.buildObject().addObject("data").add("title", "foo")
+                        .add("body", "bar").add("userID", 1).getJson();
 
         apiResource(new JSONPlaceholderPutResource()).getRequest().setPayload(jsonObject.toString());
 

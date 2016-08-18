@@ -24,13 +24,13 @@ public class XMlBuilderTest {
 
     @Test
     public void dummyRootTagTest() {
-        System.out.println(XMLMessageBuilder.build("oxip")
-                .withEncoding("UTF-16")
-                .withAttribute("version", "6.0")
+        System.out.println(XMLMessageBuilder.build("root")
+                .withEncoding("UTF-8")
+                .withAttribute("version", "1.0")
                 .addElementGroup("request")
-                .addElementGroup("reqClientAuth")
-                .addElement("user", "uname")
-                .addElement("password", "password")
+                .addElementGroup("loginReq")
+                .addElement("user", "x")
+                .addElement("password", "y")
                 .endElementGroup()
                 .endElementGroup()
                 .getXMLAsPretty()
