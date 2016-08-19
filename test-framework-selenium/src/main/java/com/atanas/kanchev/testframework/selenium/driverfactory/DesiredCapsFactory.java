@@ -1,3 +1,16 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.selenium.driverfactory;
 
 import org.openqa.selenium.Proxy;
@@ -16,8 +29,7 @@ import java.util.*;
 /**
  * <p>DesiredCapsFactory class.</p>
  *
- * @author Atanas Ksnchev
- * @version 1.0
+ * @author Atanas Kanchev
  */
 public class DesiredCapsFactory {
 
@@ -25,9 +37,9 @@ public class DesiredCapsFactory {
     private DesiredCapabilities caps;
 
     /**
-     * Get public Chrome capabilities
+     * <p>getDefaultChromeCaps.</p>
      *
-     * @return configured DesiredCapabilities instance
+     * @return a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
      */
     public DesiredCapabilities getDefaultChromeCaps() {
 
@@ -43,9 +55,9 @@ public class DesiredCapsFactory {
     }
 
     /**
-     * Get public Firefox capabilities
+     * <p>getDefaultFirefoxCaps.</p>
      *
-     * @return configured DesiredCapabilities instance
+     * @return a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
      */
     public DesiredCapabilities getDefaultFirefoxCaps() {
 
@@ -86,9 +98,9 @@ public class DesiredCapsFactory {
     }
 
     /**
-     * Get public Safari capabilities
+     * <p>getDefaultSafariCaps.</p>
      *
-     * @return configured DesiredCapabilities instance
+     * @return a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
      */
     public DesiredCapabilities getDefaultSafariCaps() {
 
@@ -123,7 +135,8 @@ public class DesiredCapsFactory {
         cliArguments.add("--web-security=false");
         cliArguments.add("--ssl-protocol=any");
         cliArguments.add("--ignore-ssl-errors=true");
-        caps.setCapability("phantomjs.cli.args", applyPhantomJSProxySettings(cliArguments, proxySettings));
+        caps.setCapability("phantomjs.cli.args",
+            applyPhantomJSProxySettings(cliArguments, proxySettings));
         caps.setCapability("takesScreenshot", true);
 
         logger.debug("Configured default PhantomJS DesiredCapabilities: " + caps.toString());
@@ -131,7 +144,8 @@ public class DesiredCapsFactory {
         return caps;
     }
 
-    private List<String> applyPhantomJSProxySettings(List<String> cliArguments, Proxy proxySettings) {
+    private List<String> applyPhantomJSProxySettings(List<String> cliArguments,
+        Proxy proxySettings) {
         if (null == proxySettings) {
             cliArguments.add("--proxy-type=none");
         } else {
@@ -142,24 +156,26 @@ public class DesiredCapsFactory {
     }
 
     /**
-     * Merge capabilities
+     * <p>mergeCapabilities.</p>
      *
-     * @param sourceCaps instance of the source capabilities
-     * @param newCaps    instance of the capabilities to be merged to the sourceCaps
-     * @return DesiredCapabilities instance
+     * @param sourceCaps a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
+     * @param newCaps    a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
+     * @return a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
      */
-    public DesiredCapabilities mergeCapabilities(DesiredCapabilities sourceCaps, DesiredCapabilities newCaps) {
+    public DesiredCapabilities mergeCapabilities(DesiredCapabilities sourceCaps,
+        DesiredCapabilities newCaps) {
 
-        logger.debug("Merging capabilities [NEW_CAPS]: " + newCaps + " into [SOURCE]: " + sourceCaps);
+        logger
+            .debug("Merging capabilities [NEW_CAPS]: " + newCaps + " into [SOURCE]: " + sourceCaps);
 
         return caps = sourceCaps.merge(newCaps);
     }
 
     /**
-     * Merge capabilities
+     * <p>mergeCapabilities.</p>
      *
-     * @param newCaps instance of the capabilities to be merged to the {@link com.atanas.kanchev.testframework.selenium.driverfactory.DesiredCapsFactory#caps}
-     * @return DesiredCapabilities instance
+     * @param newCaps a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
+     * @return a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
      */
     public DesiredCapabilities mergeCapabilities(DesiredCapabilities newCaps) {
 
@@ -169,10 +185,10 @@ public class DesiredCapsFactory {
     }
 
     /**
-     * Set custom ChromeOptions
+     * <p>setCustomChromeOptions.</p>
      *
-     * @param chromeOptions ChromeOptions
-     * @return DesiredCapabilities instance
+     * @param chromeOptions a {@link org.openqa.selenium.chrome.ChromeOptions} object.
+     * @return a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
      */
     public DesiredCapabilities setCustomChromeOptions(ChromeOptions chromeOptions) {
 
@@ -192,10 +208,10 @@ public class DesiredCapsFactory {
     }
 
     /**
-     * Set custom ChromeOptions
+     * <p>setCustomChromeOptions.</p>
      *
-     * @param chromeOptions Map chromeOptions
-     * @return DesiredCapabilities instance
+     * @param chromeOptions a {@link java.util.Map} object.
+     * @return a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
      */
     public DesiredCapabilities setCustomChromeOptions(Map<String, Object> chromeOptions) {
 
@@ -211,10 +227,10 @@ public class DesiredCapsFactory {
     }
 
     /**
-     * Set custom FirefoxProfile
+     * <p>setCustomFirefoxProfile.</p>
      *
-     * @param firefoxProfile FirefoxProfile
-     * @return DesiredCapabilities instance
+     * @param firefoxProfile a {@link org.openqa.selenium.firefox.FirefoxProfile} object.
+     * @return a {@link org.openqa.selenium.remote.DesiredCapabilities} object.
      */
     public DesiredCapabilities setCustomFirefoxProfile(FirefoxProfile firefoxProfile) {
 

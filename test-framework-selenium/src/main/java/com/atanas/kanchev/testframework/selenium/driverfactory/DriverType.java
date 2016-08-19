@@ -1,3 +1,16 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.selenium.driverfactory;
 
 import io.github.bonigarcia.wdm.*;
@@ -19,14 +32,14 @@ import static org.openqa.selenium.remote.CapabilityType.PROXY;
 /**
  * <p>DriverType class.</p>
  *
- * @author atanas
- * @version 1.0
+ * @author Atanas Kanchev
  */
 public enum DriverType implements DriverSetup {
 
     FIREFOX {
         public DesiredCapabilities getDesiredCapabilities(Proxy proxySettings) {
-            return addProxySettings(new DesiredCapsFactory().getDefaultFirefoxCaps(), proxySettings);
+            return addProxySettings(new DesiredCapsFactory().getDefaultFirefoxCaps(),
+                proxySettings);
         }
 
         public WebDriver getWebDriverObject(DesiredCapabilities capabilities) {
@@ -101,7 +114,9 @@ public enum DriverType implements DriverSetup {
     };
 
     // the logger
-    /** Constant <code>logger</code> */
+    /**
+     * Constant <code>logger</code>
+     */
     private static final Logger logger = LoggerFactory.getLogger(DriverType.class);
 
     DesiredCapabilities addProxySettings(DesiredCapabilities capabilities, Proxy proxySettings) {
@@ -111,7 +126,7 @@ public enum DriverType implements DriverSetup {
         logger.debug("Proxy settings: " + proxySettings);
         return capabilities;
     }
-    
+
 
 }
 

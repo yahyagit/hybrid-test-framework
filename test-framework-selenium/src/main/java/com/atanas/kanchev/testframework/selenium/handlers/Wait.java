@@ -1,3 +1,16 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.selenium.handlers;
 
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
@@ -12,7 +25,9 @@ import org.slf4j.LoggerFactory;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
- * Wait
+ * <p>Wait class.</p>
+ *
+ * @author Atanas Kanchev
  */
 public final class Wait implements IWait, IContext {
 
@@ -21,112 +36,148 @@ public final class Wait implements IWait, IContext {
 
     private final long wait;
 
+    /**
+     * <p>Constructor for Wait.</p>
+     *
+     * @param wait a long.
+     */
     public Wait(long wait) {
         this.wait = wait;
     }
 
-    @Override
-    public IWait presenceOfElement(By locator) {
-//        new LocatorFactory().isElementPresent(locator, wait);
+    /**
+     * {@inheritDoc}
+     */
+    @Override public IWait presenceOfElement(By locator) {
+        //        new LocatorFactory().isElementPresent(locator, wait);
         return this;
     }
 
-    @Override
-    public IWait visibilityOfElement(By locator) {
-//        new LocatorFactory().isElementVisible(locator, true, wait);
+    /**
+     * {@inheritDoc}
+     */
+    @Override public IWait visibilityOfElement(By locator) {
+        //        new LocatorFactory().isElementVisible(locator, true, wait);
         return this;
     }
 
-    @Override
-    public IWait invisibilityOfElement(By locator) {
-//        new LocatorFactory().isElementVisible(locator, false, wait);
+    /**
+     * {@inheritDoc}
+     */
+    @Override public IWait invisibilityOfElement(By locator) {
+        //        new LocatorFactory().isElementVisible(locator, false, wait);
         return this;
     }
 
-    @Override
-    public IWait elementToBeClickable(By locator) {
-//        new LocatorFactory().isElementClickable(locator, wait);
+    /**
+     * {@inheritDoc}
+     */
+    @Override public IWait elementToBeClickable(By locator) {
+        //        new LocatorFactory().isElementClickable(locator, wait);
         return this;
     }
 
-    @Override
-    public IWait valueToBePresent(By locator, String text) {
-//        new LocatorFactory().isTextPresentInElementValue(locator, text, wait);
+    /**
+     * {@inheritDoc}
+     */
+    @Override public IWait valueToBePresent(By locator, String text) {
+        //        new LocatorFactory().isTextPresentInElementValue(locator, text, wait);
         return this;
     }
 
-//    @Override
-//    public IWait textToBePresentInElement(By locator, final String text) {
-//        new LocatorFactory().isTextPresentInElement(locator, text, wait);
-//        return this;
-//    }
+    //    @Override
+    //    public IWait textToBePresentInElement(By locator, final String text) {
+    //        new LocatorFactory().isTextPresentInElement(locator, text, wait);
+    //        return this;
+    //    }
 
-    @Override
-    public IWait frameToBeAvailableAndSwitch(By locator) {
-//        new LocatorFactory().isFrameAvailable(locator, wait);
+    /**
+     * {@inheritDoc}
+     */
+    @Override public IWait frameToBeAvailableAndSwitch(By locator) {
+        //        new LocatorFactory().isFrameAvailable(locator, wait);
         return this;
     }
 
-    @Override
-    public boolean isElementPresent(By locator, long wait) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean isElementPresent(By locator, long wait) {
 
         try {
             getWait(wait).until(ExpectedConditions.presenceOfElementLocated(locator));
             return true;
         } catch (TimeoutException e) {
-            logger.error("Timeout after waiting for presence of element by:  " + locator.toString());
+            logger
+                .error("Timeout after waiting for presence of element by:  " + locator.toString());
             throw new TimeoutException(e.getMessage());
         }
     }
 
-    @Override
-    public boolean isElementVisible(By locator, boolean visibility, long wait) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean isElementVisible(By locator, boolean visibility, long wait) {
 
         if (visibility)
             try {
                 getWait(wait).until(ExpectedConditions.visibilityOfElementLocated(locator));
                 return true;
             } catch (TimeoutException e) {
-                logger.error("Timeout after waiting " + wait + " for visibility of element by:  " + locator.toString());
+                logger.error(
+                    "Timeout after waiting " + wait + " for visibility of element by:  " + locator
+                        .toString());
                 return false;
             }
-        else try {
-            getWait(wait).until(ExpectedConditions.invisibilityOfElementLocated(locator));
-            return true;
-        } catch (TimeoutException e) {
-            logger.error("Timeout after waiting " + wait + " for invisibility of element by:  " + locator.toString());
-            throw new TimeoutException(e.getMessage());
-        }
+        else
+            try {
+                getWait(wait).until(ExpectedConditions.invisibilityOfElementLocated(locator));
+                return true;
+            } catch (TimeoutException e) {
+                logger.error(
+                    "Timeout after waiting " + wait + " for invisibility of element by:  " + locator
+                        .toString());
+                throw new TimeoutException(e.getMessage());
+            }
 
     }
 
-    @Override
-    public boolean isElementClickable(By locator, long wait) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean isElementClickable(By locator, long wait) {
 
         try {
             getWait(wait).until(ExpectedConditions.elementToBeClickable(locator));
             return true;
         } catch (TimeoutException e) {
-            logger.error("Timeout after waiting for element to be clickable located by:  " + locator.toString());
+            logger.error("Timeout after waiting for element to be clickable located by:  " + locator
+                .toString());
             throw new TimeoutException(e.getMessage());
         }
 
     }
 
-    @Override
-    public boolean isTextPresentInElementValue(By locator, String text, long wait) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean isTextPresentInElementValue(By locator, String text, long wait) {
         try {
             getWait(wait).until(ExpectedConditions.textToBePresentInElementValue(locator, text));
             return true;
         } catch (TimeoutException e) {
-            logger.error("Timeout after waiting text  " + text + " to be present in element located by " + locator.toString());
+            logger.error(
+                "Timeout after waiting text  " + text + " to be present in element located by "
+                    + locator.toString());
             throw new TimeoutException(e.getMessage());
         }
     }
 
 
-    @Override
-    public boolean isFrameAvailable(By locator, long wait) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean isFrameAvailable(By locator, long wait) {
         try {
             getWait(wait).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator));
             return true;
@@ -138,10 +189,10 @@ public final class Wait implements IWait, IContext {
 
     private FluentWait<WebDriver> getWait(long duration) {
         try {
-            return new FluentWait<>((((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver()))
-                    .withTimeout(duration, SECONDS)
-                    .pollingEvery(5, SECONDS)
-                    .ignoring(NoSuchElementException.class);
+            return new FluentWait<>(
+                (((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver()))
+                .withTimeout(duration, SECONDS).pollingEvery(5, SECONDS)
+                .ignoring(NoSuchElementException.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -150,109 +201,114 @@ public final class Wait implements IWait, IContext {
 
 }
 
-/**
- * Wait Factory Interface
- */
+
 interface IWait extends ISelenium {
 
     /**
-     * Wait for presence of an element
+     * <p>presenceOfElement.</p>
      *
-     * @param locator {@link By} locator
-     * @return this
+     * @param locator a {@link org.openqa.selenium.By} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IWait} object.
      */
     IWait presenceOfElement(By locator);
 
     /**
-     * Wait for visibility of and element
+     * <p>visibilityOfElement.</p>
      *
-     * @param locator {@link By} locator
-     * @return this
+     * @param locator a {@link org.openqa.selenium.By} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IWait} object.
      */
     IWait visibilityOfElement(By locator);
 
     /**
-     * Wait for invisibility of an element
+     * <p>invisibilityOfElement.</p>
      *
-     * @param locator {@link By} locator
-     * @return this
+     * @param locator a {@link org.openqa.selenium.By} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IWait} object.
      */
     IWait invisibilityOfElement(By locator);
 
     /**
-     * Wait for element to be clickable
+     * <p>elementToBeClickable.</p>
      *
-     * @param locator {@link By} locator
-     * @return this
+     * @param locator a {@link org.openqa.selenium.By} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IWait} object.
      */
     IWait elementToBeClickable(By locator);
 
     /**
-     * Wait for value to be present
+     * <p>valueToBePresent.</p>
      *
-     * @param locator {@link By} locator
-     * @param text    String
-     * @return this
+     * @param locator a {@link org.openqa.selenium.By} object.
+     * @param text    a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IWait} object.
      */
     IWait valueToBePresent(By locator, String text);
 
-//    /**
-//     * Wait for text to be present in element
-//     *
-//     * @param locator {@link By} locator
-//     * @param text    String
-//     * @return this
-//     */
-//    IWait textToBePresentInElement(By locator, final String text);
+    //    /**
+    //     * Wait for text to be present in element
+    //     *
+    //     * @param locator {@link By} locator
+    //     * @param text    String
+    //     * @return this
+    //     */
+    //    IWait textToBePresentInElement(By locator, final String text);
 
     /**
-     * Wait for frame to become available and switch to it
+     * <p>frameToBeAvailableAndSwitch.</p>
      *
-     * @param locator {@link By} locator
-     * @return this
+     * @param locator a {@link org.openqa.selenium.By} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IWait} object.
      */
     IWait frameToBeAvailableAndSwitch(By locator);
 
     /**
-     * Is WebElement located by @param org.openqa.selenium.By present
+     * <p>isElementPresent.</p>
      *
-     * @param locator Locator type
-     * @param wait    Wait time in seconds
-     * @return boolean result
+     * @param locator a {@link org.openqa.selenium.By} object.
+     * @param wait    a long.
+     * @return a boolean.
      */
     boolean isElementPresent(By locator, long wait);
 
     /**
-     * Is WebElement located by @param rg.openqa.selenium.By visible
+     * <p>isElementVisible.</p>
      *
-     * @param locator    Locator type
-     * @param visibility Visibility or invisibility
-     * @param wait       Wait time in seconds
-     * @return boolean result
+     * @param locator    a {@link org.openqa.selenium.By} object.
+     * @param visibility a boolean.
+     * @param wait       a long.
+     * @return a boolean.
      */
     boolean isElementVisible(By locator, boolean visibility, long wait);
 
     /**
-     * Is WebElement located by @param org.openqa.selenium.By clickable
+     * <p>isElementClickable.</p>
      *
-     * @param locator Locator type
-     * @param wait    Wait time in seconds
-     * @return boolean result
+     * @param locator a {@link org.openqa.selenium.By} object.
+     * @param wait    a long.
+     * @return a boolean.
      */
     boolean isElementClickable(By locator, long wait);
 
     /**
-     * Wait for given @param value to be present
+     * <p>isTextPresentInElementValue.</p>
      *
-     * @param locator Locator type
-     * @param text    String value
-     * @param wait    Wait time in seconds
-     * @return boolean result
+     * @param locator a {@link org.openqa.selenium.By} object.
+     * @param text    a {@link java.lang.String} object.
+     * @param wait    a long.
+     * @return a boolean.
      */
     boolean isTextPresentInElementValue(By locator, String text, long wait);
 
-//    boolean isTextPresentInElement(By locator, String text, long wait);
+    //    boolean isTextPresentInElement(By locator, String text, long wait);
 
+    /**
+     * <p>isFrameAvailable.</p>
+     *
+     * @param locator a {@link org.openqa.selenium.By} object.
+     * @param wait    a long.
+     * @return a boolean.
+     */
     boolean isFrameAvailable(By locator, long wait);
 
 }

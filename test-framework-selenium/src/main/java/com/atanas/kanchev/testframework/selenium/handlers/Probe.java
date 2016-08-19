@@ -1,3 +1,16 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.selenium.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
@@ -12,10 +25,9 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 
 /**
- * Probe
+ * <p>Probe class.</p>
  *
- * @author Atanas Ksnchev
- * @version $Id: $Id
+ * @author Atanas Kanchev
  */
 public final class Probe implements IProbe, IContext {
 
@@ -36,16 +48,18 @@ public final class Probe implements IProbe, IContext {
             logger.debug("Trying to locate element using " + locator);
             try {
                 find().elementBy(locator);
-                logger.debug("Element found, setting as the current element pointer SeleniumContext#currentElement");
+                logger.debug(
+                    "Element found, setting as the current element pointer SeleniumContext#currentElement");
             } catch (NoSuchElementException e) {
                 logger.debug("Unable to locate element by " + locator, e.getMessage());
             }
         }
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean exist() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean exist() {
         try {
             return ((SeleniumContext) context().getCurrentContext()).getCurrentElement() != null;
         } catch (CustomExceptions.Common.NullReferenceException e) {
@@ -53,26 +67,33 @@ public final class Probe implements IProbe, IContext {
         }
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean hasAnyText() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean hasAnyText() {
 
-        boolean hasAnyText = !((SeleniumContext) context().getCurrentContext()).getCurrentElement().getText().isEmpty();
+        boolean hasAnyText =
+            !((SeleniumContext) context().getCurrentContext()).getCurrentElement().getText()
+                .isEmpty();
         logger.debug("Has any text: " + hasAnyText);
         return hasAnyText;
 
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean hasText(boolean isCaseSensitiveMatch, boolean isPreciseMatch, String... textElements) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean hasText(boolean isCaseSensitiveMatch, boolean isPreciseMatch,
+        String... textElements) {
 
-        String elText = ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getText();
+        String elText =
+            ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getText();
 
         boolean matchFound = false;
 
         if (textElements != null && textElements.length > 0) {
-            logger.debug("Matching " + Arrays.toString(textElements) + " against element text:  " + elText);
+            logger.debug(
+                "Matching " + Arrays.toString(textElements) + " against element text:  " + elText);
             for (String textElement : textElements) {
 
                 if (isCaseSensitiveMatch) {
@@ -104,19 +125,26 @@ public final class Probe implements IProbe, IContext {
             }
 
             if (matchFound)
-                logger.debug("Match found! Expected: [" + Arrays.toString(textElements) + "] Actual: [" + elText + "]");
+                logger.debug(
+                    "Match found! Expected: [" + Arrays.toString(textElements) + "] Actual: ["
+                        + elText + "]");
             else
-                logger.error("Match not found! Expected: [" + Arrays.toString(textElements) + "] Actual: [" + elText + "]");
+                logger.error(
+                    "Match not found! Expected: [" + Arrays.toString(textElements) + "] Actual: ["
+                        + elText + "]");
 
         }
         return matchFound;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean hasAttribute(boolean preciseMatch, String attributeName, String attributeText) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean hasAttribute(boolean preciseMatch, String attributeName,
+        String attributeText) {
 
-        String attrValue = ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getAttribute(attributeName);
+        String attrValue = ((SeleniumContext) context().getCurrentContext()).getCurrentElement()
+            .getAttribute(attributeName);
 
         if (attrValue == null) {
             logger.error("The current element doesn't have a child attribute: " + attributeName);
@@ -125,57 +153,70 @@ public final class Probe implements IProbe, IContext {
 
         boolean matchFound = false;
         if (preciseMatch) {
-            if (attrValue.equals(attributeText)) matchFound = true;
+            if (attrValue.equals(attributeText))
+                matchFound = true;
         } else {
-            if (attrValue.contains(attributeText)) matchFound = true;
+            if (attrValue.contains(attributeText))
+                matchFound = true;
         }
 
         if (matchFound)
-            logger.debug("Match found! Attribute name: [" + attributeName + "] Attribute Value: [" + attrValue + "]");
+            logger.debug("Match found! Attribute name: [" + attributeName + "] Attribute Value: ["
+                + attrValue + "]");
         else
-            logger.error("Match not found! Attribute name: [" + attributeName + "] Attribute Value: [" + attrValue + "]");
+            logger.error(
+                "Match not found! Attribute name: [" + attributeName + "] Attribute Value: ["
+                    + attrValue + "]");
 
 
         return matchFound;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isOfTagType(String tag) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean isOfTagType(String tag) {
 
-        String tagName = ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getTagName();
+        String tagName =
+            ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getTagName();
         logger.debug("Current element tag name: " + tagName);
 
         return tagName.equals(tag);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isEnabled() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean isEnabled() {
         return ((SeleniumContext) context().getCurrentContext()).getCurrentElement().isEnabled();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isSelected() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean isSelected() {
         return ((SeleniumContext) context().getCurrentContext()).getCurrentElement().isSelected();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isActive() {
-        return ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getAttribute("class").contains("active");
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean isActive() {
+        return ((SeleniumContext) context().getCurrentContext()).getCurrentElement()
+            .getAttribute("class").contains("active");
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isDisplayed() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean isDisplayed() {
         return ((SeleniumContext) context().getCurrentContext()).getCurrentElement().isDisplayed();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean hasColour(CommonPageDefinitions.CSS css, String expectedColorHexCode) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean hasColour(CommonPageDefinitions.CSS css, String expectedColorHexCode) {
 
         Color expColor;
 
@@ -183,19 +224,23 @@ public final class Probe implements IProbe, IContext {
             expColor = Color.fromString(expectedColorHexCode);
             logger.debug("Expected color: " + expColor.asHex());
         } catch (IllegalArgumentException e) {
-            logger.error("Error processing color : " + expectedColorHexCode + " : color should have format : #[6 Hexadecimal Characters]");
+            logger.error("Error processing color : " + expectedColorHexCode
+                + " : color should have format : #[6 Hexadecimal Characters]");
             throw new IllegalArgumentException();
         }
 
         switch (css) {
             case CSS_BACKGROUND_COLOUR:
                 Color backgroundColor = Color.fromString(
-                        ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.getDefinition()));
+                    ((SeleniumContext) context().getCurrentContext()).getCurrentElement()
+                        .getCssValue(
+                            CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.getDefinition()));
                 logger.debug("Actual color: " + backgroundColor.asHex());
                 return expColor.asHex().equals(backgroundColor.asHex());
             case CSS_TEXT_COLOUR:
                 Color textColor = Color.fromString(
-                        ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.getDefinition()));
+                    ((SeleniumContext) context().getCurrentContext()).getCurrentElement()
+                        .getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.getDefinition()));
                 logger.debug("Actual color: " + textColor.asHex());
                 return expColor.asHex().equals(textColor.asHex());
         }
@@ -203,45 +248,60 @@ public final class Probe implements IProbe, IContext {
         return false;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean hasURL(String expectedURL, boolean isPreciseMatch) {
-        String actualURL = ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().getCurrentUrl();
-        if (isPreciseMatch) return actualURL.equals(expectedURL);
-        else return actualURL.contains(expectedURL);
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean hasURL(String expectedURL, boolean isPreciseMatch) {
+        String actualURL = ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver()
+            .getCurrentUrl();
+        if (isPreciseMatch)
+            return actualURL.equals(expectedURL);
+        else
+            return actualURL.contains(expectedURL);
 
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean hasTitle(String expectedTitle, boolean isPreciseMatch) {
-        String actualURL = ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().getTitle();
-        if (isPreciseMatch) return actualURL.equals(expectedTitle);
-        else return actualURL.contains(expectedTitle);
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean hasTitle(String expectedTitle, boolean isPreciseMatch) {
+        String actualURL =
+            ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().getTitle();
+        if (isPreciseMatch)
+            return actualURL.equals(expectedTitle);
+        else
+            return actualURL.contains(expectedTitle);
 
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean hasPartialImagePath(String imagePath) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean hasPartialImagePath(String imagePath) {
         boolean contains = false;
-        if (!((SeleniumContext) context().getCurrentContext()).getCurrentElement().getTagName().equals(CommonPageDefinitions.HTML.IMAGE.getDefinition())) {
+        if (!((SeleniumContext) context().getCurrentContext()).getCurrentElement().getTagName()
+            .equals(CommonPageDefinitions.HTML.IMAGE.getDefinition())) {
             logger.error("hasImage : Current element is not image container");
         } else {
-            contains = ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getAttribute("src").contains(imagePath);
+            contains = ((SeleniumContext) context().getCurrentContext()).getCurrentElement()
+                .getAttribute("src").contains(imagePath);
         }
         return contains;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean hasLinkToURL(String url) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean hasLinkToURL(String url) {
         boolean hasAnchorAndHref = false;
         ((SeleniumContext) context().getCurrentContext()).setWebElementsList(
-                ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
+            ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver()
+                .findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
 
-        for (WebElement anchor : ((SeleniumContext<WebDriver>) context().getCurrentContext()).getWebElementsList()) {
-            if (anchor.getAttribute("href") != null && anchor.getAttribute("href").contains(url)) ;
+        for (WebElement anchor : ((SeleniumContext<WebDriver>) context().getCurrentContext())
+            .getWebElementsList()) {
+            if (anchor.getAttribute("href") != null && anchor.getAttribute("href").contains(url))
+                ;
             hasAnchorAndHref = true;
             break;
 
@@ -249,208 +309,210 @@ public final class Probe implements IProbe, IContext {
         return hasAnchorAndHref;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean followLinkToURL(String link) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean followLinkToURL(String link) {
         boolean canFollow = false;
         if (hasLinkToURL(link)) {
-            ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().navigate().to(link);
+            ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().navigate()
+                .to(link);
             canFollow = true;
         }
         return canFollow;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean titleHasText(String text, boolean isPreciseMatch) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean titleHasText(String text, boolean isPreciseMatch) {
 
-        String title = ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().getTitle();
+        String title =
+            ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().getTitle();
 
         boolean matchFound = false;
         if (isPreciseMatch) {
-            if (title.contains(text)) matchFound = true;
+            if (title.contains(text))
+                matchFound = true;
         } else {
-            if (title.equals(text)) matchFound = true;
+            if (title.equals(text))
+                matchFound = true;
         }
 
-        if (matchFound) logger.debug("Page title contains: " + text + " Actual Title: " + title);
-        else logger.error("Page title does not contain: " + text + " Actual Title: " + title);
+        if (matchFound)
+            logger.debug("Page title contains: " + text + " Actual Title: " + title);
+        else
+            logger.error("Page title does not contain: " + text + " Actual Title: " + title);
 
         return matchFound;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean hasPartialCookieValue(String cookieName, String cookieValue) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public boolean hasPartialCookieValue(String cookieName, String cookieValue) {
 
         try {
 
-            if (((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().manage().getCookieNamed(cookieName).getValue().contains(cookieValue)) {
+            if (((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().manage()
+                .getCookieNamed(cookieName).getValue().contains(cookieValue)) {
                 return true;
             }
         } catch (NullPointerException e) {
             logger.error("Cookie: " + cookieName + " does not exist");
             logger.debug("Cookie Names:");
-            for (Cookie cookie : ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().manage().getCookies()) {
+            for (Cookie cookie : ((SeleniumContext<WebDriver>) context().getCurrentContext())
+                .getDriver().manage().getCookies()) {
                 logger.debug(cookie.getName());
             }
             return false;
         }
-        logger.error("Cookie does not contain the value: " + cookieValue + ", actual value: " + (((SeleniumContext<WebDriver>) context().getCurrentContext())).getDriver().manage().getCookieNamed(cookieName).getValue());
+        logger.error("Cookie does not contain the value: " + cookieValue + ", actual value: "
+            + (((SeleniumContext<WebDriver>) context().getCurrentContext())).getDriver().manage()
+            .getCookieNamed(cookieName).getValue());
         return false;
 
     }
 
 }
 
+
 interface IProbe extends ISelenium {
     /**
-     * Check if the element locator passed to the constructor exists
+     * <p>exist.</p>
      *
-     * @return {@code true} if the element has been found
+     * @return a boolean.
      */
     boolean exist();
 
     /**
-     * Probe if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} has any text i.e. </br>
-     * {@code <div>Text</div>} match will return <b>true</b>.
-     * The text to be found can be anywhere in the element text string
+     * <p>hasAnyText.</p>
      *
-     * @return {@code true} if the current WebElement has any text
+     * @return a boolean.
      */
     boolean hasAnyText();
 
     /**
-     * Probe if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} has partial text match e.g.
-     * {@code hasPartialText("hello");} matching against {@code <div>hello there<\div>}
-     * will return <b>true</b> The text to be found can be a subset of
-     * element text string </br> The method can also be used for multiple String elements
-     * e.g. {@code hasPartialText("+", "-");
-     * </br>(Note once an item is matched it returns true, irrespective of the other checks)
+     * <p>hasText.</p>
      *
-     * @param isCaseSensitiveMatch {@code boolean}
-     * @param isPreciseMatch       {@code boolean}
-     * @param textElements         the text elements
-     * @return {@code true} if the current element contains the text
+     * @param isCaseSensitiveMatch a boolean.
+     * @param isPreciseMatch       a boolean.
+     * @param textElements         a {@link java.lang.String} object.
+     * @return a boolean.
      */
     boolean hasText(boolean isCaseSensitiveMatch, boolean isPreciseMatch, String... textElements);
 
     /**
-     * Check if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} contains specified identifier.
-     * The identifier to be found can be a subset of element identifier
+     * <p>hasAttribute.</p>
      *
-     * @param preciseMatch  {@code boolean}
-     * @param attributeName the attribute name to check
-     * @param attributeText the attribute text to check
-     * @return {@code true} if identifier is present and its value matches @param attributeText
+     * @param preciseMatch  a boolean.
+     * @param attributeName a {@link java.lang.String} object.
+     * @param attributeText a {@link java.lang.String} object.
+     * @return a boolean.
      */
     boolean hasAttribute(boolean preciseMatch, String attributeName, String attributeText);
 
     /**
-     * Checks if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} of specified HTML tag type.
+     * <p>isOfTagType.</p>
      *
-     * @param tag the tag name to check
-     * @return {@code true}, if element of specified tag type
+     * @param tag a {@link java.lang.String} object.
+     * @return a boolean.
      */
     boolean isOfTagType(String tag);
 
     /**
-     * Checks if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} is enabled i.e. can receive focus.
+     * <p>isEnabled.</p>
      *
-     * @return {@code true} if element is enabled
+     * @return a boolean.
      */
     boolean isEnabled();
 
     /**
-     * Checks if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} is selected.
-     * Checkboxes, options in select and radio buttons.
+     * <p>isSelected.</p>
      *
-     * @return {@code true} if element is selected
+     * @return a boolean.
      */
     boolean isSelected();
 
     /**
-     * Checks {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} is active.
+     * <p>isActive.</p>
      *
-     * @return {@code true} if element is active
+     * @return a boolean.
      */
     boolean isActive();
 
     /**
-     * Checks {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} is displayed.
+     * <p>isDisplayed.</p>
      *
-     * @return {@code true} if element is displayed
+     * @return a boolean.
      */
     boolean isDisplayed();
 
     /**
-     * Check if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} has color as expected
+     * <p>hasColour.</p>
      *
-     * @param css                  CSS definition {@link com.atanas.kanchev.testframework.selenium.handlers.CommonPageDefinitions.CSS}
-     * @param expectedColorHexCode HEX color code
-     * @return {@code true} if the color matches
+     * @param css                  a {@link com.atanas.kanchev.testframework.selenium.handlers.CommonPageDefinitions.CSS} object.
+     * @param expectedColorHexCode a {@link java.lang.String} object.
+     * @return a boolean.
      */
     boolean hasColour(CommonPageDefinitions.CSS css, String expectedColorHexCode);
 
     /**
-     * Check if the current URL that the browser is looking at is same as {@code @param expectedURL}
+     * <p>hasURL.</p>
      *
-     * @param expectedURL    String the expected URL
-     * @param isPreciseMatch boolean is precise match
-     * @return {@code true} if the url matches
+     * @param expectedURL    a {@link java.lang.String} object.
+     * @param isPreciseMatch a boolean.
+     * @return a boolean.
      */
     boolean hasURL(String expectedURL, boolean isPreciseMatch);
 
 
     /**
-     * Check if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} has a title as expected
+     * <p>hasTitle.</p>
      *
-     * @param expectedTitle  String
-     * @param isPreciseMatch boolean
-     * @return {@code true} if the title matches
+     * @param expectedTitle  a {@link java.lang.String} object.
+     * @param isPreciseMatch a boolean.
+     * @return a boolean.
      */
     boolean hasTitle(String expectedTitle, boolean isPreciseMatch);
 
     /**
-     * Contains image reference. Either exact or as a subset i.e. 'image.gif' =
-     * 'c:/images/image.gif' = true.
+     * <p>hasPartialImagePath.</p>
      *
-     * @param imagePath String path to image
-     * @return true if image found false if not found or the current element is
-     * not an <IMG> tag
+     * @param imagePath a {@link java.lang.String} object.
+     * @return a boolean.
      */
     boolean hasPartialImagePath(String imagePath);
 
     /**
-     * Check if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} has link to url
+     * <p>hasLinkToURL.</p>
      *
-     * @param url expected url
-     * @return {@code true} if it has link to url
+     * @param url a {@link java.lang.String} object.
+     * @return a boolean.
      */
     boolean hasLinkToURL(String url);
 
     /**
-     * Check if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} has link to url
-     * and if it does - navigate to it
+     * <p>followLinkToURL.</p>
      *
-     * @param link URL
-     * @return {@code true} if it has link to url and it was able to navigate
+     * @param link a {@link java.lang.String} object.
+     * @return a boolean.
      */
     boolean followLinkToURL(String link);
 
     /**
-     * Check if {@link com.atanas.kanchev.testframework.selenium.context.SeleniumContext#currentElement} has title with text
+     * <p>titleHasText.</p>
      *
-     * @param text           expected text
-     * @param isPreciseMatch boolean
-     * @return {@code true} if it has has title with text
+     * @param text           a {@link java.lang.String} object.
+     * @param isPreciseMatch a boolean.
+     * @return a boolean.
      */
     boolean titleHasText(String text, boolean isPreciseMatch);
 
     /**
-     * Check if the cookie has text
+     * <p>hasPartialCookieValue.</p>
      *
-     * @param cookieName a {@link java.lang.String} object.
+     * @param cookieName  a {@link java.lang.String} object.
      * @param cookieValue a {@link java.lang.String} object.
      * @return a boolean.
      */

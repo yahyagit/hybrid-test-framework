@@ -1,3 +1,16 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.selenium.driverfactory;
 
 import org.openqa.selenium.Dimension;
@@ -17,10 +30,9 @@ import static org.openqa.selenium.Proxy.ProxyType.MANUAL;
 /**
  * <p>DriverFactory class.</p>
  *
- * @author atanas
- * @version 1.0
+ * @author Atanas Kanchev
  */
-public class DriverFactory extends DriverConfig{
+public class DriverFactory extends DriverConfig {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(DriverFactory.class);
@@ -70,14 +82,15 @@ public class DriverFactory extends DriverConfig{
         logger.debug("Current Browser Selection: " + selectedDriverType);
 
         if (null != getCustomCapabilities())
-            desiredCapabilities = new DesiredCapsFactory().mergeCapabilities(desiredCapabilities, getCustomCapabilities());
+            desiredCapabilities = new DesiredCapsFactory()
+                .mergeCapabilities(desiredCapabilities, getCustomCapabilities());
 
         logger.debug("Using " + desiredCapabilities);
 
         if (isUseRemoteWebDriver()) {
             RemoteWebDriverFactory remoteWebDriverFactory = new RemoteWebDriverFactory();
             return conf(remoteWebDriverFactory.getRemoteWebDriver(desiredCapabilities));
-//            logger.debug("Running on IP: " + remoteWebDriverFactory.getExecutionIP());
+            //            logger.debug("Running on IP: " + remoteWebDriverFactory.getExecutionIP());
         } else {
             logger.debug("Running on IP: " + getExecutionIP());
             return conf(selectedDriverType.getWebDriverObject(desiredCapabilities));
@@ -95,7 +108,8 @@ public class DriverFactory extends DriverConfig{
         logger.debug("Setting implicitly wait to: " + DEFAULT_IMPL_WAIT + " ms.");
         driver.manage().timeouts().implicitlyWait(DEFAULT_IMPL_WAIT, TimeUnit.MILLISECONDS);
         logger.debug("Setting page load timeout to: " + DEFAULT_PAGE_LOAD_TIMEOUT + " ms.");
-        driver.manage().timeouts().pageLoadTimeout(DEFAULT_PAGE_LOAD_TIMEOUT, TimeUnit.MILLISECONDS);
+        driver.manage().timeouts()
+            .pageLoadTimeout(DEFAULT_PAGE_LOAD_TIMEOUT, TimeUnit.MILLISECONDS);
         return driver;
     }
 
@@ -105,8 +119,10 @@ public class DriverFactory extends DriverConfig{
             logger.debug("Maximising browser window");
             driver.manage().window().maximize();
         } else {
-            logger.debug("Setting resolution to: " + DEFAULT_BROWSER_RES_WIDTH + "*" + DEFAULT_BROWSER_RES_HEIGHT);
-            driver.manage().window().setSize(new Dimension(DEFAULT_BROWSER_RES_WIDTH, DEFAULT_BROWSER_RES_HEIGHT));
+            logger.debug("Setting resolution to: " + DEFAULT_BROWSER_RES_WIDTH + "*"
+                + DEFAULT_BROWSER_RES_HEIGHT);
+            driver.manage().window()
+                .setSize(new Dimension(DEFAULT_BROWSER_RES_WIDTH, DEFAULT_BROWSER_RES_HEIGHT));
         }
 
         return driver;
@@ -117,9 +133,9 @@ public class DriverFactory extends DriverConfig{
     ////////////////////
 
     /**
-     * Get endpoint execution IP address
+     * <p>getExecutionIP.</p>
      *
-     * @return String IP
+     * @return a {@link java.lang.String} object.
      */
     public String getExecutionIP() {
 

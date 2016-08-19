@@ -1,6 +1,22 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.appium.driverfactory;
 
-import com.atanas.kanchev.testframework.commons.properties.PropertyReader;
+import com.atanas.kanchev.testframework.dataservices.dataprovider.properties.PropertyReader;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
@@ -13,7 +29,6 @@ import java.io.File;
  * <p>AppiumLocalServiceBuilder class.</p>
  *
  * @author Atanas Kanchev
- * @version 1.0
  */
 public class AppiumLocalServiceBuilder {
 
@@ -32,7 +47,7 @@ public class AppiumLocalServiceBuilder {
             PropertyReader.getProp("appium.properties", "appium.js.executable.linux");
 
     /**
-     * <p>configureService.</p>
+     * <p>Configure service.</p>
      *
      * @return a {@link io.appium.java_client.service.local.AppiumServiceBuilder} object.
      */
@@ -41,7 +56,7 @@ public class AppiumLocalServiceBuilder {
     }
 
     /**
-     * Build default Appium local service
+     * <p>Build default service.</p>
      *
      * @return a {@link com.atanas.kanchev.testframework.appium.driverfactory.AppiumLocalServiceBuilder} object.
      */
@@ -82,7 +97,7 @@ public class AppiumLocalServiceBuilder {
     }
 
     /**
-     * <p>startServer.</p>
+     * <p>Start server.</p>
      *
      * @return a {@link com.atanas.kanchev.testframework.appium.driverfactory.AppiumLocalServiceBuilder} object.
      */
@@ -99,7 +114,7 @@ public class AppiumLocalServiceBuilder {
     }
 
     /**
-     * <p>stopServer.</p>
+     * <p>Stop server.</p>
      *
      * @return a {@link com.atanas.kanchev.testframework.appium.driverfactory.AppiumLocalServiceBuilder} object.
      */

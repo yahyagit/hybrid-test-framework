@@ -1,3 +1,16 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.sikuli.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
@@ -10,10 +23,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
- * SukuliX Implementation
+ * <p>SikuliXFactory class.</p>
  *
- * @author Atanas Ksnchev
- * @version 1.0
+ * @author Atanas Kanchev
  */
 public final class SikuliXFactory {
 
@@ -45,16 +57,16 @@ public final class SikuliXFactory {
     public SikuliXFactory(final String fileName) {
 
         this();
-        if (fileName != null) findImage(fileName);
+        if (fileName != null)
+            findImage(fileName);
 
     }
 
     /**
-     * From the current screen getImageFilePath the image defined in the {@param fileName}
-     * Hover the mouse pointer to the matched image location on the screen
+     * <p>findImage.</p>
      *
-     * @param fileName The image file name
-     * @return this
+     * @param fileName a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory} object.
      */
     public SikuliXFactory findImage(String fileName) {
 
@@ -64,10 +76,9 @@ public final class SikuliXFactory {
     }
 
     /**
-     * Left click at the region's last successful match
-     * Click center if no lastMatch
+     * <p>click.</p>
      *
-     * @return this
+     * @return a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory} object.
      */
     public SikuliXFactory click() {
 
@@ -75,57 +86,72 @@ public final class SikuliXFactory {
             logger.debug("Successfully clicked");
         } else {
             logger.error("Unable to perform single click");
-            throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform single click");
+            throw new CustomExceptions.Sikuli.UnableToInteractException(
+                "Unable to perform single click");
         }
 
         return this;
     }
 
     /**
-     * From the current screen navigate to image and click according to {@param directions}
+     * <p>click.</p>
      *
-     * @param direction the direction to click on, ex Directions.LEFT
-     * @param px        the pixels to click on
-     * @return this
+     * @param direction a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory.Directions} object.
+     * @param px        a int.
+     * @return a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory} object.
      */
     public SikuliXFactory click(final Directions direction, final int px) {
 
         switch (direction) {
             case ABOVE:
-                if (match.above(px).click() == 1) logger.debug("Successfully clicked " + px + " " + direction);
-                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                if (match.above(px).click() == 1)
+                    logger.debug("Successfully clicked " + px + " " + direction);
+                else
+                    throw new CustomExceptions.Sikuli.UnableToInteractException(
+                        "Unable to perform click");
                 break;
             case LEFT:
-                if (match.left(px).click() == 1) logger.debug("Successfully clicked " + px + " " + direction);
-                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                if (match.left(px).click() == 1)
+                    logger.debug("Successfully clicked " + px + " " + direction);
+                else
+                    throw new CustomExceptions.Sikuli.UnableToInteractException(
+                        "Unable to perform click");
                 break;
             case CENTER:
                 try {
                     match.getCenter().click();
                     logger.debug("Successfully clicked " + px + " " + direction);
                 } catch (Exception e) {
-                    throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                    throw new CustomExceptions.Sikuli.UnableToInteractException(
+                        "Unable to perform click");
                 }
                 break;
             case RIGHT:
-                if (match.right(px).click() == 1) logger.debug("Successfully clicked " + px + " " + direction);
-                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                if (match.right(px).click() == 1)
+                    logger.debug("Successfully clicked " + px + " " + direction);
+                else
+                    throw new CustomExceptions.Sikuli.UnableToInteractException(
+                        "Unable to perform click");
                 break;
             case BELOW:
-                if (match.below(px).click() == 1) logger.debug("Successfully clicked " + px + " " + direction);
-                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                if (match.below(px).click() == 1)
+                    logger.debug("Successfully clicked " + px + " " + direction);
+                else
+                    throw new CustomExceptions.Sikuli.UnableToInteractException(
+                        "Unable to perform click");
                 break;
             default:
-                throw new CustomExceptions.Common.IllegalArgumentException("Not supported direction: " + direction);
+                throw new CustomExceptions.Common.IllegalArgumentException(
+                    "Not supported direction: " + direction);
         }
 
         return this;
     }
 
     /**
-     * Double click at the given target location {@link org.sikuli.script.Region#doubleClick()}
+     * <p>doubleClick.</p>
      *
-     * @return this
+     * @return a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory} object.
      */
     public SikuliXFactory doubleClick() {
 
@@ -133,17 +159,18 @@ public final class SikuliXFactory {
             logger.debug("Successfully clicked");
         } else {
             logger.error("Unable to perform double click");
-            throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform double click");
+            throw new CustomExceptions.Sikuli.UnableToInteractException(
+                "Unable to perform double click");
         }
         return this;
     }
 
     /**
-     * From the current screen double click on image according to {@param directions}
+     * <p>doubleClick.</p>
      *
-     * @param direction Directions
-     * @param px        the pixels to click on
-     * @return this
+     * @param direction a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory.Directions} object.
+     * @param px        a int.
+     * @return a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory} object.
      */
     public SikuliXFactory doubleClick(final Directions direction, final int px) {
 
@@ -151,42 +178,55 @@ public final class SikuliXFactory {
             case ABOVE:
                 if (match.above(px).doubleClick() == 1)
                     logger.debug("Successfully clicked " + px + " " + direction);
-                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                else
+                    throw new CustomExceptions.Sikuli.UnableToInteractException(
+                        "Unable to perform click");
                 break;
             case LEFT:
                 if (match.left(px).doubleClick() == 1)
                     logger.debug("Successfully clicked " + px + " " + direction);
-                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                else
+                    throw new CustomExceptions.Sikuli.UnableToInteractException(
+                        "Unable to perform click");
                 break;
             case CENTER:
-                if (match.doubleClick() == 1) logger.debug("Successfully clicked " + px + " " + direction);
-                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                if (match.doubleClick() == 1)
+                    logger.debug("Successfully clicked " + px + " " + direction);
+                else
+                    throw new CustomExceptions.Sikuli.UnableToInteractException(
+                        "Unable to perform click");
                 break;
             case RIGHT:
                 if (match.right(px).doubleClick() == 1)
                     logger.debug("Successfully clicked " + px + " " + direction);
-                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                else
+                    throw new CustomExceptions.Sikuli.UnableToInteractException(
+                        "Unable to perform click");
                 break;
             case BELOW:
                 if (match.below(px).doubleClick() == 1)
                     logger.debug("Successfully clicked " + px + " " + direction);
-                else throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to perform click");
+                else
+                    throw new CustomExceptions.Sikuli.UnableToInteractException(
+                        "Unable to perform click");
                 break;
             default:
-                throw new CustomExceptions.Common.IllegalArgumentException("Not supported direction: " + direction);
+                throw new CustomExceptions.Common.IllegalArgumentException(
+                    "Not supported direction: " + direction);
         }
         return this;
     }
 
     /**
-     * From the current screen get the Image {@link org.sikuli.script.Screen#capture(org.sikuli.script.Region)}
+     * <p>captureImage.</p>
      *
-     * @param fileName file name for the saved image
-     * @param pixelSize size of the image to be captured in px
-     * @param direction direction
-     * @return this
+     * @param fileName  a {@link java.lang.String} object.
+     * @param pixelSize a int.
+     * @param direction a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory.Directions} object.
+     * @return a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory} object.
      */
-    public SikuliXFactory captureImage(final String fileName, final int pixelSize, final Directions direction) {
+    public SikuliXFactory captureImage(final String fileName, final int pixelSize,
+        final Directions direction) {
 
         BufferedImage image = null;
 
@@ -207,12 +247,14 @@ public final class SikuliXFactory {
                     image = screen.capture(match.right(pixelSize)).getImage();
                     break;
                 default:
-                    throw new CustomExceptions.Common.IllegalArgumentException("Unsupported direction");
+                    throw new CustomExceptions.Common.IllegalArgumentException(
+                        "Unsupported direction");
             }
         } catch (Exception e) {
             logger.error("Unable to capture image ", e);
         } finally {
-            if (image != null) ImageFinder.saveImage(image, fileName);
+            if (image != null)
+                ImageFinder.saveImage(image, fileName);
             logger.debug("Saved image ", fileName);
         }
 
@@ -220,10 +262,10 @@ public final class SikuliXFactory {
     }
 
     /**
-     * From the current screen type in a string param {@link org.sikuli.script.Region#type(java.lang.Object, java.lang.String, int)}
+     * <p>type.</p>
      *
-     * @param text Text to enter in the
-     * @return this
+     * @param text a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory} object.
      */
     public SikuliXFactory type(String text) {
 
@@ -240,12 +282,12 @@ public final class SikuliXFactory {
     }
 
     /**
-     * Type in text in the current {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory#match}
+     * <p>type.</p>
      *
-     * @param text      value to be typed in
-     * @param pixelSize px to shift
-     * @param direction relative to the current position
-     * @return this
+     * @param text      a {@link java.lang.String} object.
+     * @param pixelSize a int.
+     * @param direction a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory.Directions} object.
+     * @return a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory} object.
      */
     public SikuliXFactory type(final String text, final int pixelSize, final Directions direction) {
 
@@ -271,13 +313,11 @@ public final class SikuliXFactory {
     }
 
     /**
-     * From the current screen create a swipe/click and drag motion relative
-     * from Img1 to Img2
-     * Drag from a position and drop to another using left mouse button
+     * <p>swipeBetweenImages.</p>
      *
      * @param startPointImagePath a {@link java.lang.String} object.
-     * @param endPointImagePath a {@link java.lang.String} object.
-     * @return this
+     * @param endPointImagePath   a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory} object.
      */
     public SikuliXFactory swipeBetweenImages(String startPointImagePath, String endPointImagePath) {
         try {
@@ -290,14 +330,15 @@ public final class SikuliXFactory {
     }
 
     /**
-     * Find image by scrolling
+     * <p>findImageByScrolling.</p>
      *
-     * @param fileName  image file name
-     * @param iterations number of swipes
-     * @param direction  direction of swipes
-     * @return imageFound
+     * @param fileName   a {@link java.lang.String} object.
+     * @param iterations a int.
+     * @param direction  a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory.Directions} object.
+     * @return a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory} object.
      */
-    public SikuliXFactory findImageByScrolling(final String fileName, final int iterations, final Directions direction) {
+    public SikuliXFactory findImageByScrolling(final String fileName, final int iterations,
+        final Directions direction) {
 
         screen.setAutoWaitTimeout(2.5);
         int i = 0;
@@ -339,19 +380,17 @@ public final class SikuliXFactory {
         screen.setAutoWaitTimeout(30);
         if (!imageFound) {
             logger.error("Image not found via scrolling within timeout limit");
-            throw new CustomExceptions.Sikuli.UnableToInteractException("Image not found via scrolling within timeout limit");
+            throw new CustomExceptions.Sikuli.UnableToInteractException(
+                "Image not found via scrolling within timeout limit");
         }
         return this;
     }
 
     /**
-     * From the existing Screen press a set of generic shortcut keys i.e. SPACE, F12, ESC
-     * {@link org.sikuli.script.Key}
-     * <p>
-     * Example usage: press(Key.F12) or press(Key.SPACE)
+     * <p>sendKey.</p>
      *
-     * @param specialKey - to be used with the Key class
-     * @return true if button is pressed
+     * @param specialKey a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory} object.
      */
     public SikuliXFactory sendKey(final String specialKey) {
 
@@ -359,22 +398,25 @@ public final class SikuliXFactory {
             logger.debug("Special key successfully sent");
         } else {
             logger.error("Unable to send special key " + specialKey);
-            throw new CustomExceptions.Sikuli.UnableToInteractException("Unable to send special key " + specialKey);
+            throw new CustomExceptions.Sikuli.UnableToInteractException(
+                "Unable to send special key " + specialKey);
         }
 
         return this;
     }
 
     /**
-     * Set Minimum Similarity For Image
+     * <p>setMinimumSimilarityForImage.</p>
      *
-     * @param minSimilarity double
-     * @return true if value is set with no errors
+     * @param minSimilarity a double.
+     * @return a {@link com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory} object.
      */
     public SikuliXFactory setMinimumSimilarityForImage(final double minSimilarity) {
         if (minSimilarity > 1.0 || minSimilarity < 0) {
-            logger.error("The value entered for minSimilarity is invalid, enter a value between 0 & 1");
-            throw new CustomExceptions.Common.IllegalArgumentException("The value entered for minSimilarity is invalid, enter a value between 0 & 1");
+            logger.error(
+                "The value entered for minSimilarity is invalid, enter a value between 0 & 1");
+            throw new CustomExceptions.Common.IllegalArgumentException(
+                "The value entered for minSimilarity is invalid, enter a value between 0 & 1");
         } else {
             Settings.MinSimilarity = minSimilarity;
             logger.debug("MinSimilarity value set to " + Settings.MinSimilarity);
@@ -388,7 +430,8 @@ public final class SikuliXFactory {
         try {
             match = screen.find(getImageFilePath(imageFileName));
             match.hover();
-            logger.debug("Match found for image " + imageFileName + " in location " + match.getTarget());
+            logger.debug(
+                "Match found for image " + imageFileName + " in location " + match.getTarget());
         } catch (FindFailed ffe) {
             logger.error("Unable getImageFilePath a match for image");
         }
@@ -409,11 +452,7 @@ public final class SikuliXFactory {
     }
 
     public enum Directions {
-        LEFT,
-        RIGHT,
-        CENTER,
-        ABOVE,
-        BELOW
+        LEFT, RIGHT, CENTER, ABOVE, BELOW
     }
 
 }

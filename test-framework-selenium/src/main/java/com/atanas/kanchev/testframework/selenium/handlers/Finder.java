@@ -1,3 +1,16 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.selenium.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
@@ -16,9 +29,9 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * Selenium Finder Factory
+ * <p>Finder class.</p>
  *
- * @author Atanas Ksnchev
+ * @author Atanas Kanchev
  */
 public final class Finder implements IFinder, IContext {
 
@@ -27,180 +40,236 @@ public final class Finder implements IFinder, IContext {
 
     private final WebDriver driver;
 
+    /**
+     * <p>Constructor for Finder.</p>
+     */
     public Finder() {
         driver = (WebDriver) context().getCurrentContext().getDriver();
         goToRootElement();
     }
 
+    /**
+     * <p>Constructor for Finder.</p>
+     *
+     * @param clazz a {@link java.lang.Class} object.
+     */
     public Finder(Class<?> clazz) {
         this();
         PageFactory.initElements(driver, clazz);
     }
 
+    /**
+     * <p>Constructor for Finder.</p>
+     *
+     * @param element a {@link org.openqa.selenium.WebElement} object.
+     */
     public Finder(WebElement element) {
         this();
         ((SeleniumContext) context().getCurrentContext()).setCurrentElement(element);
     }
 
-    @Override
-    public Finder elementBy(final By locator) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Finder elementBy(final By locator) {
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            ((SeleniumContext) context().getCurrentContext()).setCurrentElement(findElement(locator));
+            ((SeleniumContext) context().getCurrentContext())
+                .setCurrentElement(findElement(locator));
         return this;
     }
 
-    @Override
-    public Finder elementsBy(final By locator) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Finder elementsBy(final By locator) {
 
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            ((SeleniumContext) context().getCurrentContext()).setWebElementsList(findElements(locator));
+            ((SeleniumContext) context().getCurrentContext())
+                .setWebElementsList(findElements(locator));
         return this;
 
     }
 
-    @Override
-    public Finder byWebElement(final WebElement element) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Finder byWebElement(final WebElement element) {
 
         if (element == null)
-            throw new CustomExceptions.Common.NullArgumentException("Null method argument: WebElement element");
+            throw new CustomExceptions.Common.NullArgumentException(
+                "Null method argument: WebElement element");
         else
             ((SeleniumContext) context().getCurrentContext()).setCurrentElement(element);
 
         return this;
     }
 
-    @Override
-    public Finder containingText(final String text) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Finder containingText(final String text) {
 
         if (text == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
-                    findElement(By.xpath(".//*/text()[contains(normalize-space(.), " + Quotes.escape(text) + ")]/parent::*")));
+            ((SeleniumContext) context().getCurrentContext()).setCurrentElement(findElement(
+                By.xpath(".//*/text()[contains(normalize-space(.), " + Quotes.escape(text)
+                    + ")]/parent::*")));
         return this;
 
     }
 
-    @Override
-    public Finder havingText(final String text) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Finder havingText(final String text) {
 
         if (text == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
-                    findElement(By.xpath(".//*/text()[normalize-space(.) = " + Quotes.escape(text) + "]/parent::*")));
+            ((SeleniumContext) context().getCurrentContext()).setCurrentElement(findElement(
+                By.xpath(
+                    ".//*/text()[normalize-space(.) = " + Quotes.escape(text) + "]/parent::*")));
         return this;
 
     }
 
-    @Override
-    public Finder byScrollingToElement(final By locator) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Finder byScrollingToElement(final By locator) {
 
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else {
-            ((SeleniumContext) context().getCurrentContext()).setCurrentElement(findElement(locator));
+            ((SeleniumContext) context().getCurrentContext())
+                .setCurrentElement(findElement(locator));
             new JSExecutor().executeScript(driver, "arguments[0].scrollIntoView(true);",
-                    ((SeleniumContext) context().getCurrentContext()).getCurrentElement());
+                ((SeleniumContext) context().getCurrentContext()).getCurrentElement());
         }
         return this;
     }
 
-    @Override
-    public Finder byScrollingByAttribute(String attribute, String value) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Finder byScrollingByAttribute(String attribute, String value) {
 
-        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(findElement(By.xpath("//*[contains(@" + attribute + ", '" + value + "')]")));
+        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
+            findElement(By.xpath("//*[contains(@" + attribute + ", '" + value + "')]")));
         new JSExecutor().executeScript(driver, "arguments[0].scrollIntoView(true);",
-                ((SeleniumContext) context().getCurrentContext()).getCurrentElement());
+            ((SeleniumContext) context().getCurrentContext()).getCurrentElement());
 
         return this;
     }
 
-    @Override
-    public Finder byScrollingByTag(String tag, String value) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Finder byScrollingByTag(String tag, String value) {
 
-        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(findElement(By.xpath("//*[contains(" + tag + ", '" + value + "')]")));
+        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
+            findElement(By.xpath("//*[contains(" + tag + ", '" + value + "')]")));
         new JSExecutor().executeScript(driver, "arguments[0].scrollIntoView(true);",
-                ((SeleniumContext) context().getCurrentContext()).getCurrentElement());
+            ((SeleniumContext) context().getCurrentContext()).getCurrentElement());
 
         return this;
     }
 
-    @Override
-    public Finder byScrollingByText(String text, boolean isExactMatch) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Finder byScrollingByText(String text, boolean isExactMatch) {
 
         if (isExactMatch)
-            ((SeleniumContext) context().getCurrentContext()).setCurrentElement(findElement(By.xpath("//*[.=\"" + text + "\"]")));
+            ((SeleniumContext) context().getCurrentContext())
+                .setCurrentElement(findElement(By.xpath("//*[.=\"" + text + "\"]")));
         else
-            ((SeleniumContext) context().getCurrentContext()).setCurrentElement(findElement(By.xpath("//*[contains(text(), \"" + text + "\")]")));
+            ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
+                findElement(By.xpath("//*[contains(text(), \"" + text + "\")]")));
 
         new JSExecutor().executeScript(driver, "arguments[0].scrollIntoView(true);",
-                ((SeleniumContext) context().getCurrentContext()).getCurrentElement());
+            ((SeleniumContext) context().getCurrentContext()).getCurrentElement());
 
         return this;
     }
 
-    @Override
-    public Finder byAttributeValue(String attribute, String value) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Finder byAttributeValue(String attribute, String value) {
 
         if (attribute == null || value == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
             ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
-                    findElement(By.cssSelector("[" + attribute + "='" + value + "']")));
+                findElement(By.cssSelector("[" + attribute + "='" + value + "']")));
 
         return this;
     }
 
-    @Override
-    public Finder byLabelForId(String id) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Finder byLabelForId(String id) {
         boolean labelFound = false;
 
         ((SeleniumContext) context().getCurrentContext()).setWebElementsList(
-                findElements(By.tagName(CommonPageDefinitions.HTML.LABEL.getDefinition())));
+            findElements(By.tagName(CommonPageDefinitions.HTML.LABEL.getDefinition())));
         if (!((SeleniumContext) context().getCurrentContext()).getWebElementsList().isEmpty()) {
-            for (WebElement labelElement : ((SeleniumContext<WebDriver>) context().getCurrentContext()).getWebElementsList()) {
-                String s = labelElement.getAttribute(CommonPageDefinitions.HTML.ATTRIBUTE_FOR.getDefinition());
+            for (WebElement labelElement : ((SeleniumContext<WebDriver>) context()
+                .getCurrentContext()).getWebElementsList()) {
+                String s = labelElement
+                    .getAttribute(CommonPageDefinitions.HTML.ATTRIBUTE_FOR.getDefinition());
                 if (s.equals(id)) {
-                    ((SeleniumContext) context().getCurrentContext()).setCurrentElement(labelElement);
+                    ((SeleniumContext) context().getCurrentContext())
+                        .setCurrentElement(labelElement);
                     labelFound = true;
                     break;
                 }
             }
-            if (!labelFound) throw new RuntimeException("Label not found");
+            if (!labelFound)
+                throw new RuntimeException("Label not found");
         }
         return this;
     }
 
-    @Override
-    public Finder byHref(String href) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Finder byHref(String href) {
 
         boolean navigated = false;
         ((SeleniumContext) context().getCurrentContext()).setWebElementsList(
-                findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
+            findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
         if (!((SeleniumContext) context().getCurrentContext()).getWebElementsList().isEmpty()) {
-            for (WebElement anchor : ((SeleniumContext<WebDriver>) context().getCurrentContext()).getWebElementsList()) {
+            for (WebElement anchor : ((SeleniumContext<WebDriver>) context().getCurrentContext())
+                .getWebElementsList()) {
                 if (anchor.getAttribute("href").equals(href)) {
                     ((SeleniumContext) context().getCurrentContext()).setCurrentElement(anchor);
                     navigated = true;
                     break;
                 }
             }
-            if (!navigated) throw new RuntimeException("Label not found");
+            if (!navigated)
+                throw new RuntimeException("Label not found");
         }
 
         return this;
     }
 
-    @Override
-    public Finder goToRootElement() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Finder goToRootElement() {
 
         try {
-            ((SeleniumContext) context().getCurrentContext()).setCurrentElement(findElement(By.xpath("/html/body")));
+            ((SeleniumContext) context().getCurrentContext())
+                .setCurrentElement(findElement(By.xpath("/html/body")));
         } catch (NoSuchElementException nsee) {
             logger.error("Unable to return to Root Element - Body");
         }
@@ -208,45 +277,40 @@ public final class Finder implements IFinder, IContext {
         return this;
     }
 
-    @Override
-    public Finder goToChild() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override public Finder goToChild() {
 
         // Step into child element
-        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(findElement(By.xpath("./*[1]")));
+        ((SeleniumContext) context().getCurrentContext())
+            .setCurrentElement(findElement(By.xpath("./*[1]")));
 
         return this;
 
-    }
-
-    @Override
-    public Finder goToParent() {
-
-        // Step up to parent element
-        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(findElement(By.xpath("..")));
-        return this;
     }
 
     /**
-     * Locate an element by locator @param org.openqa.selenium.By
-     *
-     * @param locator Locator type
-     * @return WebElement element
+     * {@inheritDoc}
      */
+    @Override public Finder goToParent() {
+
+        // Step up to parent element
+        ((SeleniumContext) context().getCurrentContext())
+            .setCurrentElement(findElement(By.xpath("..")));
+        return this;
+    }
+
     private WebElement findElement(By locator) {
         logger.debug("Locating element using " + locator.toString());
         try {
             return driver.findElement(locator);
         } catch (NoSuchElementException nsee) {
-            throw new NoSuchElementException("Unable to locate element using " + locator.toString(), nsee);
+            throw new NoSuchElementException("Unable to locate element using " + locator.toString(),
+                nsee);
         }
     }
 
-    /**
-     * Locate all WebElement by locator @param org.openqa.selenium.By
-     *
-     * @param locator Locator type
-     * @return Collection List<WebElement> having all elements found
-     */
     private List<WebElement> findElements(By locator) {
         logger.debug("Locating elements using " + locator.toString());
         try {
@@ -257,7 +321,8 @@ public final class Finder implements IFinder, IContext {
             logger.debug("Elements found: " + numberOfElementsFound);
             return e;
         } catch (NoSuchElementException nsee) {
-            throw new NoSuchElementException("Unable to locate any elements using " + locator.toString(), nsee);
+            throw new NoSuchElementException(
+                "Unable to locate any elements using " + locator.toString(), nsee);
         }
     }
 
@@ -266,118 +331,124 @@ public final class Finder implements IFinder, IContext {
 interface IFinder extends ISelenium {
 
     /**
-     * Sets the current element pointer {@link SeleniumContext#currentElement}
-     * to the the root page element /html/body
+     * <p>goToRootElement.</p>
      *
-     * @return this
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
      */
     IFinder goToRootElement();
 
     /**
-     * Find WebElement using {@code locator}
-     * <p>
-     * Example {@code elementBy(By.id("id_to_search_for"))}
-     * Sets the current element pointer {@link SeleniumContext#currentElement} if element is found
+     * <p>elementBy.</p>
      *
-     * @param locator {@link By}
-     * @return this
+     * @param locator a {@link org.openqa.selenium.By} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
      */
     IFinder elementBy(final By locator);
 
     /**
-     * Find all elements using {@code locator}
-     * <p>
-     * Example {@code elementsBy(By.ByClassName("class_name_to_search_for"))}
-     * Sets the elements list pointer {@link SeleniumContext#webElementsList} if sny element is found
+     * <p>elementsBy.</p>
      *
-     * @param locator {@link By}
-     * @return this
+     * @param locator a {@link org.openqa.selenium.By} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
      */
     IFinder elementsBy(final By locator);
 
     /**
-     * Set the current element pointer {@link SeleniumContext#currentElement} with {@param element}
+     * <p>byWebElement.</p>
      *
-     * @param element WebElement
-     * @return this
+     * @param element a {@link org.openqa.selenium.WebElement} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
      */
     IFinder byWebElement(final WebElement element);
 
     /**
-     * Find element containing given {@param text}
-     * <p>
-     * Example {@code containingText("text_to_search")}
-     * Sets the current element pointer {@link SeleniumContext#currentElement} if the element is found
+     * <p>containingText.</p>
      *
-     * @param text Text to search
-     * @return this
+     * @param text a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
      */
     IFinder containingText(final String text);
 
     /**
-     * Find element having exact {@param text}
-     * <p>
-     * Example {@code havingText("text_to_search")}
-     * Sets the current element pointer {@link SeleniumContext#currentElement} if the element is found
+     * <p>havingText.</p>
      *
-     * @param text Text to search
-     * @return this
+     * @param text a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
      */
     IFinder havingText(final String text);
 
+    /**
+     * <p>byScrollingToElement.</p>
+     *
+     * @param locator a {@link org.openqa.selenium.By} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     */
     IFinder byScrollingToElement(final By locator);
 
+    /**
+     * <p>byScrollingByAttribute.</p>
+     *
+     * @param attribute a {@link java.lang.String} object.
+     * @param value     a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     */
     IFinder byScrollingByAttribute(String attribute, String value);
 
+    /**
+     * <p>byScrollingByTag.</p>
+     *
+     * @param tag   a {@link java.lang.String} object.
+     * @param value a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     */
     IFinder byScrollingByTag(String tag, String value);
 
+    /**
+     * <p>byScrollingByText.</p>
+     *
+     * @param text         a {@link java.lang.String} object.
+     * @param isExactMatch a boolean.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     */
     IFinder byScrollingByText(String text, boolean isExactMatch);
 
     /**
-     * Navigate to element by ATTRIBUTE and Value
-     * <p>
-     * Example {@code <input placeholder="Username" type="text" autocapitalize="off" name="username" class="input" data-trk-fieldname="Username">}
-     * {@code byAttributeValue("placeholder", "Username")}
-     * <p>
-     * Sets the current element pointer {@link SeleniumContext#currentElement} if the element is found
+     * <p>byAttributeValue.</p>
      *
-     * @param attribute the attribute name
-     * @param value     the value of the attribute
-     * @return this
+     * @param attribute a {@link java.lang.String} object.
+     * @param value     a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
      */
     IFinder byAttributeValue(String attribute, String value);
 
     /**
-     * From the current element, navigate to the label element for the element
-     * that has this identifier.
+     * <p>byLabelForId.</p>
      *
-     * @param id Element identifier
-     * @return true if element exists and a label for this element exists. The
-     * current element pointer is set to this label element location,
-     * false otherwise and the current pointer element is unchanged.
+     * @param id a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
      */
     IFinder byLabelForId(String id);
 
     /**
-     * @param href
-     * @return this
+     * <p>byHref.</p>
+     *
+     * @param href a {@link java.lang.String} object.
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
      */
     IFinder byHref(String href);
 
     /**
-     * Step into child element. Current element pointer unaffected if the
-     * element has no child.
+     * <p>goToChild.</p>
      *
-     * @return this
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
      */
     IFinder goToChild();
 
 
     /**
-     * Step out to parent element. Current element pointer unaffected if the
-     * element has no parent.
+     * <p>goToParent.</p>
      *
-     * @return this
+     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
      */
     IFinder goToParent();
 }
