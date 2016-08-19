@@ -18,7 +18,6 @@ package com.atanas.kanchev.testframework.dataservices.tests.api.rest.requestfact
 
 import com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Message;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -29,15 +28,12 @@ import java.util.HashMap;
 public class MessageTest {
 
     private static final String PAYLOAD = "{}";
-    private static final HashMap<String, String> HEADERS = new HashMap<>();
-    private static final HashMap<String, String> COOKIES = new HashMap<>();
-
-    @BeforeClass
-    public static void before() throws Exception {
-        HEADERS.put("key", "value");
-        COOKIES.put("key", "value");
-    }
-
+    private static final HashMap<String, String> HEADERS = new HashMap<String, String>() {{
+        put("key", "value");
+    }};
+    private static final HashMap<String, String> COOKIES = new HashMap<String, String>() {{
+        put("key", "value");
+    }};
 
     @Test
     public void setPayloadTest() throws Exception {

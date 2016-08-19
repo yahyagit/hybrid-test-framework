@@ -31,8 +31,8 @@ import java.net.MalformedURLException;
  */
 public class ResourceTest {
 
-    public static final String URL = "https://www.bbc.co.uk";
-    public static final String ENDPOINT = "/endpoint";
+    private static final String URL = "https://www.bbc.co.uk";
+    private static final String ENDPOINT = "/endpoint";
 
     @Test
     public void getRequest() throws Exception {

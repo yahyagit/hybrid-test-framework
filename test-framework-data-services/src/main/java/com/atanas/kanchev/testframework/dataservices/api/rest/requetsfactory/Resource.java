@@ -222,8 +222,8 @@ public class Resource implements IContext {
         return "Resource{" +
                 "endpoint=" + endpoint +
                 ", url=" + url +
-                ", request=" + request +
-                ", response=" + response +
+                ", request=" + request.toString() +
+                ", response=" + response.toString() +
                 ", httpMethod=" + httpMethod +
                 '}';
     }

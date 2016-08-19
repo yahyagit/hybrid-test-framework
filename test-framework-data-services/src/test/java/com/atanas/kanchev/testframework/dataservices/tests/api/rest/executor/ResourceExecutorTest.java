@@ -18,18 +18,25 @@ package com.atanas.kanchev.testframework.dataservices.tests.api.rest.executor;
 
 import com.atanas.kanchev.testframework.dataservices.api.rest.executor.ResourceExecutor;
 import com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Resource;
+import com.atanas.kanchev.testframework.dataservices.dataprovider.properties.PropertyReader;
 import com.mashape.unirest.http.HttpMethod;
+import com.mashape.unirest.http.HttpResponse;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ResourceExecutorTest {
 
-    private Resource resource = new Resource(HttpMethod.GET);
 
     @Test public void executeResource() throws Exception {
 
-        ResourceExecutor resourceExecutor = new ResourceExecutor(resource);
-        resource.appendToURL("http://www.bbc.co.uk");
-        resourceExecutor.executeResource();
+        Resource resource = new Resource(
+                HttpMethod.GET,
+                PropertyReader.getProp("test.env", "root"),
+                PropertyReader.getProp("endpoints", "get"));
+
+        HttpResponse response = new ResourceExecutor(resource).executeResource();
+        resource.getResponse().getStatusCode();
+        Assert.assertEquals(200, response.getStatus());
 
     }
 

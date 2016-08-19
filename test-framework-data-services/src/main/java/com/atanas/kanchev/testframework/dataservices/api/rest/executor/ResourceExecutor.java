@@ -17,26 +17,16 @@
 package com.atanas.kanchev.testframework.dataservices.api.rest.executor;
 
 import com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Resource;
-import com.mashape.unirest.http.HttpMethod;
 import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import com.mashape.unirest.request.GetRequest;
-import com.mashape.unirest.request.HttpRequest;
-import com.mashape.unirest.request.HttpRequestWithBody;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * <p>ResourceExecutor class.</p>
  *
  * @author Atanas Kanchev
  */
-public class ResourceExecutor extends Executor{
+public class ResourceExecutor extends Executor {
 
     private static final Logger logger = LoggerFactory.getLogger(ResourceExecutor.class);
 
@@ -57,33 +47,20 @@ public class ResourceExecutor extends Executor{
      * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
     public HttpResponse<String> executeResource() {
-
-        HttpRequest req;
-
-        if (resource.getHttpMethod() == HttpMethod.GET)
-            req = new GetRequest(resource.getHttpMethod(), resource.getUrl().toString());
-        else
-            req = new HttpRequestWithBody(resource.getHttpMethod(), resource.getUrl().toString());
-        if (resource.getRequest().getHeaders() != null)
-            req.headers(resource.getRequest().getHeaders());
-        if (resource.getRequest().getPayload() != null)
-            ((HttpRequestWithBody) req).body(resource.getRequest().getPayload());
-
-
-        if (httpClientBuilder == null)
-            httpClientBuilder = HttpClients.custom()
-                    .setConnectionTimeToLive(30, TimeUnit.SECONDS);
-
-        CloseableHttpClient httpClient = httpClientBuilder.build();
-        Unirest.setHttpClient(httpClient);
-
-        try {
-            return req.asString();
-        } catch (UnirestException e) {
-            logger.error("Unirest exception ", e);
-        }
-
-        return null;
+        logger.debug("Executing resource " + resource.toString());
+        return exec
+                (
+                        resource.getHttpMethod(),
+                        resource.getUrl().toString(),
+                        resource.getRequest().getHeaders(),
+                        resource.getRequest().getPayload()
+                );
     }
 
+    @Override
+    public String toString() {
+        return "ResourceExecutor{" +
+                "resource=" + resource.toString() +
+                '}';
+    }
 }
