@@ -1,14 +1,17 @@
 /*
  * Copyright 2016 Atanas Stoychev Kanchev
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 
 package com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory;
@@ -20,6 +23,9 @@ import com.mashape.unirest.http.HttpMethod;
 import com.mashape.unirest.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * <p>Resource class.</p>
@@ -35,8 +41,18 @@ public class Resource implements IContext {
 
     private Request request;
     private Response response;
-
     private HttpMethod httpMethod;
+
+    /**
+     * <p>Default constructor for Resource.</p>
+     */
+    public Resource() {
+        this.request = new Request();
+        this.response = new Response();
+        APIResourceContext apiResourceContext = new APIResourceContext(this);
+        context().addContext(apiResourceContext);
+
+    }
 
     /**
      * <p>Constructor for Resource.</p>
@@ -44,12 +60,22 @@ public class Resource implements IContext {
      * @param httpMethod a {@link com.mashape.unirest.http.HttpMethod} object.
      */
     public Resource(HttpMethod httpMethod) {
-
+        this();
         this.httpMethod = httpMethod;
-        this.request = new Request();
-        this.response = new Response();
-        APIResourceContext apiResourceContext = new APIResourceContext(this);
-        context().addContext(apiResourceContext);
+
+    }
+
+    /**
+     * <p>Constructor for Resource.</p>
+     *
+     * @param httpMethod a {@link com.mashape.unirest.http.HttpMethod} object.
+     * @param url        a {@link java.lang.String} object.
+     * @param endpoint   a {@link java.lang.String} object.
+     */
+    public Resource(HttpMethod httpMethod, String url, String endpoint) {
+        this(httpMethod);
+        appendToURL(url);
+        appendToEndpoint(endpoint);
 
     }
 
@@ -88,10 +114,16 @@ public class Resource implements IContext {
     /**
      * <p>Getter for the field <code>url</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return a {@link java.net.URL} object.
      */
-    public String getUrl() {
-        return url.toString();
+    public URL getUrl() {
+        try {
+            return new URL(url.toString());
+        } catch (MalformedURLException e) {
+            logger.error("Invalid URL " + url.toString());
+        }
+
+        return null;
     }
 
     /**
@@ -112,19 +144,17 @@ public class Resource implements IContext {
      * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Resource} object.
      */
     public Resource setRequest(Request request) {
-
         this.request = request;
-
         return this;
     }
 
     /**
-     * <p>setURL.</p>
+     * <p>Append To URL.</p>
      *
      * @param url a {@link java.lang.String} object.
      * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Resource} object.
      */
-    public Resource setURL(String url) {
+    public Resource appendToURL(String url) {
         this.url.append(url);
         logger.debug("Setting url to " + this.url.toString());
         return this;
@@ -136,7 +166,7 @@ public class Resource implements IContext {
      * @param append a {@link java.lang.String} object.
      * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Resource} object.
      */
-    public Resource setEndpoint(String append) {
+    public Resource appendToEndpoint(String append) {
         this.endpoint.append(append);
         logger.debug("Setting endpoint to " + this.endpoint.toString());
         return this;
@@ -170,7 +200,7 @@ public class Resource implements IContext {
         this.response.setStatusCode(response.getStatus());
         this.response.setReason(response.getStatusText());
         logger.debug("> Response status and text: " + "{" + response.getStatus() + "," + response
-            .getStatusText() + "}");
+                .getStatusText() + "}");
 
         logger.debug("> Response body: " + response.getBody());
 
@@ -181,9 +211,20 @@ public class Resource implements IContext {
     private void setRespMessage(HttpResponse<String> response) {
 
         if (response.getHeaders().getFirst("Content-Type") != null && response.getHeaders()
-            .getFirst("Content-Type").contains("application/json")) {
+                .getFirst("Content-Type").contains("application/json")) {
             this.response.setPayload(response.getBody());
         }
         logger.debug("> Response body: " + this.response.getPayload());
+    }
+
+    @Override
+    public String toString() {
+        return "Resource{" +
+                "endpoint=" + endpoint +
+                ", url=" + url +
+                ", request=" + request +
+                ", response=" + response +
+                ", httpMethod=" + httpMethod +
+                '}';
     }
 }
