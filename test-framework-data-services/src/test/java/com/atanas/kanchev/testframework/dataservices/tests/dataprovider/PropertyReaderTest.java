@@ -49,6 +49,11 @@ public class PropertyReaderTest {
             assertEquals(PropertyReader.getProp(VALID_KEY), VALID_VALUE);
         }
 
+        @Test
+        public void ignoreKeyCase() throws Exception {
+            assertEquals(PropertyReader.getProp(VALID_KEY.toUpperCase()), VALID_VALUE);
+        }
+
         @Test(expected = CustomExceptions.Common.NullArgumentException.class)
         public void getPropertyWithNullArgument() throws Exception {
             assertNull(PropertyReader.getProp(null));

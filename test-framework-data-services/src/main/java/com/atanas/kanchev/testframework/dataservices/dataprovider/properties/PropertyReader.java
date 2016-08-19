@@ -23,7 +23,9 @@ import org.slf4j.LoggerFactory;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 
 import static com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions.Properties.EmptyValueException;
 import static com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions.Properties.InvalidKeyException;
@@ -56,7 +58,6 @@ public final class PropertyReader {
             }
         } else
             throw new CustomExceptions.Common.NullArgumentException("Null JVM argument \"env\"");
-
     }
 
     private static void loadPropFile(String propFileName) {
@@ -102,7 +103,7 @@ public final class PropertyReader {
         else
             key = propKey;
 
-        value = properties.getProperty(key);
+        value = getPropertyIgnoreCase(key);
         if (value == null)
             throw new InvalidKeyException(
                     "The property file doesn't contain property with key " + propKey);
@@ -135,13 +136,35 @@ public final class PropertyReader {
         else
             key = propKey;
 
-        value = properties.getProperty(key);
+        value = getPropertyIgnoreCase(key);
         if (value == null)
             throw new InvalidKeyException(
-                    "The property file doesn't contain property with key " + propKey);
+                    "The property file doesn't contain property with a key [" + propKey + "]");
         else if (value.isEmpty())
-            throw new EmptyValueException("The value for property key " + propKey + " is empty");
+            throw new EmptyValueException("The value for property key [" + propKey + "] is empty");
         else
             return value;
+    }
+
+    /**
+     * Get value from {Properties}
+     *
+     * @param key a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
+    private static String getPropertyIgnoreCase(String key) {
+        String value = properties.getProperty(key);
+        if (null != value)
+            return value;
+
+        // Not matching with the actual key then
+        Set<Entry<Object, Object>> s = properties.entrySet();
+        for (Entry<Object, Object> entry : s) {
+            if (key.equalsIgnoreCase((String) entry.getKey())) {
+                value = (String) entry.getValue();
+                break;
+            }
+        }
+        return value;
     }
 }
