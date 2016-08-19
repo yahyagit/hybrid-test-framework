@@ -114,16 +114,18 @@ public class Resource implements IContext {
     /**
      * <p>Getter for the field <code>url</code>.</p>
      *
-     * @return a {@link java.net.URL} object.
+     * @return a {@link java.lang.String} object.
      */
-    public URL getUrl() {
+    public String getUrl() {
         try {
-            return new URL(url.toString());
+            new URL(url.toString());
         } catch (MalformedURLException e) {
             logger.error("Invalid URL " + url.toString());
+            throw new RuntimeException("Invalid URL > " + url.toString());
+
         }
 
-        return null;
+        return url.toString();
     }
 
     /**
@@ -156,19 +158,19 @@ public class Resource implements IContext {
      */
     public Resource appendToURL(String url) {
         this.url.append(url);
-        logger.debug("Setting url to " + this.url.toString());
+        logger.debug("Append " + url + " > [" + this.url.toString() + "]");
         return this;
     }
 
     /**
      * <p>Setter for the field <code>endpoint</code>.</p>
      *
-     * @param append a {@link java.lang.String} object.
+     * @param endpoint a {@link java.lang.String} object.
      * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Resource} object.
      */
-    public Resource appendToEndpoint(String append) {
-        this.endpoint.append(append);
-        logger.debug("Setting endpoint to " + this.endpoint.toString());
+    public Resource appendToEndpoint(String endpoint) {
+        this.endpoint.append(endpoint);
+        logger.debug("Append " + endpoint + " > [" + this.endpoint.toString() + "]");
         return this;
     }
 

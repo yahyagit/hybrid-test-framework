@@ -17,18 +17,14 @@
 package com.atanas.kanchev.testframework.dataservices.tests.api.rest.objectmapper;
 
 import com.atanas.kanchev.testframework.dataservices.api.rest.objectmapper.JacksonMapper;
-import com.atanas.kanchev.testframework.dataservices.tests.api.JSONPlaceholderGetResource;
+import com.atanas.kanchev.testframework.dataservices.tests.api.rest.executor.JSONPlaceholderResource;
 import com.atanas.kanchev.testframework.dataservices.tests.api.JSONPlaceholderPutResource;
-import com.atanas.kanchev.testframework.dataservices.tests.api.rest.Example;
 import com.atanas.kanchev.testframework.dataservices.wrappers.IDataResource;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.List;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.*;
 
 /**
  * Test for {@link JacksonMapper}
@@ -56,7 +52,7 @@ public class JacksonMapperTest implements IDataResource {
 
     @Test
     public void jsonToObject() throws Exception {
-        apiResource(new JSONPlaceholderGetResource("/posts"));
+        apiResource(new JSONPlaceholderResource().new JSONPlaceholderPUTResource("/posts"));
         apiResource().appendToEndpoint("/1");
         apiResource().exec();
 
@@ -64,7 +60,6 @@ public class JacksonMapperTest implements IDataResource {
         assertThat(apiResource().getResponse().getReason(), equalTo("OK"));
 
         Posts posts = JacksonMapper.jsonToObject(apiResource().getResponse().getPayload(), Posts.class);
-        Assert.assertEquals(1, posts.getUserId().longValue());
         Assert.assertEquals(1, posts.getId().longValue());
 
     }

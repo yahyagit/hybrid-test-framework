@@ -56,171 +56,170 @@ public class Executor {
     /**
      * <p>GET.</p>
      *
-     * @param endpoint a {@link java.lang.String} object.
+     * @param url a {@link java.lang.String} object.
      * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> GET(String endpoint) {
+    public HttpResponse<String> GET(String url) {
 
-        return GET(endpoint, null);
+        return GET(url, null);
     }
 
     /**
      * <p>GET.</p>
      *
-     * @param endpoint a {@link java.lang.String} object.
+     * @param url a {@link java.lang.String} object.
      * @param headers  a {@link java.util.HashMap} object.
      * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> GET(String endpoint, HashMap<String, String> headers) {
+    public HttpResponse<String> GET(String url, HashMap<String, String> headers) {
 
-        return exec(HttpMethod.GET, endpoint, headers, null);
+        return exec(HttpMethod.GET, url, headers, null);
     }
 
     /**
      * <p>POST.</p>
      *
-     * @param endpoint a {@link java.lang.String} object.
+     * @param url a {@link java.lang.String} object.
      * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> POST(String endpoint) {
+    public HttpResponse<String> POST(String url) {
 
-        return POST(endpoint, null, null);
+        return POST(url, null, null);
     }
 
     /**
      * <p>POST.</p>
      *
-     * @param endpoint a {@link java.lang.String} object.
+     * @param url a {@link java.lang.String} object.
      * @param payload  a {@link java.lang.String} object.
      * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> POST(String endpoint, String payload) {
+    public HttpResponse<String> POST(String url, String payload) {
 
-        return POST(endpoint, null, payload);
+        return POST(url, null, payload);
     }
 
     /**
      * <p>POST.</p>
      *
-     * @param endpoint a {@link java.lang.String} object.
+     * @param url a {@link java.lang.String} object.
      * @param headers  a {@link java.util.HashMap} object.
      * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> POST(String endpoint, HashMap<String, String> headers) {
+    public HttpResponse<String> POST(String url, HashMap<String, String> headers) {
 
-        return POST(endpoint, headers, null);
+        return POST(url, headers, null);
     }
 
     /**
      * <p>POST.</p>
      *
-     * @param endpoint a {@link java.lang.String} object.
+     * @param url a {@link java.lang.String} object.
      * @param headers  a {@link java.util.HashMap} object.
      * @param payload  a {@link java.lang.String} object.
      * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> POST(String endpoint, HashMap<String, String> headers,
+    public HttpResponse<String> POST(String url, HashMap<String, String> headers,
         String payload) {
 
-        return exec(HttpMethod.POST, endpoint, headers, payload);
+        return exec(HttpMethod.POST, url, headers, payload);
     }
 
     /**
      * <p>PUT.</p>
      *
-     * @param endpoint a {@link java.lang.String} object.
+     * @param url a {@link java.lang.String} object.
      * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> PUT(String endpoint) {
+    public HttpResponse<String> PUT(String url) {
 
-        return PUT(endpoint, null, null);
+        return PUT(url, null, null);
     }
 
     /**
      * <p>PUT.</p>
      *
-     * @param endpoint a {@link java.lang.String} object.
+     * @param url a {@link java.lang.String} object.
      * @param payload  a {@link java.lang.String} object.
      * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> PUT(String endpoint, String payload) {
+    public HttpResponse<String> PUT(String url, String payload) {
 
-        return PUT(endpoint, null, payload);
+        return PUT(url, null, payload);
     }
 
     /**
      * <p>PUT.</p>
      *
-     * @param endpoint a {@link java.lang.String} object.
+     * @param url a {@link java.lang.String} object.
      * @param headers  a {@link java.util.HashMap} object.
      * @param payload  a {@link java.lang.String} object.
      * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> PUT(String endpoint, HashMap<String, String> headers,
+    public HttpResponse<String> PUT(String url, HashMap<String, String> headers,
         String payload) {
 
-        return exec(HttpMethod.PUT, endpoint, headers, payload);
+        return exec(HttpMethod.PUT, url, headers, payload);
     }
 
     /**
      * <p>DELETE.</p>
      *
-     * @param endpoint a {@link java.lang.String} object.
+     * @param url a {@link java.lang.String} object.
      * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> DELETE(String endpoint) {
+    public HttpResponse<String> DELETE(String url) {
 
-        return DELETE(endpoint, null, null);
+        return DELETE(url, null, null);
     }
 
     /**
      * <p>DELETE.</p>
      *
-     * @param endpoint a {@link java.lang.String} object.
+     * @param url a {@link java.lang.String} object.
      * @param payload  a {@link java.lang.String} object.
      * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> DELETE(String endpoint, String payload) {
+    public HttpResponse<String> DELETE(String url, String payload) {
 
-        return DELETE(endpoint, null, payload);
+        return DELETE(url, null, payload);
     }
 
     /**
      * <p>DELETE.</p>
      *
-     * @param endpoint a {@link java.lang.String} object.
+     * @param url a {@link java.lang.String} object.
      * @param headers  a {@link java.util.HashMap} object.
      * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> DELETE(String endpoint, HashMap<String, String> headers) {
+    public HttpResponse<String> DELETE(String url, HashMap<String, String> headers) {
 
-        return DELETE(endpoint, headers, null);
+        return DELETE(url, headers, null);
     }
 
     /**
      * <p>DELETE.</p>
      *
-     * @param endpoint a {@link java.lang.String} object.
+     * @param url a {@link java.lang.String} object.
      * @param headers  a {@link java.util.HashMap} object.
      * @param payload  a {@link java.lang.String} object.
      * @return a {@link com.mashape.unirest.http.HttpResponse} object.
      */
-    public HttpResponse<String> DELETE(String endpoint, HashMap<String, String> headers,
+    public HttpResponse<String> DELETE(String url, HashMap<String, String> headers,
         String payload) {
 
-        return exec(HttpMethod.DELETE, endpoint, headers, payload);
+        return exec(HttpMethod.DELETE, url, headers, payload);
     }
 
     @SuppressWarnings("ConstantConditions")
-    public HttpResponse<String> exec(HttpMethod httpMethod, String endpoint,
+    public HttpResponse<String> exec(HttpMethod httpMethod, String url,
                                      HashMap<String, String> headers, String payload) {
-
         HttpRequest req;
 
         if (httpMethod == HttpMethod.GET)
-            req = new GetRequest(httpMethod, endpoint);
+            req = new GetRequest(httpMethod, url);
         else
-            req = new HttpRequestWithBody(httpMethod, endpoint);
+            req = new HttpRequestWithBody(httpMethod, url);
         if (headers != null)
             req.headers(headers);
         if (payload != null)

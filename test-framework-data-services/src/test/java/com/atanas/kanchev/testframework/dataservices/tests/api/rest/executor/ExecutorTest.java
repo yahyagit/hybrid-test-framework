@@ -14,78 +14,209 @@
 package com.atanas.kanchev.testframework.dataservices.tests.api.rest.executor;
 
 import com.atanas.kanchev.testframework.dataservices.api.rest.executor.Executor;
+import com.atanas.kanchev.testframework.dataservices.api.rest.objectmapper.JacksonMapper;
+import com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Resource;
+import com.atanas.kanchev.testframework.dataservices.tests.api.rest.objectmapper.Posts;
+import com.mashape.unirest.http.HttpResponse;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.HashMap;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
-
 public class ExecutorTest extends Executor {
 
-    private static final String ENDPOINT = "http://www.endpoint.com";
+    private static final Posts POSTS = new Posts() {{
+        setId(1);
+        setUserId(1);
+        setTitle("title");
+    }};
+
     private static final HashMap<String, String> HEADERS = new HashMap<String, String>() {{
         put("key", "value");
     }};
-    private static final String PAYLOAD = "payload";
+    private static final String PAYLOAD = "{}";
 
-    @Test public void confClientTest() throws Exception {
+    @Test
+    public void confClientTest() throws Exception {
         confClient().disableCookieManagement().setUserAgent("userAgent");
     }
 
-    @Test public void GETTest() throws Exception {
-        assertThat(GET(ENDPOINT), is(notNullValue()));
+    @Test
+    public void GET() throws Exception {
+        Resource resource = new JSONPlaceholderResource().new JSONPlaceholderGETResource();
+        HttpResponse<String> resp = GET
+                (
+                        resource.getUrl()
+                );
+        Assert.assertEquals(200, resp.getStatus());
+        Assert.assertEquals("OK", resp.getStatusText());
     }
 
-    @Test public void GET1Test() throws Exception {
-        GET(ENDPOINT, HEADERS);
+    @Test
+    public void GET1() throws Exception {
+        Resource resource = new JSONPlaceholderResource().new JSONPlaceholderGETResource();
+        resource.getRequest().setHeaders(HEADERS);
+        HttpResponse<String> resp = GET
+                (
+                        resource.getUrl(),
+                        resource.getRequest().getHeaders()
+                );
+        Assert.assertEquals(200, resp.getStatus());
+        Assert.assertEquals("OK", resp.getStatusText());
     }
 
-    @Test public void POSTTest() throws Exception {
-        POST(ENDPOINT);
+    @Test
+    public void POST() throws Exception {
+        Resource resource = new JSONPlaceholderResource().new JSONPlaceholderPOSTResource();
+        HttpResponse<String> resp = POST
+                (
+                        resource.getUrl().concat(resource.getEndpoint())
+                );
+        Assert.assertEquals(201, resp.getStatus());
+        Assert.assertEquals("Created", resp.getStatusText());
     }
 
-    @Test public void POST1Test() throws Exception {
-        POST(ENDPOINT, "payload");
+    @Test
+    public void POST1() throws Exception {
+        Resource resource = new JSONPlaceholderResource().new JSONPlaceholderPOSTResource();
+        resource.getRequest().setPayload("");
+        HttpResponse<String> resp = POST
+                (
+                        resource.getUrl().concat(resource.getEndpoint()),
+                        resource.getRequest().getPayload()
+                );
+        Assert.assertEquals(201, resp.getStatus());
+        Assert.assertEquals("Created", resp.getStatusText());
     }
 
-    @Test public void POST2Test() throws Exception {
-        POST(ENDPOINT, "payload");
+    @Test
+    public void POST2() throws Exception {
+        Resource resource = new JSONPlaceholderResource().new JSONPlaceholderPOSTResource();
+        resource.getRequest().setHeaders(HEADERS);
+        HttpResponse<String> resp = POST
+                (
+                        resource.getUrl().concat(resource.getEndpoint()),
+                        resource.getRequest().getHeaders()
+                );
+        Assert.assertEquals(201, resp.getStatus());
+        Assert.assertEquals("Created", resp.getStatusText());
     }
 
-    @Test public void POST3Test() throws Exception {
-        POST(ENDPOINT, HEADERS);
+    @Test
+    public void POST3() throws Exception {
+        Resource resource = new JSONPlaceholderResource().new JSONPlaceholderPOSTResource();
+        resource.getRequest().setHeaders(HEADERS);
+        resource.getRequest().setPayload("");
+        HttpResponse<String> resp = POST
+                (
+                        resource.getUrl().concat(resource.getEndpoint()),
+                        resource.getRequest().getHeaders(),
+                        resource.getRequest().getPayload()
+                );
+        Assert.assertEquals(201, resp.getStatus());
+        Assert.assertEquals("Created", resp.getStatusText());
     }
 
-    @Test public void PUTTest() throws Exception {
-        PUT(ENDPOINT);
+    @Test
+    public void PUT() throws Exception {
+        Resource resource = new JSONPlaceholderResource().new JSONPlaceholderPUTResource();
+        HttpResponse<String> resp = PUT
+                (
+                        resource.getUrl().concat(resource.getEndpoint())
+                );
+        Assert.assertEquals(200, resp.getStatus());
+        Assert.assertEquals("OK", resp.getStatusText());
     }
 
-    @Test public void PUT1Test() throws Exception {
-        PUT(ENDPOINT, PAYLOAD);
+    @Test
+    public void PUT1() throws Exception {
+        String json = JacksonMapper.objectToJson(POSTS);
+        Resource resource = new JSONPlaceholderResource().new JSONPlaceholderPUTResource();
+        resource.getRequest().setPayload(json);
+        HttpResponse<String> resp = PUT
+                (
+                        resource.getUrl().concat(resource.getEndpoint()),
+                        resource.getRequest().getPayload()
+                );
+        Assert.assertEquals(200, resp.getStatus());
+        Assert.assertEquals("OK", resp.getStatusText());
+
     }
 
-    @Test public void PUT2Test() throws Exception {
-        PUT(ENDPOINT, HEADERS, PAYLOAD);
+    @Test
+    public void PUT2Test() throws Exception {
+        String json = JacksonMapper.objectToJson(POSTS);
+        Resource resource = new JSONPlaceholderResource().new JSONPlaceholderPUTResource();
+        resource.getRequest().setPayload(json);
+        resource.getRequest().setHeaders(HEADERS);
+        HttpResponse<String> resp = PUT
+                (
+                        resource.getUrl().concat(resource.getEndpoint()),
+                        resource.getRequest().getHeaders(),
+                        resource.getRequest().getPayload()
+                );
+        Assert.assertEquals(200, resp.getStatus());
+        Assert.assertEquals("OK", resp.getStatusText());
+
     }
 
-    @Test public void DELETETest() throws Exception {
-        DELETE(ENDPOINT);
+    @Test
+    public void DELETE() throws Exception {
+        Resource resource = new JSONPlaceholderResource().new JSONPlaceholderDELETEResource();
+        HttpResponse<String> resp = DELETE
+                (
+                        resource.getUrl().concat(resource.getEndpoint())
+                );
+        Assert.assertEquals(200, resp.getStatus());
+        Assert.assertEquals("OK", resp.getStatusText());
     }
 
-    @Test public void DELETE1Test() throws Exception {
-        DELETE(ENDPOINT, HEADERS);
+    @Test
+    public void DELETE1() throws Exception {
+
+        Resource resource = new JSONPlaceholderResource().new JSONPlaceholderDELETEResource();
+        resource.getRequest().setPayload("{}");
+        HttpResponse<String> resp = DELETE
+                (
+                        resource.getUrl().concat(resource.getEndpoint()),
+                        resource.getRequest().getPayload()
+                );
+        Assert.assertEquals(200, resp.getStatus());
+        Assert.assertEquals("OK", resp.getStatusText());
     }
 
-    @Test public void DELETE2Test() throws Exception {
-        DELETE(ENDPOINT, HEADERS, PAYLOAD);
+    @Test
+    public void DELETE2() throws Exception {
+        String json = JacksonMapper.objectToJson(POSTS);
+        Resource resource = new JSONPlaceholderResource().new JSONPlaceholderDELETEResource();
+        resource.getRequest().setPayload(json);
+        resource.getRequest().setHeaders(HEADERS);
+        HttpResponse<String> resp = DELETE
+                (
+                        resource.getUrl().concat(resource.getEndpoint()),
+                        resource.getRequest().getHeaders(),
+                        resource.getRequest().getPayload()
+                );
+        Assert.assertEquals(200, resp.getStatus());
+        Assert.assertEquals("OK", resp.getStatusText());
     }
 
-    @Test public void DELETE3Test() throws Exception {
-        DELETE(ENDPOINT, PAYLOAD);
+    @Test
+    public void DELETE3Test() throws Exception {
+        Resource resource = new JSONPlaceholderResource().new JSONPlaceholderDELETEResource();
+        resource.getRequest().setHeaders(HEADERS);
+        HttpResponse<String> resp = DELETE
+                (
+                        resource.getUrl().concat(resource.getEndpoint()),
+                        resource.getRequest().getHeaders()
+                );
+        Assert.assertEquals(200, resp.getStatus());
+        Assert.assertEquals("OK", resp.getStatusText());
+
     }
 
-    @Test public void shutdownTest() throws Exception {
+    @Test
+    public void shutdownTest() throws Exception {
         shutdown();
     }
 

@@ -65,7 +65,7 @@ public class ResourceTest {
         Assert.assertEquals(URL, resource.getUrl().toString());
     }
 
-    @Test()
+    @Test(expected = RuntimeException.class)
     public void getInvalidUrl() throws Exception {
 
         Resource resource = new Resource(HttpMethod.GET);
