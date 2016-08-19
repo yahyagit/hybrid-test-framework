@@ -1,90 +1,122 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.sikuli.tests;
 
-import com.atanas.kanchev.testframework.selenium.context.ContextFactory;
-import com.atanas.kanchev.testframework.selenium.handlers.IWrapper;
-import com.atanas.kanchev.testframework.sikuli.SikuliXFactory;
+import com.atanas.kanchev.testframework.commons.wrappers.IContext;
+import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
+import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.sikuli.script.Key;
 
-/**
- * @author Atanas Ksnchev
- */
-public class SikuliXFactoryTest implements IWrapper {
+public class SikuliXFactoryTest implements ISelenium, IContext {
 
     private SikuliXFactory sikuliXFactory;
 
-    @Before
-    public void setUp() throws Exception {
+    @Before public void setUp() throws Exception {
+        setupSelenium().setBrowser("chrome");
+        sikuliXFactory = new SikuliXFactory();
         goTo("https://www.google.co.uk");
-        sikuliXFactory = new SikuliXFactory("search-field.png");
     }
 
-    @After
-    public void tearDown() throws Exception {
-        ContextFactory.tearDownContext();
+    @After public void tearDown() throws Exception {
+        context().tearDownContexts();
     }
 
-    @Test
-    public void click() throws Exception {
+    @Test public void findImage() throws Exception {
+
+        sikuliXFactory.findImage("search-button.png");
+
+    }
+
+    @Test public void click() throws Exception {
+
         sikuliXFactory.click();
-    }
-
-    @Test
-    public void click1() throws Exception {
-        sikuliXFactory.click(SikuliXFactory.Directions.LEFT);
-        sikuliXFactory.click(SikuliXFactory.Directions.RIGHT);
-    }
-
-    @Test
-    public void doubleClick() throws Exception {
 
     }
 
-    @Test
-    public void doubleClick1() throws Exception {
+    @Test public void click1() throws Exception {
+
+        sikuliXFactory.click(SikuliXFactory.Directions.ABOVE, 1);
+        sikuliXFactory.click(SikuliXFactory.Directions.BELOW, 333);
+        sikuliXFactory.click(SikuliXFactory.Directions.CENTER, 0);
+        sikuliXFactory.click(SikuliXFactory.Directions.LEFT, 2);
+        sikuliXFactory.click(SikuliXFactory.Directions.RIGHT, 999);
 
     }
 
-    @Test
-    public void findImage() throws Exception {
+    @Test public void doubleClick() throws Exception {
+
+        sikuliXFactory.doubleClick();
 
     }
 
-    @Test
-    public void inputText() throws Exception {
+    @Test public void doubleClick1() throws Exception {
+
+        sikuliXFactory.doubleClick(SikuliXFactory.Directions.ABOVE, 1);
+        sikuliXFactory.doubleClick(SikuliXFactory.Directions.BELOW, 333);
+        sikuliXFactory.doubleClick(SikuliXFactory.Directions.CENTER, 0);
+        sikuliXFactory.doubleClick(SikuliXFactory.Directions.LEFT, 2);
+        sikuliXFactory.doubleClick(SikuliXFactory.Directions.RIGHT, 999);
 
     }
 
-    @Test
-    public void captureImage() throws Exception {
+    @Test public void captureImage() throws Exception {
+
+        sikuliXFactory.captureImage("image1", 101, SikuliXFactory.Directions.ABOVE);
+        sikuliXFactory.captureImage("image2", 999, SikuliXFactory.Directions.BELOW);
+        sikuliXFactory.captureImage("image3", 0, SikuliXFactory.Directions.CENTER);
+        sikuliXFactory.captureImage("image4", 22, SikuliXFactory.Directions.LEFT);
+        sikuliXFactory.captureImage("image5", 1, SikuliXFactory.Directions.RIGHT);
 
     }
 
-    @Test
-    public void type() throws Exception {
+    @Test public void type() throws Exception {
+
+        sikuliXFactory.findImage("search-field.png").type("text");
 
     }
 
-    @Test
-    public void swipeBetweenImages() throws Exception {
+    @Test public void type1() throws Exception {
+
+        sikuliXFactory.findImage("search-field.png")
+            .type("text", 5, SikuliXFactory.Directions.RIGHT);
+    }
+
+    @Test public void swipeBetweenImages() throws Exception {
+
+        sikuliXFactory.swipeBetweenImages("search-field.png", "search-button.png");
 
     }
 
-    @Test
-    public void findImageByScrolling() throws Exception {
+    @Test public void findImageByScrolling() throws Exception {
+
+        goTo("https://www.rightmove.co.uk");
+        sikuliXFactory.findImageByScrolling("rm-select.png", 15, SikuliXFactory.Directions.BELOW);
 
     }
 
-    @Test
-    public void press() throws Exception {
+    @Test public void sendKey() throws Exception {
 
+        sikuliXFactory.sendKey(Key.F5);
     }
 
-    @Test
-    public void setMinimumSimilarityForImage() throws Exception {
+    @Test public void setMinimumSimilarityForImage() throws Exception {
+
+        sikuliXFactory.setMinimumSimilarityForImage(0.5);
 
     }
-
 
 }

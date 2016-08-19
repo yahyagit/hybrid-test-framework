@@ -1,16 +1,27 @@
-# **Fluent Test Framework**
+**Hybrid Test Framework**
+=========================
+## Requirements ##
+* Java 8
+* Maven 3
 
-* JVM Arguments
+## Components ##
 
-Argument            |Description                |Accepted Values                            |Example
---------------------|---------------------------|-------------------------------------------|--------------------------
-browser             |Browser                    |chrome, firefox                            |-Dbrowser=firefox
-resolution          |Browser resolution         |WIDTHxHEIGHT                               |-Dresolution=1024x768
-user.agent          |User agent                 |Valid key from user.agents.properties file |-Duser.agent=iPhone6
-capability          |Custom browser capability  |Valid                                      |-Dcapability={"startMaximised": "true"}
-chrome.bin.version  |Chrome binary version      |2.21                                       |-Dchrome.bin.version=2.21
-env                 |Target environment         |The prefix of the property file            |-Denv=dev
-grid                |Is Grid execution          |true?false                                 |-Dgrid=true
-browser.version     |Remote browser version     |39                                         |-Dbrowser.version=39
-platform            |Remote platform            |windows                                    |-Dplatform=windows
-hub                 |Remote hub URL             |Valid URL                                  |-Dhub=http://localhost:4444/grid/
+### [Selenium](docs/Selenium.md) ###
+![alt tag](http://www.seleniumhq.org/images/big-logo.png)
+
+### [SikuliX](docs/SikuliX.md) ###
+![alt tag](http://www.sikuli.org/uploads/1/3/6/8/13689586/1350141391.png)
+
+Implementation of SikuliX-2014 [(version 1.1.x)](https://github.com/RaiMan/SikuliX-2014) with focus on usage in browser driven tests
+
+### [Appium](docs/Appium.md) ###
+![alt tag](https://avatars3.githubusercontent.com/u/3221291?v=3&s=200)
+
+### [Data services](docs/DataServices.md) ###
+![alt tag](https://www.mashape.com/assets/images/home/open-source/unirest.svg)
+
+### [Runtime arguments](docs/Arguments.md) ###
+
+## About ##
+Hybrid Test Framework is a personal project of Atanas Kanchev licensed under [Apache License Version 2.0](LICENSE.md). 
+Comments, questions and suggestions are always very welcome!

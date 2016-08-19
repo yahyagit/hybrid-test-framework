@@ -1,66 +1,83 @@
+/*
+ * Copyright 2016 Atanas Stoychev Kanchev
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.atanas.kanchev.testframework.selenium.handlers;
 
 /**
- * @author Atanas Ksnchev
+ * <p>CommonPageDefinitions class.</p>
+ *
+ * @author Atanas Kanchev
  */
-class CommonPageDefinitions {
+public class CommonPageDefinitions {
 
-    enum HTML {
+    public enum HTML {
 
-        HTML_UNORDERED_LIST("ul"),
-        HTML_ORDERED_LIST("ol"),
-        HTML_LIST_ITEM("li"),
-        HTML_ANCHOR("a"),
-        HTML_TABLE("table"),
-        HTML_TABLE_BODY("tbody"),
-        HTML_TABLE_ROW("tr"),
-        HTML_TABLE_DATA("td"),
-        HTML_TABLE_HEADER("th"),
-        HTML_STRONG("strong"),
-        HTML_SPAN("span"),
-        HTML_IFRAME("iframe"),
-        HTML_PARAGRAPH("p"),
-        HTML_LABEL("label"),
-        HTML_BUTTON("button"),
-        HTML_DIVISION("div"),
-        HTML_INPUT("input"),
-        HTML_SECTION("section"),
-        HTML_HEADER("header"),
-        HTML_FORM("form"),
-        HTML_SELECT("select"),
-        HTML_ICON("i"),
-        HTML_FIELDSET("fieldset"),
-        HTML_TITLE("title"),
-        HTML_ASIDE("aside"),
-        HTML_IMAGE("img"),
-        HTML_TEXTAREA("textarea"),
+        UNORDERED_LIST("ul"),
+        ORDERED_LIST("ol"),
+        LIST_ITEM("li"),
+        ANCHOR("a"),
+        TABLE("table"),
+        TABLE_BODY("tbody"),
+        TABLE_ROW("tr"),
+        TABLE_DATA("td"),
+        TABLE_HEADER("th"),
+        STRONG("strong"),
+        SPAN("span"),
+        IFRAME("iframe"),
+        PARAGRAPH("p"),
+        LABEL("label"),
+        BUTTON("button"),
+        DIVISION("div"),
+        INPUT("input"),
+        SECTION("section"),
+        HEADER("header"),
+        FORM("form"),
+        SELECT("select"),
+        ICON("i"),
+        FIELDSET("fieldset"),
+        TITLE("title"),
+        ASIDE("aside"),
+        IMAGE("img"),
+        TEXTAREA("textarea"),
         UIA_TEXTFIELD("UIATextField"),
         UIA_SECURETEXTFIELD("UIASecureTextField"),
 
         // HTML headers
-        HTML_HEADER_ONE("h1"),
-        HTML_HEADER_TWO("h2"),
-        HTML_HEADER_THREE("h3"),
+        HEADER_ONE("h1"),
+        HEADER_TWO("h2"),
+        HEADER_THREE("h3"),
 
         // Element attributes
-        HTML_ATTRIBUTE_ONCLICK("onclick"),
-        HTML_ATTRIBUTE_TITLE("title"),
-        HTML_ATTRIBUTE_CLASS("class"),
-        HTML_ATTRIBUTE_ID("id"),
-        HTML_ATTRIBUTE_FOR("for"),
-        HTML_ATTRIBUTE_TEXT("text"),
-        HTML_ATTRIBUTE_PASSWORD("password");
+        ATTRIBUTE_ONCLICK("onclick"),
+        ATTRIBUTE_TITLE("title"),
+        ATTRIBUTE_CLASS("class"),
+        ATTRIBUTE_ID("id"),
+        ATTRIBUTE_FOR("for"),
+        ATTRIBUTE_TEXT("text"),
+        ATTRIBUTE_PASSWORD("password");
 
         private final String definition;
+
         HTML(String definition) {
             this.definition = definition;
         }
-        private String getDefinition() {
+
+        public String getDefinition() {
             return definition;
         }
     }
 
-    enum CSS {
+    public enum CSS {
 
         CSS_BORDER_TOP_COLOUR("border-top-color"),
         CSS_BORDER_LEFT_COLOUR("border-left-color"),
@@ -70,23 +87,27 @@ class CommonPageDefinitions {
         CSS_BACKGROUND_COLOUR("background-color");
 
         private final String definition;
+
         CSS(String definition) {
             this.definition = definition;
         }
-        private String getDefinition() {
+
+        public String getDefinition() {
             return definition;
         }
     }
 
-    enum COLOR {
+    public enum COLOR {
         COLOUR_WHITE("#FFFFFF"),
         COLOUR_BLACK("#000000");
 
         private final String definition;
+
         COLOR(String definition) {
             this.definition = definition;
         }
-        private String getDefinition() {
+
+        public String getDefinition() {
             return definition;
         }
     }
