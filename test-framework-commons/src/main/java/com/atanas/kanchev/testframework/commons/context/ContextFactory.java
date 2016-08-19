@@ -68,8 +68,8 @@ public final class ContextFactory implements IContextFactory {
 
         if (contextMap.containsKey(context.getContextName())) {
             contextMap.remove(context.getContextName());
-            logger.debug("Removing context " + context.getContextName() +
-                " from ContextFactory#contextMap");
+            logger.debug(
+                "Removing context " + context.getContextName() + " from ContextFactory#contextMap");
             if (currentContext == context)
                 currentContext = null;
         } else {
@@ -120,9 +120,9 @@ public final class ContextFactory implements IContextFactory {
     @Override public <T extends AbstractContext> T getCurrentContext() {
 
         if (currentContext == null)
-            throw new CustomExceptions.Common.NullArgumentException("The current context is null");
-        else
-            return (T) currentContext;
+            logger.warn("The current context is null");
+
+        return (T) currentContext;
 
     }
 
@@ -149,9 +149,7 @@ public final class ContextFactory implements IContextFactory {
         for (AbstractContext context : getContextMap().values()) {
             logger.debug("Tearing down context type " + context.toString());
             context.tearDownContext(context);
-            logger.debug("Removing context from map " + context.getContextName());
-            getContextMap().remove(context.getContextName());
-            setCurrentContext(null);
+            removeContext(context);
 
         }
         return this;
@@ -167,6 +165,7 @@ public final class ContextFactory implements IContextFactory {
     }
 
 }
+
 
 interface IContextFactory {
 

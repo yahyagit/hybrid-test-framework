@@ -14,12 +14,19 @@
 package com.atanas.kanchev.testframework.demo.tests.selenium;
 
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
+import org.junit.After;
 import org.junit.Test;
 
 public class SeleniumTests implements IWrapper {
 
+    @After
+    public void tearDown() throws Exception {
+        context().tearDownContexts();
+
+    }
+
     @Test
     public void setupBrowserTest() throws Exception {
-
+        goTo("https://www.google.co.uk");
     }
 }
