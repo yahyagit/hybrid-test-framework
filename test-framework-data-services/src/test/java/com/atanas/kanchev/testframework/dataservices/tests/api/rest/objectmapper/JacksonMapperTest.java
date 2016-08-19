@@ -18,7 +18,6 @@ package com.atanas.kanchev.testframework.dataservices.tests.api.rest.objectmappe
 
 import com.atanas.kanchev.testframework.dataservices.api.rest.objectmapper.JacksonMapper;
 import com.atanas.kanchev.testframework.dataservices.tests.api.rest.executor.JSONPlaceholderResource;
-import com.atanas.kanchev.testframework.dataservices.tests.api.JSONPlaceholderPutResource;
 import com.atanas.kanchev.testframework.dataservices.wrappers.IDataResource;
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,7 +39,7 @@ public class JacksonMapperTest implements IDataResource {
 
         String json = JacksonMapper.objectToJson(posts);
 
-        apiResource(new JSONPlaceholderPutResource("/posts"));
+        apiResource(new JSONPlaceholderResource().new JSONPlaceholderPUTResource("/posts"));
         apiResource().appendToEndpoint("/1");
         apiResource().getRequest().setPayload(json);
         apiResource().exec();
