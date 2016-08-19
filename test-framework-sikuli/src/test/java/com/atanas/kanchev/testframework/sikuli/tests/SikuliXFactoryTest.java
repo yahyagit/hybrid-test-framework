@@ -13,26 +13,29 @@
 
 package com.atanas.kanchev.testframework.sikuli.tests;
 
-import com.atanas.kanchev.testframework.commons.wrappers.IContext;
-import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.sikuli.script.Key;
 
-public class SikuliXFactoryTest implements ISelenium, IContext {
+public class SikuliXFactoryTest {
 
-    private SikuliXFactory sikuliXFactory;
+    private SikuliXFactory sikuliXFactory = new SikuliXFactory();
+    WebDriver driver;
 
     @Before public void setUp() throws Exception {
-        setupSelenium().setBrowser("chrome");
-        sikuliXFactory = new SikuliXFactory();
-        goTo("https://www.google.co.uk");
+
+        ChromeDriverManager.getInstance().setup();
+        driver = new ChromeDriver();
+        driver.get("https://www.google.co.uk");
     }
 
     @After public void tearDown() throws Exception {
-        context().tearDownContexts();
+        driver.quit();
     }
 
     @Test public void findImage() throws Exception {
@@ -48,7 +51,7 @@ public class SikuliXFactoryTest implements ISelenium, IContext {
     }
 
     @Test public void click1() throws Exception {
-
+        sikuliXFactory.findImage("search-button.png");
         sikuliXFactory.click(SikuliXFactory.Directions.ABOVE, 1);
         sikuliXFactory.click(SikuliXFactory.Directions.BELOW, 333);
         sikuliXFactory.click(SikuliXFactory.Directions.CENTER, 0);
@@ -65,6 +68,7 @@ public class SikuliXFactoryTest implements ISelenium, IContext {
 
     @Test public void doubleClick1() throws Exception {
 
+        sikuliXFactory.findImage("search-button.png");
         sikuliXFactory.doubleClick(SikuliXFactory.Directions.ABOVE, 1);
         sikuliXFactory.doubleClick(SikuliXFactory.Directions.BELOW, 333);
         sikuliXFactory.doubleClick(SikuliXFactory.Directions.CENTER, 0);
@@ -103,7 +107,7 @@ public class SikuliXFactoryTest implements ISelenium, IContext {
 
     @Test public void findImageByScrolling() throws Exception {
 
-        goTo("https://www.rightmove.co.uk");
+        driver.get("https://www.rightmove.co.uk");
         sikuliXFactory.findImageByScrolling("rm-select.png", 15, SikuliXFactory.Directions.BELOW);
 
     }

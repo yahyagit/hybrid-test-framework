@@ -42,6 +42,15 @@ public class SeleniumContext<T> extends AbstractContext<T> {
     /**
      * <p>Constructor for SeleniumContext.</p>
      *
+     * @param
+     */
+    public SeleniumContext(String contextName) {
+        super(contextName);
+    }
+
+    /**
+     * <p>Constructor for SeleniumContext.</p>
+     *
      * @param driver a T object.
      */
     public SeleniumContext(T driver) {
@@ -66,9 +75,12 @@ public class SeleniumContext<T> extends AbstractContext<T> {
 
         logger.debug("Tearing down context " + context.getContextName());
 
-        if (context instanceof SeleniumContext) {
+
+        if (((SeleniumContext<WebDriver>) context).getDriver() != null) {
+
             if (context.getDriver() instanceof WebDriver)
                 ((SeleniumContext<WebDriver>) context).getDriver().quit();
+
             if (context.getDriver() instanceof RemoteWebDriver)
                 ((SeleniumContext<RemoteWebDriver>) context).getDriver().quit();
         }

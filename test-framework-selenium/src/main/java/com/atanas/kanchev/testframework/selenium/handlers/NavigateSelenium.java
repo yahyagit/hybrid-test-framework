@@ -50,11 +50,12 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
 
         try {
             context().getCurrentContext();
+            //TODO fix me
         } catch (CustomExceptions.Common.NullArgumentException e) {
-            SeleniumContext<WebDriver> context = new SeleniumContext<>(driverFactory.getDriver());
-            if (driverFactory.isReuseBrowser())
-                context.setContextReusable(true);
-            context().addContext(context);
+        SeleniumContext<WebDriver> context = new SeleniumContext<>(driverFactory.getDriver());
+        if (driverFactory.isReuseBrowser())
+            context.setContextReusable(true);
+        context().addContext(context);
         }
         driver = (WebDriver) context().getCurrentContext().getDriver();
     }
