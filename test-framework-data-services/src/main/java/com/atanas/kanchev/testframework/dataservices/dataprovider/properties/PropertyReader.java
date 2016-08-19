@@ -39,7 +39,8 @@ public final class PropertyReader {
     private static final Logger logger = LoggerFactory.getLogger(PropertyReader.class);
 
     private static final Properties properties = new Properties();
-    private static final String ENV_PROP_FILE_SUFFIX = ".env.properties";
+    private static final String PROP_FILE_EXTENSION = ".properties";
+    private static final String ENV_PROP_FILE_SUFFIX = ".env".concat(PROP_FILE_EXTENSION);
     private static final String ENV_JVM_ARG = "env";
 
     private static void loadProperties() {
@@ -48,7 +49,7 @@ public final class PropertyReader {
         if (env != null) {
             if (env.isEmpty())
                 throw new CustomExceptions.Common.EmptyArgumentException(
-                    "Empty JVM arg " + ENV_JVM_ARG);
+                        "Empty JVM arg " + ENV_JVM_ARG);
             else {
                 String propFileName = env.toLowerCase().trim() + ENV_PROP_FILE_SUFFIX;
                 loadPropFile(propFileName);
@@ -67,7 +68,7 @@ public final class PropertyReader {
 
         try {
             InputStream inputStream =
-                PropertyReader.class.getClassLoader().getResourceAsStream(propFileName);
+                    PropertyReader.class.getClassLoader().getResourceAsStream(propFileName);
             logger.debug("Reading property file " + propFileName);
             if (inputStream != null) {
                 properties.load(inputStream);
@@ -97,14 +98,14 @@ public final class PropertyReader {
             throw new CustomExceptions.Common.NullArgumentException("Null argument: property key");
         else if (propKey.isEmpty())
             throw new CustomExceptions.Common.EmptyArgumentException(
-                "Empty argument: property key");
+                    "Empty argument: property key");
         else
             key = propKey;
 
         value = properties.getProperty(key);
         if (value == null)
             throw new InvalidKeyException(
-                "The property file doesn't contain property with key " + propKey);
+                    "The property file doesn't contain property with key " + propKey);
         else if (value.isEmpty())
             throw new EmptyValueException("The value for property key " + propKey + " is empty");
         else
@@ -120,7 +121,9 @@ public final class PropertyReader {
      */
     public static String getProp(final String propFileName, final String propKey) {
 
-        loadPropFile(propFileName);
+        String fileName = propFileName.endsWith(PROP_FILE_EXTENSION) ? propFileName : propFileName.concat(PROP_FILE_EXTENSION);
+
+        loadPropFile(fileName);
 
         String key, value;
 
@@ -128,14 +131,14 @@ public final class PropertyReader {
             throw new CustomExceptions.Common.NullArgumentException("Null argument: property key");
         else if (propKey.isEmpty())
             throw new CustomExceptions.Common.EmptyArgumentException(
-                "Empty argument: property key");
+                    "Empty argument: property key");
         else
             key = propKey;
 
         value = properties.getProperty(key);
         if (value == null)
             throw new InvalidKeyException(
-                "The property file doesn't contain property with key " + propKey);
+                    "The property file doesn't contain property with key " + propKey);
         else if (value.isEmpty())
             throw new EmptyValueException("The value for property key " + propKey + " is empty");
         else

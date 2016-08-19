@@ -35,7 +35,7 @@ public class PropertyReaderTest {
     private static final String KEY_WITH_EMPTY_VALUE = "key.with.empty.value";
     private static final String INVALID_FILE_NAME = "invalid.filename";
     private static final String INVALID_KEY = "invalid.key";
-    private static final String CUSTOM_PROP_FILE_NAME = "custom.properties";
+    private static final String CUSTOM_PROP_FILE_NAME = "custom";
 
     public static class EnvironmentPropFileTests {
 
@@ -76,6 +76,11 @@ public class PropertyReaderTest {
         @Test
         public void getValidProperty() throws Exception {
             assertEquals(PropertyReader.getProp(CUSTOM_PROP_FILE_NAME, VALID_KEY), VALID_VALUE);
+        }
+
+        @Test
+        public void getValidPropertyWithExtension() throws Exception {
+            assertEquals(PropertyReader.getProp(CUSTOM_PROP_FILE_NAME.concat(".properties"), VALID_KEY), VALID_VALUE);
         }
 
         @Test(expected = CustomExceptions.Common.NullArgumentException.class)
