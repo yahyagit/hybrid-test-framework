@@ -1,68 +1,122 @@
 /*
  * Copyright 2016 Atanas Stoychev Kanchev
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 
 package com.atanas.kanchev.testframework.dataservices.tests.api.rest.requestfactory;
 
 import com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Message;
+import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertTrue;
+import java.util.HashMap;
 
+/**
+ * Test for {@link Message}
+ */
 public class MessageTest {
 
-    @Test public void getPayload() throws Exception {
+    private static final String PAYLOAD = "{}";
+    private static final HashMap<String, String> HEADERS = new HashMap<>();
+    private static final HashMap<String, String> COOKIES = new HashMap<>();
 
+    @BeforeClass
+    public static void before() throws Exception {
+        HEADERS.put("key", "value");
+        COOKIES.put("key", "value");
+    }
+
+
+    @Test
+    public void setPayloadTest() throws Exception {
         Message message = new Message();
-        message.setPayload("payload");
-        assertThat(message.getPayload(), is(equalTo("payload")));
+        message.setPayload(PAYLOAD);
+
     }
 
-    @Test public void setPayload() throws Exception {
-
+    @Test
+    public void getPayloadTest() throws Exception {
         Message message = new Message();
-        message.setPayload("payload");
-        assertThat(message.getPayload(), is(equalTo("payload")));
-
+        message.setPayload(PAYLOAD);
+        Assert.assertEquals(PAYLOAD, message.getPayload());
+        String newPayload = "{\"k\": \"v\"}";
+        message.setPayload(PAYLOAD.replace(PAYLOAD, newPayload));
+        Assert.assertEquals(newPayload, message.getPayload());
     }
 
-    @Test public void getHeaders() throws Exception {
-
-    }
-
-    @Test public void getCookies() throws Exception {
-
-    }
-
-    @Test public void setHeaders() throws Exception {
-
-    }
-
-    @Test public void setCookies() throws Exception {
-
-    }
-
-    @Test public void setHeader() throws Exception {
-
+    @Test
+    public void setHeadersTest() throws Exception {
         Message message = new Message();
-        message.setHeader("key", "value");
-        assertTrue(message.getHeaders().containsKey("key"));
-        assertTrue(message.getHeaders().containsValue("value"));
+        HashMap<String, String> newHeaders = new HashMap<>();
+        newHeaders.put("k", "v");
+        message.setHeaders(HEADERS);
+        message.setHeaders(newHeaders);
+        Assert.assertEquals(2, message.getHeaders().size());
     }
 
-    @Test public void setCookie() throws Exception {
+    @Test
+    public void getHeadersTest() throws Exception {
+        Assert.assertEquals(1, HEADERS.size());
+    }
 
+    @Test
+    public void setCookiesTest() throws Exception {
+        Message message = new Message();
+        HashMap<String, String> newCookies = new HashMap<>();
+        newCookies.put("k", "v");
+        message.setCookies(COOKIES);
+        message.setCookies(newCookies);
+        Assert.assertEquals(2, message.getCookies().size());
+    }
+
+    @Test
+    public void getCookiesTest() throws Exception {
+        Message message = new Message();
+        Assert.assertEquals(0, message.getCookies().size());
+    }
+
+    @Test
+    public void setHeaderTest() throws Exception {
+        Message message = new Message();
+        message.setHeader("k", "v");
+        Assert.assertEquals(1, message.getHeaders().size());
+    }
+
+    @Test
+    public void setCookieTest() throws Exception {
+        Message message = new Message();
+        message.setCookie("k", "v");
+        Assert.assertEquals(1, message.getCookies().size());
+    }
+
+    @Test
+    public void immutableCookiesMapTest() throws Exception {
+        Message message = new Message();
+        message.setCookie("k", "v");
+        Assert.assertEquals(1, message.getCookies().size());
+        message.getCookies().put("newKey", "v");
+        Assert.assertEquals(1, message.getCookies().size());
+    }
+
+    @Test
+    public void immutableHeadersMapTest() throws Exception {
+        Message message = new Message();
+        message.setHeader("k", "v");
+        Assert.assertEquals(1, message.getHeaders().size());
+        message.getHeaders().put("newKey", "v");
+        Assert.assertEquals(1, message.getHeaders().size());
     }
 
 }
