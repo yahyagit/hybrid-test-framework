@@ -1,14 +1,17 @@
 /*
  * Copyright 2016 Atanas Stoychev Kanchev
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 
 package com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory;
@@ -16,6 +19,7 @@ package com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -27,7 +31,7 @@ public class Request extends Message {
 
     private static final Logger logger = LoggerFactory.getLogger(Request.class);
 
-    private static final HashMap<String, Object> QUERY_PARAMETERS = new HashMap<>();
+    private final HashMap<String, Object> queryParameters = new HashMap<>();
 
     /**
      * <p>setContentType.</p>
@@ -48,7 +52,7 @@ public class Request extends Message {
      * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Request} object.
      */
     public Request addQueryParameter(String name, String value) {
-        QUERY_PARAMETERS.put(name, value);
+        queryParameters.put(name, value);
         return this;
     }
 
@@ -58,7 +62,15 @@ public class Request extends Message {
      * @return a {@link java.util.HashMap} object.
      */
     public HashMap<String, Object> getQueryParameters() {
-        return new HashMap<>(QUERY_PARAMETERS);
+
+        return new HashMap<>(queryParameters);
+    }
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "queryParameters=" + Arrays.toString(queryParameters.entrySet().toArray()) +
+                '}';
     }
 
     public enum ApplicationType {
