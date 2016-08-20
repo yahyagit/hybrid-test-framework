@@ -20,7 +20,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.concurrent.TimeUnit;
 
-public interface ISelenium extends IFind, IInteract, INavigate, IProbe, IWaits {
+public interface ISelenium extends IFind, IInteract, INavigate, IProbes, IWaits {
 }
 
 
@@ -65,10 +65,10 @@ interface INavigate {
 }
 
 
-interface IProbe {
+interface IProbes {
 
-    default Probe probe(By locator) {
-        return new Probe(locator);
+    default Probes probe(By locator) {
+        return new Probes(locator);
     }
 }
 

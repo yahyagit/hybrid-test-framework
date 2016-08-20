@@ -119,10 +119,11 @@ public final class ContextFactory implements IContextFactory {
      */
     @Override public <T extends AbstractContext> T getCurrentContext() {
 
-        if (currentContext == null)
+        if (currentContext == null) {
             logger.warn("The current context is null");
-
-        return (T) currentContext;
+            throw new CustomExceptions.Common.NullReferenceException("The current context is null");
+        } else
+            return (T) currentContext;
 
     }
 
