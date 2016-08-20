@@ -18,10 +18,7 @@ import com.atanas.kanchev.testframework.dataservices.dataprovider.properties.Pro
 import com.atanas.kanchev.testframework.dataservices.wrappers.IDataResource;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +44,7 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         this.duration = Long.parseLong(PropertyReader.getProp("default", "wait.duration"));
         this.polling = Long.parseLong(PropertyReader.getProp("default", "polling.interval"));
         this.unit = TimeUnit.valueOf(PropertyReader.getProp("default", "time.unit"));
+        logger.debug(toString());
     }
 
     /**
@@ -58,6 +56,7 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         this.duration = duration;
         this.polling = Long.parseLong(PropertyReader.getProp("default", "polling.interval"));
         this.unit = TimeUnit.valueOf(PropertyReader.getProp("default", "time.unit"));
+        logger.debug(toString());
     }
 
     /**
@@ -71,14 +70,20 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         this.duration = duration;
         this.polling = polling;
         this.unit = unit;
+        logger.debug(toString());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override public IWaitsExpectedCondition titleIs(String title) {
-        logger.debug(ExpectedConditions.titleIs(title).toString());
-        waiting(duration).until(ExpectedConditions.titleIs(title));
+        logger.debug("Waiting " + ExpectedConditions.titleIs(title).toString());
+        try {
+            waiting(duration).until(ExpectedConditions.titleIs(title));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -87,7 +92,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition titleContains(String title) {
         logger.debug("Waiting " + ExpectedConditions.titleContains(title).toString());
-        waiting(duration).until(ExpectedConditions.titleContains(title));
+        try {
+            waiting(duration).until(ExpectedConditions.titleContains(title));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -96,7 +106,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition urlToBe(String url) {
         logger.debug("Waiting " + ExpectedConditions.urlToBe(url).toString());
-        waiting(duration).until(ExpectedConditions.urlToBe(url));
+        try {
+            waiting(duration).until(ExpectedConditions.urlToBe(url));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -105,7 +120,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition urlContains(String fraction) {
         logger.debug("Waiting " + ExpectedConditions.urlContains(fraction).toString());
-        waiting(duration).until(ExpectedConditions.urlContains(fraction));
+        try {
+            waiting(duration).until(ExpectedConditions.urlContains(fraction));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -114,7 +134,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition urlMatches(String regex) {
         logger.debug("Waiting " + ExpectedConditions.urlMatches(regex).toString());
-        waiting(duration).until(ExpectedConditions.urlMatches(regex));
+        try {
+            waiting(duration).until(ExpectedConditions.urlMatches(regex));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
+
         return this;
     }
 
@@ -123,7 +149,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition presenceOfElementLocated(By locator) {
         logger.debug("Waiting " + ExpectedConditions.presenceOfElementLocated(locator).toString());
-        waiting(duration).until(ExpectedConditions.presenceOfElementLocated(locator));
+        try {
+            waiting(duration).until(ExpectedConditions.presenceOfElementLocated(locator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -133,7 +164,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
     @Override public IWaitsExpectedCondition visibilityOfElementLocated(By locator) {
         logger
             .debug("Waiting " + ExpectedConditions.visibilityOfElementLocated(locator).toString());
-        waiting(duration).until(ExpectedConditions.visibilityOfElementLocated(locator));
+        try {
+            waiting(duration).until(ExpectedConditions.visibilityOfElementLocated(locator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -143,7 +179,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
     @Override public IWaitsExpectedCondition visibilityOfAllElementsLocatedBy(By locator) {
         logger.debug(
             "Waiting " + ExpectedConditions.visibilityOfAllElementsLocatedBy(locator).toString());
-        waiting(duration).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+        try {
+            waiting(duration).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -152,7 +193,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition visibilityOfAllElements(List<WebElement> elements) {
         logger.debug("Waiting " + ExpectedConditions.visibilityOfAllElements(elements).toString());
-        waiting(duration).until(ExpectedConditions.visibilityOfAllElements(elements));
+        try {
+            waiting(duration).until(ExpectedConditions.visibilityOfAllElements(elements));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -161,7 +207,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition visibilityOf(WebElement element) {
         logger.debug("Waiting " + ExpectedConditions.visibilityOf(element).toString());
-        waiting(duration).until(ExpectedConditions.visibilityOf(element));
+        try {
+            waiting(duration).until(ExpectedConditions.visibilityOf(element));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -171,7 +222,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
     @Override public IWaitsExpectedCondition presenceOfAllElementsLocatedBy(By locator) {
         logger.debug(
             "Waiting " + ExpectedConditions.presenceOfAllElementsLocatedBy(locator).toString());
-        waiting(duration).until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+        try {
+            waiting(duration).until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -182,7 +238,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         String text) {
         logger.debug(
             "Waiting " + ExpectedConditions.textToBePresentInElement(element, text).toString());
-        waiting(duration).until(ExpectedConditions.textToBePresentInElement(element, text));
+        try {
+            waiting(duration).until(ExpectedConditions.textToBePresentInElement(element, text));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -193,7 +254,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         String text) {
         logger.debug("Waiting " + ExpectedConditions.textToBePresentInElementLocated(locator, text)
             .toString());
-        waiting(duration).until(ExpectedConditions.textToBePresentInElementLocated(locator, text));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.textToBePresentInElementLocated(locator, text));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -204,7 +271,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         String text) {
         logger.debug("Waiting " + ExpectedConditions.textToBePresentInElementValue(element, text)
             .toString());
-        waiting(duration).until(ExpectedConditions.textToBePresentInElementValue(element, text));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.textToBePresentInElementValue(element, text));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -215,7 +288,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         String text) {
         logger.debug("Waiting " + ExpectedConditions.textToBePresentInElementValue(locator, text)
             .toString());
-        waiting(duration).until(ExpectedConditions.textToBePresentInElementValue(locator, text));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.textToBePresentInElementValue(locator, text));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -225,7 +304,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
     @Override public IWaitsExpectedCondition frameToBeAvailableAndSwitchToIt(String frameLocator) {
         logger.debug("Waiting " + ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator)
             .toString());
-        waiting(duration).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -235,7 +320,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
     @Override public IWaitsExpectedCondition frameToBeAvailableAndSwitchToIt(By locator) {
         logger.debug(
             "Waiting " + ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator).toString());
-        waiting(duration).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator));
+        try {
+            waiting(duration).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -245,7 +335,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
     @Override public IWaitsExpectedCondition frameToBeAvailableAndSwitchToIt(int frameLocator) {
         logger.debug("Waiting " + ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator)
             .toString());
-        waiting(duration).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -256,7 +352,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         WebElement frameLocator) {
         logger.debug("Waiting " + ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator)
             .toString());
-        waiting(duration).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -266,7 +368,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
     @Override public IWaitsExpectedCondition invisibilityOfElementLocated(By locator) {
         logger.debug(
             "Waiting " + ExpectedConditions.invisibilityOfElementLocated(locator).toString());
-        waiting(duration).until(ExpectedConditions.invisibilityOfElementLocated(locator));
+        try {
+            waiting(duration).until(ExpectedConditions.invisibilityOfElementLocated(locator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -277,7 +384,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         String text) {
         logger.debug("Waiting " + ExpectedConditions.invisibilityOfElementWithText(locator, text)
             .toString());
-        waiting(duration).until(ExpectedConditions.invisibilityOfElementWithText(locator, text));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.invisibilityOfElementWithText(locator, text));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -286,7 +399,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition elementToBeClickable(By locator) {
         logger.debug("Waiting " + ExpectedConditions.elementToBeClickable(locator).toString());
-        waiting(duration).until(ExpectedConditions.elementToBeClickable(locator));
+        try {
+            waiting(duration).until(ExpectedConditions.elementToBeClickable(locator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -295,7 +413,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition elementToBeClickable(WebElement element) {
         logger.debug("Waiting " + ExpectedConditions.elementToBeClickable(element).toString());
-        waiting(duration).until(ExpectedConditions.elementToBeClickable(element));
+        try {
+            waiting(duration).until(ExpectedConditions.elementToBeClickable(element));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -304,7 +427,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition stalenessOf(WebElement element) {
         logger.debug("Waiting " + ExpectedConditions.stalenessOf(element).toString());
-        waiting(duration).until(ExpectedConditions.stalenessOf(element));
+        try {
+            waiting(duration).until(ExpectedConditions.stalenessOf(element));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -313,7 +441,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public <T> IWaitsExpectedCondition refreshed(ExpectedCondition<T> condition) {
         logger.debug("Waiting " + ExpectedConditions.refreshed(condition).toString());
-        waiting(duration).until(ExpectedConditions.refreshed(condition));
+        try {
+            waiting(duration).until(ExpectedConditions.refreshed(condition));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -322,7 +455,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition elementToBeSelected(WebElement element) {
         logger.debug("Waiting " + ExpectedConditions.elementToBeSelected(element).toString());
-        waiting(duration).until(ExpectedConditions.elementToBeSelected(element));
+        try {
+            waiting(duration).until(ExpectedConditions.elementToBeSelected(element));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -333,7 +471,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         boolean selected) {
         logger.debug("Waiting " + ExpectedConditions.elementSelectionStateToBe(element, selected)
             .toString());
-        waiting(duration).until(ExpectedConditions.elementSelectionStateToBe(element, selected));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.elementSelectionStateToBe(element, selected));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -342,7 +486,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition elementToBeSelected(By locator) {
         logger.debug("Waiting " + ExpectedConditions.elementToBeSelected(locator).toString());
-        waiting(duration).until(ExpectedConditions.elementToBeSelected(locator));
+        try {
+            waiting(duration).until(ExpectedConditions.elementToBeSelected(locator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -353,7 +502,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         boolean selected) {
         logger.debug("Waiting " + ExpectedConditions.elementSelectionStateToBe(locator, selected)
             .toString());
-        waiting(duration).until(ExpectedConditions.elementSelectionStateToBe(locator, selected));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.elementSelectionStateToBe(locator, selected));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -362,7 +517,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition alertIsPresent() {
         logger.debug("Waiting " + ExpectedConditions.alertIsPresent().toString());
-        waiting(duration).until(ExpectedConditions.alertIsPresent());
+        try {
+            waiting(duration).until(ExpectedConditions.alertIsPresent());
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -372,7 +532,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
     @Override public IWaitsExpectedCondition numberOfWindowsToBe(int expectedNumberOfWindows) {
         logger.debug("Waiting " + ExpectedConditions.numberOfWindowsToBe(expectedNumberOfWindows)
             .toString());
-        waiting(duration).until(ExpectedConditions.numberOfWindowsToBe(expectedNumberOfWindows));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.numberOfWindowsToBe(expectedNumberOfWindows));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -381,7 +547,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition not(ExpectedCondition<?> condition) {
         logger.debug("Waiting " + ExpectedConditions.not(condition).toString());
-        waiting(duration).until(ExpectedConditions.not(condition));
+        try {
+            waiting(duration).until(ExpectedConditions.not(condition));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -392,7 +563,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         String value) {
         logger.debug(
             "Waiting " + ExpectedConditions.attributeToBe(locator, attribute, value).toString());
-        waiting(duration).until(ExpectedConditions.attributeToBe(locator, attribute, value));
+        try {
+            waiting(duration).until(ExpectedConditions.attributeToBe(locator, attribute, value));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -401,7 +577,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition textToBe(By locator, String value) {
         logger.debug("Waiting " + ExpectedConditions.textToBe(locator, value).toString());
-        waiting(duration).until(ExpectedConditions.textToBe(locator, value));
+        try {
+            waiting(duration).until(ExpectedConditions.textToBe(locator, value));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -410,7 +591,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition textMatches(By locator, Pattern pattern) {
         logger.debug("Waiting " + ExpectedConditions.textMatches(locator, pattern).toString());
-        waiting(duration).until(ExpectedConditions.textMatches(locator, pattern));
+        try {
+            waiting(duration).until(ExpectedConditions.textMatches(locator, pattern));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -421,7 +607,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         Integer number) {
         logger.debug("Waiting " + ExpectedConditions.numberOfElementsToBeMoreThan(locator, number)
             .toString());
-        waiting(duration).until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, number));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, number));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -432,7 +624,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         Integer number) {
         logger.debug("Waiting " + ExpectedConditions.numberOfElementsToBeLessThan(locator, number)
             .toString());
-        waiting(duration).until(ExpectedConditions.numberOfElementsToBeLessThan(locator, number));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.numberOfElementsToBeLessThan(locator, number));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -442,7 +640,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
     @Override public IWaitsExpectedCondition numberOfElementsToBe(By locator, Integer number) {
         logger.debug(
             "Waiting " + ExpectedConditions.numberOfElementsToBe(locator, number).toString());
-        waiting(duration).until(ExpectedConditions.numberOfElementsToBe(locator, number));
+        try {
+            waiting(duration).until(ExpectedConditions.numberOfElementsToBe(locator, number));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -453,7 +656,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         String value) {
         logger.debug(
             "Waiting " + ExpectedConditions.attributeToBe(element, attribute, value).toString());
-        waiting(duration).until(ExpectedConditions.attributeToBe(element, attribute, value));
+        try {
+            waiting(duration).until(ExpectedConditions.attributeToBe(element, attribute, value));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -464,7 +672,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         String value) {
         logger.debug("Waiting " + ExpectedConditions.attributeContains(element, attribute, value)
             .toString());
-        waiting(duration).until(ExpectedConditions.attributeContains(element, attribute, value));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.attributeContains(element, attribute, value));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -475,7 +689,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         String value) {
         logger.debug("Waiting " + ExpectedConditions.attributeContains(locator, attribute, value)
             .toString());
-        waiting(duration).until(ExpectedConditions.attributeContains(locator, attribute, value));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.attributeContains(locator, attribute, value));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -486,7 +706,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         String attribute) {
         logger.debug(
             "Waiting " + ExpectedConditions.attributeToBeNotEmpty(element, attribute).toString());
-        waiting(duration).until(ExpectedConditions.attributeToBeNotEmpty(element, attribute));
+        try {
+            waiting(duration).until(ExpectedConditions.attributeToBeNotEmpty(element, attribute));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -497,8 +722,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         By sub_locator) {
         logger.debug("Waiting " + ExpectedConditions
             .visibilityOfNestedElementsLocatedBy(locator, sub_locator).toString());
-        waiting(duration)
-            .until(ExpectedConditions.visibilityOfNestedElementsLocatedBy(locator, sub_locator));
+        try {
+            waiting(duration).until(
+                ExpectedConditions.visibilityOfNestedElementsLocatedBy(locator, sub_locator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -509,8 +739,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         By sub_locator) {
         logger.debug("Waiting " + ExpectedConditions
             .visibilityOfNestedElementsLocatedBy(element, sub_locator).toString());
-        waiting(duration)
-            .until(ExpectedConditions.visibilityOfNestedElementsLocatedBy(element, sub_locator));
+        try {
+            waiting(duration).until(
+                ExpectedConditions.visibilityOfNestedElementsLocatedBy(element, sub_locator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -522,8 +757,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         logger.debug(
             "Waiting " + ExpectedConditions.presenceOfNestedElementLocatedBy(locator, sub_locator)
                 .toString());
-        waiting(duration)
-            .until(ExpectedConditions.presenceOfNestedElementLocatedBy(locator, sub_locator));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.presenceOfNestedElementLocatedBy(locator, sub_locator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -535,8 +775,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         logger.debug(
             "Waiting " + ExpectedConditions.presenceOfNestedElementLocatedBy(element, sub_locator)
                 .toString());
-        waiting(duration)
-            .until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, sub_locator));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, sub_locator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -548,8 +793,13 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
         logger.debug(
             "Waiting " + ExpectedConditions.presenceOfNestedElementsLocatedBy(locator, sub_locator)
                 .toString());
-        waiting(duration)
-            .until(ExpectedConditions.presenceOfNestedElementsLocatedBy(locator, sub_locator));
+        try {
+            waiting(duration)
+                .until(ExpectedConditions.presenceOfNestedElementsLocatedBy(locator, sub_locator));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -559,7 +809,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
     @Override public IWaitsExpectedCondition invisibilityOfAllElements(List<WebElement> elements) {
         logger
             .debug("Waiting " + ExpectedConditions.invisibilityOfAllElements(elements).toString());
-        waiting(duration).until(ExpectedConditions.invisibilityOfAllElements(elements));
+        try {
+            waiting(duration).until(ExpectedConditions.invisibilityOfAllElements(elements));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -568,7 +823,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition or(ExpectedCondition<?>... conditions) {
         logger.debug("Waiting " + ExpectedConditions.or(conditions).toString());
-        waiting(duration).until(ExpectedConditions.or(conditions));
+        try {
+            waiting(duration).until(ExpectedConditions.or(conditions));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -577,7 +837,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition and(ExpectedCondition<?>... conditions) {
         logger.debug("Waiting " + ExpectedConditions.and(conditions).toString());
-        waiting(duration).until(ExpectedConditions.and(conditions));
+        try {
+            waiting(duration).until(ExpectedConditions.and(conditions));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -587,7 +852,12 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
     @Override public IWaitsExpectedCondition javaScriptThrowsNoExceptions(String javaScript) {
         logger.debug(
             "Waiting " + ExpectedConditions.javaScriptThrowsNoExceptions(javaScript).toString());
-        waiting(duration).until(ExpectedConditions.javaScriptThrowsNoExceptions(javaScript));
+        try {
+            waiting(duration).until(ExpectedConditions.javaScriptThrowsNoExceptions(javaScript));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
@@ -596,31 +866,48 @@ public final class Waits implements IWaitsExpectedCondition, IContext, IDataReso
      */
     @Override public IWaitsExpectedCondition jsReturnsValue(String javaScript) {
         logger.debug("Waiting " + ExpectedConditions.jsReturnsValue(javaScript).toString());
-        waiting(duration).until(ExpectedConditions.jsReturnsValue(javaScript));
+        try {
+            waiting(duration).until(ExpectedConditions.jsReturnsValue(javaScript));
+        } catch (TimeoutException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
         return this;
     }
 
-
+    /**
+     * Hard wait for fixed time period
+     *
+     * @param waitInSec wait time in seconds
+     * @return this
+     */
     public Waits hardWait(int waitInSec) throws InterruptedException {
         Thread.sleep(waitInSec);
         return this;
     }
 
-    // TODO configurable from prop
-    private FluentWait<WebDriver> waiting(long duration) {
-        return new FluentWait<>(
-            ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver())
-            .withTimeout(duration, unit).pollingEvery(polling, unit)
-            .ignoring(NoSuchElementException.class).ignoring(NoSuchFrameException.class)
+    private Wait<WebDriver> waiting(long duration) {
+        return new FluentWait<>
+            (
+            ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver()
+            )
+            .withTimeout(duration, unit)
+            .pollingEvery(polling, unit)
+            .ignoring(NoSuchElementException.class)
+            .ignoring(NoSuchFrameException.class)
             .ignoring(StaleElementReferenceException.class)
             .ignoring(ElementNotVisibleException.class);
 
     }
 
+    @Override public String toString() {
+        return "Waits {" + "duration=" + duration + ", polling=" + polling + ", unit=" + unit + '}';
+    }
 }
 
 
 /**
+ * Implementation of {@link org.openqa.selenium.support.ui.ExpectedConditions}
  * Models a condition that might reasonably be expected to eventually evaluate to something that is
  * neither null nor false. Examples would include determining if a web page has loaded or that an
  * element is visible.
