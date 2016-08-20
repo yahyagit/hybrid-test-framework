@@ -18,7 +18,11 @@ import com.atanas.kanchev.testframework.selenium.handlers.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public interface ISelenium extends IFind, IInteract, INavigate, IProbe, IWait {}
+import java.util.concurrent.TimeUnit;
+
+public interface ISelenium extends IFind, IInteract, INavigate, IProbe, IWaits {
+}
+
 
 interface IFind {
 
@@ -35,6 +39,7 @@ interface IFind {
     }
 }
 
+
 interface IInteract {
 
     default Interact interact() {
@@ -45,6 +50,7 @@ interface IInteract {
         return new JSExecutor();
     }
 }
+
 
 interface INavigate {
     DriverFactory DRIVER_FACTORY = new DriverFactory();
@@ -58,6 +64,7 @@ interface INavigate {
     }
 }
 
+
 interface IProbe {
 
     default Probe probe(By locator) {
@@ -65,9 +72,18 @@ interface IProbe {
     }
 }
 
-interface IWait {
 
-    default Wait waitFor(long wait) {
-        return new Wait(wait);
+interface IWaits {
+
+    default Waits waitFor() {
+        return new Waits();
+    }
+
+    default Waits waitFor(long wait) {
+        return new Waits(wait);
+    }
+
+    default Waits waitFor(long duration, long polling, TimeUnit unit) {
+        return new Waits(duration, polling, unit);
     }
 }
