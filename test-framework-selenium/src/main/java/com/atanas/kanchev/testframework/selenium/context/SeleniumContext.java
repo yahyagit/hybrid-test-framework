@@ -18,9 +18,11 @@ import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -128,9 +130,11 @@ public class SeleniumContext<T> extends AbstractContext<T> {
      * @param currentElement a {@link org.openqa.selenium.WebElement} object.
      */
     public void setCurrentElement(WebElement currentElement) {
-        if (currentElement != null)
+        if (currentElement != null) {
+            logger.debug(
+                "Setting current element to " + ((RemoteWebElement) currentElement).toString());
             this.currentElement = currentElement;
-        else
+        } else
             throw new CustomExceptions.Common.NullArgumentException(
                 "Null WebElement instance passed as method argument");
 
@@ -142,9 +146,11 @@ public class SeleniumContext<T> extends AbstractContext<T> {
      * @param webElementsList a {@link java.util.List} object.
      */
     public void setWebElementsList(List<WebElement> webElementsList) {
-        if (webElementsList != null)
+        if (webElementsList != null) {
             this.webElementsList = webElementsList;
-        else
+            logger.debug(
+                "Setting current element list to \n" + Arrays.toString(webElementsList.toArray()));
+        } else
             throw new CustomExceptions.Common.NullArgumentException(
                 "Null WebElement instance passed as method argument");
 

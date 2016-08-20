@@ -79,11 +79,12 @@ interface IWaits {
         return new Waits();
     }
 
-    default Waits waitFor(long wait) {
-        return new Waits(wait);
+    default Waits waitFor(long duration) {
+        return new Waits(duration);
     }
 
     default Waits waitFor(long duration, long polling, TimeUnit unit) {
         return new Waits(duration, polling, unit);
     }
+
 }

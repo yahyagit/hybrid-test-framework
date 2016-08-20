@@ -1,17 +1,14 @@
 /*
  * Copyright 2016 Atanas Stoychev Kanchev
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package com.atanas.kanchev.testframework.dataservices.dataprovider.properties;
@@ -51,7 +48,7 @@ public final class PropertyReader {
         if (env != null) {
             if (env.isEmpty())
                 throw new CustomExceptions.Common.EmptyArgumentException(
-                        "Empty JVM arg " + ENV_JVM_ARG);
+                    "Empty JVM arg " + ENV_JVM_ARG);
             else {
                 String propFileName = env.toLowerCase().trim() + ENV_PROP_FILE_SUFFIX;
                 loadPropFile(propFileName);
@@ -69,13 +66,13 @@ public final class PropertyReader {
 
         try {
             InputStream inputStream =
-                    PropertyReader.class.getClassLoader().getResourceAsStream(propFileName);
+                PropertyReader.class.getClassLoader().getResourceAsStream(propFileName);
             logger.debug("Reading property file " + propFileName);
             if (inputStream != null) {
                 properties.load(inputStream);
             } else {
                 logger.error("****** Unable to find property file " + propFileName);
-                throw new FileNotFoundException("Unable to find property file");
+                throw new FileNotFoundException("Unable to find property file" + propFileName);
             }
         } catch (IOException e) {
             logger.error("****** Unable to read Property file " + propFileName, e);
@@ -99,14 +96,14 @@ public final class PropertyReader {
             throw new CustomExceptions.Common.NullArgumentException("Null argument: property key");
         else if (propKey.isEmpty())
             throw new CustomExceptions.Common.EmptyArgumentException(
-                    "Empty argument: property key");
+                "Empty argument: property key");
         else
             key = propKey;
 
         value = getPropertyIgnoreCase(key);
         if (value == null)
             throw new InvalidKeyException(
-                    "The property file doesn't contain property with key " + propKey);
+                "The property file doesn't contain property with key " + propKey);
         else if (value.isEmpty())
             throw new EmptyValueException("The value for property key " + propKey + " is empty");
         else
@@ -122,7 +119,9 @@ public final class PropertyReader {
      */
     public static String getProp(final String propFileName, final String propKey) {
 
-        String fileName = propFileName.endsWith(PROP_FILE_EXTENSION) ? propFileName : propFileName.concat(PROP_FILE_EXTENSION);
+        String fileName = propFileName.endsWith(PROP_FILE_EXTENSION) ?
+            propFileName :
+            propFileName.concat(PROP_FILE_EXTENSION);
 
         loadPropFile(fileName);
 
@@ -132,14 +131,14 @@ public final class PropertyReader {
             throw new CustomExceptions.Common.NullArgumentException("Null argument: property key");
         else if (propKey.isEmpty())
             throw new CustomExceptions.Common.EmptyArgumentException(
-                    "Empty argument: property key");
+                "Empty argument: property key");
         else
             key = propKey;
 
         value = getPropertyIgnoreCase(key);
         if (value == null)
             throw new InvalidKeyException(
-                    "The property file doesn't contain property with a key [" + propKey + "]");
+                "The property file doesn't contain property with a key [" + propKey + "]");
         else if (value.isEmpty())
             throw new EmptyValueException("The value for property key [" + propKey + "] is empty");
         else
