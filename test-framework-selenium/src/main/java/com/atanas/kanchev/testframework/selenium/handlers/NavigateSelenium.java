@@ -48,7 +48,6 @@ public class NavigateSelenium implements INavigateSelenium, IContext {
      */
     public NavigateSelenium(DriverFactory driverFactory) {
 
-
         SeleniumContext<WebDriver> context = new SeleniumContext<>(driverFactory.getDriver());
         if (driverFactory.isReuseBrowser())
             context.setContextReusable(true);
