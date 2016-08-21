@@ -24,7 +24,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>DesiredCapsFactory class.</p>
@@ -36,6 +38,10 @@ public class DesiredCapsFactory {
     private static final Logger logger = LoggerFactory.getLogger(DesiredCapsFactory.class);
     private DesiredCapabilities caps;
 
+    public DesiredCapsFactory() {
+        this.caps = createCommonCapabilities();
+    }
+
     /**
      * <p>getDefaultChromeCaps.</p>
      *
@@ -44,11 +50,12 @@ public class DesiredCapsFactory {
     public DesiredCapabilities getDefaultChromeCaps() {
 
         caps = DesiredCapabilities.chrome();
-        caps.setCapability("chrome.switches", Arrays.asList("--no-default-browser-check"));
-        HashMap<String, String> chromePreferences = new HashMap<>();
-        chromePreferences.put("profile.password_manager_enabled", "false");
-        caps.setCapability("chrome.prefs", chromePreferences);
-
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("test-type");
+        if (DriverConfiguration.getChromeSwitches() != null) {
+            options.addArguments("chrome.switches", DriverConfiguration.getChromeSwitches());
+        }
+        caps.setCapability(ChromeOptions.CAPABILITY, options);
         logger.debug("Configured default Chrome DesiredCapabilities: " + caps.toString());
 
         return caps;
@@ -62,6 +69,20 @@ public class DesiredCapsFactory {
     public DesiredCapabilities getDefaultFirefoxCaps() {
 
         caps = DesiredCapabilities.firefox();
+        FirefoxProfile myProfile = new FirefoxProfile();
+
+        if (DriverConfiguration.getFirefoxProfile() != null) {
+            myProfile = DriverConfiguration.getFirefoxProfile();
+        }
+        myProfile.setPreference("network.automatic-ntlm-auth.trusted-uris", "http://,https://");
+        myProfile.setPreference("network.automatic-ntlm-auth.allow-non-fqdn", true);
+        myProfile.setPreference("network.negotiate-auth.delegation-uris", "http://,https://");
+        myProfile.setPreference("network.negotiate-auth.trusted-uris", "http://,https://");
+        myProfile.setPreference("network.http.phishy-userpass-length", 255);
+        myProfile.setPreference("security.csp.enable", false);
+
+        caps.setCapability(FirefoxDriver.PROFILE, myProfile);
+
         logger.debug("Configured default Firefox DesiredCapabilities: " + caps.toString());
 
         return caps;
@@ -241,6 +262,17 @@ public class DesiredCapsFactory {
         } else
             throw new IllegalArgumentException("Null FirefoxProfile argument");
 
+        return caps;
+    }
+
+    private DesiredCapabilities createCommonCapabilities() {
+        DesiredCapabilities caps = new DesiredCapabilities();
+        if (DriverConfiguration.getBrowserVersion() != null && !DriverConfiguration
+            .getBrowserVersion().isEmpty()) {
+            caps.setVersion(DriverConfiguration.getBrowserVersion());
+        }
+        caps.setCapability(CapabilityType.PAGE_LOAD_STRATEGY,
+            DriverConfiguration.getPageLoadStrategy());
         return caps;
     }
 

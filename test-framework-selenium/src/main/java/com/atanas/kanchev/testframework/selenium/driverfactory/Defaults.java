@@ -13,73 +13,88 @@
 
 package com.atanas.kanchev.testframework.selenium.driverfactory;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.concurrent.TimeUnit;
 
-public final class Defaults {
-
-    // the logger
-    private static final Logger logger = LoggerFactory.getLogger(Defaults.class);
+public class Defaults {
 
     /**
-     * Constant <code>IMPL_WAIT</code>
+     * Constant <code>DEF_TIME_UNITS</code>
      */
-    public static final long IMPL_WAIT = 500L;
+    public static TimeUnit DEF_TIME_UNITS = TimeUnit.MILLISECONDS;
 
     /**
-     * Constant <code>PAGE_LOAD_TIMEOUT</code>
+     * Constant <code>DEF_IMPL_WAIT</code>
      */
-    public static final long PAGE_LOAD_TIMEOUT = 30000L;
-
+    public static final long DEF_IMPL_WAIT = 500L;
     /**
-     * Constant <code>POLLING_INTERVAL</code>
+     * Constant <code>DEF_PAGE_LOAD_TIMEOUT</code>
      */
-    public static final long POLLING_INTERVAL = 100L;
-
+    public static final long DEF_PAGE_LOAD_TIMEOUT = 30000L;
     /**
-     * Constant <code>REUSE_BROWSER</code>
+     * Constant <code>DEF_POLLING_INTERVAL</code>
      */
-    public static final boolean REUSE_BROWSER = false;
-
+    public static final long DEF_POLLING_INTERVAL = 100L;
     /**
-     * Constant <code>REOPEN_BROWSER_ON_FAIL</code>
+     * Constant <code>DEF_REUSE_BROWSER</code>
      */
-    public static final boolean REOPEN_BROWSER_ON_FAIL = true;
-
+    public static final boolean DEF_REUSE_BROWSER = false;
     /**
-     * Constant <code>CLOSE_BROWSER_TIMEOUT</code>
+     * Constant <code>DEF_REOPEN_BROWSER_ON_FAIL</code>
      */
-    public static final long CLOSE_BROWSER_TIMEOUT = 5000L;
-
+    public static final boolean DEF_REOPEN_BROWSER_ON_FAIL = true;
     /**
-     * Constant <code>BROWSER</code>
+     * Constant <code>DEF_CLOSE_BROWSER_TIMEOUT</code>
      */
-    public static final DriverType BROWSER = DriverType.FIREFOX;
-
+    public static final long DEF_CLOSE_BROWSER_TIMEOUT = 5000L;
     /**
-     * Constant <code>BROWSER_RES_WIDTH</code>
+     * Constant <code>DEF_BROWSER</code>
      */
-    public static final int BROWSER_RES_WIDTH = 1024;
-
+    public static final DriverType DEF_BROWSER = DriverType.FIREFOX;
     /**
-     * Constant <code>BROWSER_RES_HEIGHT</code>
+     * Constant <code>DEF_BROWSER_RES_WIDTH</code>
      */
-    public static final int BROWSER_RES_HEIGHT = 768;
-
+    public static final int DEF_BROWSER_RES_WIDTH = 1024;
     /**
-     * Constant <code>BROWSER_RES_HEIGHT</code>
+     * Constant <code>DEF_BROWSER_RES_HEIGHT</code>
      */
-    public static final boolean START_MAXIMISED = false;
-
+    public static final int DEF_BROWSER_RES_HEIGHT = 768;
+    /**
+     * Constant <code>DEF_BROWSER_RES_HEIGHT</code>
+     */
+    public static final boolean DEF_START_MAXIMISED = false;
+    /**
+     * Constant <code>DEF_SCREENSHOT_ON_FAILURE</code>
+     */
+    public static final boolean DEF_SCREENSHOT_ON_FAILURE = true;
+    /**
+     * Constant <code>DEF_PAGE_SOURCE_ON_FAILURE</code>
+     */
+    public static final boolean DEF_PAGE_SOURCE_ON_FAILURE = false;
+    /**
+     * Constant <code>DEF_REPORTS_FOLDER</code>
+     */
+    public static final String DEF_REPORTS_FOLDER = "target/reports/tests";
     /**
      * Constant <code>OPERATING_SYSTEM="System.getProperty(os.name).toUpperCase"{trunked}</code>
      */
     public static final String OPERATING_SYSTEM = System.getProperty("os.name").toUpperCase();
-
     /**
      * Constant <code>SYSTEM_ARCHITECTURE="System.getProperty(os.arch)"</code>
      */
     public static final String SYSTEM_ARCHITECTURE = System.getProperty("os.arch");
 
-
+    @Override public String toString() {
+        return "Defaults{" + "\nDEF_IMPL_WAIT=" + DEF_IMPL_WAIT + ",\nDEF_PAGE_LOAD_TIMEOUT="
+            + DEF_PAGE_LOAD_TIMEOUT + ",\nDEF_POLLING_INTERVAL=" + DEF_POLLING_INTERVAL
+            + ",\nDEF_REUSE_BROWSER=" + DEF_REUSE_BROWSER + ",\nDEF_REOPEN_BROWSER_ON_FAIL="
+            + DEF_REOPEN_BROWSER_ON_FAIL + ",\nDEF_CLOSE_BROWSER_TIMEOUT="
+            + DEF_CLOSE_BROWSER_TIMEOUT + ",\nDEF_BROWSER=" + DEF_BROWSER
+            + ",\nDEF_BROWSER_RES_WIDTH=" + DEF_BROWSER_RES_WIDTH + ",\nDEF_BROWSER_RES_HEIGHT="
+            + DEF_BROWSER_RES_HEIGHT + ",\nDEF_START_MAXIMISED=" + DEF_START_MAXIMISED
+            + ",\nDEF_SCREENSHOT_ON_FAILURE=" + DEF_SCREENSHOT_ON_FAILURE
+            + ",\nDEF_PAGE_SOURCE_ON_FAILURE=" + DEF_PAGE_SOURCE_ON_FAILURE
+            + ",\nDEF_REPORTS_FOLDER='" + DEF_REPORTS_FOLDER + '\'' + ",\nOPERATING_SYSTEM='"
+            + OPERATING_SYSTEM + '\'' + ",\nSYSTEM_ARCHITECTURE='" + SYSTEM_ARCHITECTURE + '\''
+            + '}';
+    }
 }

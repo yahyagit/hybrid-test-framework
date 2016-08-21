@@ -37,7 +37,7 @@ public class DriverConfig {
     public static final String SYSTEM_ARCHITECTURE = System.getProperty("os.arch");
 
     /**
-     * Constant <code>BROWSER</code>
+     * Constant <code>DEF_BROWSER</code>
      */
     public static final DriverType DEFAULT_BROWSER = DriverType.FIREFOX;
     /**
@@ -49,11 +49,11 @@ public class DriverConfig {
      */
     public static final int DEFAULT_BROWSER_RES_HEIGHT = 768;
     /**
-     * Constant <code>IMPL_WAIT=500L</code>
+     * Constant <code>DEF_IMPL_WAIT=500L</code>
      */
     public static final long DEFAULT_IMPL_WAIT = 500L;
     /**
-     * Constant <code>PAGE_LOAD_TIMEOUT=30000L</code>
+     * Constant <code>DEF_PAGE_LOAD_TIMEOUT=30000L</code>
      */
     public static final long DEFAULT_PAGE_LOAD_TIMEOUT = 30000L;
 

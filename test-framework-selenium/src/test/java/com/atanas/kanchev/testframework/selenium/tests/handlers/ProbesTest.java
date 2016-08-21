@@ -28,7 +28,10 @@ import org.openqa.selenium.By;
 public class ProbesTest implements ISelenium, IContext {
 
     @Before public void setUp() throws Exception {
-        setupSelenium().setBrowser("chrome").setReuseBrowser(true);
+        setupSelenium()
+            .setBrowser("chrome")
+           /* .setReuseBrowser(true)
+        .setCustomCapabilities(DesiredCapabilities.android())*/;
     }
 
     @After public void tearDown() throws Exception {
