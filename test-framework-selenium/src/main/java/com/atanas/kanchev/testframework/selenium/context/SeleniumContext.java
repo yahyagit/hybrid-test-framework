@@ -15,6 +15,7 @@ package com.atanas.kanchev.testframework.selenium.context;
 
 import com.atanas.kanchev.testframework.commons.context.AbstractContext;
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
+import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -34,10 +35,9 @@ public class SeleniumContext<T> extends AbstractContext<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(SeleniumContext.class);
-
+    private final DriverFactory driverFactory = new DriverFactory();
     // Current WebElement pointer
     private WebElement currentElement;
-
     // Current WebElement pointer
     private List<WebElement> webElementsList;
 
@@ -57,6 +57,13 @@ public class SeleniumContext<T> extends AbstractContext<T> {
      */
     public SeleniumContext(T driver) {
         this(driver, "seleniumCtx_");
+    }
+
+    /**
+     * <p>Constructor for SeleniumContext.</p>
+     */
+    public SeleniumContext() {
+        this("seleniumCtx_");
     }
 
     /**
@@ -107,6 +114,22 @@ public class SeleniumContext<T> extends AbstractContext<T> {
     }
 
     /**
+     * <p>Setter for the field <code>currentElement</code>.</p>
+     *
+     * @param currentElement a {@link org.openqa.selenium.WebElement} object.
+     */
+    public void setCurrentElement(WebElement currentElement) {
+        if (currentElement != null) {
+            logger.debug(
+                "Setting current element to " + ((RemoteWebElement) currentElement).toString());
+            this.currentElement = currentElement;
+        } else
+            throw new CustomExceptions.Common.NullArgumentException(
+                "Null WebElement instance passed as method argument");
+
+    }
+
+    /**
      * <p>Getter for the field <code>webElementsList</code>.</p>
      *
      * @return a {@link java.util.List} object.
@@ -125,22 +148,6 @@ public class SeleniumContext<T> extends AbstractContext<T> {
     /////////////
 
     /**
-     * <p>Setter for the field <code>currentElement</code>.</p>
-     *
-     * @param currentElement a {@link org.openqa.selenium.WebElement} object.
-     */
-    public void setCurrentElement(WebElement currentElement) {
-        if (currentElement != null) {
-            logger.debug(
-                "Setting current element to " + ((RemoteWebElement) currentElement).toString());
-            this.currentElement = currentElement;
-        } else
-            throw new CustomExceptions.Common.NullArgumentException(
-                "Null WebElement instance passed as method argument");
-
-    }
-
-    /**
      * <p>Setter for the field <code>webElementsList</code>.</p>
      *
      * @param webElementsList a {@link java.util.List} object.
@@ -154,6 +161,10 @@ public class SeleniumContext<T> extends AbstractContext<T> {
             throw new CustomExceptions.Common.NullArgumentException(
                 "Null WebElement instance passed as method argument");
 
+    }
+
+    public DriverFactory getDriverFactory() {
+        return driverFactory;
     }
 
     /**

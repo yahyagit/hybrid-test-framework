@@ -13,6 +13,8 @@
 
 package com.atanas.kanchev.testframework.selenium.wrappers;
 
+import com.atanas.kanchev.testframework.commons.wrappers.IContext;
+import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import com.atanas.kanchev.testframework.selenium.handlers.*;
 import org.openqa.selenium.By;
@@ -52,15 +54,19 @@ interface IInteract {
 }
 
 
-interface INavigate {
-    DriverFactory DRIVER_FACTORY = new DriverFactory();
+interface INavigate extends IContext {
 
     default DriverFactory setupSelenium() {
-        return DRIVER_FACTORY;
+
+        if (context().getCurrentContext() == null) {
+            context().setCurrentContext(new SeleniumContext());
+        }
+        return ((SeleniumContext) context().getCurrentContext()).getDriverFactory();
     }
 
     default NavigateSelenium goTo(final String url) {
-        return new NavigateSelenium(DRIVER_FACTORY).getPage(url);
+        return new NavigateSelenium(
+            ((SeleniumContext) context().getCurrentContext()).getDriverFactory()).getPage(url);
     }
 }
 

@@ -121,7 +121,7 @@ public final class ContextFactory implements IContextFactory {
 
         if (currentContext == null) {
             logger.warn("The current context is null");
-            throw new CustomExceptions.Common.NullReferenceException("The current context is null");
+            return null;
         } else
             return (T) currentContext;
 
