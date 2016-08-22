@@ -25,7 +25,7 @@ import java.security.SecureRandom;
  *
  * @author Atanas Kanchev
  */
-public abstract class AbstractContext<T> implements IAbstractContext<T> {
+public abstract class AbstractContext<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(AbstractContext.class);
@@ -48,42 +48,26 @@ public abstract class AbstractContext<T> implements IAbstractContext<T> {
         logger.debug("Current context name: " + this.contextName);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public T getDriver() {
         if (this.driver == null)
             throw new CustomExceptions.Common.NullReferenceException(
-                    "Null driver object AbstractContext#driver");
+                "Null driver object AbstractContext#driver");
         else
             return this.driver;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void setDriver(T driver) {
         if (driver != null)
             this.driver = driver;
         else
             throw new CustomExceptions.Common.NullArgumentException(
-                    "Null driver instance passed as method argument");
+                "Null driver instance passed as method argument");
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getContextName() {
         return contextName;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void setContextName(String contextName) {
         if (contextName == null)
             throw new CustomExceptions.Common.NullArgumentException("Null argument contextName");
@@ -92,73 +76,14 @@ public abstract class AbstractContext<T> implements IAbstractContext<T> {
         this.contextName = contextName;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public boolean isContextReusable() {
         return isContextReusable;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void setContextReusable(boolean contextReusable) {
         isContextReusable = contextReusable;
     }
 
-}
-
-interface IAbstractContext<T> {
-
-    /**
-     * <p>getDriver.</p>
-     *
-     * @return a T object.
-     */
-    T getDriver();
-
-    /**
-     * <p>setDriver.</p>
-     *
-     * @param driver a T object.
-     */
-    void setDriver(T driver);
-
-    /**
-     * <p>getContextName.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    String getContextName();
-
-    /**
-     * <p>setContextName.</p>
-     *
-     * @param contextName a {@link java.lang.String} object.
-     */
-    void setContextName(String contextName);
-
-    /**
-     * <p>isContextReusable.</p>
-     *
-     * @return a boolean.
-     */
-    boolean isContextReusable();
-
-    /**
-     * <p>setContextReusable.</p>
-     *
-     * @param contextReusable a boolean.
-     */
-    void setContextReusable(boolean contextReusable);
-
-    /**
-     * <p>tearDownContext.</p>
-     *
-     * @param context a T object
-     */
-    void tearDownContext(AbstractContext<T> context);
+    public abstract void tearDownContext(AbstractContext<T> context);
 
 }

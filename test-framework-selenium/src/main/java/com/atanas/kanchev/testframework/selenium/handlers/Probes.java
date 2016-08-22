@@ -65,7 +65,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
      */
     @Override public boolean exist() {
         try {
-            return ((SeleniumContext) context().getCurrentContext()).getCurrentElement() != null;
+            return context().getCurrentContext().getCurrentElement() != null;
         } catch (CustomExceptions.Common.NullReferenceException e) {
             return false;
         }
@@ -77,7 +77,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean hasAnyText() {
 
         boolean hasAnyText =
-            !((SeleniumContext) context().getCurrentContext()).getCurrentElement().getText()
+            ! context().getCurrentContext().getCurrentElement().getText()
                 .isEmpty();
         logger.debug("Has any text: " + hasAnyText);
         return hasAnyText;
@@ -91,7 +91,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         String... textElements) {
 
         String elText =
-            ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getText();
+            context().getCurrentContext().getCurrentElement().getText();
 
         boolean matchFound = false;
 
@@ -147,7 +147,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean hasAttribute(String attributeName, String attributeText,
         boolean preciseMatch) {
 
-        String attrValue = ((SeleniumContext) context().getCurrentContext()).getCurrentElement()
+        String attrValue =  context().getCurrentContext().getCurrentElement()
             .getAttribute(attributeName);
 
         if (attrValue == null) {
@@ -182,7 +182,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean isOfTagType(String tag) {
 
         String tagName =
-            ((SeleniumContext) context().getCurrentContext()).getCurrentElement().getTagName();
+            context().getCurrentContext().getCurrentElement().getTagName();
         logger.debug("Current element tag name: " + tagName);
 
         return tagName.equals(tag);
@@ -192,21 +192,21 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
      * {@inheritDoc}
      */
     @Override public boolean isEnabled() {
-        return ((SeleniumContext) context().getCurrentContext()).getCurrentElement().isEnabled();
+        return context().getCurrentContext().getCurrentElement().isEnabled();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override public boolean isSelected() {
-        return ((SeleniumContext) context().getCurrentContext()).getCurrentElement().isSelected();
+        return context().getCurrentContext().getCurrentElement().isSelected();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override public boolean isActive() {
-        return ((SeleniumContext) context().getCurrentContext()).getCurrentElement()
+        return  context().getCurrentContext().getCurrentElement()
             .getAttribute("class").contains("active");
     }
 
@@ -214,7 +214,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
      * {@inheritDoc}
      */
     @Override public boolean isDisplayed() {
-        return ((SeleniumContext) context().getCurrentContext()).getCurrentElement().isDisplayed();
+        return context().getCurrentContext().getCurrentElement().isDisplayed();
     }
 
     /**
@@ -236,14 +236,14 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         switch (css) {
             case CSS_BACKGROUND_COLOUR:
                 Color backgroundColor = Color.fromString(
-                    ((SeleniumContext) context().getCurrentContext()).getCurrentElement()
+                   context().getCurrentContext().getCurrentElement()
                         .getCssValue(
                             CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.getDefinition()));
                 logger.debug("Actual color: " + backgroundColor.asHex());
                 return expColor.asHex().equals(backgroundColor.asHex());
             case CSS_TEXT_COLOUR:
                 Color textColor = Color.fromString(
-                    ((SeleniumContext) context().getCurrentContext()).getCurrentElement()
+                    context().getCurrentContext().getCurrentElement()
                         .getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.getDefinition()));
                 logger.debug("Actual color: " + textColor.asHex());
                 return expColor.asHex().equals(textColor.asHex());
@@ -257,11 +257,11 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
      */
     @Override public boolean hasPartialImagePath(String imagePath) {
         boolean contains = false;
-        if (!((SeleniumContext) context().getCurrentContext()).getCurrentElement().getTagName()
+        if (!context().getCurrentContext().getCurrentElement().getTagName()
             .equals(CommonPageDefinitions.HTML.IMAGE.getDefinition())) {
             logger.error("hasImage : Current element is not image container");
         } else {
-            contains = ((SeleniumContext) context().getCurrentContext()).getCurrentElement()
+            contains = context().getCurrentContext().getCurrentElement()
                 .getAttribute("src").contains(imagePath);
         }
         return contains;
