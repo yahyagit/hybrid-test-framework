@@ -13,13 +13,15 @@
 
 package com.atanas.kanchev.testframework.commons.wrappers;
 
+import com.atanas.kanchev.testframework.commons.context.AbstractContext;
 import com.atanas.kanchev.testframework.commons.context.ContextFactory;
 
-public interface IContext {
-    ContextFactory CONTEXT_FACTORY = new ContextFactory();
+import static com.atanas.kanchev.testframework.commons.Omnia.contextFactory;
 
-    default ContextFactory context() {
-        return CONTEXT_FACTORY;
+public interface IContext<T extends AbstractContext> {
+
+    default ContextFactory<T> context() {
+        return contextFactory;
     }
 }
 

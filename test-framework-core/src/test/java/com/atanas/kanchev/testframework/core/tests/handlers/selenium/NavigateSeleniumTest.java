@@ -13,10 +13,12 @@
 
 package com.atanas.kanchev.testframework.core.tests.handlers.selenium;
 
+import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import org.junit.Test;
+import org.openqa.selenium.WebDriver;
 
-public class NavigateSeleniumTest extends BaseTest implements ISelenium {
+public class NavigateSeleniumTest extends BaseTest {
 
     public static final String url = "https://bbc.co.uk";
 

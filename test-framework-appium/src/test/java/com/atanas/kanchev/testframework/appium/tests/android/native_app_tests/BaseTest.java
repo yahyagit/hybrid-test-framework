@@ -37,7 +37,7 @@ public class BaseTest implements IAppium, IContext {
 
     @AfterClass
     public static void tearDown() throws Exception {
-        CONTEXT_FACTORY.tearDownContexts();
+//        CONTEXT_FACTORY.tearDownContexts();
         APPIUM_DRIVER_FACTORY.stopServer();
     }
 }

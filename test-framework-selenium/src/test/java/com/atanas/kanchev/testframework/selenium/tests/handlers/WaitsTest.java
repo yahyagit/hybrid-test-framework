@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * Test for {@link Waits}
  */
-public class WaitsTest implements ISelenium, IContext {
+public class WaitsTest implements ISelenium, IContext<SeleniumContext> {
 
     Waits waits;
 

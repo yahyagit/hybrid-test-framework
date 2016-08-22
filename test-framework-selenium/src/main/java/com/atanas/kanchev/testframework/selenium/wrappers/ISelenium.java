@@ -13,31 +13,33 @@
 
 package com.atanas.kanchev.testframework.selenium.wrappers;
 
+import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import com.atanas.kanchev.testframework.selenium.handlers.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.concurrent.TimeUnit;
 
-public interface ISelenium extends IFind, IInteract, INavigate, IProbes, IWaits {
+public interface ISelenium extends IFind, IInteract, INavigate, IProbes, IWaits, IContext<SeleniumContext> {
 }
 
 
 interface IFind {
 
-    default Finder find() {
-        return new Finder();
+    default Finder<? extends WebDriver> find() {
+        return new Finder<>();
     }
 
-    default Finder find(WebElement e) {
-        return new Finder(e);
+    default Finder<? extends WebDriver> find(WebElement e) {
+        return new Finder<>(e);
     }
 
-    default Finder find(Class<?> clasz) {
-        return new Finder(clasz);
+    default Finder<? extends WebDriver> find(Class<?> clasz) {
+        return new Finder<>(clasz);
     }
 }
 
@@ -54,27 +56,30 @@ interface IInteract {
 }
 
 
-interface INavigate extends IContext {
+interface INavigate extends IContext<SeleniumContext> {
 
     default DriverFactory setupSelenium() {
 
-        if (context().getCurrentContext() == null) {
-            context().setCurrentContext(new SeleniumContext());
+        try {
+           context().getCurrentContext();
+        } catch (CustomExceptions.Common.NullReferenceException e) {
+            context().setCurrentContext(new SeleniumContext<>());
+            return context().getCurrentContext().getDriverFactory();
         }
-        return ((SeleniumContext) context().getCurrentContext()).getDriverFactory();
+
+        return null;
     }
 
-    default NavigateSelenium goTo(final String url) {
-        return new NavigateSelenium(
-            ((SeleniumContext) context().getCurrentContext()).getDriverFactory()).getPage(url);
+    default Navigates goTo(final String url) {
+        return new Navigates().getPage(url);
     }
 }
 
 
 interface IProbes {
 
-    default Probes probe(By locator) {
-        return new Probes(locator);
+    default Probes<? extends org.openqa.selenium.WebDriver> probe(By locator) {
+        return new Probes<>(locator);
     }
 }
 

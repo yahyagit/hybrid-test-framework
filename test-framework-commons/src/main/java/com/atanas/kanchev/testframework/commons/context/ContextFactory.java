@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author Atanas Kanchev
  */
-public final class ContextFactory implements IContextFactory {
+public final class ContextFactory<T extends AbstractContext> implements IContextFactory<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(ContextFactory.class);
@@ -39,7 +39,7 @@ public final class ContextFactory implements IContextFactory {
     /**
      * {@inheritDoc}
      */
-    @Override public <T extends AbstractContext> IContextFactory addContext(T context) {
+    @Override public IContextFactory addContext(T context) {
 
         if (context == null)
             throw new CustomExceptions.Common.NullArgumentException("Null method argument context");
@@ -61,7 +61,7 @@ public final class ContextFactory implements IContextFactory {
     /**
      * {@inheritDoc}
      */
-    @Override public <T extends AbstractContext> IContextFactory removeContext(T context) {
+    @Override public IContextFactory removeContext(T context) {
 
         if (context == null)
             throw new CustomExceptions.Common.NullArgumentException("Null method argument context");
@@ -85,7 +85,7 @@ public final class ContextFactory implements IContextFactory {
     /**
      * {@inheritDoc}
      */
-    @Override public <T extends AbstractContext> T switchContext(String contextName) {
+    @Override public T switchContext(String contextName) {
 
         if (contextName == null)
             throw new CustomExceptions.Common.NullArgumentException("Null method argument context");
@@ -105,7 +105,7 @@ public final class ContextFactory implements IContextFactory {
     /**
      * {@inheritDoc}
      */
-    @Override public <T extends AbstractContext> IContextFactory setCurrentContext(T context) {
+    @Override public IContextFactory<T> setCurrentContext(T context) {
 
         logger.debug(
             "Setting current context to " + (context == null ? "null" : context.getContextName()));
@@ -117,11 +117,11 @@ public final class ContextFactory implements IContextFactory {
     /**
      * {@inheritDoc}
      */
-    @Override public <T extends AbstractContext> T getCurrentContext() {
+    @Override public T getCurrentContext() throws CustomExceptions.Common.NullReferenceException {
 
         if (currentContext == null) {
             logger.warn("The current context is null");
-            return null;
+            throw new CustomExceptions.Common.NullReferenceException("The current context is null");
         } else
             return (T) currentContext;
 
@@ -130,7 +130,7 @@ public final class ContextFactory implements IContextFactory {
     /**
      * {@inheritDoc}
      */
-    @Override public <T extends AbstractContext> IContextFactory tearDownContext(T context) {
+    @Override public IContextFactory<T> tearDownContext(T context) {
 
         logger.debug("Tearing down contexts " + contextMap.values().size());
 
@@ -150,7 +150,7 @@ public final class ContextFactory implements IContextFactory {
         for (AbstractContext context : getContextMap().values()) {
             logger.debug("Tearing down context type " + context.toString());
             context.tearDownContext(context);
-            removeContext(context);
+            removeContext((T) context);
 
         }
         return this;
@@ -161,14 +161,14 @@ public final class ContextFactory implements IContextFactory {
      *
      * @return a {@link java.util.Map} object.
      */
-    public static Map<String, AbstractContext> getContextMap() {
+    public static Map<String, AbstractContext>  getContextMap() {
         return contextMap;
     }
 
 }
 
 
-interface IContextFactory {
+interface IContextFactory<T extends AbstractContext> {
 
     /**
      * <p>addContext.</p>
@@ -177,7 +177,7 @@ interface IContextFactory {
      * @param <T>     a T object.
      * @return a {@link com.atanas.kanchev.testframework.commons.context.IContextFactory} object.
      */
-    <T extends AbstractContext> IContextFactory addContext(T context);
+    IContextFactory addContext(T context);
 
     /**
      * <p>removeContext.</p>
@@ -186,7 +186,7 @@ interface IContextFactory {
      * @param <T>     a T object.
      * @return a {@link com.atanas.kanchev.testframework.commons.context.IContextFactory} object.
      */
-    <T extends AbstractContext> IContextFactory removeContext(T context);
+    IContextFactory removeContext(T context);
 
     /**
      * <p>switchContext.</p>
@@ -195,7 +195,7 @@ interface IContextFactory {
      * @param <T>         a T object.
      * @return a T object.
      */
-    <T extends AbstractContext> T switchContext(String contextName);
+    T switchContext(String contextName);
 
     /**
      * <p>setCurrentContext.</p>
@@ -204,7 +204,7 @@ interface IContextFactory {
      * @param <T>     a T object.
      * @return a {@link com.atanas.kanchev.testframework.commons.context.IContextFactory} object.
      */
-    <T extends AbstractContext> IContextFactory setCurrentContext(T context);
+    IContextFactory<? extends AbstractContext> setCurrentContext(T context);
 
     /**
      * <p>getCurrentContext.</p>
@@ -212,7 +212,7 @@ interface IContextFactory {
      * @param <T> a T object.
      * @return a T object.
      */
-    <T extends AbstractContext> T getCurrentContext();
+    T getCurrentContext();
 
     /**
      * <p>tearDownContext.</p>
@@ -221,7 +221,7 @@ interface IContextFactory {
      * @param <T>     a T object.
      * @return a {@link com.atanas.kanchev.testframework.commons.context.IContextFactory} object.
      */
-    <T extends AbstractContext> IContextFactory tearDownContext(T context);
+    IContextFactory<T> tearDownContext(T context);
 
     /**
      * <p>tearDownContexts.</p>

@@ -31,7 +31,7 @@ import java.util.List;
  *
  * @author Atanas Kanchev
  */
-public class SeleniumContext<T> extends AbstractContext<T> {
+public class SeleniumContext<T extends WebDriver> extends AbstractContext<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(SeleniumContext.class);
@@ -80,18 +80,19 @@ public class SeleniumContext<T> extends AbstractContext<T> {
     /**
      * {@inheritDoc}
      */
-    @Override public void tearDownContext(AbstractContext context) {
+    @Override
+    public void tearDownContext(AbstractContext<T> context) {
 
         logger.debug("Tearing down context " + context.getContextName());
 
 
-        if (((SeleniumContext<WebDriver>) context).getDriver() != null) {
+        if (context.getDriver() != null) {
 
             if (context.getDriver() instanceof WebDriver)
-                ((SeleniumContext<WebDriver>) context).getDriver().quit();
+                context.getDriver().quit();
 
             if (context.getDriver() instanceof RemoteWebDriver)
-                ((SeleniumContext<RemoteWebDriver>) context).getDriver().quit();
+                context.getDriver().quit();
         }
     }
 
@@ -108,7 +109,7 @@ public class SeleniumContext<T> extends AbstractContext<T> {
 
         if (this.currentElement == null)
             throw new CustomExceptions.Common.NullReferenceException(
-                "Null SeleniumContext#currentElement");
+                    "Null SeleniumContext#currentElement");
         else
             return currentElement;
     }
@@ -121,11 +122,11 @@ public class SeleniumContext<T> extends AbstractContext<T> {
     public void setCurrentElement(WebElement currentElement) {
         if (currentElement != null) {
             logger.debug(
-                "Setting current element to " + ((RemoteWebElement) currentElement).toString());
+                    "Setting current element to " + ((RemoteWebElement) currentElement).toString());
             this.currentElement = currentElement;
         } else
             throw new CustomExceptions.Common.NullArgumentException(
-                "Null WebElement instance passed as method argument");
+                    "Null WebElement instance passed as method argument");
 
     }
 
@@ -138,7 +139,7 @@ public class SeleniumContext<T> extends AbstractContext<T> {
 
         if (this.webElementsList == null)
             throw new CustomExceptions.Common.NullReferenceException(
-                "Null SeleniumContext#webElementsList");
+                    "Null SeleniumContext#webElementsList");
         else
             return webElementsList;
     }
@@ -156,10 +157,10 @@ public class SeleniumContext<T> extends AbstractContext<T> {
         if (webElementsList != null) {
             this.webElementsList = webElementsList;
             logger.debug(
-                "Setting current element list to \n" + Arrays.toString(webElementsList.toArray()));
+                    "Setting current element list to \n" + Arrays.toString(webElementsList.toArray()));
         } else
             throw new CustomExceptions.Common.NullArgumentException(
-                "Null WebElement instance passed as method argument");
+                    "Null WebElement instance passed as method argument");
 
     }
 
@@ -170,7 +171,8 @@ public class SeleniumContext<T> extends AbstractContext<T> {
     /**
      * {@inheritDoc}
      */
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return getClass().getSimpleName();
     }
 

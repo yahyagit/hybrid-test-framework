@@ -17,6 +17,7 @@ import com.atanas.kanchev.testframework.commons.context.AbstractContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Atanas Kanchev
  */
-public final class AppiumContext<T> extends SeleniumContext<T> {
+public final class AppiumContext<T extends WebDriver> extends SeleniumContext<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(AppiumContext.class);
@@ -52,7 +53,7 @@ public final class AppiumContext<T> extends SeleniumContext<T> {
     /**
      * {@inheritDoc}
      */
-    @Override public void tearDownContext(AbstractContext context) {
+    @Override public void tearDownContext(AbstractContext<T> context) {
 
         logger.debug("Tearing down context " + context.getContextName());
 

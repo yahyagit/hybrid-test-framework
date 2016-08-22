@@ -15,7 +15,8 @@ package com.atanas.kanchev.testframework.selenium.handlers;
 
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
-import com.atanas.kanchev.testframework.selenium.driverfactory.DriverConfig;
+import com.atanas.kanchev.testframework.selenium.driverfactory.Defaults;
+import com.atanas.kanchev.testframework.selenium.driverfactory.DriverConfiguration;
 import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -29,7 +30,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Atanas Kanchev
  */
-public class Interact implements IInteract, IContext {
+public class Interact implements IInteract, IContext<SeleniumContext> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Interact.class);
@@ -185,7 +186,7 @@ public class Interact implements IInteract, IContext {
         try {
             new WebDriverWait(
                 ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver(),
-                DriverConfig.DEFAULT_IMPL_WAIT).until(ExpectedConditions.alertIsPresent());
+                Defaults.DEF_IMPL_WAIT).until(ExpectedConditions.alertIsPresent());
             Alert alert =
                 ((SeleniumContext<WebDriver>) context().getCurrentContext()).getDriver().switchTo()
                     .alert();

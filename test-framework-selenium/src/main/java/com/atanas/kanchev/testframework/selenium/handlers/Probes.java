@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  *
  * @author Atanas Kanchev
  */
-public final class Probes<T extends WebDriver> implements IProbe, IProbeExpectedConditions, IContext {
+public final class Probes<T extends WebDriver> implements IProbe, IProbeExpectedConditions, IContext<SeleniumContext> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Probes.class);

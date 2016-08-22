@@ -14,6 +14,8 @@
 package com.atanas.kanchev.testframework.selenium.tests.handlers;
 
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
+import com.atanas.kanchev.testframework.dataservices.dataprovider.file.FileFinder;
+import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.handlers.Probes;
 import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import com.codeborne.selenide.WebDriverRunner;
@@ -23,109 +25,131 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ThreadGuard;
 
 import static com.codeborne.selenide.Selenide.$;
 
 /**
  * Tests for {@link Probes}
  */
-public class ProbesTest implements ISelenium, IContext {
+public class ProbesTest implements ISelenium {
 
-    @Before public void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         setupSelenium()
-            .setBrowser("chrome")
+                .setBrowser("chrome")
            /* .setReuseBrowser(true)
         .setCustomCapabilities(DesiredCapabilities.android())*/;
     }
 
-    @After public void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         context().tearDownContexts();
 
     }
 
-    @Test public void exist() throws Exception {
-        goTo("https://www.google.co.uk");
+    @Test
+    public void exist() throws Exception {
+//        goTo("https://www.google.co.uk");
 
-        WebDriverRunner.setWebDriver((WebDriver) context().getCurrentContext().getDriver());
-        $(By.name("btnK")).click();
-//        Assert.assertTrue(new Probes(By.name("btnK")).exist());
+        goTo("Google.html");
+
+        Assert.assertTrue(new Probes(By.name("btnK")).exist());
+
     }
 
-    @Test public void hasAnyText() throws Exception {
+    @Test
+    public void hasAnyText() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.className("gb_P")).hasAnyText());
     }
 
-    @Test public void hasText() throws Exception {
+    @Test
+    public void hasText() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.className("gb_P")).hasText(true, true, "Gmail"));
     }
 
-    @Test public void hasAttribute() throws Exception {
+    @Test
+    public void hasAttribute() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).hasAttribute("type", "submit", false));
     }
 
-    @Test public void isOfTagType() throws Exception {
+    @Test
+    public void isOfTagType() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).isOfTagType("input"));
     }
 
-    @Test public void isEnabled() throws Exception {
+    @Test
+    public void isEnabled() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).isEnabled());
     }
 
-    @Test public void isSelected() throws Exception {
+    @Test
+    public void isSelected() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertFalse(new Probes(By.name("btnK")).isSelected());
     }
 
-    @Test public void isActive() throws Exception {
+    @Test
+    public void isActive() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).isActive());
     }
 
-    @Test public void isDisplayed() throws Exception {
+    @Test
+    public void isDisplayed() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).isDisplayed());
     }
 
-    @Test public void hasColour() throws Exception {
+    @Test
+    public void hasColour() throws Exception {
 
     }
 
-    @Test public void hasURL() throws Exception {
+    @Test
+    public void hasURL() throws Exception {
         goTo("https://www.google.co.uk");
 //        Assert.assertTrue(
 //            new Probes(By.className("gb_P")).hasURL("google.co", false));
     }
 
-    @Test public void hasTitle() throws Exception {
+    @Test
+    public void hasTitle() throws Exception {
 
     }
 
-    @Test public void hasPartialImagePath() throws Exception {
+    @Test
+    public void hasPartialImagePath() throws Exception {
 
     }
 
-    @Test public void hasLinkToURL() throws Exception {
+    @Test
+    public void hasLinkToURL() throws Exception {
 
     }
 
-    @Test public void followLinkToURL() throws Exception {
+    @Test
+    public void followLinkToURL() throws Exception {
 
     }
 
-    @Test public void titleHasText() throws Exception {
+    @Test
+    public void titleHasText() throws Exception {
 
     }
 
-    @Test public void hasPartialCookieValue() throws Exception {
+    @Test
+    public void hasPartialCookieValue() throws Exception {
 
     }
 
-    @Test public void titleIs() throws Exception {
+    @Test
+    public void titleIs() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).titleContains("Google"));
     }

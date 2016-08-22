@@ -17,6 +17,7 @@ import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
+import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -33,7 +34,7 @@ import java.util.List;
  *
  * @author Atanas Kanchev
  */
-public final class Finder implements IFinder, IContext {
+public final class Finder<T extends WebDriver> implements IFinder, IContext<SeleniumContext> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Finder.class);
@@ -65,7 +66,7 @@ public final class Finder implements IFinder, IContext {
      */
     public Finder(WebElement element) {
         this();
-        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(element);
+        context().getCurrentContext().setCurrentElement(element);
     }
 
     /**
@@ -75,7 +76,7 @@ public final class Finder implements IFinder, IContext {
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            ((SeleniumContext) context().getCurrentContext())
+            context().getCurrentContext()
                 .setCurrentElement(findElement(locator));
         return this;
     }
@@ -88,7 +89,7 @@ public final class Finder implements IFinder, IContext {
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            ((SeleniumContext) context().getCurrentContext())
+            context().getCurrentContext()
                 .setWebElementsList(findElements(locator));
         return this;
 
@@ -103,7 +104,7 @@ public final class Finder implements IFinder, IContext {
             throw new CustomExceptions.Common.NullArgumentException(
                 "Null method argument: WebElement element");
         else
-            ((SeleniumContext) context().getCurrentContext()).setCurrentElement(element);
+            context().getCurrentContext().setCurrentElement(element);
 
         return this;
     }
@@ -116,7 +117,7 @@ public final class Finder implements IFinder, IContext {
         if (text == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            ((SeleniumContext) context().getCurrentContext()).setCurrentElement(findElement(
+            context().getCurrentContext().setCurrentElement(findElement(
                 By.xpath(".//*/text()[contains(normalize-space(.), " + Quotes.escape(text)
                     + ")]/parent::*")));
         return this;
@@ -131,7 +132,7 @@ public final class Finder implements IFinder, IContext {
         if (text == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            ((SeleniumContext) context().getCurrentContext()).setCurrentElement(findElement(
+            context().getCurrentContext().setCurrentElement(findElement(
                 By.xpath(
                     ".//*/text()[normalize-space(.) = " + Quotes.escape(text) + "]/parent::*")));
         return this;
@@ -146,10 +147,10 @@ public final class Finder implements IFinder, IContext {
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else {
-            ((SeleniumContext) context().getCurrentContext())
+            context().getCurrentContext()
                 .setCurrentElement(findElement(locator));
             new JSExecutor().executeScript(driver, "arguments[0].scrollIntoView(true);",
-                ((SeleniumContext) context().getCurrentContext()).getCurrentElement());
+                context().getCurrentContext().getCurrentElement());
         }
         return this;
     }
@@ -159,10 +160,10 @@ public final class Finder implements IFinder, IContext {
      */
     @Override public Finder byScrollingByAttribute(String attribute, String value) {
 
-        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
+        context().getCurrentContext().setCurrentElement(
             findElement(By.xpath("//*[contains(@" + attribute + ", '" + value + "')]")));
         new JSExecutor().executeScript(driver, "arguments[0].scrollIntoView(true);",
-            ((SeleniumContext) context().getCurrentContext()).getCurrentElement());
+            context().getCurrentContext().getCurrentElement());
 
         return this;
     }
@@ -172,10 +173,10 @@ public final class Finder implements IFinder, IContext {
      */
     @Override public Finder byScrollingByTag(String tag, String value) {
 
-        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
+        context().getCurrentContext().setCurrentElement(
             findElement(By.xpath("//*[contains(" + tag + ", '" + value + "')]")));
         new JSExecutor().executeScript(driver, "arguments[0].scrollIntoView(true);",
-            ((SeleniumContext) context().getCurrentContext()).getCurrentElement());
+            context().getCurrentContext().getCurrentElement());
 
         return this;
     }
@@ -186,14 +187,14 @@ public final class Finder implements IFinder, IContext {
     @Override public Finder byScrollingByText(String text, boolean isExactMatch) {
 
         if (isExactMatch)
-            ((SeleniumContext) context().getCurrentContext())
+            context().getCurrentContext()
                 .setCurrentElement(findElement(By.xpath("//*[.=\"" + text + "\"]")));
         else
-            ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
+            context().getCurrentContext().setCurrentElement(
                 findElement(By.xpath("//*[contains(text(), \"" + text + "\")]")));
 
         new JSExecutor().executeScript(driver, "arguments[0].scrollIntoView(true);",
-            ((SeleniumContext) context().getCurrentContext()).getCurrentElement());
+            context().getCurrentContext().getCurrentElement());
 
         return this;
     }
@@ -206,7 +207,7 @@ public final class Finder implements IFinder, IContext {
         if (attribute == null || value == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
+            context().getCurrentContext().setCurrentElement(
                 findElement(By.cssSelector("[" + attribute + "='" + value + "']")));
 
         return this;
@@ -218,15 +219,14 @@ public final class Finder implements IFinder, IContext {
     @Override public Finder byLabelForId(String id) {
         boolean labelFound = false;
 
-        ((SeleniumContext) context().getCurrentContext()).setWebElementsList(
+        context().getCurrentContext().setWebElementsList(
             findElements(By.tagName(CommonPageDefinitions.HTML.LABEL.getDefinition())));
-        if (!((SeleniumContext) context().getCurrentContext()).getWebElementsList().isEmpty()) {
-            for (WebElement labelElement : ((SeleniumContext<WebDriver>) context()
-                .getCurrentContext()).getWebElementsList()) {
+        if (!context().getCurrentContext().getWebElementsList().isEmpty()) {
+            for (WebElement labelElement : ((SeleniumContext<T>)context().getCurrentContext()).getWebElementsList()) {
                 String s = labelElement
                     .getAttribute(CommonPageDefinitions.HTML.ATTRIBUTE_FOR.getDefinition());
                 if (s.equals(id)) {
-                    ((SeleniumContext) context().getCurrentContext())
+                    context().getCurrentContext()
                         .setCurrentElement(labelElement);
                     labelFound = true;
                     break;
@@ -244,13 +244,12 @@ public final class Finder implements IFinder, IContext {
     @Override public Finder byHref(String href) {
 
         boolean navigated = false;
-        ((SeleniumContext) context().getCurrentContext()).setWebElementsList(
+        context().getCurrentContext().setWebElementsList(
             findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
-        if (!((SeleniumContext) context().getCurrentContext()).getWebElementsList().isEmpty()) {
-            for (WebElement anchor : ((SeleniumContext<WebDriver>) context().getCurrentContext())
-                .getWebElementsList()) {
+        if (!context().getCurrentContext().getWebElementsList().isEmpty()) {
+            for (WebElement anchor : ((SeleniumContext<T>)context().getCurrentContext()).getWebElementsList()) {
                 if (anchor.getAttribute("href").equals(href)) {
-                    ((SeleniumContext) context().getCurrentContext()).setCurrentElement(anchor);
+                    context().getCurrentContext().setCurrentElement(anchor);
                     navigated = true;
                     break;
                 }
@@ -268,7 +267,7 @@ public final class Finder implements IFinder, IContext {
     @Override public Finder goToRootElement() {
 
         try {
-            ((SeleniumContext) context().getCurrentContext())
+            context().getCurrentContext()
                 .setCurrentElement(findElement(By.xpath("/html/body")));
         } catch (NoSuchElementException nsee) {
             logger.error("Unable to return to Root Element - Body");
@@ -283,7 +282,7 @@ public final class Finder implements IFinder, IContext {
     @Override public Finder goToChild() {
 
         // Step into child element
-        ((SeleniumContext) context().getCurrentContext())
+        context().getCurrentContext()
             .setCurrentElement(findElement(By.xpath("./*[1]")));
 
         return this;
@@ -296,7 +295,7 @@ public final class Finder implements IFinder, IContext {
     @Override public Finder goToParent() {
 
         // Step up to parent element
-        ((SeleniumContext) context().getCurrentContext())
+        context().getCurrentContext()
             .setCurrentElement(findElement(By.xpath("..")));
         return this;
     }

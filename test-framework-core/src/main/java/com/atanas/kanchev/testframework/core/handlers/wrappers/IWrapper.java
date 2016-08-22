@@ -23,6 +23,6 @@ import com.atanas.kanchev.testframework.sikuli.wrappers.ISikulix;
  *
  * @author Atanas Kanchev
  */
-public interface IWrapper extends IContext, ISikulix, IAppium, ISelenium {
+public interface IWrapper extends ISikulix, IAppium, ISelenium {
 }
 

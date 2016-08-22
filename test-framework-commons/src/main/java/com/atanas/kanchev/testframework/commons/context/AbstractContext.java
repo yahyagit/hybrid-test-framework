@@ -51,10 +51,11 @@ public abstract class AbstractContext<T> implements IAbstractContext<T> {
     /**
      * {@inheritDoc}
      */
-    @Override public T getDriver() {
+    @Override
+    public T getDriver() {
         if (this.driver == null)
             throw new CustomExceptions.Common.NullReferenceException(
-                "Null driver object AbstractContext#driver");
+                    "Null driver object AbstractContext#driver");
         else
             return this.driver;
     }
@@ -62,25 +63,28 @@ public abstract class AbstractContext<T> implements IAbstractContext<T> {
     /**
      * {@inheritDoc}
      */
-    @Override public void setDriver(T driver) {
+    @Override
+    public void setDriver(T driver) {
         if (driver != null)
             this.driver = driver;
         else
             throw new CustomExceptions.Common.NullArgumentException(
-                "Null driver instance passed as method argument");
+                    "Null driver instance passed as method argument");
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override public String getContextName() {
+    @Override
+    public String getContextName() {
         return contextName;
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override public void setContextName(String contextName) {
+    @Override
+    public void setContextName(String contextName) {
         if (contextName == null)
             throw new CustomExceptions.Common.NullArgumentException("Null argument contextName");
         if (contextName.isEmpty())
@@ -91,14 +95,16 @@ public abstract class AbstractContext<T> implements IAbstractContext<T> {
     /**
      * {@inheritDoc}
      */
-    @Override public boolean isContextReusable() {
+    @Override
+    public boolean isContextReusable() {
         return isContextReusable;
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override public void setContextReusable(boolean contextReusable) {
+    @Override
+    public void setContextReusable(boolean contextReusable) {
         isContextReusable = contextReusable;
     }
 
@@ -151,9 +157,8 @@ interface IAbstractContext<T> {
     /**
      * <p>tearDownContext.</p>
      *
-     * @param context a U object.
-     * @param <U>     a U object.
+     * @param context a T object
      */
-    <U extends AbstractContext> void tearDownContext(U context);
+    void tearDownContext(AbstractContext<T> context);
 
 }

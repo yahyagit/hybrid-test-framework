@@ -21,10 +21,10 @@ public class ContextFactoryTest /*extends ContextFactory*/ {
 //    @Caps
 //    public void addContextTest() throws Exception {
 //
-//        AbstractContext com.atanas.kanchev.testframework.selenium.context = new SeleniumContext();
-//        super.addContext(com.atanas.kanchev.testframework.selenium.context);
-//        assertTrue(getContextMap().containsValue(com.atanas.kanchev.testframework.selenium.context));
-//        assertTrue(getCurrentContext() == com.atanas.kanchev.testframework.selenium.context);
+//        AbstractContext com.atanas.kanchev.testframework.omniadriver.context = new SeleniumContext();
+//        super.addContext(com.atanas.kanchev.testframework.omniadriver.context);
+//        assertTrue(getContextMap().containsValue(com.atanas.kanchev.testframework.omniadriver.context));
+//        assertTrue(getCurrentContext() == com.atanas.kanchev.testframework.omniadriver.context);
 //
 //    }
 //
@@ -90,10 +90,10 @@ public class ContextFactoryTest /*extends ContextFactory*/ {
 //
 //    @Caps
 //    public void getCurrentContextTest() throws Exception {
-//        AbstractContext com.atanas.kanchev.testframework.selenium.context = new SeleniumContext();
-//        super.addContext(com.atanas.kanchev.testframework.selenium.context);
-//        assertTrue(getContextMap().containsValue(com.atanas.kanchev.testframework.selenium.context));
-//        assertTrue(getCurrentContext() == com.atanas.kanchev.testframework.selenium.context);
+//        AbstractContext com.atanas.kanchev.testframework.omniadriver.context = new SeleniumContext();
+//        super.addContext(com.atanas.kanchev.testframework.omniadriver.context);
+//        assertTrue(getContextMap().containsValue(com.atanas.kanchev.testframework.omniadriver.context));
+//        assertTrue(getCurrentContext() == com.atanas.kanchev.testframework.omniadriver.context);
 //        assertTrue(getCurrentContext() instanceof SeleniumContext);
 //    }
 //

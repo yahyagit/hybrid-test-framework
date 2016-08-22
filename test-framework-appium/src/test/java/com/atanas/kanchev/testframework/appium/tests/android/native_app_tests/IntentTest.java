@@ -47,7 +47,7 @@ public class IntentTest implements IAppium, IContext {
     public static void tearDown() throws Exception {
 
         APPIUM_DRIVER_FACTORY.stopServer();
-        CONTEXT_FACTORY.tearDownContexts();
+//        CONTEXT_FACTORY.tearDownContexts();
 
     }
 
