@@ -126,7 +126,7 @@ public class SeleniumContext<T extends WebDriver> extends AbstractContext<T> {
             this.currentElement = currentElement;
         } else
             throw new CustomExceptions.Common.NullArgumentException(
-                    "Null WebElement instance passed as method argument");
+                    "Null WebElement omniaDriver passed as method argument");
 
     }
 
@@ -160,7 +160,7 @@ public class SeleniumContext<T extends WebDriver> extends AbstractContext<T> {
                     "Setting current element list to \n" + Arrays.toString(webElementsList.toArray()));
         } else
             throw new CustomExceptions.Common.NullArgumentException(
-                    "Null WebElement instance passed as method argument");
+                    "Null WebElement omniaDriver passed as method argument");
 
     }
 

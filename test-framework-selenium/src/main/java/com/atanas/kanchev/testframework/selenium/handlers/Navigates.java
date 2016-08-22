@@ -17,19 +17,15 @@ import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
+import com.atanas.kanchev.testframework.selenium.omniadriver.*;
 import com.atanas.kanchev.testframework.selenium.omniadriver.Navigation;
-import com.atanas.kanchev.testframework.selenium.omniadriver.OmniaDriver;
-import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Iterator;
-import java.util.Set;
+
+import static com.atanas.kanchev.testframework.selenium.omniadriver.OmniaDriver.*;
 
 /**
  * <p>Navigates class.</p>
@@ -41,7 +37,7 @@ public class Navigates implements /*INavigates,*/ IContext<SeleniumContext> {
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Navigates.class);
 
-    private Navigation navigation = new Navigation();
+    Navigation navigation = new Navigation();
 
     public Navigates() {
 

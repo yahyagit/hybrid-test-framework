@@ -1148,7 +1148,7 @@ interface IProbeExpectedConditions extends ISelenium{
      * is available it switches the given driver to the specified frame.
      *
      * @param frameLocator used to find the frame (id or name)
-     * @return WebDriver instance after frame has been switched
+     * @return WebDriver omniaDriver after frame has been switched
      */
     IProbeExpectedConditions frameToBeAvailableAndSwitchToIt(final String frameLocator);
 
@@ -1157,7 +1157,7 @@ interface IProbeExpectedConditions extends ISelenium{
      * is available it switches the given driver to the specified frame.
      *
      * @param locator used to find the frame
-     * @return WebDriver instance after frame has been switched
+     * @return WebDriver omniaDriver after frame has been switched
      */
     IProbeExpectedConditions frameToBeAvailableAndSwitchToIt(final By locator);
 
@@ -1166,7 +1166,7 @@ interface IProbeExpectedConditions extends ISelenium{
      * is available it switches the given driver to the specified frameIndex.
      *
      * @param frameLocator used to find the frame (index)
-     * @return WebDriver instance after frame has been switched
+     * @return WebDriver omniaDriver after frame has been switched
      */
     IProbeExpectedConditions frameToBeAvailableAndSwitchToIt(final int frameLocator);
 
@@ -1175,7 +1175,7 @@ interface IProbeExpectedConditions extends ISelenium{
      * is available it switches the given driver to the specified webelement.
      *
      * @param frameLocator used to find the frame (webelement)
-     * @return WebDriver instance after frame has been switched
+     * @return WebDriver omniaDriver after frame has been switched
      */
     IProbeExpectedConditions frameToBeAvailableAndSwitchToIt(final WebElement frameLocator);
 

@@ -30,11 +30,6 @@ import java.util.Set;
  */
 public final class OmniaDriver implements WebDriver, IContext<SeleniumContext<OmniaDriver>> {
 
-    private OmniaDriver() {
-    }
-
-    public static OmniaDriver instance = new OmniaDriver();
-
     @Override
     public void get(String s) {
         context().getCurrentContext().getDriver().get(s);

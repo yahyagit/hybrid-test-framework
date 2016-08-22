@@ -1068,7 +1068,7 @@ interface IWaitsExpectedCondition {
      * is available it switches the given driver to the specified frame.
      *
      * @param frameLocator used to find the frame (id or name)
-     * @return WebDriver instance after frame has been switched
+     * @return WebDriver omniaDriver after frame has been switched
      */
     IWaitsExpectedCondition frameToBeAvailableAndSwitchToIt(final String frameLocator);
 
@@ -1077,7 +1077,7 @@ interface IWaitsExpectedCondition {
      * is available it switches the given driver to the specified frame.
      *
      * @param locator used to find the frame
-     * @return WebDriver instance after frame has been switched
+     * @return WebDriver omniaDriver after frame has been switched
      */
     IWaitsExpectedCondition frameToBeAvailableAndSwitchToIt(final By locator);
 
@@ -1086,7 +1086,7 @@ interface IWaitsExpectedCondition {
      * is available it switches the given driver to the specified frameIndex.
      *
      * @param frameLocator used to find the frame (index)
-     * @return WebDriver instance after frame has been switched
+     * @return WebDriver omniaDriver after frame has been switched
      */
     IWaitsExpectedCondition frameToBeAvailableAndSwitchToIt(final int frameLocator);
 
@@ -1095,7 +1095,7 @@ interface IWaitsExpectedCondition {
      * is available it switches the given driver to the specified webelement.
      *
      * @param frameLocator used to find the frame (webelement)
-     * @return WebDriver instance after frame has been switched
+     * @return WebDriver omniaDriver after frame has been switched
      */
     IWaitsExpectedCondition frameToBeAvailableAndSwitchToIt(final WebElement frameLocator);
 

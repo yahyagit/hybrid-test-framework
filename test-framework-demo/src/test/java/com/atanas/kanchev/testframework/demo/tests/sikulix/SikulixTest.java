@@ -22,7 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sikuli.script.Key;
 
-public class SikulixTest implements ISelenium, ISikulix, IContext {
+public class SikulixTest implements ISelenium, ISikulix {
 
     @Before
     public void setUp() throws Exception {
