@@ -16,11 +16,15 @@ package com.atanas.kanchev.testframework.selenium.tests.handlers;
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.handlers.Probes;
 import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
+import com.codeborne.selenide.WebDriverRunner;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+import static com.codeborne.selenide.Selenide.$;
 
 /**
  * Tests for {@link Probes}
@@ -36,11 +40,15 @@ public class ProbesTest implements ISelenium, IContext {
 
     @After public void tearDown() throws Exception {
         context().tearDownContexts();
+
     }
 
     @Test public void exist() throws Exception {
         goTo("https://www.google.co.uk");
-        Assert.assertTrue(new Probes(By.name("btnK")).exist());
+
+        WebDriverRunner.setWebDriver((WebDriver) context().getCurrentContext().getDriver());
+        $(By.name("btnK")).click();
+//        Assert.assertTrue(new Probes(By.name("btnK")).exist());
     }
 
     @Test public void hasAnyText() throws Exception {
