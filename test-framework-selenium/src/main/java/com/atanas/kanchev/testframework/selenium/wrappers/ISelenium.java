@@ -17,6 +17,7 @@ import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
+import com.atanas.kanchev.testframework.selenium.element.OmniaElement;
 import com.atanas.kanchev.testframework.selenium.handlers.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -24,7 +25,17 @@ import org.openqa.selenium.WebElement;
 
 import java.util.concurrent.TimeUnit;
 
-public interface ISelenium extends IFind, IInteract, INavigate, IProbes, IWaits, IContext<SeleniumContext> {
+public interface ISelenium extends IFind, IInteract, INavigate, IProbes, IWaits, IContext<SeleniumContext>, IElement {
+
+
+}
+
+interface IElement {
+
+    default OmniaElement s(){
+        return new OmniaElement();
+    }
+
 }
 
 

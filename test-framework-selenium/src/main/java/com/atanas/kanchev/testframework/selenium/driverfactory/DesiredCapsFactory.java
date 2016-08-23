@@ -56,7 +56,7 @@ public class DesiredCapsFactory {
             options.addArguments("chrome.switches", DriverConfiguration.getChromeSwitches());
         }
         caps.setCapability(ChromeOptions.CAPABILITY, options);
-        logger.debug("Configured default Chrome DesiredCapabilities: " + caps.toString());
+        logger.debug("Configured default Chrome " + caps.toString());
 
         return caps;
     }
@@ -83,7 +83,7 @@ public class DesiredCapsFactory {
 
         caps.setCapability(FirefoxDriver.PROFILE, myProfile);
 
-        logger.debug("Configured default Firefox DesiredCapabilities: " + caps.toString());
+        logger.debug("Configured default Firefox " + caps.toString());
 
         return caps;
     }
@@ -100,7 +100,7 @@ public class DesiredCapsFactory {
         caps.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
         caps.setCapability("requireWindowFocus", true);
 
-        logger.debug("Configured default IE DesiredCapabilities: " + caps.toString());
+        logger.debug("Configured default IE " + caps.toString());
 
         return caps;
     }
@@ -113,7 +113,7 @@ public class DesiredCapsFactory {
     public DesiredCapabilities getDefaultEdgeCaps() {
 
         caps = DesiredCapabilities.edge();
-        logger.debug("Configured default Edge DesiredCapabilities: " + caps.toString());
+        logger.debug("Configured default Edge " + caps.toString());
 
         return caps;
     }
@@ -128,7 +128,7 @@ public class DesiredCapsFactory {
         caps = DesiredCapabilities.safari();
         caps.setCapability("safari.cleanSession", true);
 
-        logger.debug("Configured default Safari DesiredCapabilities: " + caps.toString());
+        logger.debug("Configured default Safari " + caps.toString());
 
         return caps;
     }
@@ -140,7 +140,7 @@ public class DesiredCapsFactory {
      */
     public DesiredCapabilities getDefaultOperaCaps() {
         caps = DesiredCapabilities.operaBlink();
-        logger.debug("Configured default Opera DesiredCapabilities: " + caps.toString());
+        logger.debug("Configured default Opera " + caps.toString());
         return caps;
     }
 
@@ -160,7 +160,7 @@ public class DesiredCapsFactory {
             applyPhantomJSProxySettings(cliArguments, proxySettings));
         caps.setCapability("takesScreenshot", true);
 
-        logger.debug("Configured default PhantomJS DesiredCapabilities: " + caps.toString());
+        logger.debug("Configured default PhantomJS " + caps.toString());
 
         return caps;
     }

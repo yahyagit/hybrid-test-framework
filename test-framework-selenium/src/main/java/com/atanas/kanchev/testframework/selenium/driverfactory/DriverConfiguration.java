@@ -23,6 +23,14 @@ import org.slf4j.LoggerFactory;
 
 public class DriverConfiguration extends Defaults {
 
+    private static final Logger logger = LoggerFactory.getLogger(DriverConfiguration.class.getName());
+
+    public DriverConfiguration() {
+        logger.debug(DriverType.getDriverTypes());
+        logger.debug(super.toString());
+        logger.debug(this.toString());
+    }
+
     /**
      * If reuseBrowser is true, browser window stays open after running tests.
      * It may be useful for debugging or saving execution time.
@@ -200,14 +208,6 @@ public class DriverConfiguration extends Defaults {
      * Proxy host port
      */
     private static Integer proxyPort = Integer.getInteger("proxyPort");
-    private final Logger logger = LoggerFactory.getLogger(DriverConfiguration.class.getName());
-
-    public DriverConfiguration() {
-        logger.debug(DriverType.getDriverTypes());
-        logger.debug(super.toString());
-        logger.debug(this.toString());
-
-    }
 
     public static long getImplicitlyWait() {
         return implicitlyWait;

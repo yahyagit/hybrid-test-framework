@@ -11,18 +11,27 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.commons.wrappers;
+package com.atanas.kanchev.testframework.selenium.exceptions;
 
-import com.atanas.kanchev.testframework.commons.context.AbstractContext;
-import com.atanas.kanchev.testframework.commons.context.ContextFactory;
+import org.openqa.selenium.WebDriverException;
 
+/**
+ * @author Atanas Kanchev
+ */
+public class ElementEx extends WebDriverException {
 
-public interface IContext<T extends AbstractContext> {
+    public ElementEx() {
+    }
 
-    ContextFactory CONTEXT_FACTORY = new ContextFactory();
+    public ElementEx(String message) {
+        super(message);
+    }
 
-    default ContextFactory<T> context() {
-        return CONTEXT_FACTORY;
+    public ElementEx(Throwable cause) {
+        super(cause);
+    }
+
+    public ElementEx(String message, Throwable cause) {
+        super(message, cause);
     }
 }
-

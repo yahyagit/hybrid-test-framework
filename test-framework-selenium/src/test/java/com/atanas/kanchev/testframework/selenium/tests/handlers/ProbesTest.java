@@ -13,21 +13,13 @@
 
 package com.atanas.kanchev.testframework.selenium.tests.handlers;
 
-import com.atanas.kanchev.testframework.commons.wrappers.IContext;
-import com.atanas.kanchev.testframework.dataservices.dataprovider.file.FileFinder;
-import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.handlers.Probes;
 import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
-import com.codeborne.selenide.WebDriverRunner;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ThreadGuard;
-
-import static com.codeborne.selenide.Selenide.$;
 
 /**
  * Tests for {@link Probes}
@@ -50,11 +42,12 @@ public class ProbesTest implements ISelenium {
 
     @Test
     public void exist() throws Exception {
-//        goTo("https://www.google.co.uk");
 
-        goTo("Google.html");
+        goTo("https://www.google.co.uk");
+        find().elementBy(By.name("btnK"));
+        s().click();
 
-        Assert.assertTrue(new Probes(By.name("btnK")).exist());
+//        Assert.assertTrue(new Probes(By.name("btnK")).exist());
 
     }
 

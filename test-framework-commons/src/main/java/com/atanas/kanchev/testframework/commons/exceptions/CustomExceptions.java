@@ -66,11 +66,6 @@ public final class CustomExceptions {
         }
     }
 
-
-    public static class WebHandler {
-    }
-
-
     public static class Properties {
 
         public static class PropFileNotFoundException extends RuntimeException {

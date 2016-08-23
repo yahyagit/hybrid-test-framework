@@ -11,18 +11,13 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.commons.wrappers;
+package com.atanas.kanchev.testframework.selenium.element;
 
-import com.atanas.kanchev.testframework.commons.context.AbstractContext;
-import com.atanas.kanchev.testframework.commons.context.ContextFactory;
+/**
+ * @author Atanas Kanchev
+ */
+public interface Executor<T> {
 
+    T execute(Object... args);
 
-public interface IContext<T extends AbstractContext> {
-
-    ContextFactory CONTEXT_FACTORY = new ContextFactory();
-
-    default ContextFactory<T> context() {
-        return CONTEXT_FACTORY;
-    }
 }
-

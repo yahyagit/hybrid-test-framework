@@ -121,7 +121,7 @@ public enum DriverType implements DriverSetup {
     private static final Logger logger = LoggerFactory.getLogger(DriverType.class);
 
     public static String getDriverTypes() {
-        return "Supported browsers{" + Arrays.toString(DriverType.values()) + '}';
+        return "Supported browsers" + Arrays.toString(DriverType.values());
     }
 
     DesiredCapabilities addProxySettings(DesiredCapabilities capabilities, Proxy proxySettings) {

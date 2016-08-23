@@ -18,11 +18,6 @@ import java.util.concurrent.TimeUnit;
 public class Defaults {
 
     /**
-     * Constant <code>DEF_TIME_UNITS</code>
-     */
-    public static TimeUnit DEF_TIME_UNITS = TimeUnit.MILLISECONDS;
-
-    /**
      * Constant <code>DEF_IMPL_WAIT</code>
      */
     public static final long DEF_IMPL_WAIT = 500L;
@@ -82,6 +77,10 @@ public class Defaults {
      * Constant <code>SYSTEM_ARCHITECTURE="System.getProperty(os.arch)"</code>
      */
     public static final String SYSTEM_ARCHITECTURE = System.getProperty("os.arch");
+    /**
+     * Constant <code>DEF_TIME_UNITS</code>
+     */
+    public static TimeUnit DEF_TIME_UNITS = TimeUnit.MILLISECONDS;
 
     @Override public String toString() {
         return "Defaults{" + "\nDEF_IMPL_WAIT=" + DEF_IMPL_WAIT + ",\nDEF_PAGE_LOAD_TIMEOUT="

@@ -11,18 +11,26 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.commons.wrappers;
+package com.atanas.kanchev.testframework.selenium.element.interactions;
 
-import com.atanas.kanchev.testframework.commons.context.AbstractContext;
-import com.atanas.kanchev.testframework.commons.context.ContextFactory;
+import com.atanas.kanchev.testframework.commons.wrappers.IContext;
+import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
+import com.atanas.kanchev.testframework.selenium.element.Executor;
+import org.openqa.selenium.WebDriver;
 
 
-public interface IContext<T extends AbstractContext> {
+/**
+ * @author Atanas Kanchev
+ */
+public class GetScreenshotAs<T> extends AbstractInteraction
+    implements Executor<T>, IContext<SeleniumContext<WebDriver>> {
 
-    ContextFactory CONTEXT_FACTORY = new ContextFactory();
-
-    default ContextFactory<T> context() {
-        return CONTEXT_FACTORY;
+    @Override public T execute(Object... args) {
+        //TODO Implement me!!!
+        return null;
     }
 }
+
+
+
 
