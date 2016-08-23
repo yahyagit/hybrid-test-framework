@@ -29,7 +29,7 @@ public class IsEnabled extends AbstractInteraction
         try {
             return element.isEnabled();
         } catch (WebDriverException e) {
-            thrrowEx(e);
+            throwEx(e);
         }
         return false;
     }

@@ -41,16 +41,16 @@ interface IElement {
 
 interface IFind {
 
-    default Finder<? extends WebDriver> find() {
-        return new Finder<>();
+    default Finds<? extends WebDriver> find() {
+        return new Finds<>();
     }
 
-    default Finder<? extends WebDriver> find(WebElement e) {
-        return new Finder<>(e);
+    default Finds<? extends WebDriver> find(WebElement e) {
+        return new Finds<>(e);
     }
 
-    default Finder<? extends WebDriver> find(Class<?> clasz) {
-        return new Finder<>(clasz);
+    default Finds<? extends WebDriver> find(Class<?> clasz) {
+        return new Finds<>(clasz);
     }
 }
 

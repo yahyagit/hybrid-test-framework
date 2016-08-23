@@ -50,7 +50,7 @@ public abstract class AbstractInteraction implements IContext<SeleniumContext<We
             throw new CustomExceptions.Common.NullArgumentException("Null agrs");
     }
 
-    protected void thrrowEx(Throwable throwable) throws ElementEx {
+    protected void throwEx(Throwable throwable) throws ElementEx {
         logger.error(executorMarker, "Unable to execute " + throwable.toString());
         throw new ElementEx(throwable);
     }

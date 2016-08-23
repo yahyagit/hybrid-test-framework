@@ -13,6 +13,7 @@
 
 package com.atanas.kanchev.testframework.selenium.element;
 
+import com.atanas.kanchev.testframework.selenium.handlers.Finds;
 import org.openqa.selenium.*;
 
 import java.util.List;
@@ -53,4 +54,22 @@ public interface IOmniaElement extends WebElement {
     @Override Rectangle getRect();
 
     @Override String getCssValue(String propertyName);
+
+    void clickAndHold(int duration);
+
+    void doubleClick();
+
+    void contextClick();
+
+    IOmniaElement hover();
+
+    IOmniaElement selectAll();
+
+    IOmniaElement copy();
+
+    IOmniaElement paste();
+
+    IOmniaElement handleAlert(boolean accept);
+
+    Finds find();
 }

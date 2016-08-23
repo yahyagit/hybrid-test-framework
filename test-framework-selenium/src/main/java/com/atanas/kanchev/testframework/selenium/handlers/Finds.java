@@ -29,41 +29,41 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * <p>Finder class.</p>
+ * <p>Finds class.</p>
  *
  * @author Atanas Kanchev
  */
-public final class Finder<T extends WebDriver> implements IFinder, IContext<SeleniumContext> {
+public final class Finds<T extends WebDriver> implements IFinds, IContext<SeleniumContext> {
 
     // the logger
-    private static final Logger logger = LoggerFactory.getLogger(Finder.class);
+    private static final Logger logger = LoggerFactory.getLogger(Finds.class);
 
     private final WebDriver driver;
 
     /**
-     * <p>Constructor for Finder.</p>
+     * <p>Constructor for Finds.</p>
      */
-    public Finder() {
+    public Finds() {
         driver = (WebDriver) context().getCurrentContext().getDriver();
         goToRootElement();
     }
 
     /**
-     * <p>Constructor for Finder.</p>
+     * <p>Constructor for Finds.</p>
      *
      * @param clazz a {@link java.lang.Class} object.
      */
-    public Finder(Class<?> clazz) {
+    public Finds(Class<?> clazz) {
         this();
         PageFactory.initElements(driver, clazz);
     }
 
     /**
-     * <p>Constructor for Finder.</p>
+     * <p>Constructor for Finds.</p>
      *
      * @param element a {@link org.openqa.selenium.WebElement} object.
      */
-    public Finder(WebElement element) {
+    public Finds(WebElement element) {
         this();
         context().getCurrentContext().setCurrentElement(element);
     }
@@ -71,7 +71,7 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
     /**
      * {@inheritDoc}
      */
-    @Override public Finder elementBy(final By locator) {
+    @Override public Finds elementBy(final By locator) {
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
@@ -83,7 +83,7 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
     /**
      * {@inheritDoc}
      */
-    @Override public Finder elementsBy(final By locator) {
+    @Override public Finds elementsBy(final By locator) {
 
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
@@ -97,7 +97,7 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
     /**
      * {@inheritDoc}
      */
-    @Override public Finder byWebElement(final WebElement element) {
+    @Override public Finds byWebElement(final WebElement element) {
 
         if (element == null)
             throw new CustomExceptions.Common.NullArgumentException(
@@ -111,7 +111,7 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
     /**
      * {@inheritDoc}
      */
-    @Override public Finder containingText(final String text) {
+    @Override public Finds containingText(final String text) {
 
         if (text == null)
             throw new CustomExceptions.Common.NullArgumentException();
@@ -126,7 +126,7 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
     /**
      * {@inheritDoc}
      */
-    @Override public Finder havingText(final String text) {
+    @Override public Finds havingText(final String text) {
 
         if (text == null)
             throw new CustomExceptions.Common.NullArgumentException();
@@ -141,7 +141,7 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
     /**
      * {@inheritDoc}
      */
-    @Override public Finder byScrollingToElement(final By locator) {
+    @Override public Finds byScrollingToElement(final By locator) {
 
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
@@ -157,7 +157,7 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
     /**
      * {@inheritDoc}
      */
-    @Override public Finder byScrollingByAttribute(String attribute, String value) {
+    @Override public Finds byScrollingByAttribute(String attribute, String value) {
 
         context().getCurrentContext().setCurrentElement(
             findElement(By.xpath("//*[contains(@" + attribute + ", '" + value + "')]")));
@@ -170,7 +170,7 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
     /**
      * {@inheritDoc}
      */
-    @Override public Finder byScrollingByTag(String tag, String value) {
+    @Override public Finds byScrollingByTag(String tag, String value) {
 
         context().getCurrentContext().setCurrentElement(
             findElement(By.xpath("//*[contains(" + tag + ", '" + value + "')]")));
@@ -183,7 +183,7 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
     /**
      * {@inheritDoc}
      */
-    @Override public Finder byScrollingByText(String text, boolean isExactMatch) {
+    @Override public Finds byScrollingByText(String text, boolean isExactMatch) {
 
         if (isExactMatch)
             context().getCurrentContext()
@@ -201,7 +201,7 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
     /**
      * {@inheritDoc}
      */
-    @Override public Finder byAttributeValue(String attribute, String value) {
+    @Override public Finds byAttributeValue(String attribute, String value) {
 
         if (attribute == null || value == null)
             throw new CustomExceptions.Common.NullArgumentException();
@@ -215,7 +215,7 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
     /**
      * {@inheritDoc}
      */
-    @Override public Finder byLabelForId(String id) {
+    @Override public Finds byLabelForId(String id) {
         boolean labelFound = false;
 
         context().getCurrentContext().setWebElementsList(
@@ -240,7 +240,7 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
     /**
      * {@inheritDoc}
      */
-    @Override public Finder byHref(String href) {
+    @Override public Finds byHref(String href) {
 
         boolean navigated = false;
         context().getCurrentContext().setWebElementsList(
@@ -263,7 +263,7 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
     /**
      * {@inheritDoc}
      */
-    @Override public Finder goToRootElement() {
+    @Override public Finds goToRootElement() {
 
         try {
             context().getCurrentContext()
@@ -278,7 +278,7 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
     /**
      * {@inheritDoc}
      */
-    @Override public Finder goToChild() {
+    @Override public Finds goToChild() {
 
         // Step into child element
         context().getCurrentContext()
@@ -291,7 +291,7 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
     /**
      * {@inheritDoc}
      */
-    @Override public Finder goToParent() {
+    @Override public Finds goToParent() {
 
         // Step up to parent element
         context().getCurrentContext()
@@ -326,127 +326,127 @@ public final class Finder<T extends WebDriver> implements IFinder, IContext<Sele
 
 }
 
-interface IFinder extends ISelenium {
+interface IFinds extends ISelenium {
 
     /**
      * <p>goToRootElement.</p>
      *
-     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     * @return a {@link IFinds} object.
      */
-    IFinder goToRootElement();
+    IFinds goToRootElement();
 
     /**
      * <p>elementBy.</p>
      *
      * @param locator a {@link org.openqa.selenium.By} object.
-     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     * @return a {@link IFinds} object.
      */
-    IFinder elementBy(final By locator);
+    IFinds elementBy(final By locator);
 
     /**
      * <p>elementsBy.</p>
      *
      * @param locator a {@link org.openqa.selenium.By} object.
-     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     * @return a {@link IFinds} object.
      */
-    IFinder elementsBy(final By locator);
+    IFinds elementsBy(final By locator);
 
     /**
      * <p>byWebElement.</p>
      *
      * @param element a {@link org.openqa.selenium.WebElement} object.
-     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     * @return a {@link IFinds} object.
      */
-    IFinder byWebElement(final WebElement element);
+    IFinds byWebElement(final WebElement element);
 
     /**
      * <p>containingText.</p>
      *
      * @param text a {@link java.lang.String} object.
-     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     * @return a {@link IFinds} object.
      */
-    IFinder containingText(final String text);
+    IFinds containingText(final String text);
 
     /**
      * <p>havingText.</p>
      *
      * @param text a {@link java.lang.String} object.
-     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     * @return a {@link IFinds} object.
      */
-    IFinder havingText(final String text);
+    IFinds havingText(final String text);
 
     /**
      * <p>byScrollingToElement.</p>
      *
      * @param locator a {@link org.openqa.selenium.By} object.
-     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     * @return a {@link IFinds} object.
      */
-    IFinder byScrollingToElement(final By locator);
+    IFinds byScrollingToElement(final By locator);
 
     /**
      * <p>byScrollingByAttribute.</p>
      *
      * @param attribute a {@link java.lang.String} object.
      * @param value     a {@link java.lang.String} object.
-     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     * @return a {@link IFinds} object.
      */
-    IFinder byScrollingByAttribute(String attribute, String value);
+    IFinds byScrollingByAttribute(String attribute, String value);
 
     /**
      * <p>byScrollingByTag.</p>
      *
      * @param tag   a {@link java.lang.String} object.
      * @param value a {@link java.lang.String} object.
-     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     * @return a {@link IFinds} object.
      */
-    IFinder byScrollingByTag(String tag, String value);
+    IFinds byScrollingByTag(String tag, String value);
 
     /**
      * <p>byScrollingByText.</p>
      *
      * @param text         a {@link java.lang.String} object.
      * @param isExactMatch a boolean.
-     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     * @return a {@link IFinds} object.
      */
-    IFinder byScrollingByText(String text, boolean isExactMatch);
+    IFinds byScrollingByText(String text, boolean isExactMatch);
 
     /**
      * <p>byAttributeValue.</p>
      *
      * @param attribute a {@link java.lang.String} object.
      * @param value     a {@link java.lang.String} object.
-     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     * @return a {@link IFinds} object.
      */
-    IFinder byAttributeValue(String attribute, String value);
+    IFinds byAttributeValue(String attribute, String value);
 
     /**
      * <p>byLabelForId.</p>
      *
      * @param id a {@link java.lang.String} object.
-     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     * @return a {@link IFinds} object.
      */
-    IFinder byLabelForId(String id);
+    IFinds byLabelForId(String id);
 
     /**
      * <p>byHref.</p>
      *
      * @param href a {@link java.lang.String} object.
-     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     * @return a {@link IFinds} object.
      */
-    IFinder byHref(String href);
+    IFinds byHref(String href);
 
     /**
      * <p>goToChild.</p>
      *
-     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     * @return a {@link IFinds} object.
      */
-    IFinder goToChild();
+    IFinds goToChild();
 
 
     /**
      * <p>goToParent.</p>
      *
-     * @return a {@link com.atanas.kanchev.testframework.selenium.handlers.IFinder} object.
+     * @return a {@link IFinds} object.
      */
-    IFinder goToParent();
+    IFinds goToParent();
 }

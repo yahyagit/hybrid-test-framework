@@ -29,7 +29,7 @@ public class IsDisplayed extends AbstractInteraction
         try {
             return element.isDisplayed();
         } catch (WebDriverException e) {
-            thrrowEx(e);
+            throwEx(e);
         }
         return false;
     }

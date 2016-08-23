@@ -13,7 +13,9 @@
 
 package com.atanas.kanchev.testframework.selenium.element;
 
+import com.atanas.kanchev.testframework.selenium.element.interactions.Alert;
 import com.atanas.kanchev.testframework.selenium.element.interactions.*;
+import com.atanas.kanchev.testframework.selenium.handlers.Finds;
 import org.openqa.selenium.*;
 
 import java.util.List;
@@ -89,8 +91,45 @@ public class OmniaElement implements IOmniaElement {
         return new GetCssValue().execute();
     }
 
+    @Override public void clickAndHold(int duration) {
+        new ClickAndHold().execute(duration);
+    }
+
+    @Override public void doubleClick() {
+        new DoubleClick().execute();
+    }
+
+    @Override public void contextClick() {
+        new ContextClick().execute();
+    }
+
+    @Override public IOmniaElement hover() {
+        return new Hover().execute();
+    }
+
+    @Override public IOmniaElement selectAll() {
+        return new CopyPaste().execute("a");
+    }
+
+    @Override public IOmniaElement copy() {
+        return new CopyPaste().execute("c");
+    }
+
+    @Override public IOmniaElement paste() {
+        return new CopyPaste().execute("v");
+    }
+
+    @Override public IOmniaElement handleAlert(boolean accept) {
+        return new Alert().execute(accept);
+    }
+
+    @Override public Finds find() {
+        return new Finds();
+    }
+
     @Override public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
         return null;
     }
+
 
 }

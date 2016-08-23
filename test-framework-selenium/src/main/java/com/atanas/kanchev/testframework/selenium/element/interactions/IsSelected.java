@@ -29,7 +29,7 @@ public class IsSelected extends AbstractInteraction
         try {
             return element.isSelected();
         } catch (WebDriverException e) {
-            thrrowEx(e);
+            throwEx(e);
         }
         return false;
     }

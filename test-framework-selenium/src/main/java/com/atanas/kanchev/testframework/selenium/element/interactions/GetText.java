@@ -29,7 +29,7 @@ public class GetText extends AbstractInteraction
         try {
             return element.getText();
         } catch (WebDriverException e) {
-            thrrowEx(e);
+            throwEx(e);
         }
         return null;
     }

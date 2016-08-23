@@ -17,6 +17,7 @@ import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.element.Executor;
 import com.atanas.kanchev.testframework.selenium.element.OmniaElement;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 
@@ -31,8 +32,9 @@ public class Clear extends AbstractInteraction
     @Override public OmniaElement execute(Object... args) {
         try {
             element.clear();
+            element.sendKeys(Keys.BACK_SPACE);
         } catch (WebDriverException e) {
-            thrrowEx(e);
+            throwEx(e);
         }
 
         return omniaElement;

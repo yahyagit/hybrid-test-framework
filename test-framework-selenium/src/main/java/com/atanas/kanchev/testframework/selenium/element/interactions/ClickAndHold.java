@@ -17,23 +17,40 @@ import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.element.Executor;
 import com.atanas.kanchev.testframework.selenium.element.OmniaElement;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 
 import static com.atanas.kanchev.testframework.selenium.element.OmniaElement.omniaElement;
 
 /**
  * @author Atanas Kanchev
  */
-public class Submit extends AbstractInteraction
+public class ClickAndHold extends AbstractInteraction
     implements Executor<OmniaElement>, IContext<SeleniumContext<WebDriver>> {
 
-    @Override public OmniaElement execute(Object... args) {
+    private static void sleep(int sleep) {
+        //TODO make wait generic
         try {
-            element.submit();
-        } catch (NoSuchElementException e) {
+            Thread.sleep(sleep);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    @Override public OmniaElement execute(Object... args) {
+
+        logger.debug("Click and Hold Element");
+        try {
+            Actions actions = new Actions(context().getCurrentContext().getDriver());
+            actions.clickAndHold(element).perform();
+            sleep((Integer) args[0]);
+            actions.release(element).perform();
+        } catch (Exception e) {
             throwEx(e);
         }
+
         return omniaElement;
     }
+
+
 }

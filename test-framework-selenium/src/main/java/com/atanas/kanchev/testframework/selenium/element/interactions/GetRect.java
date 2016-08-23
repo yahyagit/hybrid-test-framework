@@ -30,7 +30,7 @@ public class GetRect extends AbstractInteraction
         try {
             return element.getRect();
         } catch (WebDriverException e) {
-            thrrowEx(e);
+            throwEx(e);
         }
         return null;
     }

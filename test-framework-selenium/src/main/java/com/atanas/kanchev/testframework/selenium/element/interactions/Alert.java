@@ -15,25 +15,37 @@ package com.atanas.kanchev.testframework.selenium.element.interactions;
 
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
+import com.atanas.kanchev.testframework.selenium.driverfactory.Defaults;
 import com.atanas.kanchev.testframework.selenium.element.Executor;
 import com.atanas.kanchev.testframework.selenium.element.OmniaElement;
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.atanas.kanchev.testframework.selenium.element.OmniaElement.omniaElement;
 
 /**
  * @author Atanas Kanchev
  */
-public class Submit extends AbstractInteraction
+public class Alert extends AbstractInteraction
     implements Executor<OmniaElement>, IContext<SeleniumContext<WebDriver>> {
 
     @Override public OmniaElement execute(Object... args) {
+
+        new WebDriverWait(context().getCurrentContext().getDriver(), Defaults.DEF_IMPL_WAIT)
+            .until(ExpectedConditions.alertIsPresent());
         try {
-            element.submit();
-        } catch (NoSuchElementException e) {
+            org.openqa.selenium.Alert alert =
+                context().getCurrentContext().getDriver().switchTo().alert();
+            if (Boolean.parseBoolean(String.valueOf(args[0])))
+                alert.accept();
+            else
+                alert.dismiss();
+        } catch (NoAlertPresentException e) {
             throwEx(e);
         }
+
         return omniaElement;
     }
 }

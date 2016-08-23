@@ -30,7 +30,7 @@ public class GetLocation extends AbstractInteraction
         try {
             return element.getLocation();
         } catch (WebDriverException e) {
-            thrrowEx(e);
+            throwEx(e);
         }
         return null;
     }

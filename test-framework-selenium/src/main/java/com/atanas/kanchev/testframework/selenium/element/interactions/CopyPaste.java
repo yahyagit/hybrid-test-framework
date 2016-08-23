@@ -17,23 +17,26 @@ import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.element.Executor;
 import com.atanas.kanchev.testframework.selenium.element.OmniaElement;
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 
 import static com.atanas.kanchev.testframework.selenium.element.OmniaElement.omniaElement;
 
 /**
  * @author Atanas Kanchev
  */
-public class Submit extends AbstractInteraction
+public class CopyPaste extends AbstractInteraction
     implements Executor<OmniaElement>, IContext<SeleniumContext<WebDriver>> {
 
     @Override public OmniaElement execute(Object... args) {
+        validate(args);
         try {
-            element.submit();
-        } catch (NoSuchElementException e) {
+            element.sendKeys(Keys.chord(Keys.CONTROL, String.valueOf(args[0])));
+        } catch (WebDriverException e) {
             throwEx(e);
         }
+
         return omniaElement;
     }
 }

@@ -13,7 +13,7 @@
 
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
-import com.atanas.kanchev.testframework.selenium.handlers.Finder;
+import com.atanas.kanchev.testframework.selenium.handlers.Finds;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 
 import org.junit.After;
@@ -27,13 +27,12 @@ import org.slf4j.LoggerFactory;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class FinderTest implements IWrapper {
+public class FindsTest implements IWrapper {
 
-    @Mock
-    Finder ifind;
+    @Mock Finds ifind;
 
     private static URL url;
-    private static final Logger logger = LoggerFactory.getLogger(FinderTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(FindsTest.class);
 
     @Before
     public void setUp() throws Exception {

@@ -17,8 +17,9 @@ import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.element.Executor;
 import com.atanas.kanchev.testframework.selenium.element.OmniaElement;
-import org.openqa.selenium.NoSuchElementException;
+import com.atanas.kanchev.testframework.selenium.handlers.CommonPageDefinitions;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 
 import static com.atanas.kanchev.testframework.selenium.element.OmniaElement.omniaElement;
 
@@ -30,11 +31,18 @@ public class SendKeys extends AbstractInteraction
 
     @Override public OmniaElement execute(Object... args) {
         validate();
-        try {
+        String tag = element.getTagName();
+        if (tag.equals(CommonPageDefinitions.HTML.INPUT.getDefinition()) || tag
+            .equals(CommonPageDefinitions.HTML.TEXTAREA.getDefinition()) || tag
+            .equals(CommonPageDefinitions.HTML.UIA_SECURETEXTFIELD.getDefinition()) || tag
+            .equals(CommonPageDefinitions.HTML.UIA_TEXTFIELD.getDefinition()) || tag
+            .equals("android.widget.EditText")) {
             element.sendKeys((CharSequence[]) args);
-        } catch (NoSuchElementException e) {
-            thrrowEx(e);
+        } else {
+            logger.error("Cannot type in this element");
+            throwEx(new WebDriverException("Cannot type in this element"));
         }
+
         return omniaElement;
     }
 }

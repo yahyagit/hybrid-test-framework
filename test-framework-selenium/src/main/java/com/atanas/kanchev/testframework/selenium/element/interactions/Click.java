@@ -17,6 +17,7 @@ import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.element.Executor;
 import com.atanas.kanchev.testframework.selenium.element.OmniaElement;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 
@@ -33,9 +34,12 @@ public class Click extends AbstractInteraction
         try {
             element.click();
         } catch (StaleElementReferenceException e) {
-            thrrowEx(e);
+            logger.error("Stale element");
+            throwEx(e);
+        } catch (ElementNotVisibleException e) {
+            logger.error("click() : Element is Not visible");
+            throwEx(e);
         }
-
         return omniaElement;
     }
 

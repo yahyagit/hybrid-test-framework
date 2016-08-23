@@ -29,7 +29,7 @@ public class GetTagName extends AbstractInteraction
         try {
             return element.getTagName();
         } catch (WebDriverException e) {
-            thrrowEx(e);
+            throwEx(e);
         }
         return null;
     }

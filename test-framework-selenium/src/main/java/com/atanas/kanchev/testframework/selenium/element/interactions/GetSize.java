@@ -30,7 +30,7 @@ public class GetSize extends AbstractInteraction
         try {
             return element.getSize();
         } catch (WebDriverException e) {
-            thrrowEx(e);
+            throwEx(e);
         }
         return null;
     }

@@ -30,7 +30,7 @@ public class GetAttribute extends AbstractInteraction
         try {
             return element.getAttribute(String.valueOf(args[0]));
         } catch (WebDriverException e) {
-            thrrowEx(e);
+            throwEx(e);
         }
         return null;
     }
