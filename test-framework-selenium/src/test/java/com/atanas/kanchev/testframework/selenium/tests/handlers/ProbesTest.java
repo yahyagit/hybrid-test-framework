@@ -44,8 +44,24 @@ public class ProbesTest implements ISelenium {
     public void exist() throws Exception {
 
         goTo("https://www.google.co.uk");
-        find().elementBy(By.name("btnK"));
-        s().click();
+//        find().elementBy(By.name("btnK"));
+//        o().click();
+
+        o(By.name("q")).click();
+        o().sendKeys("hello");
+        o().clear();
+//        waitFors().
+//        waitFor().titleIs("X");
+//        waitFor().titleContains("X");
+//        FluentWait<WebDriver> fait =new FluentWait<>((WebDriver)context().getCurrentContext().getDriver())
+//            .withTimeout(30, TimeUnit.SECONDS)
+//            .pollingEvery(1, TimeUnit.SECONDS)
+//            .ignoring(NoSuchElementException.class)
+//            .ignoring(NoSuchFrameException.class)
+//            .ignoring(StaleElementReferenceException.class)
+//            .ignoring(ElementNotVisibleException.class);
+//        fait.until(ExpectedConditions.titleIs("X"));
+//        waitFor().hardWait(10000);
 
 //        Assert.assertTrue(new Probes(By.name("btnK")).exist());
 

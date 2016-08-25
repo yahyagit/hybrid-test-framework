@@ -17,23 +17,29 @@ import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
-import com.atanas.kanchev.testframework.selenium.element.OmniaElement;
-import com.atanas.kanchev.testframework.selenium.handlers.*;
+import com.atanas.kanchev.testframework.selenium.handlers.Finds;
+import com.atanas.kanchev.testframework.selenium.handlers.Navigates;
+import com.atanas.kanchev.testframework.selenium.handlers.Probes;
+import com.atanas.kanchev.testframework.selenium.interactions.element.OmniaElement;
+import com.atanas.kanchev.testframework.selenium.interactions.wait.Waiting;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.concurrent.TimeUnit;
-
-public interface ISelenium extends IFind, IInteract, INavigate, IProbes, IWaits, IContext<SeleniumContext>, IElement {
+public interface ISelenium extends IFind, INavigate, IProbes, IWaits, IContext<SeleniumContext>, IElement {
 
 
 }
 
 interface IElement {
 
-    default OmniaElement s(){
+    default OmniaElement o(){
         return new OmniaElement();
+    }
+
+    default OmniaElement o(By by){
+
+        return new OmniaElement(by);
     }
 
 }
@@ -51,18 +57,6 @@ interface IFind {
 
     default Finds<? extends WebDriver> find(Class<?> clasz) {
         return new Finds<>(clasz);
-    }
-}
-
-
-interface IInteract {
-
-    default Interact interact() {
-        return new Interact();
-    }
-
-    default JSExecutor js() {
-        return new JSExecutor();
     }
 }
 
@@ -97,16 +91,17 @@ interface IProbes {
 
 interface IWaits {
 
-    default Waits waitFor() {
-        return new Waits();
+    default Waiting waitFor() {
+        return new Waiting();
     }
 
-    default Waits waitFor(long duration) {
-        return new Waits(duration);
-    }
 
-    default Waits waitFor(long duration, long polling, TimeUnit unit) {
-        return new Waits(duration, polling, unit);
-    }
+//    default Waiting waitFor(long duration) {
+//        return new Waiting(duration);
+//    }
+//
+//    default Waiting waitFor(long duration, long polling, TimeUnit unit) {
+//        return new Waiting(duration, polling, unit);
+//    }
 
 }

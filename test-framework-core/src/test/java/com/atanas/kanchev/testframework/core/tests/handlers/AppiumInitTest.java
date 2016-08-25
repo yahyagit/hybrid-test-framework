@@ -51,7 +51,6 @@ public class AppiumInitTest implements IWrapper {
         find().elementBy(By.id("idcta-link"));
 
 
-        interact().click();
 
 
         Thread.sleep(10000);

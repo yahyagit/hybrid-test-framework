@@ -66,6 +66,10 @@
             <artifactId>webdrivermanager</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.atanas.kanchev</groupId>
             <artifactId>test-framework-commons</artifactId>
             <version>1.0-SNAPSHOT</version>

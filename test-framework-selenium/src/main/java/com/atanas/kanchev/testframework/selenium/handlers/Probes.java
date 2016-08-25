@@ -1214,7 +1214,7 @@ interface IProbeExpectedConditions extends ISelenium{
     IProbeExpectedConditions elementToBeClickable(final WebElement element);
 
     /**
-     * Wait until an element is no longer attached to the DOM.
+     * IWait until an element is no longer attached to the DOM.
      *
      * @param element The element to wait for.
      * @return false is the element is still attached to the DOM, true otherwise.
