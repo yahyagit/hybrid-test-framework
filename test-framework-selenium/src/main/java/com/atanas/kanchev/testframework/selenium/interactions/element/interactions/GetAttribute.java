@@ -20,20 +20,16 @@ import org.openqa.selenium.WebDriverException;
  */
 public class GetAttribute extends AbstractElementInteraction {
 
-    public String getAttribute(String attribute) {
-
-        new ElementExecutor<String>() {
-
+    public ElementExecutor<String> getAttribute(String attribute) {
+        return new ElementExecutor<String>() {
             @Override public String execute() {
                 try {
-                    element.getAttribute(attribute);
+                    return element.getAttribute(attribute);
                 } catch (WebDriverException e) {
                     throwEx(e);
-                }
-                return null;
+                    return null;                }
+
             }
         };
-
-        return null;
     }
 }

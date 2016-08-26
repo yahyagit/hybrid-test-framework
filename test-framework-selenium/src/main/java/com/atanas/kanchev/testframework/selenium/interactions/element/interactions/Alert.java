@@ -26,9 +26,10 @@ import static com.atanas.kanchev.testframework.selenium.interactions.element.Omn
  */
 public class Alert extends AbstractElementInteraction {
 
-    public OmniaElement handleAlert(boolean accept) {
-        new ElementExecutor<OmniaElement>() {
+    public ElementExecutor<OmniaElement> handleAlert(boolean accept) {
+        return new ElementExecutor<OmniaElement>() {
             @Override public OmniaElement execute() {
+                valNotNull(accept);
                 new WebDriverWait(driver, Defaults.DEF_IMPL_WAIT)
                     .until(ExpectedConditions.alertIsPresent());
                 try {
@@ -43,7 +44,5 @@ public class Alert extends AbstractElementInteraction {
                 return omniaElement;
             }
         };
-        return omniaElement;
     }
-
 }

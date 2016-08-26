@@ -14,6 +14,7 @@
 package com.atanas.kanchev.testframework.selenium.interactions.element;
 
 import com.atanas.kanchev.testframework.selenium.handlers.Finds;
+import com.atanas.kanchev.testframework.selenium.interactions.wait.Waiting;
 import org.openqa.selenium.*;
 
 import java.util.List;
@@ -72,4 +73,11 @@ public interface IOmniaElement extends WebElement {
     IOmniaElement handleAlert(boolean accept);
 
     Finds find();
+
+    Finds find(WebElement element);
+
+    Finds find(Class<?> clazz);
+
+    Waiting waitFor();
+
 }

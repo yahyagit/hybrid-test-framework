@@ -32,9 +32,8 @@ public class ClickAndHold extends AbstractElementInteraction {
         }
     }
 
-    public OmniaElement clickAndHold(long duration) {
-        new ElementExecutor<OmniaElement>() {
-
+    public ElementExecutor<OmniaElement> clickAndHold(long duration) {
+        return new ElementExecutor<OmniaElement>() {
             @Override public OmniaElement execute() {
                 logger.debug("Click and Hold Element");
                 try {
@@ -49,7 +48,5 @@ public class ClickAndHold extends AbstractElementInteraction {
                 return omniaElement;
             }
         };
-        return omniaElement;
     }
-
 }

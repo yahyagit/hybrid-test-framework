@@ -24,9 +24,8 @@ import static com.atanas.kanchev.testframework.selenium.interactions.element.Omn
  */
 public class ContextClick extends AbstractElementInteraction {
 
-    public OmniaElement contextClick() {
-        new ElementExecutor<OmniaElement>() {
-
+    public ElementExecutor<OmniaElement> contextClick() {
+        return new ElementExecutor<OmniaElement>() {
             @Override public OmniaElement execute() {
                 logger.debug("Click and Hold Element");
                 try {
@@ -38,7 +37,5 @@ public class ContextClick extends AbstractElementInteraction {
                 return omniaElement;
             }
         };
-        return omniaElement;
     }
-
 }

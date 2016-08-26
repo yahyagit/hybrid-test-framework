@@ -22,8 +22,8 @@ public class GetCssValue extends AbstractElementInteraction {
 
     private String result;
 
-    public String getCssValue(String propertyName) {
-        new ElementExecutor<String>() {
+    public ElementExecutor<String> getCssValue(String propertyName) {
+        return new ElementExecutor<String>() {
             @Override public String execute() {
                 try {
                     return result = element.getCssValue(propertyName);
@@ -33,6 +33,6 @@ public class GetCssValue extends AbstractElementInteraction {
                 }
             }
         };
-        return result;
+
     }
 }

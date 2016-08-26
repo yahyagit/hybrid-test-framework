@@ -49,9 +49,9 @@ public class ProbesTest implements ISelenium {
 
         o(By.name("q")).click();
         o().sendKeys("hello");
-        o().clear();
-//        waitFors().
-//        waitFor().titleIs("X");
+//        o().clear();
+        waitFor().hardWait(10000);
+        waitFor().titleIs("X");
 //        waitFor().titleContains("X");
 //        FluentWait<WebDriver> fait =new FluentWait<>((WebDriver)context().getCurrentContext().getDriver())
 //            .withTimeout(30, TimeUnit.SECONDS)

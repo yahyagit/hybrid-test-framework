@@ -20,6 +20,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
  */
 public class Title extends AbstractWaitInteraction {
 
+
+
     public WaitExecutor titleIs(String input) {
         return new WaitExecutor<Boolean>() {
             @Override public Boolean execute() {

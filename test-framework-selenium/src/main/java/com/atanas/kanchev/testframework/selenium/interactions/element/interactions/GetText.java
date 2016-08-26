@@ -22,8 +22,8 @@ public class GetText extends AbstractElementInteraction {
 
     private String result;
 
-    public String getText() {
-        new ElementExecutor<String>() {
+    public ElementExecutor<String> getText() {
+        return new ElementExecutor<String>() {
             @Override public String execute() {
                 try {
                     return result = element.getText();
@@ -33,7 +33,5 @@ public class GetText extends AbstractElementInteraction {
                 }
             }
         };
-        return result;
     }
-
 }

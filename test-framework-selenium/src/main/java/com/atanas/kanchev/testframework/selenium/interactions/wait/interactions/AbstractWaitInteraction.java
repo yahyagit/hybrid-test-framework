@@ -27,23 +27,29 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Atanas Kanchev
  */
-public abstract class AbstractWaitInteraction extends AbstractInteraction {
+public class AbstractWaitInteraction extends AbstractInteraction {
 
     protected long duration;
     protected long polling;
     protected TimeUnit unit;
 
-    protected AbstractWaitInteraction() {
+    public AbstractWaitInteraction() {
         this.duration = Defaults.DEF_IMPL_WAIT;
         this.polling = Defaults.DEF_POLLING_INTERVAL;
         this.unit = Defaults.DEF_TIME_UNITS;
         logger.debug(toString());
     }
 
-    protected AbstractWaitInteraction(long duration, long polling, TimeUnit unit) {
+    public AbstractWaitInteraction(long duration, long polling, TimeUnit unit) {
         this.duration = duration;
         this.polling = polling;
         this.unit = unit;
+    }
+
+    public AbstractWaitInteraction(long duration) {
+        this.duration = duration;
+        this.polling = Defaults.DEF_POLLING_INTERVAL;
+        this.unit = Defaults.DEF_TIME_UNITS;
     }
 
     protected void validate(Object... args) {

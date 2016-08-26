@@ -23,8 +23,8 @@ import static com.atanas.kanchev.testframework.selenium.interactions.element.Omn
  */
 public class DoubleClick extends AbstractElementInteraction {
 
-    public OmniaElement doubleClick() {
-        new ElementExecutor<OmniaElement>() {
+    public ElementExecutor<OmniaElement> doubleClick() {
+        return new ElementExecutor<OmniaElement>() {
 
             @Override public OmniaElement execute() {
                 try {
@@ -36,7 +36,5 @@ public class DoubleClick extends AbstractElementInteraction {
                 return omniaElement;
             }
         };
-        return omniaElement;
     }
-
 }

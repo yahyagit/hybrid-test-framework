@@ -23,8 +23,8 @@ import static com.atanas.kanchev.testframework.selenium.interactions.element.Omn
  */
 public class Submit extends AbstractElementInteraction {
 
-    public OmniaElement submit() {
-        new ElementExecutor<OmniaElement>() {
+    public ElementExecutor<OmniaElement> submit() {
+       return new ElementExecutor<OmniaElement>() {
 
             @Override public OmniaElement execute() {
                 try {
@@ -35,7 +35,5 @@ public class Submit extends AbstractElementInteraction {
                 return omniaElement;
             }
         };
-        return omniaElement;
     }
-
 }

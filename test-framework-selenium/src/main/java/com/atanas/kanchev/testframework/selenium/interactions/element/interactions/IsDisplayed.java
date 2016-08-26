@@ -22,18 +22,17 @@ public class IsDisplayed extends AbstractElementInteraction {
 
     private boolean result;
 
-    public Boolean isDisplayed() {
-        new ElementExecutor<Boolean>() {
+    public ElementExecutor<Boolean> isDisplayed() {
+        return new ElementExecutor<Boolean>() {
 
             @Override public Boolean execute() {
                 try {
                     return result = element.isDisplayed();
                 } catch (WebDriverException e) {
                     throwEx(e);
-                    return false;
+                    return result;
                 }
             }
         };
-        return result;
     }
 }

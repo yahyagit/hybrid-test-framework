@@ -17,6 +17,8 @@ import com.atanas.kanchev.testframework.selenium.handlers.CommonPageDefinitions;
 import com.atanas.kanchev.testframework.selenium.interactions.element.OmniaElement;
 import org.openqa.selenium.WebDriverException;
 
+import java.util.Arrays;
+
 import static com.atanas.kanchev.testframework.selenium.interactions.element.OmniaElement.omniaElement;
 
 /**
@@ -24,25 +26,24 @@ import static com.atanas.kanchev.testframework.selenium.interactions.element.Omn
  */
 public class SendKeys extends AbstractElementInteraction {
 
-    public OmniaElement sendKeys(CharSequence[] charSequences) {
-        new ElementExecutor<OmniaElement>() {
-
+    public ElementExecutor<OmniaElement> sendKeys(CharSequence[] charSequences) {
+        return new ElementExecutor<OmniaElement>() {
             @Override public OmniaElement execute() {
+                valNotNull(charSequences);
                 String tag = element.getTagName();
                 if (tag.equals(CommonPageDefinitions.HTML.INPUT.getDefinition()) || tag
                     .equals(CommonPageDefinitions.HTML.TEXTAREA.getDefinition()) || tag
                     .equals(CommonPageDefinitions.HTML.UIA_SECURETEXTFIELD.getDefinition()) || tag
                     .equals(CommonPageDefinitions.HTML.UIA_TEXTFIELD.getDefinition()) || tag
                     .equals("android.widget.EditText")) {
+                    logger.debug(executorMarker, "Typing " + Arrays.toString(charSequences));
                     element.sendKeys(charSequences);
                 } else {
                     logger.error("Cannot type in this element");
                     throwEx(new WebDriverException("Cannot type in this element"));
                 }
-
                 return omniaElement;
             }
         };
-        return omniaElement;
     }
 }

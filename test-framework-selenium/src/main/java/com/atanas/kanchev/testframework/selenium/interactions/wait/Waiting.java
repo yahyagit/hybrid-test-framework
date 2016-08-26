@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 /**
  * @author Atanas Kanchev
  */
-public class Waiting implements IExpectedCondition {
+public class Waiting extends AbstractWaitInteraction implements IExpectedCondition {
 
     static final Logger logger = LoggerFactory.getLogger(Waits.class);
 
@@ -43,223 +43,223 @@ public class Waiting implements IExpectedCondition {
     }
 
     @Override public IExpectedCondition titleIs(String title) {
-        new Title().titleIs(title);
+        new Title().titleIs(title).execute();
         return this;
     }
 
     @Override public IExpectedCondition titleContains(String title) {
-        new Title().titleContains(title);
+        new Title().titleContains(title).execute();
         return this;
     }
 
     @Override public IExpectedCondition urlToBe(String url) {
-        new Url().urlToBe(url);
+        new Url().urlToBe(url).execute();
         return this;
     }
 
     @Override public IExpectedCondition urlContains(String fraction) {
-        new Url().urlContains(fraction);
+        new Url().urlContains(fraction).execute();
         return this;
     }
 
     @Override public IExpectedCondition urlMatches(String regex) {
-        new Url().urlMatches(regex);
+        new Url().urlMatches(regex).execute();
         return this;
     }
 
     @Override public IExpectedCondition presenceOfElementLocated(By locator) {
-        new Element().presenceOfElementLocated(locator);
+        new Element().presenceOfElementLocated(locator).execute();
         return this;
     }
 
     @Override public IExpectedCondition presenceOfAllElementsLocatedBy(By locator) {
-        new Element().presenceOfAllElementsLocatedBy(locator);
+        new Element().presenceOfAllElementsLocatedBy(locator).execute();
         return this;
     }
 
     @Override
     public IExpectedCondition presenceOfNestedElementLocatedBy(By locator, By sub_locator) {
-        new Element().presenceOfNestedElementLocatedBy(locator, sub_locator);
+        new Element().presenceOfNestedElementLocatedBy(locator, sub_locator).execute();
         return this;
     }
 
     @Override
     public IExpectedCondition presenceOfNestedElementLocatedBy(WebElement element, By sub_locator) {
-        new Element().presenceOfNestedElementLocatedBy(element, sub_locator);
+        new Element().presenceOfNestedElementLocatedBy(element, sub_locator).execute();
         return this;
     }
 
     @Override
     public IExpectedCondition presenceOfNestedElementsLocatedBy(By locator, By sub_locator) {
-        new Element().presenceOfNestedElementsLocatedBy(locator, sub_locator);
+        new Element().presenceOfNestedElementsLocatedBy(locator, sub_locator).execute();
         return this;
     }
 
     @Override public IExpectedCondition visibilityOfElementLocated(By locator) {
-        new Element().visibilityOfElementLocated(locator);
+        new Element().visibilityOfElementLocated(locator).execute();
         return this;
     }
 
     @Override public IExpectedCondition visibilityOfAllElementsLocatedBy(By locator) {
-        new Element().visibilityOfAllElementsLocatedBy(locator);
+        new Element().visibilityOfAllElementsLocatedBy(locator).execute();
         return this;
     }
 
     @Override public IExpectedCondition visibilityOfAllElements(List<WebElement> elements) {
-        new Element().visibilityOfAllElements(elements);
+        new Element().visibilityOfAllElements(elements).execute();
         return this;
     }
 
     @Override public IExpectedCondition visibilityOf(WebElement element) {
-        new Element().visibilityOf(element);
+        new Element().visibilityOf(element).execute();
         return this;
     }
 
     @Override public IExpectedCondition textToBePresentInElement(WebElement element, String text) {
-        new Element().textToBePresentInElement(element, text);
+        new Element().textToBePresentInElement(element, text).execute();
         return this;
     }
 
     @Override public IExpectedCondition textToBePresentInElementLocated(By locator, String text) {
-        new Element().textToBePresentInElementLocated(locator, text);
+        new Element().textToBePresentInElementLocated(locator, text).execute();
         return this;
     }
 
     @Override
     public IExpectedCondition textToBePresentInElementValue(WebElement element, String text) {
-        new Element().textToBePresentInElementValue(element, text);
+        new Element().textToBePresentInElementValue(element, text).execute();
         return this;
     }
 
     @Override public IExpectedCondition textToBePresentInElementValue(By locator, String text) {
-        new Element().textToBePresentInElementValue(locator, text);
+        new Element().textToBePresentInElementValue(locator, text).execute();
         return this;
     }
 
     @Override public IExpectedCondition invisibilityOfElementLocated(By locator) {
-        new Element().invisibilityOfElementLocated(locator);
+        new Element().invisibilityOfElementLocated(locator).execute();
         return this;
     }
 
     @Override public IExpectedCondition invisibilityOfElementWithText(By locator, String text) {
-        new Element().invisibilityOfElementWithText(locator, text);
+        new Element().invisibilityOfElementWithText(locator, text).execute();
         return this;
     }
 
     @Override public IExpectedCondition elementToBeClickable(By locator) {
-        new Element().elementToBeClickable(locator);
+        new Element().elementToBeClickable(locator).execute();
         return this;
     }
 
     @Override public IExpectedCondition elementToBeClickable(WebElement element) {
-        new Element().elementToBeClickable(element);
+        new Element().elementToBeClickable(element).execute();
         return this;
     }
 
     @Override public IExpectedCondition stalenessOf(WebElement element) {
-        new Element().stalenessOf(element);
+        new Element().stalenessOf(element).execute();
         return this;
     }
 
     @Override public IExpectedCondition elementToBeSelected(WebElement element) {
-        new Element().elementToBeSelected(element);
+        new Element().elementToBeSelected(element).execute();
         return this;
     }
 
     @Override
     public IExpectedCondition elementSelectionStateToBe(WebElement element, boolean selected) {
-        new Element().elementSelectionStateToBe(element, selected);
+        new Element().elementSelectionStateToBe(element, selected).execute();
         return this;
     }
 
     @Override public IExpectedCondition elementToBeSelected(By locator) {
-        new Element().elementToBeSelected(locator);
+        new Element().elementToBeSelected(locator).execute();
         return this;
     }
 
     @Override public IExpectedCondition elementSelectionStateToBe(By locator, boolean selected) {
-        new Element().elementSelectionStateToBe(locator, selected);
+        new Element().elementSelectionStateToBe(locator, selected).execute();
         return this;
     }
 
     @Override public IExpectedCondition attributeToBe(By locator, String attribute, String value) {
-        new Element().attributeToBe(locator, attribute, value);
+        new Element().attributeToBe(locator, attribute, value).execute();
         return this;
     }
 
     @Override public IExpectedCondition textToBe(By locator, String value) {
-        new Element().textToBe(locator, value);
+        new Element().textToBe(locator, value).execute();
         return this;
     }
 
     @Override public IExpectedCondition textMatches(By locator, Pattern pattern) {
-        new Element().textMatches(locator, pattern);
+        new Element().textMatches(locator, pattern).execute();
         return this;
     }
 
     @Override public IExpectedCondition numberOfElementsToBeMoreThan(By locator, Integer number) {
-        new Element().numberOfElementsToBeMoreThan(locator, number);
+        new Element().numberOfElementsToBeMoreThan(locator, number).execute();
         return this;
     }
 
     @Override public IExpectedCondition numberOfElementsToBeLessThan(By locator, Integer number) {
-        new Element().numberOfElementsToBeLessThan(locator, number);
+        new Element().numberOfElementsToBeLessThan(locator, number).execute();
         return this;
     }
 
     @Override public IExpectedCondition numberOfElementsToBe(By locator, Integer number) {
-        new Element().numberOfElementsToBe(locator, number);
+        new Element().numberOfElementsToBe(locator, number).execute();
         return this;
     }
 
     @Override
     public IExpectedCondition attributeToBe(WebElement element, String attribute, String value) {
-        new Element().attributeToBe(element, attribute, value);
+        new Element().attributeToBe(element, attribute, value).execute();
         return this;
     }
 
     @Override public IExpectedCondition attributeContains(WebElement element, String attribute,
         String value) {
-        new Element().attributeContains(element, attribute, value);
+        new Element().attributeContains(element, attribute, value).execute();
         return this;
     }
 
     @Override
     public IExpectedCondition attributeContains(By locator, String attribute, String value) {
-        new Element().attributeContains(locator, attribute, value);
+        new Element().attributeContains(locator, attribute, value).execute();
         return this;
     }
 
     @Override
     public IExpectedCondition attributeToBeNotEmpty(WebElement element, String attribute) {
-        new Element().attributeToBeNotEmpty(element, attribute);
+        new Element().attributeToBeNotEmpty(element, attribute).execute();
         return this;
     }
 
     @Override
     public IExpectedCondition visibilityOfNestedElementsLocatedBy(By locator, By sub_locator) {
-        new Element().visibilityOfNestedElementsLocatedBy(locator, sub_locator);
+        new Element().visibilityOfNestedElementsLocatedBy(locator, sub_locator).execute();
         return this;
     }
 
     @Override public IExpectedCondition visibilityOfNestedElementsLocatedBy(WebElement element,
         By sub_locator) {
-        new Element().visibilityOfNestedElementsLocatedBy(element, sub_locator);
+        new Element().visibilityOfNestedElementsLocatedBy(element, sub_locator).execute();
         return this;
     }
 
     @Override public IExpectedCondition invisibilityOfAllElements(List<WebElement> elements) {
-        new Element().invisibilityOfAllElements(elements);
+        new Element().invisibilityOfAllElements(elements).execute();
         return this;
     }
 
     @Override public IExpectedCondition or(ExpectedCondition<?>... conditions) {
-        new Compose().or(conditions);
+        new Compose().or(conditions).execute();
         return this;
     }
 
     @Override public IExpectedCondition and(ExpectedCondition<?>... conditions) {
-        new Compose().and(conditions);
+        new Compose().and(conditions).execute();
         return this;
     }
 
@@ -269,47 +269,47 @@ public class Waiting implements IExpectedCondition {
     }
 
     @Override public <T> IExpectedCondition refreshed(ExpectedCondition<T> condition) {
-        new Element().refreshed(condition);
+        new Element().refreshed(condition).execute();
         return this;
     }
 
     @Override public IExpectedCondition javaScriptThrowsNoExceptions(String javaScript) {
-        new JS().javaScriptThrowsNoExceptions(javaScript);
+        new JS().javaScriptThrowsNoExceptions(javaScript).execute();
         return this;
     }
 
     @Override public IExpectedCondition jsReturnsValue(String javaScript) {
-        new JS().jsReturnsValue(javaScript);
+        new JS().jsReturnsValue(javaScript).execute();
         return this;
     }
 
     @Override public IExpectedCondition frameToBeAvailableAndSwitchToIt(String frameLocator) {
-        new Frame().frameToBeAvailableAndSwitchToIt(frameLocator);
+        new Frame().frameToBeAvailableAndSwitchToIt(frameLocator).execute();
         return this;
     }
 
     @Override public IExpectedCondition frameToBeAvailableAndSwitchToIt(By locator) {
-        new Frame().frameToBeAvailableAndSwitchToIt(locator);
+        new Frame().frameToBeAvailableAndSwitchToIt(locator).execute();
         return this;
     }
 
     @Override public IExpectedCondition frameToBeAvailableAndSwitchToIt(int frameLocator) {
-        new Frame().frameToBeAvailableAndSwitchToIt(frameLocator);
+        new Frame().frameToBeAvailableAndSwitchToIt(frameLocator).execute();
         return this;
     }
 
     @Override public IExpectedCondition frameToBeAvailableAndSwitchToIt(WebElement frameLocator) {
-        new Frame().frameToBeAvailableAndSwitchToIt(frameLocator);
+        new Frame().frameToBeAvailableAndSwitchToIt(frameLocator).execute();
         return this;
     }
 
     @Override public IExpectedCondition alertIsPresent() {
-        new Alert().alertIsPresent();
+        new Alert().alertIsPresent().execute();
         return this;
     }
 
     @Override public IExpectedCondition numberOfWindowsToBe(int expectedNumberOfWindows) {
-        new Window().numberOfWindowsToBe(expectedNumberOfWindows);
+        new Window().numberOfWindowsToBe(expectedNumberOfWindows).execute();
         return this;
     }
 

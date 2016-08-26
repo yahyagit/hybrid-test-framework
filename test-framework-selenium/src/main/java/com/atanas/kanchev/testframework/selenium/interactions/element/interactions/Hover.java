@@ -24,8 +24,8 @@ import static com.atanas.kanchev.testframework.selenium.interactions.element.Omn
  */
 public class Hover extends AbstractElementInteraction {
 
-    public OmniaElement hover() {
-        new ElementExecutor<OmniaElement>() {
+    public ElementExecutor<OmniaElement> hover() {
+        return new ElementExecutor<OmniaElement>() {
             @Override public OmniaElement execute() {
                 try {
                     Actions actions = new Actions(driver);
@@ -36,7 +36,5 @@ public class Hover extends AbstractElementInteraction {
                 return omniaElement;
             }
         };
-        return omniaElement;
     }
-
 }

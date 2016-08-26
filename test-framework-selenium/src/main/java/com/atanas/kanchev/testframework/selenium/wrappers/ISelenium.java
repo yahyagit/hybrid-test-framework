@@ -26,18 +26,20 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public interface ISelenium extends IFind, INavigate, IProbes, IWaits, IContext<SeleniumContext>, IElement {
+public interface ISelenium
+    extends IFind, INavigate, IProbes, IWaits, IContext<SeleniumContext>, IElement {
 
 
 }
 
+
 interface IElement {
 
-    default OmniaElement o(){
+    default OmniaElement o() {
         return new OmniaElement();
     }
 
-    default OmniaElement o(By by){
+    default OmniaElement o(By by) {
 
         return new OmniaElement(by);
     }
@@ -66,7 +68,7 @@ interface INavigate extends IContext<SeleniumContext> {
     default DriverFactory setupSelenium() {
 
         try {
-           context().getCurrentContext();
+            context().getCurrentContext();
         } catch (CustomExceptions.Common.NullReferenceException e) {
             context().setCurrentContext(new SeleniumContext<>());
             return context().getCurrentContext().getDriverFactory();
@@ -96,12 +98,12 @@ interface IWaits {
     }
 
 
-//    default Waiting waitFor(long duration) {
-//        return new Waiting(duration);
-//    }
-//
-//    default Waiting waitFor(long duration, long polling, TimeUnit unit) {
-//        return new Waiting(duration, polling, unit);
-//    }
+    //    default Waiting waitFor(long duration) {
+    //        return new Waiting(duration);
+    //    }
+    //
+    //    default Waiting waitFor(long duration, long polling, TimeUnit unit) {
+    //        return new Waiting(duration, polling, unit);
+    //    }
 
 }

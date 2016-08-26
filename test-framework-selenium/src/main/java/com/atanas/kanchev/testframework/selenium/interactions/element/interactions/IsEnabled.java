@@ -22,19 +22,17 @@ public class IsEnabled extends AbstractElementInteraction {
 
     private boolean result;
 
-    public Boolean isEnabled() {
-        new ElementExecutor<Boolean>() {
+    public ElementExecutor<Boolean> isEnabled() {
+        return new ElementExecutor<Boolean>() {
 
             @Override public Boolean execute() {
                 try {
                     return result = element.isEnabled();
                 } catch (WebDriverException e) {
                     throwEx(e);
-                    return false;
+                    return result;
                 }
             }
         };
-        return result;
     }
-
 }

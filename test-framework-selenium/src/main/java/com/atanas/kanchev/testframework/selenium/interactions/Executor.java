@@ -13,6 +13,8 @@
 
 package com.atanas.kanchev.testframework.selenium.interactions;
 
+import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
+
 /**
  * @param <T> method return type
  * @author Atanas Kanchev
@@ -20,5 +22,10 @@ package com.atanas.kanchev.testframework.selenium.interactions;
 public interface Executor<T> {
 
     T execute();
+
+    default void valNotNull(Object arg) {
+        if (arg == null)
+            throw new CustomExceptions.Common.NullArgumentException("The argument is null");
+    }
 
 }

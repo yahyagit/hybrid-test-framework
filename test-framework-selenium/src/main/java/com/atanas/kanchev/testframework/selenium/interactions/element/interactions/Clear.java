@@ -24,8 +24,8 @@ import static com.atanas.kanchev.testframework.selenium.interactions.element.Omn
  */
 public class Clear extends AbstractElementInteraction {
 
-    public OmniaElement clear() {
-        new ElementExecutor<OmniaElement>() {
+    public ElementExecutor<OmniaElement> clear() {
+        return new ElementExecutor<OmniaElement>() {
             @Override public OmniaElement execute() {
                 try {
                     element.clear();
@@ -36,7 +36,5 @@ public class Clear extends AbstractElementInteraction {
                 return omniaElement;
             }
         };
-        return omniaElement;
     }
-
 }

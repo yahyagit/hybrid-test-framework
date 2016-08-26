@@ -22,8 +22,8 @@ public class GetTagName extends AbstractElementInteraction {
 
     private String result;
 
-    public String getTagName() {
-        new ElementExecutor<String>() {
+    public ElementExecutor<String> getTagName() {
+        return new ElementExecutor<String>() {
             @Override public String execute() {
                 try {
                     return result = element.getTagName();
@@ -33,6 +33,5 @@ public class GetTagName extends AbstractElementInteraction {
                 }
             }
         };
-        return result;
     }
 }

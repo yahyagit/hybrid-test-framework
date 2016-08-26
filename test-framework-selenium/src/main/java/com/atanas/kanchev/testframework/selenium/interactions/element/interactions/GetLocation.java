@@ -23,8 +23,8 @@ public class GetLocation extends AbstractElementInteraction {
 
     private Point result;
 
-    public Point getLocation() {
-        new ElementExecutor<Point>() {
+    public ElementExecutor<Point> getLocation() {
+        return new ElementExecutor<Point>() {
             @Override public Point execute() {
                 try {
                     return result = element.getLocation();
@@ -34,6 +34,5 @@ public class GetLocation extends AbstractElementInteraction {
                 }
             }
         };
-        return result;
     }
 }

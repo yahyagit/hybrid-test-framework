@@ -23,8 +23,8 @@ public class GetRect extends AbstractElementInteraction {
 
     private Rectangle result;
 
-    public Rectangle getRect() {
-        new ElementExecutor<Rectangle>() {
+    public ElementExecutor<Rectangle> getRect() {
+        return new ElementExecutor<Rectangle>() {
             @Override public Rectangle execute() {
                 try {
                     return result = element.getRect();
@@ -34,7 +34,5 @@ public class GetRect extends AbstractElementInteraction {
                 }
             }
         };
-        return result;
     }
-
 }

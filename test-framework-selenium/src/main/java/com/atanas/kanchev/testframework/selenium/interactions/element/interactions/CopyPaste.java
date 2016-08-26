@@ -24,8 +24,8 @@ import static com.atanas.kanchev.testframework.selenium.interactions.element.Omn
  */
 public class CopyPaste extends AbstractElementInteraction {
 
-    public OmniaElement command(String command) {
-        new ElementExecutor<OmniaElement>() {
+    public ElementExecutor<OmniaElement> command(String command) {
+       return new ElementExecutor<OmniaElement>() {
 
             @Override public OmniaElement execute() {
                 try {
@@ -36,6 +36,5 @@ public class CopyPaste extends AbstractElementInteraction {
                 return omniaElement;
             }
         };
-        return omniaElement;
     }
 }

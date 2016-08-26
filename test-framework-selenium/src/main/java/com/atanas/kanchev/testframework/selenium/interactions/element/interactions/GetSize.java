@@ -23,8 +23,8 @@ public class GetSize extends AbstractElementInteraction {
 
     private Dimension result;
 
-    public Dimension getSize() {
-        new ElementExecutor<Dimension>() {
+    public ElementExecutor<Dimension> getSize() {
+        return new ElementExecutor<Dimension>() {
             @Override public Dimension execute() {
                 try {
                     return result = element.getSize();
@@ -34,8 +34,5 @@ public class GetSize extends AbstractElementInteraction {
                 }
             }
         };
-        return result;
     }
-
-
 }

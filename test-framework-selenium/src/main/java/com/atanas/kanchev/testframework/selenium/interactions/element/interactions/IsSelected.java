@@ -22,19 +22,17 @@ public class IsSelected extends AbstractElementInteraction {
 
     boolean result;
 
-    public Boolean isSelected() {
-        new ElementExecutor<Boolean>() {
+    public ElementExecutor<Boolean> isSelected() {
+        return new ElementExecutor<Boolean>() {
 
             @Override public Boolean execute() {
                 try {
                     return result = element.isSelected();
                 } catch (WebDriverException e) {
                     throwEx(e);
-                    return false;
+                    return result;
                 }
             }
         };
-        return result;
     }
-
 }

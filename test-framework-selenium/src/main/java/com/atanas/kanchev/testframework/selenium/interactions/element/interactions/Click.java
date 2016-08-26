@@ -25,8 +25,8 @@ import static com.atanas.kanchev.testframework.selenium.interactions.element.Omn
  */
 public class Click extends AbstractElementInteraction {
 
-    public OmniaElement click() {
-        new ElementExecutor<OmniaElement>() {
+    public ElementExecutor<OmniaElement> click() {
+       return new ElementExecutor<OmniaElement>() {
             @Override public OmniaElement execute() {
                 try {
                     element.click();
@@ -40,11 +40,5 @@ public class Click extends AbstractElementInteraction {
                 return omniaElement;
             }
         };
-        return omniaElement;
     }
-
 }
-
-
-
-
