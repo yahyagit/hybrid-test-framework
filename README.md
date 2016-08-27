@@ -1,5 +1,9 @@
 **Hybrid Test Framework**
 =========================
+
+## Build Status ##
+[![Build Status](https://travis-ci.org/atanaskanchev/hybrid-test-framework.svg?branch=hotfix%2Fselenium)](https://travis-ci.org/atanaskanchev/hybrid-test-framework)
+
 ## Requirements ##
 * Java 8
 * Maven 3
