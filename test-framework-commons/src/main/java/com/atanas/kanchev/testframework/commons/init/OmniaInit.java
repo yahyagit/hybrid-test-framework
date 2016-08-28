@@ -13,19 +13,19 @@
 
 package com.atanas.kanchev.testframework.commons.init;
 
-import com.atanas.kanchev.testframework.commons.context.ContextThreadLocalContainer;
+import com.atanas.kanchev.testframework.commons.context.ContextContainer;
+import com.atanas.kanchev.testframework.commons.context.ConcurrentContextContainer;
 
 /**
  * @author Atanas Kanchev
  */
 public class OmniaInit {
 
-    private static final ContextThreadLocalContainer contextThreadLocalContainer =
-        new ContextThreadLocalContainer();
+    private static final ContextContainer contextThreadLocalContainer =
+        new ConcurrentContextContainer();
 
-    public static ContextThreadLocalContainer context(){
+    public static ContextContainer context() {
         return contextThreadLocalContainer;
     }
-
 
 }

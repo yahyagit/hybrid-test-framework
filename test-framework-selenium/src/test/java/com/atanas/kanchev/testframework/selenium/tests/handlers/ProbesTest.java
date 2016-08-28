@@ -21,19 +21,22 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
+import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+
 /**
  * Tests for {@link Probes}
  */
 public class ProbesTest implements ISelenium {
 
     @Before public void setUp() throws Exception {
-//        setupSelenium().setBrowser("chrome")
-           /* .setReuseBrowser(true)
-        .setCustomCapabilities(DesiredCapabilities.android())*/;
+                setupSelenium().setBrowser("chrome")
+//            .setReuseBrowser(true)
+       /* .setCustomCapabilities(DesiredCapabilities.android())*/
+        ;
     }
 
     @After public void tearDown() throws Exception {
-        //        OmniaInit.context().tearDownContexts();
+        context().tearDownContexts();
 
     }
 
@@ -42,7 +45,7 @@ public class ProbesTest implements ISelenium {
         goTo("https://www.google.co.uk");
         o(By.name("q")).click();
         o().sendKeys("hello");
-//        setupSelenium().setBrowser("firefox");
+        //        setupSelenium().setBrowser("firefox");
         goTo("https://www.bbc.co.uk");
         //        find().elementBy(By.name("btnK"));
         //        o().click();

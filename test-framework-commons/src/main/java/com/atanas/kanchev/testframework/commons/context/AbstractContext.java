@@ -26,15 +26,9 @@ import static java.lang.Thread.currentThread;
  */
 public abstract class AbstractContext<T> {
 
-    // the logger
     private static final Logger logger = LoggerFactory.getLogger(AbstractContext.class);
-
-    // the context name
     private String contextName;
-
     private boolean isContextReusable;
-
-    // the driver object
     private T driver;
 
     /**
@@ -44,7 +38,7 @@ public abstract class AbstractContext<T> {
      */
     public AbstractContext(String contextName) {
         this.contextName = contextName + currentThread().getId();
-        logger.debug("Creating context from type " + toString());
+        logger.debug("Creating " + toString());
     }
 
     public T getDriver() {
@@ -86,8 +80,7 @@ public abstract class AbstractContext<T> {
     public abstract void tearDownContext(AbstractContext<T> context);
 
     @Override public String toString() {
-        return "AbstractContext{" + "contextName='" + contextName + '\'' + ", isContextReusable="
-            + isContextReusable + ", driver=" + driver + ", contextReusable=" + isContextReusable()
-            + '}';
+        return "contextName='" + contextName + '\'' + ", isContextReusable=" + isContextReusable
+            + ", driver=" + driver + ", contextReusable=" + isContextReusable();
     }
 }

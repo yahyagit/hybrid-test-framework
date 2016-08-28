@@ -23,14 +23,8 @@ import org.slf4j.LoggerFactory;
 
 public class DriverConfiguration extends Defaults {
 
-    private static final Logger logger = LoggerFactory.getLogger(DriverConfiguration.class.getName());
-
-    public DriverConfiguration() {
-        logger.debug(DriverType.getDriverTypes());
-        logger.debug(super.toString());
-        logger.debug(this.toString());
-    }
-
+    private static final Logger logger =
+        LoggerFactory.getLogger(DriverConfiguration.class.getName());
     /**
      * If reuseBrowser is true, browser window stays open after running tests.
      * It may be useful for debugging or saving execution time.
@@ -208,6 +202,11 @@ public class DriverConfiguration extends Defaults {
      * Proxy host port
      */
     private static Integer proxyPort = Integer.getInteger("proxyPort");
+    public DriverConfiguration() {
+        logger.debug(DriverType.getDriverTypes());
+        logger.debug(super.toString());
+        logger.debug(this.toString());
+    }
 
     public static long getImplicitlyWait() {
         return implicitlyWait;
@@ -426,16 +425,16 @@ public class DriverConfiguration extends Defaults {
     }
 
     @Override public String toString() {
-        return "DriverConfiguration{" + "\nimplicitlyWait=" + implicitlyWait + ",\npageLoadTimeout="
-            + pageLoadTimeout + ",\npollingInterval=" + pollingInterval + ",\nreuseBrowser="
-            + reuseBrowser + ",\nreopenBrowserOnFail=" + reopenBrowserOnFail
-            + ",\ncloseBrowserTimeout=" + closeBrowserTimeout + ",\nbrowser='" + browser + '\''
-            + ",\nbrowserSize='" + browserSize + '\'' + ",\nstartMaximized=" + startMaximized
-            + ",\nuserAgent='" + userAgent + '\'' + ",\nchromeSwitches='" + chromeSwitches + '\''
-            + ",\nhub='" + hub + '\'' + ",\nbrowserVersion='" + browserVersion + '\''
-            + ",\nplatform='" + platform + '\'' + ",\npageLoadStrategy='" + pageLoadStrategy + '\''
-            + ",\nscreenshotOnFailure=" + screenshotOnFailure + ",\nsavePageSourceOnFailure="
-            + savePageSourceOnFailure + ",\nreportsFolder='" + reportsFolder + '\''
-            + ",\ncustomCapabilities=" + customCapabilities + '}';
+        return "DriverConfiguration{" + "implicitlyWait=" + implicitlyWait + ",pageLoadTimeout="
+            + pageLoadTimeout + ",pollingInterval=" + pollingInterval + ",reuseBrowser="
+            + reuseBrowser + ",reopenBrowserOnFail=" + reopenBrowserOnFail + ",closeBrowserTimeout="
+            + closeBrowserTimeout + ",browser='" + browser + '\'' + ",browserSize='" + browserSize
+            + '\'' + ",startMaximized=" + startMaximized + ",userAgent='" + userAgent + '\''
+            + ",chromeSwitches='" + chromeSwitches + '\'' + ",hub='" + hub + '\''
+            + ",browserVersion='" + browserVersion + '\'' + ",platform='" + platform + '\''
+            + ",pageLoadStrategy='" + pageLoadStrategy + '\'' + ",screenshotOnFailure="
+            + screenshotOnFailure + ",savePageSourceOnFailure=" + savePageSourceOnFailure
+            + ",reportsFolder='" + reportsFolder + '\'' + ",customCapabilities="
+            + customCapabilities + '}';
     }
 }

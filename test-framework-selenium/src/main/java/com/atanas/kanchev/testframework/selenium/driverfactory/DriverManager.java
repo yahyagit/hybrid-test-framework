@@ -56,14 +56,14 @@ public class DriverManager {
 
             long begin = System.currentTimeMillis();
             try {
-                logger.info("Trying to quit the browser " + driver);
                 driver.quit();
             } catch (UnreachableBrowserException e) {
                 logger.warn("Browser is unreachable", e);
             } catch (WebDriverException cannotCloseBrowser) {
                 logger.error("Cannot close browser normally");
             } finally {
-                killBrowser(driver);
+                if (driver instanceof Killable)
+                    killBrowser(driver);
             }
 
             long duration = System.currentTimeMillis() - begin;
