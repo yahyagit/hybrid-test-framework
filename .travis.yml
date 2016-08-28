@@ -3,5 +3,9 @@ language: java
 jdk:
   - oraclejdk8
 
+branches:
+  only:
+    - develop
+
 script:
   - mvn clean verify -Dmaven.test.skip=true
