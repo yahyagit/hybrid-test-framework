@@ -15,7 +15,6 @@ package com.atanas.kanchev.testframework.appium.driverfactory;
 
 import com.atanas.kanchev.testframework.appium.context.AppiumContext;
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
@@ -24,12 +23,14 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.URL;
 
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+
 /**
  * <p>AppiumDriverFactory class.</p>
  *
  * @author Atanas Kanchev
  */
-public class AppiumDriverFactory extends AppiumLocalServiceBuilder implements IContext {
+public class AppiumDriverFactory extends AppiumLocalServiceBuilder {
 
     private final DesiredCapabilities caps = new DesiredCapabilities();
 

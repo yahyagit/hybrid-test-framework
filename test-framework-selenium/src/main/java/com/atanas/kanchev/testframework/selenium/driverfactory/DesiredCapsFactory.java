@@ -24,7 +24,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>DesiredCapsFactory class.</p>
@@ -36,6 +38,10 @@ public class DesiredCapsFactory {
     private static final Logger logger = LoggerFactory.getLogger(DesiredCapsFactory.class);
     private DesiredCapabilities caps;
 
+    public DesiredCapsFactory() {
+        this.caps = createCommonCapabilities();
+    }
+
     /**
      * <p>getDefaultChromeCaps.</p>
      *
@@ -44,12 +50,13 @@ public class DesiredCapsFactory {
     public DesiredCapabilities getDefaultChromeCaps() {
 
         caps = DesiredCapabilities.chrome();
-        caps.setCapability("chrome.switches", Arrays.asList("--no-default-browser-check"));
-        HashMap<String, String> chromePreferences = new HashMap<>();
-        chromePreferences.put("profile.password_manager_enabled", "false");
-        caps.setCapability("chrome.prefs", chromePreferences);
-
-        logger.debug("Configured default Chrome DesiredCapabilities: " + caps.toString());
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("test-type");
+        if (DriverConfiguration.getChromeSwitches() != null) {
+            options.addArguments("chrome.switches", DriverConfiguration.getChromeSwitches());
+        }
+        caps.setCapability(ChromeOptions.CAPABILITY, options);
+        logger.debug("Configured default Chrome " + caps.toString());
 
         return caps;
     }
@@ -62,7 +69,21 @@ public class DesiredCapsFactory {
     public DesiredCapabilities getDefaultFirefoxCaps() {
 
         caps = DesiredCapabilities.firefox();
-        logger.debug("Configured default Firefox DesiredCapabilities: " + caps.toString());
+        FirefoxProfile myProfile = new FirefoxProfile();
+
+        if (DriverConfiguration.getFirefoxProfile() != null) {
+            myProfile = DriverConfiguration.getFirefoxProfile();
+        }
+        myProfile.setPreference("network.automatic-ntlm-auth.trusted-uris", "http://,https://");
+        myProfile.setPreference("network.automatic-ntlm-auth.allow-non-fqdn", true);
+        myProfile.setPreference("network.negotiate-auth.delegation-uris", "http://,https://");
+        myProfile.setPreference("network.negotiate-auth.trusted-uris", "http://,https://");
+        myProfile.setPreference("network.http.phishy-userpass-length", 255);
+        myProfile.setPreference("security.csp.enable", false);
+
+        caps.setCapability(FirefoxDriver.PROFILE, myProfile);
+
+        logger.debug("Configured default Firefox " + caps.toString());
 
         return caps;
     }
@@ -79,7 +100,7 @@ public class DesiredCapsFactory {
         caps.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
         caps.setCapability("requireWindowFocus", true);
 
-        logger.debug("Configured default IE DesiredCapabilities: " + caps.toString());
+        logger.debug("Configured default IE " + caps.toString());
 
         return caps;
     }
@@ -92,7 +113,7 @@ public class DesiredCapsFactory {
     public DesiredCapabilities getDefaultEdgeCaps() {
 
         caps = DesiredCapabilities.edge();
-        logger.debug("Configured default Edge DesiredCapabilities: " + caps.toString());
+        logger.debug("Configured default Edge " + caps.toString());
 
         return caps;
     }
@@ -107,7 +128,7 @@ public class DesiredCapsFactory {
         caps = DesiredCapabilities.safari();
         caps.setCapability("safari.cleanSession", true);
 
-        logger.debug("Configured default Safari DesiredCapabilities: " + caps.toString());
+        logger.debug("Configured default Safari " + caps.toString());
 
         return caps;
     }
@@ -119,7 +140,7 @@ public class DesiredCapsFactory {
      */
     public DesiredCapabilities getDefaultOperaCaps() {
         caps = DesiredCapabilities.operaBlink();
-        logger.debug("Configured default Opera DesiredCapabilities: " + caps.toString());
+        logger.debug("Configured default Opera " + caps.toString());
         return caps;
     }
 
@@ -139,7 +160,7 @@ public class DesiredCapsFactory {
             applyPhantomJSProxySettings(cliArguments, proxySettings));
         caps.setCapability("takesScreenshot", true);
 
-        logger.debug("Configured default PhantomJS DesiredCapabilities: " + caps.toString());
+        logger.debug("Configured default PhantomJS " + caps.toString());
 
         return caps;
     }
@@ -241,6 +262,17 @@ public class DesiredCapsFactory {
         } else
             throw new IllegalArgumentException("Null FirefoxProfile argument");
 
+        return caps;
+    }
+
+    private DesiredCapabilities createCommonCapabilities() {
+        DesiredCapabilities caps = new DesiredCapabilities();
+        if (DriverConfiguration.getBrowserVersion() != null && !DriverConfiguration
+            .getBrowserVersion().isEmpty()) {
+            caps.setVersion(DriverConfiguration.getBrowserVersion());
+        }
+        caps.setCapability(CapabilityType.PAGE_LOAD_STRATEGY,
+            DriverConfiguration.getPageLoadStrategy());
         return caps;
     }
 

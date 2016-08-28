@@ -128,3 +128,12 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+.idea/
+test-framework-appium/test-framework-appium.iml
+test-framework-commons/test-framework-commons.iml
+test-framework-core/test-framework-core.iml
+test-framework-data-services/test-framework-data-services.iml
+test-framework-demo/test-framework-demo.iml
+test-framework-parent.iml
+test-framework-selenium/test-framework-selenium.iml
+test-framework-sikuli/test-framework-sikuli.iml

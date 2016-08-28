@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.concurrent.TimeUnit;
 
 import static com.atanas.kanchev.testframework.selenium.driverfactory.DriverType.valueOf;
 import static org.openqa.selenium.Proxy.ProxyType.MANUAL;
@@ -32,12 +31,11 @@ import static org.openqa.selenium.Proxy.ProxyType.MANUAL;
  *
  * @author Atanas Kanchev
  */
-public class DriverFactory extends DriverConfig {
+public class DriverFactory extends DriverConfiguration {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(DriverFactory.class);
     private DriverType selectedDriverType;
-    private Proxy proxy;
 
     /**
      * <p>getDriver.</p>
@@ -46,28 +44,27 @@ public class DriverFactory extends DriverConfig {
      */
     public WebDriver getDriver() {
         this.selectedDriverType = determineEffectiveDriverType();
-        return instantiateWebDriver(selectedDriverType.getDesiredCapabilities(proxy));
+        return instantiateWebDriver(selectedDriverType.getDesiredCapabilities(getProxy()));
     }
 
     private void configureProxy() {
 
-        if (isProxyEnabled()) {
-            proxy = new Proxy();
-            proxy.setProxyType(MANUAL);
-            proxy.setHttpProxy(getProxyDetails());
-            proxy.setSslProxy(getProxyDetails());
-
+        if (getProxy() != null) {
+            setProxy(new Proxy());
+            getProxy().setProxyType(MANUAL);
+            getProxy().setHttpProxy(String.format("%s:%d", getProxyHostname(), getProxyPort()));
+            getProxy().setSslProxy(String.format("%s:%d", getProxyHostname(), getProxyPort()));
         }
     }
 
     private DriverType determineEffectiveDriverType() {
-        DriverType driverType = DEFAULT_BROWSER;
+        DriverType driverType = DEF_BROWSER;
         try {
-            driverType = valueOf(getBrowser());
+            driverType = valueOf(getBrowser().toUpperCase());
         } catch (IllegalArgumentException ignored) {
-            logger.error("Unknown driver specified, defaulting to '" + driverType + "'...");
+            logger.error("Unknown driver specified, defaulting to " + driverType);
         } catch (NullPointerException ignored) {
-            logger.error("No driver specified, defaulting to '" + driverType + "'...");
+            logger.error("No driver specified,defaulting to " + driverType);
         }
         return selectedDriverType = driverType;
     }
@@ -77,9 +74,9 @@ public class DriverFactory extends DriverConfig {
         configureProxy();
         determineEffectiveDriverType();
 
-        logger.debug("Current Operating System: " + OPERATING_SYSTEM);
-        logger.debug("Current Architecture: " + SYSTEM_ARCHITECTURE);
-        logger.debug("Current Browser Selection: " + selectedDriverType);
+        logger.debug("Current Operating System " + OPERATING_SYSTEM);
+        logger.debug("Current Architecture " + SYSTEM_ARCHITECTURE);
+        logger.debug("Current Browser Selection " + selectedDriverType);
 
         if (null != getCustomCapabilities())
             desiredCapabilities = new DesiredCapsFactory()
@@ -87,12 +84,12 @@ public class DriverFactory extends DriverConfig {
 
         logger.debug("Using " + desiredCapabilities);
 
-        if (isUseRemoteWebDriver()) {
+        if (null != getHub()) {
             RemoteWebDriverFactory remoteWebDriverFactory = new RemoteWebDriverFactory();
             return conf(remoteWebDriverFactory.getRemoteWebDriver(desiredCapabilities));
             //            logger.debug("Running on IP: " + remoteWebDriverFactory.getExecutionIP());
         } else {
-            logger.debug("Running on IP: " + getExecutionIP());
+            logger.debug("Running on IP " + getExecutionIP());
             return conf(selectedDriverType.getWebDriverObject(desiredCapabilities));
         }
 
@@ -100,37 +97,40 @@ public class DriverFactory extends DriverConfig {
 
     private WebDriver conf(WebDriver driver) {
         confTimeouts(driver);
-        confResolution(driver);
+        confBrowserSize(driver);
         return driver;
     }
 
     private WebDriver confTimeouts(WebDriver driver) {
-        logger.debug("Setting implicitly wait to: " + DEFAULT_IMPL_WAIT + " ms.");
-        driver.manage().timeouts().implicitlyWait(DEFAULT_IMPL_WAIT, TimeUnit.MILLISECONDS);
-        logger.debug("Setting page load timeout to: " + DEFAULT_PAGE_LOAD_TIMEOUT + " ms.");
-        driver.manage().timeouts()
-            .pageLoadTimeout(DEFAULT_PAGE_LOAD_TIMEOUT, TimeUnit.MILLISECONDS);
+        logger.debug(
+            String.format("Setting implicitly wait to %d %s", getImplicitlyWait(), DEF_TIME_UNITS));
+        driver.manage().timeouts().implicitlyWait(getImplicitlyWait(), DEF_TIME_UNITS);
+        logger.debug(String
+            .format("Setting page load timeout to %d %s", getPageLoadTimeout(), DEF_TIME_UNITS));
+        driver.manage().timeouts().pageLoadTimeout(getPageLoadTimeout(), DEF_TIME_UNITS);
         return driver;
     }
 
-    private WebDriver confResolution(WebDriver driver) {
+    private WebDriver confBrowserSize(WebDriver driver) {
 
         if (isStartMaximized()) {
             logger.debug("Maximising browser window");
             driver.manage().window().maximize();
+        } else if (getBrowserSize() != null) {
+            logger.debug("Setting resolution to " + getBrowserSize());
+            String res[] = getBrowserSize().split("x");
+            int width = Integer.parseInt(res[0]);
+            int height = Integer.parseInt(res[1]);
+            driver.manage().window().setSize(new Dimension(width, height));
         } else {
-            logger.debug("Setting resolution to: " + DEFAULT_BROWSER_RES_WIDTH + "*"
-                + DEFAULT_BROWSER_RES_HEIGHT);
+            logger.debug(String.format("Setting resolution to: %dx%d", DEF_BROWSER_RES_WIDTH,
+                DEF_BROWSER_RES_HEIGHT));
             driver.manage().window()
-                .setSize(new Dimension(DEFAULT_BROWSER_RES_WIDTH, DEFAULT_BROWSER_RES_HEIGHT));
+                .setSize(new Dimension(DEF_BROWSER_RES_WIDTH, DEF_BROWSER_RES_HEIGHT));
         }
 
         return driver;
     }
-
-    /////////////////////
-    // STATIC MEMBERS //
-    ////////////////////
 
     /**
      * <p>getExecutionIP.</p>

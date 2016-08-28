@@ -113,10 +113,10 @@ public final class ImageFinder extends SimpleFileVisitor<Path> {
 
     static void saveImage(BufferedImage image, String imageName) {
 
-        String path = "./target/sikuli-screenshots/";
+        String path = "./target/sikuli-screenshotOnFailure/";
 
         Path tmpDownloadFolder = Paths.get(path);
-        logger.debug("Checking if sikulix screenshots folder exists in path " + tmpDownloadFolder);
+        logger.debug("Checking if sikulix screenshotOnFailure folder exists in path " + tmpDownloadFolder);
         if (Files.notExists(tmpDownloadFolder)) {
             logger.debug("The folder doesn't exist, creating " + tmpDownloadFolder);
             try {

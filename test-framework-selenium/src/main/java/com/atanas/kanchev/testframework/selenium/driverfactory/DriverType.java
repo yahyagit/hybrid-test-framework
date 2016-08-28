@@ -27,6 +27,8 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+
 import static org.openqa.selenium.remote.CapabilityType.PROXY;
 
 /**
@@ -113,22 +115,26 @@ public enum DriverType implements DriverSetup {
         }
     };
 
-    // the logger
     /**
      * Constant <code>logger</code>
      */
     private static final Logger logger = LoggerFactory.getLogger(DriverType.class);
 
+    public static String getDriverTypes() {
+        return "Supported browsers" + Arrays.toString(DriverType.values());
+    }
+
     DesiredCapabilities addProxySettings(DesiredCapabilities capabilities, Proxy proxySettings) {
         if (null != proxySettings) {
             capabilities.setCapability(PROXY, proxySettings);
+            logger.debug("Configured proxy settings: " + proxySettings);
         }
-        logger.debug("Proxy settings: " + proxySettings);
+
         return capabilities;
     }
 
-
 }
+
 
 interface DriverSetup {
 

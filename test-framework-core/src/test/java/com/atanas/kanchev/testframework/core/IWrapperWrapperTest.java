@@ -13,8 +13,6 @@
 
 package com.atanas.kanchev.testframework.core;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -23,17 +21,22 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.atanas.kanchev.testframework.core.accessors.OmniaAccessors.$;
+import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.$selenium;
+
+
 @RunWith(Enclosed.class)
 public class IWrapperWrapperTest {
 
     private static String url = "https://www.google.co.uk/";
     private static final Logger logger = LoggerFactory.getLogger(IWrapperWrapperTest.class);
 
-    public static class SetupBrowserTest implements IWrapper {
+    public static class SetupBrowserTest  {
 
         @Before
         public void setUp() throws Exception {
-            setupSelenium()
+            $().$appium();
+            $selenium().driverSetup()
                     .setBrowser("chrome")
                     .setStartMaximized(true)
 //                    .setReuseBrowser(true)
@@ -41,20 +44,17 @@ public class IWrapperWrapperTest {
 
         }
 
-        @After
-        public void tearDown() throws Exception {
-            context().tearDownContexts();
-        }
+
 
         @Test
         public void setupBrowserTest() throws Exception {
-            goTo(url);
+            $selenium().goTo(url);
         }
 
 
         @Test
         public void name() throws Exception {
-            goTo("https://bbc.co.uk");
+            $selenium().goTo("https://bbc.co.uk");
 
         }
 //    @Caps

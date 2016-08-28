@@ -17,24 +17,42 @@ import com.atanas.kanchev.testframework.commons.context.AbstractContext;
 import org.openqa.selenium.WebDriver;
 
 public class AbstractContextTest extends AbstractContext<WebDriver> {
+    /**
+     * <p>Constructor for AbstractContext.</p>
+     *
+     * @param contextName a {@link String} object.
+     */
     public AbstractContextTest(String contextName) {
         super(contextName);
     }
 
+    /**
+     * <p>tearDownContext.</p>
+     *
+     * @param context a U object.
+     */
     @Override
-    public WebDriver getDriver() {
-        return null;
-    }
-
-    @Override
-    public void setDriver(WebDriver driver) {
-
-    }
-
-    @Override
-    public <U extends AbstractContext> void tearDownContext(U context) {
+    public void tearDownContext(AbstractContext<WebDriver> context) {
 
     }
+//    public AbstractContextTest(String contextName) {
+//        super(contextName);
+//    }
+//
+//    @Override
+//    public WebDriver getDriver() {
+//        return null;
+//    }
+//
+//    @Override
+//    public void setDriver(WebDriver driver) {
+//
+//    }
+//
+//    @Override
+//    public <U extends AbstractContext> void tearDownContext(U context) {
+//
+//    }
 
 //    /**
 //     * Constructor
@@ -47,7 +65,7 @@ public class AbstractContextTest extends AbstractContext<WebDriver> {
 //    }
 //
 //    @Override
-//    public void tearDownContext(AbstractContext com.atanas.kanchev.testframework.selenium.context) {
+//    public void tearDownContext(AbstractContext com.atanas.kanchev.testframework.omniadriver.context) {
 //
 //    }
 //
@@ -95,8 +113,8 @@ public class AbstractContextTest extends AbstractContext<WebDriver> {
 //    @Caps
 //    public void setContextNameTest() throws Exception {
 //
-//        super.setContextName("new.com.atanas.kanchev.testframework.selenium.context");
-//        assertEquals("new.com.atanas.kanchev.testframework.selenium.context", getContextName());
+//        super.setContextName("new.com.atanas.kanchev.testframework.omniadriver.context");
+//        assertEquals("new.com.atanas.kanchev.testframework.omniadriver.context", getContextName());
 //
 //    }
 //

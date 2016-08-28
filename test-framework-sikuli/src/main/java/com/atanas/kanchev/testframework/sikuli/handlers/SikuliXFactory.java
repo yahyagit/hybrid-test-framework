@@ -14,7 +14,6 @@
 package com.atanas.kanchev.testframework.sikuli.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.sikuli.context.SikuliXContext;
 import org.sikuli.basics.Settings;
 import org.sikuli.script.*;
@@ -24,12 +23,14 @@ import org.slf4j.LoggerFactory;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+
 /**
  * <p>SikuliXFactory class.</p>
  *
  * @author Atanas Kanchev
  */
-public final class SikuliXFactory implements IContext{
+public final class SikuliXFactory {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(SikuliXFactory.class);

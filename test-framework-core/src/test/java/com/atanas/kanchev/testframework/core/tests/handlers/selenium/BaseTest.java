@@ -13,19 +13,16 @@
 
 package com.atanas.kanchev.testframework.core.tests.handlers.selenium;
 
-import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
-public class BaseTest implements IContext {
+public class BaseTest  {
 
-    @BeforeClass
-    public static void setUp() throws Exception {
+    @BeforeClass public static void setUp() throws Exception {
 
     }
 
-    @AfterClass
-    public static void tearDown() throws Exception {
-        CONTEXT_FACTORY.tearDownContexts();
+    @AfterClass public static void tearDown() throws Exception {
+        //        CONTEXT_FACTORY.tearDownContexts();
     }
 }

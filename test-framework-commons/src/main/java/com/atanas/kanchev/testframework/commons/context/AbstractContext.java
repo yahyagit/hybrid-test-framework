@@ -17,25 +17,18 @@ import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
+import static java.lang.Thread.currentThread;
 
 /**
  * <p>AbstractContext class.</p>
  *
  * @author Atanas Kanchev
  */
-public abstract class AbstractContext<T> implements IAbstractContext<T> {
+public abstract class AbstractContext<T> {
 
-    // the logger
     private static final Logger logger = LoggerFactory.getLogger(AbstractContext.class);
-
-    // the context name
     private String contextName;
-
     private boolean isContextReusable;
-
-    // the driver object
     private T driver;
 
     /**
@@ -44,14 +37,11 @@ public abstract class AbstractContext<T> implements IAbstractContext<T> {
      * @param contextName a {@link java.lang.String} object.
      */
     public AbstractContext(String contextName) {
-        this.contextName = contextName + new BigInteger(130, new SecureRandom()).toString(32);
-        logger.debug("Current context name: " + this.contextName);
+        this.contextName = contextName + currentThread().getId();
+        logger.debug("Creating " + toString());
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override public T getDriver() {
+    public T getDriver() {
         if (this.driver == null)
             throw new CustomExceptions.Common.NullReferenceException(
                 "Null driver object AbstractContext#driver");
@@ -59,10 +49,7 @@ public abstract class AbstractContext<T> implements IAbstractContext<T> {
             return this.driver;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override public void setDriver(T driver) {
+    public void setDriver(T driver) {
         if (driver != null)
             this.driver = driver;
         else
@@ -70,17 +57,11 @@ public abstract class AbstractContext<T> implements IAbstractContext<T> {
                 "Null driver instance passed as method argument");
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override public String getContextName() {
+    public String getContextName() {
         return contextName;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override public void setContextName(String contextName) {
+    public void setContextName(String contextName) {
         if (contextName == null)
             throw new CustomExceptions.Common.NullArgumentException("Null argument contextName");
         if (contextName.isEmpty())
@@ -88,72 +69,18 @@ public abstract class AbstractContext<T> implements IAbstractContext<T> {
         this.contextName = contextName;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override public boolean isContextReusable() {
+    public boolean isContextReusable() {
         return isContextReusable;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override public void setContextReusable(boolean contextReusable) {
+    public void setContextReusable(boolean contextReusable) {
         isContextReusable = contextReusable;
     }
 
-}
+    public abstract void tearDownContext(AbstractContext<T> context);
 
-interface IAbstractContext<T> {
-
-    /**
-     * <p>getDriver.</p>
-     *
-     * @return a T object.
-     */
-    T getDriver();
-
-    /**
-     * <p>setDriver.</p>
-     *
-     * @param driver a T object.
-     */
-    void setDriver(T driver);
-
-    /**
-     * <p>getContextName.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    String getContextName();
-
-    /**
-     * <p>setContextName.</p>
-     *
-     * @param contextName a {@link java.lang.String} object.
-     */
-    void setContextName(String contextName);
-
-    /**
-     * <p>isContextReusable.</p>
-     *
-     * @return a boolean.
-     */
-    boolean isContextReusable();
-
-    /**
-     * <p>setContextReusable.</p>
-     *
-     * @param contextReusable a boolean.
-     */
-    void setContextReusable(boolean contextReusable);
-
-    /**
-     * <p>tearDownContext.</p>
-     *
-     * @param context a U object.
-     * @param <U>     a U object.
-     */
-    <U extends AbstractContext> void tearDownContext(U context);
-
+    @Override public String toString() {
+        return "contextName='" + contextName + '\'' + ", isContextReusable=" + isContextReusable
+            + ", driver=" + driver + ", contextReusable=" + isContextReusable();
+    }
 }
