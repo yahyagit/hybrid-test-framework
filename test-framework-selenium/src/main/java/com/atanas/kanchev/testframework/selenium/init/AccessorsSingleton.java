@@ -13,16 +13,34 @@
 
 package com.atanas.kanchev.testframework.selenium.init;
 
+import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
+import com.atanas.kanchev.testframework.selenium.handlers.Navigates;
+
 /**
  * @author Atanas Kanchev
  */
-public class SeleniumInit {
+public class AccessorsSingleton {
 
+    private static AccessorsSingleton instance = null;
+    private static final DriverFactory driverFactory = new DriverFactory();
 
-    public static AccessorsSingleton accessorsSingleton = AccessorsSingleton.getInstance();
+    private AccessorsSingleton() {
+    }
 
-    public static AccessorsSingleton $(){
-        return accessorsSingleton;
+    public static AccessorsSingleton getInstance() {
+        if (instance == null) {
+            instance = new AccessorsSingleton();
+        }
+        return instance;
+    }
+
+    public DriverFactory driverSetup() {
+        return driverFactory;
+    }
+
+    public Navigates goTo(final String url) {
+
+        return new Navigates().getPage(url);
     }
 
 }

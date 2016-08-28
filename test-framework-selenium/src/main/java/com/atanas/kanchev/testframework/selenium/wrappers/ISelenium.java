@@ -13,18 +13,15 @@
 
 package com.atanas.kanchev.testframework.selenium.wrappers;
 
-import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import com.atanas.kanchev.testframework.selenium.handlers.Finds;
-import com.atanas.kanchev.testframework.selenium.handlers.Navigates;
 import com.atanas.kanchev.testframework.selenium.handlers.Probes;
-import com.atanas.kanchev.testframework.selenium.init.SeleniumInit;
 import com.atanas.kanchev.testframework.selenium.interactions.element.OmniaElement;
 import com.atanas.kanchev.testframework.selenium.interactions.wait.Waiting;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public interface ISelenium extends IFind, INavigate, IProbes, IWaits, IElement {
+public interface ISelenium extends IFind, IProbes, IWaits, IElement {
 
 
 }
@@ -60,16 +57,7 @@ interface IFind {
 }
 
 
-interface INavigate {
 
-    default DriverFactory setupSelenium() {
-        return SeleniumInit.getDriverFactory();
-    }
-
-    default Navigates goTo(final String url) {
-        return new Navigates().getPage(url);
-    }
-}
 
 
 interface IProbes {

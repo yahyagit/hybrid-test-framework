@@ -18,6 +18,8 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ScreenOrientation;
 
+import static com.atanas.kanchev.testframework.selenium.init.SeleniumInit.$;
+
 public class AppiumInitTest implements IWrapper {
 
 
@@ -43,7 +45,7 @@ public class AppiumInitTest implements IWrapper {
 //
 //        appiumInit()
 //                .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
-        goTo("https://bbc.co.uk");
+        $().goTo("https://bbc.co.uk");
         find().elementBy(By.id("idcta-link"));
 
 

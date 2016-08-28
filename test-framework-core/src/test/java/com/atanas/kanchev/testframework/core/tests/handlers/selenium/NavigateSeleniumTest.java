@@ -13,10 +13,9 @@
 
 package com.atanas.kanchev.testframework.core.tests.handlers.selenium;
 
-import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
-import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
+
+import static com.atanas.kanchev.testframework.selenium.init.SeleniumInit.$;
 
 public class NavigateSeleniumTest extends BaseTest {
 
@@ -24,22 +23,22 @@ public class NavigateSeleniumTest extends BaseTest {
 
     @Test
     public void getPage() throws Exception {
-        goTo(url);
+        $().goTo(url);
     }
 
     @Test
     public void back() throws Exception {
-        navigateToActivateFrame();goTo(url).back();
+        navigateToActivateFrame();$().goTo(url).back();
     }
 
     @Test
     public void forward() throws Exception {
-        goTo(url).forward();
+        $().goTo(url).forward();
     }
 
     @Test
     public void refresh() throws Exception {
-        goTo(url).refresh();
+        $().goTo(url).refresh();
     }
 
     @Test

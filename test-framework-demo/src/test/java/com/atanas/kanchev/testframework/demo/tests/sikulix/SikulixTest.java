@@ -20,12 +20,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sikuli.script.Key;
 
+import static com.atanas.kanchev.testframework.selenium.init.SeleniumInit.$;
+
 public class SikulixTest implements ISelenium, ISikulix {
 
     @Before
     public void setUp() throws Exception {
 
-        goTo("https://www.google.co.uk");
+        $().goTo("https://www.google.co.uk");
 
     }
 
@@ -107,7 +109,7 @@ public class SikulixTest implements ISelenium, ISikulix {
     @Test
     public void findImageByScrolling() throws Exception {
 
-        goTo("https://www.rightmove.co.uk");
+        $().goTo("https://www.rightmove.co.uk");
         sikulix().findImageByScrolling("rm-select.png", 15, SikuliXFactory.Directions.BELOW);
 
     }

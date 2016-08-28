@@ -22,6 +22,8 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 
 import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+import static com.atanas.kanchev.testframework.selenium.init.SeleniumInit.$;
+
 
 /**
  * Tests for {@link Probes}
@@ -29,10 +31,9 @@ import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
 public class ProbesTest implements ISelenium {
 
     @Before public void setUp() throws Exception {
-                setupSelenium().setBrowser("chrome")
-//            .setReuseBrowser(true)
-       /* .setCustomCapabilities(DesiredCapabilities.android())*/
-        ;
+        $().driverSetup().setBrowser("chrome")
+        //            .setReuseBrowser(true)
+       /* .setCustomCapabilities(DesiredCapabilities.android())*/;
     }
 
     @After public void tearDown() throws Exception {
@@ -41,12 +42,13 @@ public class ProbesTest implements ISelenium {
     }
 
     @Test public void exist() throws Exception {
-        setupSelenium().setBrowser("chrome");
-        goTo("https://www.google.co.uk");
+        $().driverSetup().setBrowser("chrome");
+        $().goTo("");
+        $().goTo("https://www.google.co.uk");
         o(By.name("q")).click();
         o().sendKeys("hello");
         //        setupSelenium().setBrowser("firefox");
-        goTo("https://www.bbc.co.uk");
+        $().goTo("https://www.bbc.co.uk");
         //        find().elementBy(By.name("btnK"));
         //        o().click();
 
@@ -70,42 +72,42 @@ public class ProbesTest implements ISelenium {
     }
 
     @Test public void hasAnyText() throws Exception {
-        goTo("https://www.google.co.uk");
+        $().goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.className("gb_P")).hasAnyText());
     }
 
     @Test public void hasText() throws Exception {
-        goTo("https://www.google.co.uk");
+        $().goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.className("gb_P")).hasText(true, true, "Gmail"));
     }
 
     @Test public void hasAttribute() throws Exception {
-        goTo("https://www.google.co.uk");
+        $().goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).hasAttribute("type", "submit", false));
     }
 
     @Test public void isOfTagType() throws Exception {
-        goTo("https://www.google.co.uk");
+        $().goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).isOfTagType("input"));
     }
 
     @Test public void isEnabled() throws Exception {
-        goTo("https://www.google.co.uk");
+        $().goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).isEnabled());
     }
 
     @Test public void isSelected() throws Exception {
-        goTo("https://www.google.co.uk");
+        $().goTo("https://www.google.co.uk");
         Assert.assertFalse(new Probes(By.name("btnK")).isSelected());
     }
 
     @Test public void isActive() throws Exception {
-        goTo("https://www.google.co.uk");
+        $().goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).isActive());
     }
 
     @Test public void isDisplayed() throws Exception {
-        goTo("https://www.google.co.uk");
+        $().goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).isDisplayed());
     }
 
@@ -114,7 +116,7 @@ public class ProbesTest implements ISelenium {
     }
 
     @Test public void hasURL() throws Exception {
-        goTo("https://www.google.co.uk");
+        $().goTo("https://www.google.co.uk");
         //        Assert.assertTrue(
         //            new Probes(By.className("gb_P")).hasURL("google.co", false));
     }
@@ -144,7 +146,7 @@ public class ProbesTest implements ISelenium {
     }
 
     @Test public void titleIs() throws Exception {
-        goTo("https://www.google.co.uk");
+        $().goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).titleContains("Google"));
     }
 

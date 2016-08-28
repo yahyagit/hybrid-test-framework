@@ -25,6 +25,9 @@ import org.slf4j.LoggerFactory;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.atanas.kanchev.testframework.selenium.init.SeleniumInit.$;
+
+
 public class FindsTest implements IWrapper {
 
     @Mock Finds ifind;
@@ -39,12 +42,12 @@ public class FindsTest implements IWrapper {
         } catch (MalformedURLException e) {
 
         }
-        setupSelenium().setBrowser("chrome");
+       $(). driverSetup().setBrowser("chrome");
     }
 
     @Test
     public void elementByTest() throws Exception {
-goTo("https://www.google.co.uk/");
+        $().goTo("https://www.google.co.uk/");
 
 
        find().elementBy(By.name("btnK"));

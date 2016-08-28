@@ -22,6 +22,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.atanas.kanchev.testframework.selenium.init.SeleniumInit.$;
+
+
 @RunWith(Enclosed.class)
 public class IWrapperWrapperTest {
 
@@ -32,7 +35,7 @@ public class IWrapperWrapperTest {
 
         @Before
         public void setUp() throws Exception {
-            setupSelenium()
+            $().driverSetup()
                     .setBrowser("chrome")
                     .setStartMaximized(true)
 //                    .setReuseBrowser(true)
@@ -44,13 +47,13 @@ public class IWrapperWrapperTest {
 
         @Test
         public void setupBrowserTest() throws Exception {
-            goTo(url);
+            $().goTo(url);
         }
 
 
         @Test
         public void name() throws Exception {
-            goTo("https://bbc.co.uk");
+            $().goTo("https://bbc.co.uk");
 
         }
 //    @Caps

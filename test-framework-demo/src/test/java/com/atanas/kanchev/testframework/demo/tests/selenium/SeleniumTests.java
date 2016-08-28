@@ -16,11 +16,13 @@ package com.atanas.kanchev.testframework.demo.tests.selenium;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 import org.junit.Test;
 
+import static com.atanas.kanchev.testframework.selenium.init.SeleniumInit.$;
+
 public class SeleniumTests implements IWrapper {
 
 
     @Test
     public void setupBrowserTest() throws Exception {
-        goTo("https://www.google.co.uk");
+        $().goTo("https://www.google.co.uk");
     }
 }

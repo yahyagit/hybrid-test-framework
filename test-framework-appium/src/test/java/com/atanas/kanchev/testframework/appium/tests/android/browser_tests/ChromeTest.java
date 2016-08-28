@@ -23,6 +23,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.ScreenOrientation;
 
+import static com.atanas.kanchev.testframework.selenium.init.SeleniumInit.$;
+
 public class ChromeTest implements IAppium, ISelenium {
 
     @Test public void androidChromeTest() throws Exception {
@@ -44,7 +46,7 @@ public class ChromeTest implements IAppium, ISelenium {
 
         appiumInit().getAndroidDriver();
 
-        goTo("https://bbc.co.uk");
+        $().goTo("https://bbc.co.uk");
 
         find().elementBy(By.id("idcta-link"));
 
