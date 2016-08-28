@@ -13,47 +13,47 @@
 
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ScreenOrientation;
 
-import static com.atanas.kanchev.testframework.selenium.init.SeleniumInit.$;
+import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessors.$appium;
+import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.$selenium;
 
-public class AppiumInitTest implements IWrapper {
+public class AppiumInitTest  {
 
 
     @Test
     public void androidChromeTest() throws Exception {
 
-//        appiumInit()
+//        init()
 //                .setupDevice()
 //                .setDeviceType(AppiumDeviceTypesEnum.ANDROID_DEVICE)
 //                .setDeviceName("ZY22398GL7")
 //                .setPlatformVersion("6.0.1");
 //
-//        appiumInit()
+//        init()
 //                .setupDeviceServer()
 //                .setBrowserName(MobileBrowserType.CHROME)
 //                .setFullReset(false)
 //                .setAutoLaunch(false);
 //
-//        appiumInit()
+//        init()
 //                .setupAndroidDriver()
 //                .setAndroidDeviceReadyTimeout(60)
 //                .setEnablePerformanceLogging(true);
 //
-//        appiumInit()
+//        init()
 //                .initAndroidDriver("http://127.0.0.1:4723/wd/hub");
-        $().goTo("https://bbc.co.uk");
-        find().elementBy(By.id("idcta-link"));
+        $selenium().goTo("https://bbc.co.uk");
+        $selenium().find().elementBy(By.id("idcta-link"));
 
 
 
 
         Thread.sleep(10000);
 
-        android().orientation().rotate(ScreenOrientation.PORTRAIT);
+        $appium().android().orientation().rotate(ScreenOrientation.PORTRAIT);
 
 
     }

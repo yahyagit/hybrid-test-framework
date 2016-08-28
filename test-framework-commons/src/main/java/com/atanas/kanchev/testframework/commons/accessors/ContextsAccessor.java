@@ -11,18 +11,21 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.core.tests.handlers.selenium;
+package com.atanas.kanchev.testframework.commons.accessors;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import com.atanas.kanchev.testframework.commons.context.ContextContainer;
+import com.atanas.kanchev.testframework.commons.context.ConcurrentContextContainer;
 
-public class BaseTest  {
+/**
+ * @author Atanas Kanchev
+ */
+public class ContextsAccessor {
 
-    @BeforeClass public static void setUp() throws Exception {
+    private static final ContextContainer contextThreadLocalContainer =
+        new ConcurrentContextContainer();
 
+    public static ContextContainer context() {
+        return contextThreadLocalContainer;
     }
 
-    @AfterClass public static void tearDown() throws Exception {
-        //        CONTEXT_FACTORY.tearDownContexts();
-    }
 }

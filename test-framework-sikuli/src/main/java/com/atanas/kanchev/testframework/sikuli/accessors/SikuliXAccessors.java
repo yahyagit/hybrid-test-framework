@@ -11,21 +11,18 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.commons.init;
-
-import com.atanas.kanchev.testframework.commons.context.ContextContainer;
-import com.atanas.kanchev.testframework.commons.context.ConcurrentContextContainer;
+package com.atanas.kanchev.testframework.sikuli.accessors;
 
 /**
  * @author Atanas Kanchev
  */
-public class OmniaInit {
+public class SikuliXAccessors {
 
-    private static final ContextContainer contextThreadLocalContainer =
-        new ConcurrentContextContainer();
+    private static final SikuliXAccessorsSingleton SIKULI_X_ACCESSORS_SINGLETON =
+        SikuliXAccessorsSingleton.getInstance();
 
-    public static ContextContainer context() {
-        return contextThreadLocalContainer;
+    public static SikuliXAccessorsSingleton $sikuli() {
+        return SIKULI_X_ACCESSORS_SINGLETON;
     }
 
 }

@@ -142,7 +142,7 @@ public class OmniaElement implements IOmniaElement {
     }
 
     @Override public Finds find(Class<?> clazz) {
-        return new Finds<>(clazz);
+        return new Finds(clazz);
     }
 
     @Override public Waiting waitFor() {

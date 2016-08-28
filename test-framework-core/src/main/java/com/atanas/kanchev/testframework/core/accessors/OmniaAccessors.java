@@ -11,17 +11,18 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.core.handlers.wrappers;
-
-import com.atanas.kanchev.testframework.appium.wrappers.IAppium;
-import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
-import com.atanas.kanchev.testframework.sikuli.wrappers.ISikulix;
+package com.atanas.kanchev.testframework.core.accessors;
 
 /**
- * <p>IWrapper interface.</p>
- *
  * @author Atanas Kanchev
  */
-public interface IWrapper extends ISikulix, IAppium, ISelenium {
-}
+public class OmniaAccessors {
 
+    private static final OmniaAccessorsSingleton OMNIA_ACCESSORS_SINGLETON =
+        OmniaAccessorsSingleton.getInstance();
+
+    public static OmniaAccessorsSingleton $() {
+        return OMNIA_ACCESSORS_SINGLETON;
+    }
+
+}

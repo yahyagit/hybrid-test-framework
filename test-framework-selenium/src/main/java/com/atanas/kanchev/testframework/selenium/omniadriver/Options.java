@@ -20,7 +20,7 @@ import org.openqa.selenium.logging.Logs;
 
 import java.util.Set;
 
-import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
 /**
  * Created by atanas on 22/08/16.

@@ -11,18 +11,32 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.selenium.init;
+package com.atanas.kanchev.testframework.sikuli.accessors;
+
+import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
 
 /**
  * @author Atanas Kanchev
  */
-public class SeleniumInit {
+public class SikuliXAccessorsSingleton {
 
+    private static SikuliXAccessorsSingleton instance = null;
 
-    public static AccessorsSingleton accessorsSingleton = AccessorsSingleton.getInstance();
+    private SikuliXAccessorsSingleton() {}
 
-    public static AccessorsSingleton $(){
-        return accessorsSingleton;
+    static SikuliXAccessorsSingleton getInstance() {
+        if (instance == null) {
+            instance = new SikuliXAccessorsSingleton();
+        }
+        return instance;
+    }
+
+    public SikuliXFactory sikulix(final String image) {
+        return new SikuliXFactory(image);
+    }
+
+    public SikuliXFactory sikulix() {
+        return new SikuliXFactory();
     }
 
 }

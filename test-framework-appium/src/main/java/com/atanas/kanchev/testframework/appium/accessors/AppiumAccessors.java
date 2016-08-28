@@ -11,18 +11,18 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.core.tests.handlers.selenium;
+package com.atanas.kanchev.testframework.appium.accessors;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+/**
+ * @author Atanas Kanchev
+ */
+public class AppiumAccessors {
 
-public class BaseTest  {
+    private static final AppiumAccessorsSingleton APPIUM_ACCESSORS_SINGLETON =
+        AppiumAccessorsSingleton.getInstance();
 
-    @BeforeClass public static void setUp() throws Exception {
-
+    public static AppiumAccessorsSingleton $appium() {
+        return APPIUM_ACCESSORS_SINGLETON;
     }
 
-    @AfterClass public static void tearDown() throws Exception {
-        //        CONTEXT_FACTORY.tearDownContexts();
-    }
 }

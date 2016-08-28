@@ -13,7 +13,6 @@
 
 package com.atanas.kanchev.testframework.appium.tests.android.native_app_tests;
 
-import com.atanas.kanchev.testframework.appium.wrappers.IAppium;
 import io.appium.java_client.NoSuchContextException;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -25,18 +24,19 @@ import org.openqa.selenium.Platform;
 
 import java.io.File;
 
+import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessors.$appium;
 import static org.junit.Assert.assertEquals;
 
-public class AndroidContextTest implements IAppium {
+public class AndroidContextTest {
 
     @BeforeClass public static void beforeClass() throws Exception {
         File appDir = new File(
             "src/test/java/com/atanas/kanchev/testframework/appium/tests/android/native_app_tests");
         File app = new File(appDir, "ApiDemos-debug.apk");
 
-        APPIUM_DRIVER_FACTORY.buildDefaultService().startServer();
+        $appium().init().buildDefaultService().startServer();
 
-        APPIUM_DRIVER_FACTORY.setCap(MobileCapabilityType.BROWSER_NAME, "")
+        $appium().init().setCap(MobileCapabilityType.BROWSER_NAME, "")
             .setCap(MobileCapabilityType.APP, app.getAbsoluteFile())
             .setCap(MobileCapabilityType.DEVICE_NAME, "8adea98f")
             .setCap(MobileCapabilityType.PLATFORM_VERSION, "6.0.1")
@@ -50,35 +50,36 @@ public class AndroidContextTest implements IAppium {
     }
 
     @Before public void setUp() throws Exception {
-        android().activity().startActivity("io.appium.android.apis", ".view.WebView1");
+        $appium().android().activity().startActivity("io.appium.android.apis", ".view.WebView1");
         Thread.sleep(5000);
 
     }
 
     @AfterClass public static void tearDown() throws Exception {
-        APPIUM_DRIVER_FACTORY.stopServer();
+        $appium().init().stopServer();
         //        CONTEXT_FACTORY.tearDownContexts();
 
     }
 
     @Test public void testGetContext() {
-        assertEquals("NATIVE_APP", android().contextAware().getContext());
+        assertEquals("NATIVE_APP", $appium().android().contextAware().getContext());
     }
 
     @Test public void testGetContextHandles() {
-        assertEquals(android().contextAware().getContextHandles().size(), 2);
+        assertEquals($appium().android().contextAware().getContextHandles().size(), 2);
     }
 
     @Test public void testSwitchContext() {
 
-        android().contextAware().getContextHandles();
-        android().contextAware().context("WEBVIEW_io.appium.android.apis");
-        assertEquals(android().contextAware().getContext(), "WEBVIEW_io.appium.android.apis");
-        android().contextAware().context("NATIVE_APP");
+        $appium().android().contextAware().getContextHandles();
+        $appium().android().contextAware().context("WEBVIEW_io.appium.android.apis");
+        assertEquals($appium().android().contextAware().getContext(),
+            "WEBVIEW_io.appium.android.apis");
+        $appium().android().contextAware().context("NATIVE_APP");
     }
 
     @Test(expected = NoSuchContextException.class) public void testContextError() {
-        android().contextAware().context("Planet of the Ape-ium");
+        $appium().android().contextAware().context("Planet of the Ape-ium");
     }
 
 }

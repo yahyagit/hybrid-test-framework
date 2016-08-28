@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
 public class Navigation<T extends WebDriver> implements WebDriver.Navigation {
 

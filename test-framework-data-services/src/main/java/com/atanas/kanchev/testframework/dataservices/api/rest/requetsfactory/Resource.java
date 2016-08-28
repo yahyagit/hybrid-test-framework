@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
 /**
  * <p>Resource class.</p>

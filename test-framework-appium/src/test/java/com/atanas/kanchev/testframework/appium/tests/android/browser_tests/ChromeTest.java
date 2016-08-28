@@ -13,8 +13,7 @@
 
 package com.atanas.kanchev.testframework.appium.tests.android.browser_tests;
 
-import com.atanas.kanchev.testframework.appium.wrappers.IAppium;
-import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
+
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileBrowserType;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -23,16 +22,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.ScreenOrientation;
 
-import static com.atanas.kanchev.testframework.selenium.init.SeleniumInit.$;
+import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessors.$appium;
+import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.$selenium;
 
-public class ChromeTest implements IAppium, ISelenium {
+public class ChromeTest {
 
     @Test public void androidChromeTest() throws Exception {
 
-        appiumInit().buildDefaultService();
-        appiumInit().startServer();
+        $appium().init().buildDefaultService();
+        $appium().init().startServer();
 
-        appiumInit()
+        $appium().init()
 
             .setCap(MobileCapabilityType.BROWSER_NAME, MobileBrowserType.CHROME)
             .setCap(MobileCapabilityType.PLATFORM, Platform.ANDROID)
@@ -44,13 +44,13 @@ public class ChromeTest implements IAppium, ISelenium {
             .setCap(AndroidMobileCapabilityType.ANDROID_DEVICE_READY_TIMEOUT, 60)
             .setCap(AndroidMobileCapabilityType.ENABLE_PERFORMANCE_LOGGING, true);
 
-        appiumInit().getAndroidDriver();
+        $appium().init().getAndroidDriver();
 
-        $().goTo("https://bbc.co.uk");
+        $selenium().goTo("https://bbc.co.uk");
 
-        find().elementBy(By.id("idcta-link"));
+        $selenium().find().elementBy(By.id("idcta-link"));
 
-        android().orientation().rotate(ScreenOrientation.LANDSCAPE);
+        $appium().android().orientation().rotate(ScreenOrientation.LANDSCAPE);
 
     }
 }

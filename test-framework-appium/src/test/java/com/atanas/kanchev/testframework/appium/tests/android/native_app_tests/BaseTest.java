@@ -13,7 +13,6 @@
 
 package com.atanas.kanchev.testframework.appium.tests.android.native_app_tests;
 
-import com.atanas.kanchev.testframework.appium.wrappers.IAppium;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.junit.AfterClass;
@@ -22,16 +21,18 @@ import org.openqa.selenium.Platform;
 
 import java.io.File;
 
-public class BaseTest implements IAppium {
+import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessors.$appium;
+
+public class BaseTest  {
 
     @BeforeClass public static void beforeClass() throws Exception {
         File appDir = new File(
             "src/test/java/com/atanas/kanchev/testframework/appium/tests/android/native_app_tests");
         File app = new File(appDir, "ApiDemos-debug.apk");
 
-        APPIUM_DRIVER_FACTORY.buildDefaultService().startServer();
+        $appium().init().buildDefaultService().startServer();
 
-        APPIUM_DRIVER_FACTORY.setCap(MobileCapabilityType.APP, app.getAbsolutePath())
+        $appium().init().setCap(MobileCapabilityType.APP, app.getAbsolutePath())
             .setCap(MobileCapabilityType.DEVICE_NAME, "8adea98f")
             .setCap(MobileCapabilityType.PLATFORM_VERSION, "6.0.1")
             .setCap(MobileCapabilityType.PLATFORM, Platform.ANDROID)
@@ -46,6 +47,6 @@ public class BaseTest implements IAppium {
 
     @AfterClass public static void tearDown() throws Exception {
         //        CONTEXT_FACTORY.tearDownContexts();
-        APPIUM_DRIVER_FACTORY.stopServer();
+        $appium().init().stopServer();
     }
 }

@@ -16,7 +16,7 @@ package com.atanas.kanchev.testframework.selenium.tests.handlers;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.interactions.wait.Waiting;
 
-import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * Test for {@link Waits}
  */
-public class WaitsTest implements ISelenium{
+public class WaitsTest{
 
 //    Waiting waits;
 //

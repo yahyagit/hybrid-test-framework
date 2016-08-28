@@ -18,7 +18,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
-import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
 /**
  * Created by atanas on 22/08/16.

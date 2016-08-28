@@ -13,7 +13,6 @@
 
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 import com.atanas.kanchev.testframework.selenium.handlers.Finds;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,10 +24,10 @@ import org.slf4j.LoggerFactory;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.atanas.kanchev.testframework.selenium.init.SeleniumInit.$;
+import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.$selenium;
 
 
-public class FindsTest implements IWrapper {
+public class FindsTest {
 
     @Mock Finds ifind;
 
@@ -42,15 +41,15 @@ public class FindsTest implements IWrapper {
         } catch (MalformedURLException e) {
 
         }
-       $(). driverSetup().setBrowser("chrome");
+       $selenium(). driverSetup().setBrowser("chrome");
     }
 
     @Test
     public void elementByTest() throws Exception {
-        $().goTo("https://www.google.co.uk/");
+        $selenium().goTo("https://www.google.co.uk/");
 
 
-       find().elementBy(By.name("btnK"));
+       $selenium().find().elementBy(By.name("btnK"));
 
     }
 

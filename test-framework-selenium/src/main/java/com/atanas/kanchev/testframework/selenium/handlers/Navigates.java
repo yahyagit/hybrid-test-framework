@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 
-import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
 /**
  * <p>Navigates class.</p>

@@ -11,36 +11,35 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.selenium.init;
+package com.atanas.kanchev.testframework.appium.accessors;
 
-import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
-import com.atanas.kanchev.testframework.selenium.handlers.Navigates;
+import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDriverFactory;
+import com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler;
 
 /**
  * @author Atanas Kanchev
  */
-public class AccessorsSingleton {
+public class AppiumAccessorsSingleton {
 
-    private static AccessorsSingleton instance = null;
-    private static final DriverFactory driverFactory = new DriverFactory();
+    private static AppiumAccessorsSingleton instance = null;
+    private static final AppiumDriverFactory APPIUM_DRIVER_FACTORY = new AppiumDriverFactory();
 
-    private AccessorsSingleton() {
+    private AppiumAccessorsSingleton() {
     }
 
-    public static AccessorsSingleton getInstance() {
+    static AppiumAccessorsSingleton getInstance() {
         if (instance == null) {
-            instance = new AccessorsSingleton();
+            instance = new AppiumAccessorsSingleton();
         }
         return instance;
     }
 
-    public DriverFactory driverSetup() {
-        return driverFactory;
+    public AppiumDriverFactory init() {
+        return APPIUM_DRIVER_FACTORY;
     }
 
-    public Navigates goTo(final String url) {
-
-        return new Navigates().getPage(url);
+    public AndroidNativeHandler android() {
+        return new AndroidNativeHandler();
     }
 
 }

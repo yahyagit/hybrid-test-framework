@@ -15,7 +15,7 @@ package com.atanas.kanchev.testframework.selenium.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
-import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -27,14 +27,14 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
 /**
  * <p>Finds class.</p>
  *
  * @author Atanas Kanchev
  */
-public final class Finds<T extends WebDriver> implements IFinds {
+public final class Finds implements IFinds {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Finds.class);
@@ -76,8 +76,7 @@ public final class Finds<T extends WebDriver> implements IFinds {
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            context().<SeleniumContext>getCurrentContext()
-                .setCurrentElement(findElement(locator));
+            context().<SeleniumContext>getCurrentContext().setCurrentElement(findElement(locator));
         return this;
     }
 
@@ -117,8 +116,8 @@ public final class Finds<T extends WebDriver> implements IFinds {
         if (text == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            context().<SeleniumContext>getCurrentContext().setCurrentElement(findElement(
-                By.xpath(".//*/text()[contains(normalize-space(.), " + Quotes.escape(text)
+            context().<SeleniumContext>getCurrentContext().setCurrentElement(findElement(By.xpath(
+                ".//*/text()[contains(normalize-space(.), " + Quotes.escape(text)
                     + ")]/parent::*")));
         return this;
 
@@ -132,9 +131,8 @@ public final class Finds<T extends WebDriver> implements IFinds {
         if (text == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            context().<SeleniumContext>getCurrentContext().setCurrentElement(findElement(
-                By.xpath(
-                    ".//*/text()[normalize-space(.) = " + Quotes.escape(text) + "]/parent::*")));
+            context().<SeleniumContext>getCurrentContext().setCurrentElement(findElement(By.xpath(
+                ".//*/text()[normalize-space(.) = " + Quotes.escape(text) + "]/parent::*")));
         return this;
 
     }
@@ -147,8 +145,7 @@ public final class Finds<T extends WebDriver> implements IFinds {
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else {
-            context().<SeleniumContext>getCurrentContext()
-                .setCurrentElement(findElement(locator));
+            context().<SeleniumContext>getCurrentContext().setCurrentElement(findElement(locator));
             new JSExecutor().executeScript(driver, "arguments[0].scrollIntoView(true);",
                 context().<SeleniumContext>getCurrentContext().getCurrentElement());
         }
@@ -222,12 +219,12 @@ public final class Finds<T extends WebDriver> implements IFinds {
         context().<SeleniumContext>getCurrentContext().setWebElementsList(
             findElements(By.tagName(CommonPageDefinitions.HTML.LABEL.getDefinition())));
         if (!context().<SeleniumContext>getCurrentContext().getWebElementsList().isEmpty()) {
-            for (WebElement labelElement : ((SeleniumContext<T>)context().<SeleniumContext>getCurrentContext()).getWebElementsList()) {
+            for (WebElement labelElement : context().<SeleniumContext<WebDriver>>getCurrentContext()
+                .getWebElementsList()) {
                 String s = labelElement
                     .getAttribute(CommonPageDefinitions.HTML.ATTRIBUTE_FOR.getDefinition());
                 if (s.equals(id)) {
-                    context().<SeleniumContext>getCurrentContext()
-                        .setCurrentElement(labelElement);
+                    context().<SeleniumContext>getCurrentContext().setCurrentElement(labelElement);
                     labelFound = true;
                     break;
                 }
@@ -247,7 +244,8 @@ public final class Finds<T extends WebDriver> implements IFinds {
         context().<SeleniumContext>getCurrentContext().setWebElementsList(
             findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
         if (!context().<SeleniumContext>getCurrentContext().getWebElementsList().isEmpty()) {
-            for (WebElement anchor : ((SeleniumContext<T>)context().<SeleniumContext>getCurrentContext()).getWebElementsList()) {
+            for (WebElement anchor : context().<SeleniumContext<WebDriver>>getCurrentContext()
+                .getWebElementsList()) {
                 if (anchor.getAttribute("href").equals(href)) {
                     context().<SeleniumContext>getCurrentContext().setCurrentElement(anchor);
                     navigated = true;
@@ -327,7 +325,8 @@ public final class Finds<T extends WebDriver> implements IFinds {
 
 }
 
-interface IFinds extends ISelenium {
+
+interface IFinds {
 
     /**
      * <p>goToRootElement.</p>

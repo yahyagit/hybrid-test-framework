@@ -11,18 +11,18 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.core.tests.handlers.selenium;
+package com.atanas.kanchev.testframework.selenium.accessors;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+/**
+ * @author Atanas Kanchev
+ */
+public class SeleniumAccessors {
 
-public class BaseTest  {
+    private static final SeleniumAccessorsSingleton seleniumAccessorsSingleton =
+        SeleniumAccessorsSingleton.getInstance();
 
-    @BeforeClass public static void setUp() throws Exception {
-
+    public static SeleniumAccessorsSingleton $selenium() {
+        return seleniumAccessorsSingleton;
     }
 
-    @AfterClass public static void tearDown() throws Exception {
-        //        CONTEXT_FACTORY.tearDownContexts();
-    }
 }

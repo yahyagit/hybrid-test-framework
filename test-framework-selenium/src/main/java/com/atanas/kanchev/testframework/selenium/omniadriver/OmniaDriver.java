@@ -21,7 +21,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 import java.util.Set;
 
-import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
 /**
  * Created by atanas on 22/08/16.

@@ -14,7 +14,6 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
 import com.atanas.kanchev.testframework.dataservices.dataprovider.properties.PropertyReader;
-import com.atanas.kanchev.testframework.dataservices.wrappers.IDataResource;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
@@ -25,14 +24,14 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
 /**
  * <p>Waits class.</p>
  *
  * @author Atanas Kanchev
  */
-public final class Waits implements IWaitsExpectedCondition, IDataResource {
+public final class Waits implements IWaitsExpectedCondition {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Waits.class);

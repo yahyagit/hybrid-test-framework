@@ -11,17 +11,18 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.sikuli.wrappers;
+package com.atanas.kanchev.testframework.dataservices.accessors;
 
-import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
+/**
+ * @author Atanas Kanchev
+ */
+public class DataServicesAccessors {
 
-public interface ISikulix {
+    private static final DataServicesAccessorsSingleton DATA_SERVICES_ACCESSORS_SINGLETON =
+        DataServicesAccessorsSingleton.getInstance();
 
-    default SikuliXFactory sikulix(final String image) {
-        return new SikuliXFactory(image);
+    public static DataServicesAccessorsSingleton $data() {
+        return DATA_SERVICES_ACCESSORS_SINGLETON;
     }
 
-    default SikuliXFactory sikulix() {
-        return new SikuliXFactory();
-    }
 }

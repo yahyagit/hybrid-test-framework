@@ -13,17 +13,16 @@
 
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
 import org.junit.Before;
 
-import static com.atanas.kanchev.testframework.selenium.init.SeleniumInit.$;
+import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.$selenium;
 
 
-public class ProbesTest implements IWrapper {
+public class ProbesTest {
 
     @Before
     public void setUp() throws Exception {
-        $().driverSetup()
+        $selenium().driverSetup()
                 .setBrowser("chrome");
     }
 

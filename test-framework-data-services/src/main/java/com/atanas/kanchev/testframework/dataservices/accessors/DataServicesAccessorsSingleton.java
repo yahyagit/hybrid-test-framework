@@ -11,31 +11,47 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.dataservices.wrappers;
+package com.atanas.kanchev.testframework.dataservices.accessors;
 
 import com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Resource;
 import com.atanas.kanchev.testframework.dataservices.context.APIResourceContext;
 import com.atanas.kanchev.testframework.dataservices.dataprovider.csv.CSVParser;
 import com.atanas.kanchev.testframework.dataservices.dataprovider.excel.ExcelParser;
 
-import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
-public interface IDataResource  {
+/**
+ * @author Atanas Kanchev
+ */
+public class DataServicesAccessorsSingleton {
 
-    default Resource apiResource(Resource resource) {
-        return ((APIResourceContext) context().getCurrentContext()).setResource(resource)
-                .getResource();
+    private static DataServicesAccessorsSingleton instance = null;
+
+    private DataServicesAccessorsSingleton() {
     }
 
-    default Resource apiResource() {
+    static DataServicesAccessorsSingleton getInstance() {
+        if (instance == null) {
+            instance = new DataServicesAccessorsSingleton();
+        }
+        return instance;
+    }
+
+    public Resource apiResource(Resource resource) {
+        return ((APIResourceContext) context().getCurrentContext()).setResource(resource)
+            .getResource();
+    }
+
+    public Resource apiResource() {
         return ((APIResourceContext) context().getCurrentContext()).getResource();
     }
 
-    default ExcelParser excel(String filePath) {
+    public ExcelParser excel(String filePath) {
         return new ExcelParser(filePath);
     }
 
-    default CSVParser csv(String filePath) {
+    public CSVParser csv(String filePath) {
         return new CSVParser(filePath);
     }
+
 }

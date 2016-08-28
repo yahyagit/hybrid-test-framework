@@ -24,37 +24,38 @@ import org.openqa.selenium.html5.Location;
 import java.io.File;
 import java.util.Map;
 
-import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessors.$appium;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 import static org.junit.Assert.*;
 
 public class AndroidDriverTest extends BaseTest {
 
     @Test public void getDeviceTimeTest() {
-        String time = android().actionShortcuts().getDeviceTime();
+        String time = $appium().android().actionShortcuts().getDeviceTime();
         assertTrue(time.length() == 28);
     }
 
     @Test public void isAppInstalledTest() {
-        assertTrue(android().interactsWithApps().isAppInstalled("io.appium.android.apis"));
+        assertTrue($appium().android().interactsWithApps().isAppInstalled("io.appium.android.apis"));
     }
 
     @Test public void isAppNotInstalledTest() {
-        assertFalse(android().interactsWithApps().isAppInstalled("foo"));
+        assertFalse($appium().android().interactsWithApps().isAppInstalled("foo"));
     }
 
 
     @Test public void closeAppTest() throws InterruptedException {
-        android().interactsWithApps().closeApp();
-        android().interactsWithApps().launchApp();
-        assertEquals(".ApiDemos", android().appiumDriverMethods().currentActivity());
+        $appium().android().interactsWithApps().closeApp();
+        $appium().android().interactsWithApps().launchApp();
+        assertEquals(".ApiDemos", $appium().android().appiumDriverMethods().currentActivity());
     }
 
     @Test public void pushFileTest() {
         byte[] data = Base64.encodeBase64(
             "The eventual code is no more than the deposit of your understanding. ~E. W. Dijkstra"
                 .getBytes());
-        android().pushFiles().pushFile("/data/local/tmp/remote.txt", data);
-        byte[] returnData = android().pushFiles().pullFile("/data/local/tmp/remote.txt");
+        $appium().android().pushFiles().pushFile("/data/local/tmp/remote.txt", data);
+        byte[] returnData = $appium().android().pushFiles().pullFile("/data/local/tmp/remote.txt");
         String returnDataDecoded = new String(Base64.decodeBase64(returnData));
         assertEquals(
             "The eventual code is no more than the deposit of your understanding. ~E. W. Dijkstra",
@@ -66,8 +67,8 @@ public class AndroidDriverTest extends BaseTest {
         try {
             FileUtils.writeStringToFile(temp, "The eventual code is no "
                 + "more than the deposit of your understanding. ~E. W. Dijkstra", "UTF-8", true);
-            android().pushFiles().pushFile("/data/local/tmp/remote2.txt", temp);
-            byte[] returnData = android().pushFiles().pullFile("/data/local/tmp/remote2.txt");
+            $appium().android().pushFiles().pushFile("/data/local/tmp/remote2.txt", temp);
+            byte[] returnData = $appium().android().pushFiles().pullFile("/data/local/tmp/remote2.txt");
             String returnDataDecoded = new String(Base64.decodeBase64(returnData));
             assertEquals("The eventual code is no more than the deposit of "
                 + "your understanding. ~E. W. Dijkstra", returnDataDecoded);
@@ -77,7 +78,7 @@ public class AndroidDriverTest extends BaseTest {
     }
 
     @Test public void ignoreUnimportantViews() {
-        android().appiumDriverMethods().ignoreUnimportantViews(true);
+        $appium().android().appiumDriverMethods().ignoreUnimportantViews(true);
         boolean ignoreViews =
             ((AndroidDriver) context().getCurrentContext().getDriver()).getSettings()
                 .get(AppiumSetting.IGNORE_UNIMPORTANT_VIEWS.toString()).getAsBoolean();
@@ -98,10 +99,10 @@ public class AndroidDriverTest extends BaseTest {
     }
 
     @Test public void orientationTest() {
-        assertEquals(ScreenOrientation.PORTRAIT, android().orientation().getOrientation());
-        android().orientation().rotate(ScreenOrientation.LANDSCAPE);
-        assertEquals(ScreenOrientation.LANDSCAPE, android().orientation().getOrientation());
-        android().orientation().rotate(ScreenOrientation.PORTRAIT);
+        assertEquals(ScreenOrientation.PORTRAIT, $appium().android().orientation().getOrientation());
+        $appium().android().orientation().rotate(ScreenOrientation.LANDSCAPE);
+        assertEquals(ScreenOrientation.LANDSCAPE, $appium().android().orientation().getOrientation());
+        $appium().android().orientation().rotate(ScreenOrientation.PORTRAIT);
     }
 
     @Test public void lockTest() {
@@ -113,34 +114,34 @@ public class AndroidDriverTest extends BaseTest {
 
     @Test public void runAppInBackgroundTest() {
         long time = System.currentTimeMillis();
-        android().interactsWithApps().runAppInBackground(4);
+        $appium().android().interactsWithApps().runAppInBackground(4);
         long timeAfter = System.currentTimeMillis();
         assert (timeAfter - time > 3000);
     }
 
     @Test public void pullFileTest() {
-        byte[] data = android().pushFiles()
+        byte[] data = $appium().android().pushFiles()
             .pullFile("data/system/registered_services/android.content.SyncAdapter.xml");
         assert (data.length > 0);
     }
 
     @Test public void resetTest() {
-        android().interactsWithApps().resetApp();
+        $appium().android().interactsWithApps().resetApp();
     }
 
     @Test public void endTestCoverage() {
-        android().appiumDriverMethods().endTestCoverage("android.intent.action.MAIN", "");
+        $appium().android().appiumDriverMethods().endTestCoverage("android.intent.action.MAIN", "");
     }
 
     @Test public void getDeviceUDIDTest() {
         String deviceSerial =
-            android().appiumDriverMethods().getSessionDetails().get("deviceUDID").toString();
+            $appium().android().appiumDriverMethods().getSessionDetails().get("deviceUDID").toString();
         assertNotNull(deviceSerial);
     }
 
     @Test public void getSessionMapData() {
         Map<?, ?> map =
-            (Map<?, ?>) android().appiumDriverMethods().getSessionDetails().get("desired");
+            (Map<?, ?>) $appium().android().appiumDriverMethods().getSessionDetails().get("desired");
         assertNotEquals(map.size(), 0);
     }
 

@@ -14,6 +14,7 @@
 package com.atanas.kanchev.testframework.appium.handlers;
 
 import com.atanas.kanchev.testframework.appium.context.AppiumContext;
+import com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor;
 import io.appium.java_client.*;
 import io.appium.java_client.android.AndroidDeviceActionShortcuts;
 import io.appium.java_client.android.AndroidDriver;
@@ -28,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
 /**
  * <p>AndroidNativeHandler class.</p>
@@ -417,19 +418,19 @@ public class AndroidNativeHandler {
     public class ContextAware implements org.openqa.selenium.ContextAware {
 
         @Override public WebDriver context(String name) {
-            return com.atanas.kanchev.testframework.commons.init.OmniaInit
+            return ContextsAccessor
                 .context().<AppiumContext<AppiumDriver>>getCurrentContext().getDriver()
                 .context(name);
         }
 
         @Override public Set<String> getContextHandles() {
-            return com.atanas.kanchev.testframework.commons.init.OmniaInit
+            return ContextsAccessor
                 .context().<AppiumContext<AndroidDriver<AndroidElement>>>getCurrentContext()
                 .getDriver().getContextHandles();
         }
 
         @Override public String getContext() {
-            return com.atanas.kanchev.testframework.commons.init.OmniaInit
+            return ContextsAccessor
                 .context().<AppiumContext<AppiumDriver>>getCurrentContext().getDriver()
                 .getContext();
         }

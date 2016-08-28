@@ -15,7 +15,7 @@ package com.atanas.kanchev.testframework.core.tests.handlers.selenium;
 
 import org.junit.Test;
 
-import static com.atanas.kanchev.testframework.selenium.init.SeleniumInit.$;
+import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.$selenium;
 
 public class NavigateSeleniumTest extends BaseTest {
 
@@ -23,22 +23,23 @@ public class NavigateSeleniumTest extends BaseTest {
 
     @Test
     public void getPage() throws Exception {
-        $().goTo(url);
+        $selenium().goTo(url);
     }
 
     @Test
     public void back() throws Exception {
-        navigateToActivateFrame();$().goTo(url).back();
+        navigateToActivateFrame();
+        $selenium().goTo(url).back();
     }
 
     @Test
     public void forward() throws Exception {
-        $().goTo(url).forward();
+        $selenium().goTo(url).forward();
     }
 
     @Test
     public void refresh() throws Exception {
-        $().goTo(url).refresh();
+        $selenium().goTo(url).refresh();
     }
 
     @Test
