@@ -14,16 +14,12 @@
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
-import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ScreenOrientation;
 
 public class AppiumInitTest implements IWrapper {
-    @After
-    public void tearDown() throws Exception {
-        context().tearDownContexts();
-    }
+
 
     @Test
     public void androidChromeTest() throws Exception {

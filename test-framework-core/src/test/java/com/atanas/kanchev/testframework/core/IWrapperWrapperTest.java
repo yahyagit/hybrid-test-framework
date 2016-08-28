@@ -14,7 +14,6 @@
 package com.atanas.kanchev.testframework.core;
 
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -41,10 +40,7 @@ public class IWrapperWrapperTest {
 
         }
 
-        @After
-        public void tearDown() throws Exception {
-            context().tearDownContexts();
-        }
+
 
         @Test
         public void setupBrowserTest() throws Exception {

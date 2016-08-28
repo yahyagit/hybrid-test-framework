@@ -14,7 +14,6 @@
 package com.atanas.kanchev.testframework.selenium.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import org.openqa.selenium.*;
@@ -29,12 +28,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+
 /**
  * <p>Probes class.</p>
  *
  * @author Atanas Kanchev
  */
-public final class Probes<T extends WebDriver> implements IProbe, IProbeExpectedConditions, IContext<SeleniumContext> {
+public final class Probes<T extends WebDriver> implements IProbe, IProbeExpectedConditions {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(Probes.class);
@@ -65,7 +66,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
      */
     @Override public boolean exist() {
         try {
-            return context().getCurrentContext().getCurrentElement() != null;
+            return context().<SeleniumContext>getCurrentContext().getCurrentElement() != null;
         } catch (CustomExceptions.Common.NullReferenceException e) {
             return false;
         }
@@ -77,7 +78,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean hasAnyText() {
 
         boolean hasAnyText =
-            ! context().getCurrentContext().getCurrentElement().getText()
+            ! context().<SeleniumContext>getCurrentContext().getCurrentElement().getText()
                 .isEmpty();
         logger.debug("Has any text: " + hasAnyText);
         return hasAnyText;
@@ -91,7 +92,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         String... textElements) {
 
         String elText =
-            context().getCurrentContext().getCurrentElement().getText();
+            context().<SeleniumContext>getCurrentContext().getCurrentElement().getText();
 
         boolean matchFound = false;
 
@@ -147,7 +148,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean hasAttribute(String attributeName, String attributeText,
         boolean preciseMatch) {
 
-        String attrValue =  context().getCurrentContext().getCurrentElement()
+        String attrValue =  context().<SeleniumContext>getCurrentContext().getCurrentElement()
             .getAttribute(attributeName);
 
         if (attrValue == null) {
@@ -182,7 +183,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean isOfTagType(String tag) {
 
         String tagName =
-            context().getCurrentContext().getCurrentElement().getTagName();
+            context().<SeleniumContext>getCurrentContext().getCurrentElement().getTagName();
         logger.debug("Current element tag name: " + tagName);
 
         return tagName.equals(tag);
@@ -192,21 +193,21 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
      * {@inheritDoc}
      */
     @Override public boolean isEnabled() {
-        return context().getCurrentContext().getCurrentElement().isEnabled();
+        return context().<SeleniumContext>getCurrentContext().getCurrentElement().isEnabled();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override public boolean isSelected() {
-        return context().getCurrentContext().getCurrentElement().isSelected();
+        return context().<SeleniumContext>getCurrentContext().getCurrentElement().isSelected();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override public boolean isActive() {
-        return  context().getCurrentContext().getCurrentElement()
+        return  context().<SeleniumContext>getCurrentContext().getCurrentElement()
             .getAttribute("class").contains("active");
     }
 
@@ -214,7 +215,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
      * {@inheritDoc}
      */
     @Override public boolean isDisplayed() {
-        return context().getCurrentContext().getCurrentElement().isDisplayed();
+        return context().<SeleniumContext>getCurrentContext().getCurrentElement().isDisplayed();
     }
 
     /**
@@ -236,14 +237,14 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         switch (css) {
             case CSS_BACKGROUND_COLOUR:
                 Color backgroundColor = Color.fromString(
-                   context().getCurrentContext().getCurrentElement()
+                   context().<SeleniumContext>getCurrentContext().getCurrentElement()
                         .getCssValue(
                             CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.getDefinition()));
                 logger.debug("Actual color: " + backgroundColor.asHex());
                 return expColor.asHex().equals(backgroundColor.asHex());
             case CSS_TEXT_COLOUR:
                 Color textColor = Color.fromString(
-                    context().getCurrentContext().getCurrentElement()
+                    context().<SeleniumContext>getCurrentContext().getCurrentElement()
                         .getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.getDefinition()));
                 logger.debug("Actual color: " + textColor.asHex());
                 return expColor.asHex().equals(textColor.asHex());
@@ -257,11 +258,11 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
      */
     @Override public boolean hasPartialImagePath(String imagePath) {
         boolean contains = false;
-        if (!context().getCurrentContext().getCurrentElement().getTagName()
+        if (!context().<SeleniumContext>getCurrentContext().getCurrentElement().getTagName()
             .equals(CommonPageDefinitions.HTML.IMAGE.getDefinition())) {
             logger.error("hasImage : Current element is not image container");
         } else {
-            contains = context().getCurrentContext().getCurrentElement()
+            contains = context().<SeleniumContext>getCurrentContext().getCurrentElement()
                 .getAttribute("src").contains(imagePath);
         }
         return contains;
@@ -272,11 +273,11 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
      */
     @Override public boolean hasLinkToURL(String url) {
         boolean hasAnchorAndHref = false;
-        ((SeleniumContext<T>) context().getCurrentContext()).setWebElementsList(
-            ((SeleniumContext<T>) context().getCurrentContext()).getDriver()
+        ((SeleniumContext<T>) context().<SeleniumContext>getCurrentContext()).setWebElementsList(
+            ((SeleniumContext<T>) context().<SeleniumContext>getCurrentContext()).getDriver()
                 .findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
 
-        for (WebElement anchor : ((SeleniumContext<T>) context().getCurrentContext())
+        for (WebElement anchor : ((SeleniumContext<T>) context().<SeleniumContext>getCurrentContext())
             .getWebElementsList()) {
             if (anchor.getAttribute("href") != null && anchor.getAttribute("href").contains(url)) {
                 hasAnchorAndHref = true;
@@ -293,7 +294,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean followLinkToURL(String link) {
         boolean canFollow = false;
         if (hasLinkToURL(link)) {
-            ((SeleniumContext<T>) context().getCurrentContext()).getDriver().navigate()
+            ((SeleniumContext<T>) context().<SeleniumContext>getCurrentContext()).getDriver().navigate()
                 .to(link);
             canFollow = true;
         }
@@ -307,21 +308,21 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
 
         try {
 
-            if (((SeleniumContext<T>) context().getCurrentContext()).getDriver().manage()
+            if (((SeleniumContext<T>) context().<SeleniumContext>getCurrentContext()).getDriver().manage()
                 .getCookieNamed(cookieName).getValue().contains(cookieValue)) {
                 return true;
             }
         } catch (NullPointerException e) {
             logger.error("Cookie: " + cookieName + " does not exist");
             logger.debug("Cookie Names:");
-            for (Cookie cookie : ((SeleniumContext<T>) context().getCurrentContext())
+            for (Cookie cookie : ((SeleniumContext<T>) context().<SeleniumContext>getCurrentContext())
                 .getDriver().manage().getCookies()) {
                 logger.debug(cookie.getName());
             }
             return false;
         }
         logger.error("Cookie does not contain the value: " + cookieValue + ", actual value: "
-            + (((SeleniumContext<T>) context().getCurrentContext())).getDriver().manage()
+            + (((SeleniumContext<T>) context().<SeleniumContext>getCurrentContext())).getDriver().manage()
             .getCookieNamed(cookieName).getValue());
         return false;
 
@@ -330,7 +331,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean titleIs(String title) {
         logger.debug("Probing " + ExpectedConditions.titleIs(title).toString());
         return ExpectedConditions.titleIs(title)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -339,7 +340,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean titleContains(String title) {
         logger.debug("Probing " + ExpectedConditions.titleContains(title).toString());
         return ExpectedConditions.titleContains(title)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -348,7 +349,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean urlToBe(String url) {
         logger.debug("Probing " + ExpectedConditions.urlToBe(url).toString());
         return ExpectedConditions.urlToBe(url)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -357,7 +358,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean urlContains(String fraction) {
         logger.debug("Probing " + ExpectedConditions.urlContains(fraction).toString());
         return ExpectedConditions.urlContains(fraction)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -366,7 +367,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean urlMatches(String regex) {
         logger.debug("Probing " + ExpectedConditions.urlMatches(regex).toString());
         return ExpectedConditions.urlMatches(regex)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -374,9 +375,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
      */
     @Override public IProbeExpectedConditions presenceOfElementLocated(By locator) {
         logger.debug("Probing " + ExpectedConditions.presenceOfElementLocated(locator).toString());
-        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setCurrentElement(
             ExpectedConditions.presenceOfElementLocated(locator)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -386,9 +387,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public IProbeExpectedConditions visibilityOfElementLocated(By locator) {
         logger
             .debug("Probing " + ExpectedConditions.visibilityOfElementLocated(locator).toString());
-        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setCurrentElement(
             ExpectedConditions.visibilityOfElementLocated(locator)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -398,9 +399,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public IProbeExpectedConditions visibilityOfAllElementsLocatedBy(By locator) {
         logger.debug(
             "Probing " + ExpectedConditions.visibilityOfAllElementsLocatedBy(locator).toString());
-        ((SeleniumContext) context().getCurrentContext()).setWebElementsList(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setWebElementsList(
             ExpectedConditions.visibilityOfAllElementsLocatedBy(locator)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -409,9 +410,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
      */
     @Override public IProbeExpectedConditions visibilityOfAllElements(List<WebElement> elements) {
         logger.debug("Probing " + ExpectedConditions.visibilityOfAllElements(elements).toString());
-        ((SeleniumContext) context().getCurrentContext()).setWebElementsList(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setWebElementsList(
             ExpectedConditions.visibilityOfAllElements(elements)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -420,9 +421,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
      */
     @Override public IProbeExpectedConditions visibilityOf(WebElement element) {
         logger.debug("Probing " + ExpectedConditions.visibilityOf(element).toString());
-        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setCurrentElement(
             ExpectedConditions.visibilityOf(element)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -432,9 +433,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public IProbeExpectedConditions presenceOfAllElementsLocatedBy(By locator) {
         logger.debug(
             "Probing " + ExpectedConditions.presenceOfAllElementsLocatedBy(locator).toString());
-        ((SeleniumContext) context().getCurrentContext()).setWebElementsList(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setWebElementsList(
             ExpectedConditions.presenceOfAllElementsLocatedBy(locator)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -445,7 +446,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug(
             "Probing " + ExpectedConditions.textToBePresentInElement(element, text).toString());
         return ExpectedConditions.textToBePresentInElement(element, text)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -455,7 +456,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug("Probing " + ExpectedConditions.textToBePresentInElementLocated(locator, text)
             .toString());
         return ExpectedConditions.textToBePresentInElementLocated(locator, text)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -466,7 +467,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug("Probing " + ExpectedConditions.textToBePresentInElementValue(element, text)
             .toString());
         ExpectedConditions.textToBePresentInElementValue(element, text)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
         return this;
     }
 
@@ -477,7 +478,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug("Probing " + ExpectedConditions.textToBePresentInElementValue(locator, text)
             .toString());
         return ExpectedConditions.textToBePresentInElementValue(locator, text)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -487,7 +488,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug("Probing " + ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator)
             .toString());
         ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
         return this;
     }
 
@@ -498,7 +499,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug(
             "Probing " + ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator).toString());
         ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
         return this;
     }
 
@@ -509,7 +510,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug("Probing " + ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator)
             .toString());
         ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
         return this;
     }
 
@@ -521,7 +522,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug("Probing " + ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator)
             .toString());
         ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
         return this;
     }
 
@@ -532,7 +533,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug(
             "Probing " + ExpectedConditions.invisibilityOfElementLocated(locator).toString());
         return ExpectedConditions.invisibilityOfElementLocated(locator)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -542,7 +543,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug("Probing " + ExpectedConditions.invisibilityOfElementWithText(locator, text)
             .toString());
         return ExpectedConditions.invisibilityOfElementWithText(locator, text)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -550,9 +551,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
      */
     @Override public IProbeExpectedConditions elementToBeClickable(By locator) {
         logger.debug("Probing " + ExpectedConditions.elementToBeClickable(locator).toString());
-        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setCurrentElement(
             ExpectedConditions.elementToBeClickable(locator)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -561,9 +562,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
      */
     @Override public IProbeExpectedConditions elementToBeClickable(WebElement element) {
         logger.debug("Probing " + ExpectedConditions.elementToBeClickable(element).toString());
-        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setCurrentElement(
             ExpectedConditions.elementToBeClickable(element)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -573,7 +574,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean stalenessOf(WebElement element) {
         logger.debug("Probing " + ExpectedConditions.stalenessOf(element).toString());
         return ExpectedConditions.stalenessOf(element)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -582,7 +583,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public <U> IProbeExpectedConditions refreshed(ExpectedCondition<U> condition) {
         logger.debug("Probing " + ExpectedConditions.refreshed(condition).toString());
         ExpectedConditions.refreshed(condition)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
         return this;
     }
 
@@ -592,7 +593,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean elementToBeSelected(WebElement element) {
         logger.debug("Probing " + ExpectedConditions.elementToBeSelected(element).toString());
         return ExpectedConditions.elementToBeSelected(element)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -602,7 +603,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug("Probing " + ExpectedConditions.elementSelectionStateToBe(element, selected)
             .toString());
         return ExpectedConditions.elementSelectionStateToBe(element, selected)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -611,7 +612,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean elementToBeSelected(By locator) {
         logger.debug("Probing " + ExpectedConditions.elementToBeSelected(locator).toString());
         return ExpectedConditions.elementToBeSelected(locator)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -621,7 +622,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug("Probing " + ExpectedConditions.elementSelectionStateToBe(locator, selected)
             .toString());
         return ExpectedConditions.elementSelectionStateToBe(locator, selected)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -631,7 +632,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         //TODO
         logger.debug("Probing " + ExpectedConditions.alertIsPresent().toString());
         ExpectedConditions.alertIsPresent()
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
         return this;
     }
 
@@ -642,7 +643,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug("Probing " + ExpectedConditions.numberOfWindowsToBe(expectedNumberOfWindows)
             .toString());
         return ExpectedConditions.numberOfWindowsToBe(expectedNumberOfWindows)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -651,7 +652,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean not(ExpectedCondition<?> condition) {
         logger.debug("Probing " + ExpectedConditions.not(condition).toString());
         return ExpectedConditions.not(condition)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -661,7 +662,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug(
             "Probing " + ExpectedConditions.attributeToBe(locator, attribute, value).toString());
         return ExpectedConditions.attributeToBe(locator, attribute, value)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -670,7 +671,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean textToBe(By locator, String value) {
         logger.debug("Probing " + ExpectedConditions.textToBe(locator, value).toString());
         return ExpectedConditions.textToBe(locator, value)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -679,7 +680,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean textMatches(By locator, Pattern pattern) {
         logger.debug("Probing " + ExpectedConditions.textMatches(locator, pattern).toString());
         return ExpectedConditions.textMatches(locator, pattern)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -689,9 +690,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         Integer number) {
         logger.debug("Probing " + ExpectedConditions.numberOfElementsToBeMoreThan(locator, number)
             .toString());
-        ((SeleniumContext) context().getCurrentContext()).setWebElementsList(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setWebElementsList(
             ExpectedConditions.numberOfElementsToBeMoreThan(locator, number)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -702,9 +703,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         Integer number) {
         logger.debug("Probing " + ExpectedConditions.numberOfElementsToBeLessThan(locator, number)
             .toString());
-        ((SeleniumContext) context().getCurrentContext()).setWebElementsList(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setWebElementsList(
             ExpectedConditions.numberOfElementsToBeLessThan(locator, number)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -714,9 +715,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public IProbeExpectedConditions numberOfElementsToBe(By locator, Integer number) {
         logger.debug(
             "Probing " + ExpectedConditions.numberOfElementsToBe(locator, number).toString());
-        ((SeleniumContext) context().getCurrentContext()).setWebElementsList(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setWebElementsList(
             ExpectedConditions.numberOfElementsToBe(locator, number)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -727,7 +728,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug(
             "Probing " + ExpectedConditions.attributeToBe(element, attribute, value).toString());
         return ExpectedConditions.attributeToBe(element, attribute, value)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -737,7 +738,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug("Probing " + ExpectedConditions.attributeContains(element, attribute, value)
             .toString());
         return ExpectedConditions.attributeContains(element, attribute, value)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -747,7 +748,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug("Probing " + ExpectedConditions.attributeContains(locator, attribute, value)
             .toString());
         return ExpectedConditions.attributeContains(locator, attribute, value)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -757,7 +758,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug(
             "Probing " + ExpectedConditions.attributeToBeNotEmpty(element, attribute).toString());
         return ExpectedConditions.attributeToBeNotEmpty(element, attribute)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -767,9 +768,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         By sub_locator) {
         logger.debug("Probing " + ExpectedConditions
             .visibilityOfNestedElementsLocatedBy(locator, sub_locator).toString());
-        ((SeleniumContext) context().getCurrentContext()).setWebElementsList(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setWebElementsList(
             ExpectedConditions.visibilityOfNestedElementsLocatedBy(locator, sub_locator)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -780,9 +781,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         WebElement element, By sub_locator) {
         logger.debug("Probing " + ExpectedConditions
             .visibilityOfNestedElementsLocatedBy(element, sub_locator).toString());
-        ((SeleniumContext) context().getCurrentContext()).setWebElementsList(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setWebElementsList(
             ExpectedConditions.visibilityOfNestedElementsLocatedBy(element, sub_locator)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -794,9 +795,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug(
             "Probing " + ExpectedConditions.presenceOfNestedElementLocatedBy(locator, sub_locator)
                 .toString());
-        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setCurrentElement(
             ExpectedConditions.presenceOfNestedElementLocatedBy(locator, sub_locator)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -808,9 +809,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug(
             "Probing " + ExpectedConditions.presenceOfNestedElementLocatedBy(element, sub_locator)
                 .toString());
-        ((SeleniumContext) context().getCurrentContext()).setCurrentElement(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setCurrentElement(
             ExpectedConditions.presenceOfNestedElementLocatedBy(element, sub_locator)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -822,9 +823,9 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug(
             "Probing " + ExpectedConditions.presenceOfNestedElementsLocatedBy(locator, sub_locator)
                 .toString());
-        ((SeleniumContext) context().getCurrentContext()).setWebElementsList(
+        ((SeleniumContext) context().<SeleniumContext>getCurrentContext()).setWebElementsList(
             ExpectedConditions.presenceOfNestedElementsLocatedBy(locator, sub_locator)
-                .apply((T) context().getCurrentContext().getDriver()));
+                .apply((T) context().<SeleniumContext>getCurrentContext().getDriver()));
         return this;
     }
 
@@ -835,7 +836,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger
             .debug("Probing " + ExpectedConditions.invisibilityOfAllElements(elements).toString());
         return ExpectedConditions.invisibilityOfAllElements(elements)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -844,7 +845,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean or(ExpectedCondition<?>... conditions) {
         logger.debug("Probing " + ExpectedConditions.or(conditions).toString());
         return ExpectedConditions.or(conditions)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -853,7 +854,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public boolean and(ExpectedCondition<?>... conditions) {
         logger.debug("Probing " + ExpectedConditions.and(conditions).toString());
         return ExpectedConditions.and(conditions).
-            apply((T) context().getCurrentContext().getDriver());
+            apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -863,7 +864,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
         logger.debug(
             "Probing " + ExpectedConditions.javaScriptThrowsNoExceptions(javaScript).toString());
         return ExpectedConditions.javaScriptThrowsNoExceptions(javaScript)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
     /**
@@ -872,7 +873,7 @@ public final class Probes<T extends WebDriver> implements IProbe, IProbeExpected
     @Override public Object jsReturnsValue(String javaScript) {
         logger.debug("Probing " + ExpectedConditions.jsReturnsValue(javaScript).toString());
         return ExpectedConditions.jsReturnsValue(javaScript)
-            .apply((T) context().getCurrentContext().getDriver());
+            .apply((T) context().<SeleniumContext>getCurrentContext().getDriver());
     }
 
 }

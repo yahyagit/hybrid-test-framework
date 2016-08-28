@@ -14,7 +14,6 @@
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
-import org.junit.After;
 import org.junit.Before;
 
 public class ProbesTest implements IWrapper {
@@ -25,10 +24,6 @@ public class ProbesTest implements IWrapper {
                 .setBrowser("chrome");
     }
 
-    @After
-    public void tearDown() throws Exception {
-        context().tearDownContexts();
-    }
 
 //    @Test
 //    public void probeNotExistingElementTest() throws Exception {

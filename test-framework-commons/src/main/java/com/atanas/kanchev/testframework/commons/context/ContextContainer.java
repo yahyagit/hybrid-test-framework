@@ -11,18 +11,21 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.commons.wrappers;
+package com.atanas.kanchev.testframework.commons.context;
 
-import com.atanas.kanchev.testframework.commons.context.AbstractContext;
-import com.atanas.kanchev.testframework.commons.context.ContextFactory;
+/**
+ * @author Atanas Kanchev
+ */
+public interface ContextContainer {
 
+    <T extends AbstractContext> ContextContainer addContext(T context);
 
-public interface IContext<T extends AbstractContext> {
+    <T extends AbstractContext> ContextContainer removeContext(T context);
 
-    ContextFactory CONTEXT_FACTORY = new ContextFactory();
+    <T extends AbstractContext> T getCurrentContext();
 
-    default ContextFactory<T> context() {
-        return CONTEXT_FACTORY;
-    }
+    <T extends AbstractContext> ContextContainer tearDownContext(T context);
+
+    ContextContainer tearDownContexts();
+
 }
-

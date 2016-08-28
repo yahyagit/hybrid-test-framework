@@ -14,23 +14,16 @@
 package com.atanas.kanchev.testframework.appium.tests.android.browser_tests;
 
 import com.atanas.kanchev.testframework.appium.wrappers.IAppium;
-import com.atanas.kanchev.testframework.commons.wrappers.IContext;
-import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileBrowserType;
 import io.appium.java_client.remote.MobileCapabilityType;
-import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.ScreenOrientation;
 
-public class ChromeTest implements IContext<SeleniumContext>, IAppium, ISelenium {
-
-    @After public void tearDown() throws Exception {
-        context().tearDownContexts();
-    }
+public class ChromeTest implements IAppium, ISelenium {
 
     @Test public void androidChromeTest() throws Exception {
 

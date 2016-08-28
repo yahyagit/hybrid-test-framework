@@ -11,16 +11,21 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.demo.tests.selenium;
+package com.atanas.kanchev.testframework.selenium.init;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
-import org.junit.Test;
+import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 
-public class SeleniumTests implements IWrapper {
+/**
+ * @author Atanas Kanchev
+ */
+public class SeleniumInit {
+
+    private static final DriverFactory driverFactory = new DriverFactory();
 
 
-    @Test
-    public void setupBrowserTest() throws Exception {
-        goTo("https://www.google.co.uk");
+    public static DriverFactory getDriverFactory() {
+        return driverFactory;
     }
+
+
 }

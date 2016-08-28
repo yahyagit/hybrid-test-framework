@@ -13,11 +13,9 @@
 
 package com.atanas.kanchev.testframework.demo.tests.sikulix;
 
-import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.wrappers.ISelenium;
 import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
 import com.atanas.kanchev.testframework.sikuli.wrappers.ISikulix;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.sikuli.script.Key;
@@ -31,11 +29,6 @@ public class SikulixTest implements ISelenium, ISikulix {
 
     }
 
-    @After
-    public void tearDown() throws Exception {
-        context().tearDownContexts();
-
-    }
 
     @Test
     public void findImage() throws Exception {

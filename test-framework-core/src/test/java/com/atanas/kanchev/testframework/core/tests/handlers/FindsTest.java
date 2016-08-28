@@ -13,10 +13,8 @@
 
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
-import com.atanas.kanchev.testframework.selenium.handlers.Finds;
 import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
-
-import org.junit.After;
+import com.atanas.kanchev.testframework.selenium.handlers.Finds;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -42,11 +40,6 @@ public class FindsTest implements IWrapper {
 
         }
         setupSelenium().setBrowser("chrome");
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        context().tearDownContexts();
     }
 
     @Test

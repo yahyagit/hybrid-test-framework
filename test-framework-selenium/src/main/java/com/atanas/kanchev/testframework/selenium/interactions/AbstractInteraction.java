@@ -14,7 +14,6 @@
 package com.atanas.kanchev.testframework.selenium.interactions;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,10 +22,12 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
+import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+
 /**
  * @author Atanas Kanchev
  */
-public abstract class AbstractInteraction implements IContext<SeleniumContext<WebDriver>> {
+public abstract class AbstractInteraction {
 
     protected static final Marker executorMarker = MarkerFactory.getMarker("INTERACTIONS_EXECUTOR");
     protected final WebElement element;
@@ -34,7 +35,7 @@ public abstract class AbstractInteraction implements IContext<SeleniumContext<We
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected AbstractInteraction() {
-        this.element = context().getCurrentContext().getCurrentElement();
+        this.element = context().<SeleniumContext>getCurrentContext().getCurrentElement();
         if (this.element != null)
             logger.debug(executorMarker, String
                 .format("Executing command [%s] on element located by [%s",
@@ -42,7 +43,7 @@ public abstract class AbstractInteraction implements IContext<SeleniumContext<We
         else
             throw new CustomExceptions.Common.NullReferenceException(
                 "Unable to interact with null element");
-        this.driver = context().getCurrentContext().getDriver();
+        this.driver = context().<SeleniumContext<WebDriver>>getCurrentContext().getDriver();
         if (this.driver == null)
             throw new CustomExceptions.Common.NullReferenceException(
                 "Null driver in the current context");

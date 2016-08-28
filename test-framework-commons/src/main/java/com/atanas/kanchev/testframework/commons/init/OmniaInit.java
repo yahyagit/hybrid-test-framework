@@ -11,16 +11,21 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.demo.tests.selenium;
+package com.atanas.kanchev.testframework.commons.init;
 
-import com.atanas.kanchev.testframework.core.handlers.wrappers.IWrapper;
-import org.junit.Test;
+import com.atanas.kanchev.testframework.commons.context.ContextThreadLocalContainer;
 
-public class SeleniumTests implements IWrapper {
+/**
+ * @author Atanas Kanchev
+ */
+public class OmniaInit {
 
+    private static final ContextThreadLocalContainer contextThreadLocalContainer =
+        new ContextThreadLocalContainer();
 
-    @Test
-    public void setupBrowserTest() throws Exception {
-        goTo("https://www.google.co.uk");
+    public static ContextThreadLocalContainer context(){
+        return contextThreadLocalContainer;
     }
+
+
 }

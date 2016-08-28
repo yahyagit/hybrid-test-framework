@@ -13,21 +13,18 @@
 
 package com.atanas.kanchev.testframework.selenium.wrappers;
 
-import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.commons.wrappers.IContext;
-import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import com.atanas.kanchev.testframework.selenium.handlers.Finds;
 import com.atanas.kanchev.testframework.selenium.handlers.Navigates;
 import com.atanas.kanchev.testframework.selenium.handlers.Probes;
+import com.atanas.kanchev.testframework.selenium.init.SeleniumInit;
 import com.atanas.kanchev.testframework.selenium.interactions.element.OmniaElement;
 import com.atanas.kanchev.testframework.selenium.interactions.wait.Waiting;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public interface ISelenium
-    extends IFind, INavigate, IProbes, IWaits, IContext<SeleniumContext>, IElement {
+public interface ISelenium extends IFind, INavigate, IProbes, IWaits, IElement {
 
 
 }
@@ -63,18 +60,10 @@ interface IFind {
 }
 
 
-interface INavigate extends IContext<SeleniumContext> {
+interface INavigate {
 
     default DriverFactory setupSelenium() {
-
-        try {
-            context().getCurrentContext();
-        } catch (CustomExceptions.Common.NullReferenceException e) {
-            context().setCurrentContext(new SeleniumContext<>());
-            return context().getCurrentContext().getDriverFactory();
-        }
-
-        return null;
+        return SeleniumInit.getDriverFactory();
     }
 
     default Navigates goTo(final String url) {

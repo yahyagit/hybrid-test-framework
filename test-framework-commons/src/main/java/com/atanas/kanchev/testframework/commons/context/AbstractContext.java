@@ -17,8 +17,7 @@ import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
+import static java.lang.Thread.currentThread;
 
 /**
  * <p>AbstractContext class.</p>
@@ -44,8 +43,8 @@ public abstract class AbstractContext<T> {
      * @param contextName a {@link java.lang.String} object.
      */
     public AbstractContext(String contextName) {
-        this.contextName = contextName + new BigInteger(130, new SecureRandom()).toString(32);
-        logger.debug("Current context name: " + this.contextName);
+        this.contextName = contextName + currentThread().getId();
+        logger.debug("Creating context from type " + toString());
     }
 
     public T getDriver() {
@@ -86,4 +85,9 @@ public abstract class AbstractContext<T> {
 
     public abstract void tearDownContext(AbstractContext<T> context);
 
+    @Override public String toString() {
+        return "AbstractContext{" + "contextName='" + contextName + '\'' + ", isContextReusable="
+            + isContextReusable + ", driver=" + driver + ", contextReusable=" + isContextReusable()
+            + '}';
+    }
 }

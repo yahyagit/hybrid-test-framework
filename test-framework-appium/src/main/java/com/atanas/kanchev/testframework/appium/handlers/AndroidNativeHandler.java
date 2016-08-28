@@ -13,11 +13,8 @@
 
 package com.atanas.kanchev.testframework.appium.handlers;
 
-import com.atanas.kanchev.testframework.commons.wrappers.IContext;
-import io.appium.java_client.FindsByAccessibilityId;
-import io.appium.java_client.FindsByAndroidUIAutomator;
-import io.appium.java_client.MultiTouchAction;
-import io.appium.java_client.TouchAction;
+import com.atanas.kanchev.testframework.appium.context.AppiumContext;
+import io.appium.java_client.*;
 import io.appium.java_client.android.AndroidDeviceActionShortcuts;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -30,6 +27,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
 
 /**
  * <p>AndroidNativeHandler class.</p>
@@ -155,7 +154,7 @@ public class AndroidNativeHandler {
         return new HasNetworkConnection();
     }
 
-    public class StartsActivity implements io.appium.java_client.android.StartsActivity, IContext {
+    public class StartsActivity implements io.appium.java_client.android.StartsActivity {
 
         @Override
         public void startActivity(String appPackage, String appActivity, String appWaitPackage,
@@ -196,7 +195,7 @@ public class AndroidNativeHandler {
     }
 
 
-    public class PushesFiles implements io.appium.java_client.android.PushesFiles, IContext {
+    public class PushesFiles implements io.appium.java_client.android.PushesFiles {
 
         @Override public void pushFile(String remotePath, byte[] base64Data) {
             ((AndroidDriver) context().getCurrentContext().getDriver())
@@ -217,7 +216,7 @@ public class AndroidNativeHandler {
     }
 
 
-    public class ActionShortcuts implements AndroidDeviceActionShortcuts, IContext {
+    public class ActionShortcuts implements AndroidDeviceActionShortcuts {
 
         @Override public void pressKeyCode(int key) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).pressKeyCode(key);
@@ -247,7 +246,7 @@ public class AndroidNativeHandler {
     }
 
 
-    public class TouchShortcuts implements io.appium.java_client.TouchShortcuts, IContext {
+    public class TouchShortcuts implements io.appium.java_client.TouchShortcuts {
 
         @Override public void zoom(int x, int y) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).zoom(x, y);
@@ -282,8 +281,7 @@ public class AndroidNativeHandler {
     }
 
 
-    public class Finds
-        implements FindsByAccessibilityId, FindsByAndroidUIAutomator, SearchContext, IContext {
+    public class Finds implements FindsByAccessibilityId, FindsByAndroidUIAutomator, SearchContext {
 
         @Override public AndroidElement findElementByAccessibilityId(String using) {
             return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver())
@@ -330,7 +328,7 @@ public class AndroidNativeHandler {
     }
 
 
-    public class HasAppStrings implements io.appium.java_client.HasAppStrings, IContext {
+    public class HasAppStrings implements io.appium.java_client.HasAppStrings {
 
         @Override public Map<String, String> getAppStringMap() {
             return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver())
@@ -350,7 +348,7 @@ public class AndroidNativeHandler {
     }
 
 
-    public class InteractsWithApps implements io.appium.java_client.InteractsWithApps, IContext {
+    public class InteractsWithApps implements io.appium.java_client.InteractsWithApps {
 
         @Override public void launchApp() {
             ((AndroidDriver) context().getCurrentContext().getDriver()).launchApp();
@@ -383,7 +381,7 @@ public class AndroidNativeHandler {
     }
 
 
-    public class LocationContext implements org.openqa.selenium.html5.LocationContext, IContext {
+    public class LocationContext implements org.openqa.selenium.html5.LocationContext {
 
         @Override public Location location() {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).location();
@@ -395,7 +393,7 @@ public class AndroidNativeHandler {
     }
 
 
-    public class Rotatable implements org.openqa.selenium.Rotatable, IContext {
+    public class Rotatable implements org.openqa.selenium.Rotatable {
 
         @Override public void rotate(ScreenOrientation orientation) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).rotate(orientation);
@@ -416,24 +414,30 @@ public class AndroidNativeHandler {
     }
 
 
-    public class ContextAware implements org.openqa.selenium.ContextAware, IContext {
+    public class ContextAware implements org.openqa.selenium.ContextAware {
 
         @Override public WebDriver context(String name) {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).context(name);
+            return com.atanas.kanchev.testframework.commons.init.OmniaInit
+                .context().<AppiumContext<AppiumDriver>>getCurrentContext().getDriver()
+                .context(name);
         }
 
         @Override public Set<String> getContextHandles() {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).getContextHandles();
+            return com.atanas.kanchev.testframework.commons.init.OmniaInit
+                .context().<AppiumContext<AndroidDriver<AndroidElement>>>getCurrentContext()
+                .getDriver().getContextHandles();
         }
 
         @Override public String getContext() {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).getContext();
+            return com.atanas.kanchev.testframework.commons.init.OmniaInit
+                .context().<AppiumContext<AppiumDriver>>getCurrentContext().getDriver()
+                .getContext();
         }
     }
 
 
     public class HasNetworkConnection
-        implements io.appium.java_client.android.HasNetworkConnection, IContext {
+        implements io.appium.java_client.android.HasNetworkConnection {
 
         @Override public void setConnection(Connection connection) {
             ((AndroidDriver) context().getCurrentContext().getDriver()).setConnection(connection);
@@ -445,7 +449,7 @@ public class AndroidNativeHandler {
     }
 
 
-    public class AppiumDriverMethods implements IContext {
+    public class AppiumDriverMethods {
 
         public boolean isLocked() {
             return ((AndroidDriver) context().getCurrentContext().getDriver()).isLocked();
@@ -488,8 +492,7 @@ public class AndroidNativeHandler {
     }
 
 
-    public class PerformsTouchActions
-        implements io.appium.java_client.PerformsTouchActions, IContext {
+    public class PerformsTouchActions implements io.appium.java_client.PerformsTouchActions {
 
         @Override public TouchAction performTouchAction(TouchAction touchAction) {
             return ((AndroidDriver) context().getCurrentContext().getDriver())

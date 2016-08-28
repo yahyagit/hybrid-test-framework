@@ -15,7 +15,6 @@ package com.atanas.kanchev.testframework.selenium.context;
 
 import com.atanas.kanchev.testframework.commons.context.AbstractContext;
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -35,7 +34,6 @@ public class SeleniumContext<T extends WebDriver> extends AbstractContext<T> {
 
     // the logger
     private static final Logger logger = LoggerFactory.getLogger(SeleniumContext.class);
-    private final DriverFactory driverFactory = new DriverFactory();
     // Current WebElement pointer
     private WebElement currentElement;
     // Current WebElement pointer
@@ -158,15 +156,8 @@ public class SeleniumContext<T extends WebDriver> extends AbstractContext<T> {
 
     }
 
-    public DriverFactory getDriverFactory() {
-        return driverFactory;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override public String toString() {
-        return getClass().getSimpleName();
+        return "SeleniumContext{ " + super.toString() + " }";
     }
 
 }

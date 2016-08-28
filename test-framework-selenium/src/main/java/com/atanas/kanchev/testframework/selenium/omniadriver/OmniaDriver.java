@@ -13,7 +13,6 @@
 
 package com.atanas.kanchev.testframework.selenium.omniadriver;
 
-import com.atanas.kanchev.testframework.commons.wrappers.IContext;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -22,10 +21,12 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 import java.util.Set;
 
+import static com.atanas.kanchev.testframework.commons.init.OmniaInit.context;
+
 /**
  * Created by atanas on 22/08/16.
  */
-public final class OmniaDriver implements WebDriver, IContext<SeleniumContext<OmniaDriver>> {
+public final class OmniaDriver implements WebDriver {
 
     public final static OmniaDriver omniaDriver = new OmniaDriver();
 
@@ -33,15 +34,15 @@ public final class OmniaDriver implements WebDriver, IContext<SeleniumContext<Om
     }
 
     @Override public void get(String s) {
-        context().getCurrentContext().getDriver().get(s);
+        context().<SeleniumContext<OmniaDriver>>getCurrentContext().getDriver().get(s);
     }
 
     @Override public String getCurrentUrl() {
-        return context().getCurrentContext().getDriver().getCurrentUrl();
+        return context().<SeleniumContext<OmniaDriver>>getCurrentContext().getDriver().getCurrentUrl();
     }
 
     @Override public String getTitle() {
-        return context().getCurrentContext().getDriver().getTitle();
+        return context().<SeleniumContext<OmniaDriver>>getCurrentContext().getDriver().getTitle();
     }
 
     @Override public List<WebElement> findElements(By by) {
@@ -53,23 +54,23 @@ public final class OmniaDriver implements WebDriver, IContext<SeleniumContext<Om
     }
 
     @Override public String getPageSource() {
-        return context().getCurrentContext().getDriver().getPageSource();
+        return context().<SeleniumContext<OmniaDriver>>getCurrentContext().getDriver().getPageSource();
     }
 
     @Override public void close() {
-        context().getCurrentContext().getDriver().close();
+        context().<SeleniumContext<OmniaDriver>>getCurrentContext().getDriver().close();
     }
 
     @Override public void quit() {
-        context().getCurrentContext().getDriver().quit();
+        context().<SeleniumContext<OmniaDriver>>getCurrentContext().getDriver().quit();
     }
 
     @Override public Set<String> getWindowHandles() {
-        return context().getCurrentContext().getDriver().getWindowHandles();
+        return context().<SeleniumContext<OmniaDriver>>getCurrentContext().getDriver().getWindowHandles();
     }
 
     @Override public String getWindowHandle() {
-        return context().getCurrentContext().getDriver().getWindowHandle();
+        return context().<SeleniumContext<OmniaDriver>>getCurrentContext().getDriver().getWindowHandle();
     }
 
     @Override public TargetLocator switchTo() {

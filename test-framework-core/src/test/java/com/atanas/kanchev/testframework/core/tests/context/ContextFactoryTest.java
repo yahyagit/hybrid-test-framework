@@ -14,8 +14,6 @@
 package com.atanas.kanchev.testframework.core.tests.context;
 
 
-import com.atanas.kanchev.testframework.commons.context.ContextFactory;
-
 public class ContextFactoryTest /*extends ContextFactory*/ {
 
 //    @Caps

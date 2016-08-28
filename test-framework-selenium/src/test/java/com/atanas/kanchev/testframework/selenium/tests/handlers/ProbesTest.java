@@ -26,139 +26,121 @@ import org.openqa.selenium.By;
  */
 public class ProbesTest implements ISelenium {
 
-    @Before
-    public void setUp() throws Exception {
-        setupSelenium()
-                .setBrowser("chrome")
+    @Before public void setUp() throws Exception {
+//        setupSelenium().setBrowser("chrome")
            /* .setReuseBrowser(true)
         .setCustomCapabilities(DesiredCapabilities.android())*/;
     }
 
-    @After
-    public void tearDown() throws Exception {
-        context().tearDownContexts();
+    @After public void tearDown() throws Exception {
+        //        OmniaInit.context().tearDownContexts();
 
     }
 
-    @Test
-    public void exist() throws Exception {
-
+    @Test public void exist() throws Exception {
+        setupSelenium().setBrowser("chrome");
         goTo("https://www.google.co.uk");
-//        find().elementBy(By.name("btnK"));
-//        o().click();
-
         o(By.name("q")).click();
         o().sendKeys("hello");
-//        o().clear();
-        waitFor().hardWait(10000);
-        waitFor().titleIs("X");
-//        waitFor().titleContains("X");
-//        FluentWait<WebDriver> fait =new FluentWait<>((WebDriver)context().getCurrentContext().getDriver())
-//            .withTimeout(30, TimeUnit.SECONDS)
-//            .pollingEvery(1, TimeUnit.SECONDS)
-//            .ignoring(NoSuchElementException.class)
-//            .ignoring(NoSuchFrameException.class)
-//            .ignoring(StaleElementReferenceException.class)
-//            .ignoring(ElementNotVisibleException.class);
-//        fait.until(ExpectedConditions.titleIs("X"));
-//        waitFor().hardWait(10000);
+//        setupSelenium().setBrowser("firefox");
+        goTo("https://www.bbc.co.uk");
+        //        find().elementBy(By.name("btnK"));
+        //        o().click();
 
-//        Assert.assertTrue(new Probes(By.name("btnK")).exist());
+
+        //        o().clear();
+        //        waitFor().hardWait(10000);
+        //        waitFor().titleIs("X");
+        //        waitFor().titleContains("X");
+        //        FluentWait<WebDriver> fait =new FluentWait<>((WebDriver)context().getCurrentContext().getDriver())
+        //            .withTimeout(30, TimeUnit.SECONDS)
+        //            .pollingEvery(1, TimeUnit.SECONDS)
+        //            .ignoring(NoSuchElementException.class)
+        //            .ignoring(NoSuchFrameException.class)
+        //            .ignoring(StaleElementReferenceException.class)
+        //            .ignoring(ElementNotVisibleException.class);
+        //        fait.until(ExpectedConditions.titleIs("X"));
+        //        waitFor().hardWait(10000);
+
+        //        Assert.assertTrue(new Probes(By.name("btnK")).exist());
 
     }
 
-    @Test
-    public void hasAnyText() throws Exception {
+    @Test public void hasAnyText() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.className("gb_P")).hasAnyText());
     }
 
-    @Test
-    public void hasText() throws Exception {
+    @Test public void hasText() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.className("gb_P")).hasText(true, true, "Gmail"));
     }
 
-    @Test
-    public void hasAttribute() throws Exception {
+    @Test public void hasAttribute() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).hasAttribute("type", "submit", false));
     }
 
-    @Test
-    public void isOfTagType() throws Exception {
+    @Test public void isOfTagType() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).isOfTagType("input"));
     }
 
-    @Test
-    public void isEnabled() throws Exception {
+    @Test public void isEnabled() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).isEnabled());
     }
 
-    @Test
-    public void isSelected() throws Exception {
+    @Test public void isSelected() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertFalse(new Probes(By.name("btnK")).isSelected());
     }
 
-    @Test
-    public void isActive() throws Exception {
+    @Test public void isActive() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).isActive());
     }
 
-    @Test
-    public void isDisplayed() throws Exception {
+    @Test public void isDisplayed() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).isDisplayed());
     }
 
-    @Test
-    public void hasColour() throws Exception {
+    @Test public void hasColour() throws Exception {
 
     }
 
-    @Test
-    public void hasURL() throws Exception {
+    @Test public void hasURL() throws Exception {
         goTo("https://www.google.co.uk");
-//        Assert.assertTrue(
-//            new Probes(By.className("gb_P")).hasURL("google.co", false));
+        //        Assert.assertTrue(
+        //            new Probes(By.className("gb_P")).hasURL("google.co", false));
     }
 
-    @Test
-    public void hasTitle() throws Exception {
-
-    }
-
-    @Test
-    public void hasPartialImagePath() throws Exception {
+    @Test public void hasTitle() throws Exception {
 
     }
 
-    @Test
-    public void hasLinkToURL() throws Exception {
+    @Test public void hasPartialImagePath() throws Exception {
 
     }
 
-    @Test
-    public void followLinkToURL() throws Exception {
+    @Test public void hasLinkToURL() throws Exception {
 
     }
 
-    @Test
-    public void titleHasText() throws Exception {
+    @Test public void followLinkToURL() throws Exception {
 
     }
 
-    @Test
-    public void hasPartialCookieValue() throws Exception {
+    @Test public void titleHasText() throws Exception {
 
     }
 
-    @Test
-    public void titleIs() throws Exception {
+    @Test public void hasPartialCookieValue() throws Exception {
+
+    }
+
+    @Test public void titleIs() throws Exception {
         goTo("https://www.google.co.uk");
         Assert.assertTrue(new Probes(By.name("btnK")).titleContains("Google"));
     }
