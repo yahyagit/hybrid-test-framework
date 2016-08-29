@@ -13,7 +13,7 @@
 
 package com.atanas.kanchev.testframework.demo.tests.sikulix;
 
-import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
+import com.atanas.kanchev.testframework.sikuli.handlers.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import org.sikuli.script.Key;
@@ -26,10 +26,10 @@ public class SikulixTest {
 
     @Before public void setUp() throws Exception {
 
+        $selenium().driverSetup().setReuseBrowser(true);
         $selenium().goTo("https://www.google.co.uk");
 
     }
-
 
     @Test public void findImage() throws Exception {
 
@@ -45,11 +45,11 @@ public class SikulixTest {
 
     @Test public void click1() throws Exception {
 
-        $sikuli().sikulix("search-field.png").click(SikuliXFactory.Directions.ABOVE, 1);
-        $sikuli().sikulix("search-field.png").click(SikuliXFactory.Directions.BELOW, 333);
-        $sikuli().sikulix("search-field.png").click(SikuliXFactory.Directions.CENTER, 0);
-        $sikuli().sikulix("search-field.png").click(SikuliXFactory.Directions.LEFT, 2);
-        $sikuli().sikulix("search-field.png").click(SikuliXFactory.Directions.RIGHT, 999);
+        $sikuli().sikulix("search-field.png").click(Direction.ABOVE, 1);
+        $sikuli().sikulix("search-field.png").click(Direction.BELOW, 333);
+        $sikuli().sikulix("search-field.png").click(Direction.CENTER, 0);
+        $sikuli().sikulix("search-field.png").click(Direction.LEFT, 2);
+        $sikuli().sikulix("search-field.png").click(Direction.RIGHT, 999);
 
     }
 
@@ -61,26 +61,21 @@ public class SikulixTest {
 
     @Test public void doubleClick1() throws Exception {
 
-        $sikuli().sikulix("search-field.png").doubleClick(SikuliXFactory.Directions.ABOVE, 1);
-        $sikuli().sikulix("search-field.png").doubleClick(SikuliXFactory.Directions.BELOW, 333);
-        $sikuli().sikulix("search-field.png").doubleClick(SikuliXFactory.Directions.CENTER, 0);
-        $sikuli().sikulix("search-field.png").doubleClick(SikuliXFactory.Directions.LEFT, 2);
-        $sikuli().sikulix("search-field.png").doubleClick(SikuliXFactory.Directions.RIGHT, 999);
+        $sikuli().sikulix("search-field.png").doubleClick(Direction.ABOVE, 1);
+        $sikuli().sikulix("search-field.png").doubleClick(Direction.BELOW, 333);
+        $sikuli().sikulix("search-field.png").doubleClick(Direction.CENTER, 0);
+        $sikuli().sikulix("search-field.png").doubleClick(Direction.LEFT, 2);
+        $sikuli().sikulix("search-field.png").doubleClick(Direction.RIGHT, 999);
 
     }
 
     @Test public void captureImage() throws Exception {
 
-        $sikuli().sikulix("search-field.png")
-            .captureImage("image1", 101, SikuliXFactory.Directions.ABOVE);
-        $sikuli().sikulix("search-field.png")
-            .captureImage("image2", 999, SikuliXFactory.Directions.BELOW);
-        $sikuli().sikulix("search-field.png")
-            .captureImage("image3", 0, SikuliXFactory.Directions.CENTER);
-        $sikuli().sikulix("search-field.png")
-            .captureImage("image4", 22, SikuliXFactory.Directions.LEFT);
-        $sikuli().sikulix("search-field.png")
-            .captureImage("image5", 1, SikuliXFactory.Directions.RIGHT);
+        $sikuli().sikulix("search-field.png").captureImage("image1", 101, Direction.ABOVE);
+        $sikuli().sikulix("search-field.png").captureImage("image2", 999, Direction.BELOW);
+        $sikuli().sikulix("search-field.png").captureImage("image3", 0, Direction.CENTER);
+        $sikuli().sikulix("search-field.png").captureImage("image4", 22, Direction.LEFT);
+        $sikuli().sikulix("search-field.png").captureImage("image5", 1, Direction.RIGHT);
 
     }
 
@@ -92,8 +87,7 @@ public class SikulixTest {
 
     @Test public void type1() throws Exception {
 
-        $sikuli().sikulix().findImage("search-field.png")
-            .type("text", 5, SikuliXFactory.Directions.RIGHT);
+        $sikuli().sikulix().findImage("search-field.png").type("text", 5, Direction.RIGHT);
     }
 
     @Test public void swipeBetweenImages() throws Exception {
@@ -105,8 +99,7 @@ public class SikulixTest {
     @Test public void findImageByScrolling() throws Exception {
 
         $selenium().goTo("https://www.rightmove.co.uk");
-        $sikuli().sikulix()
-            .findImageByScrolling("rm-select.png", 15, SikuliXFactory.Directions.BELOW);
+        $sikuli().sikulix().findImageByScrolling("rm-select.png", 15, Direction.BELOW);
 
     }
 

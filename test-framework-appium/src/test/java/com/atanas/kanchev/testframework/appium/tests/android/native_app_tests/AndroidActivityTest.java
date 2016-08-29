@@ -32,6 +32,7 @@ public class AndroidActivityTest extends BaseTest {
             ".accessibility.AccessibilityNodeProviderActivity");
         assertEquals($appium().android().appiumDriverMethods().currentActivity(),
             ".accessibility.AccessibilityNodeProviderActivity");
+        $appium().android().interactsWithApps().closeApp();
     }
 
     @Test public void startActivityWithWaitingAppTestCase() {

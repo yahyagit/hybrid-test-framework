@@ -13,6 +13,7 @@
 
 package com.atanas.kanchev.testframework.selenium.handlers;
 
+import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import com.atanas.kanchev.testframework.selenium.omniadriver.Navigation;
@@ -38,11 +39,15 @@ public class Navigates/* implements *//*INavigates,*//* IContext<SeleniumContext
 
     public Navigates() {
 
-        SeleniumContext<WebDriver> context = new SeleniumContext<>(new DriverFactory().getDriver());
-        context().addContext(context);
+        try {
+            context().getCurrentContext();
+        } catch (CustomExceptions.Common.NullReferenceException e) {
+            SeleniumContext<WebDriver> context =
+                new SeleniumContext<>(new DriverFactory().getDriver());
+            context().addContext(context);
+        }
+
     }
-
-
 
     /**
      * {@inheritDoc}

@@ -15,6 +15,9 @@ package com.atanas.kanchev.testframework.appium.accessors;
 
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDriverFactory;
 import com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler;
+import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
+
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
 /**
  * @author Atanas Kanchev
@@ -39,6 +42,13 @@ public class AppiumAccessorsSingleton {
     }
 
     public AndroidNativeHandler android() {
+
+        try {
+            context().getCurrentContext();
+        } catch (CustomExceptions.Common.NullReferenceException exception) {
+            init().getAndroidDriver();
+        }
+
         return new AndroidNativeHandler();
     }
 

@@ -33,7 +33,6 @@ public class ChromeTest {
         $appium().init().startServer();
 
         $appium().init()
-
             .setCap(MobileCapabilityType.BROWSER_NAME, MobileBrowserType.CHROME)
             .setCap(MobileCapabilityType.PLATFORM, Platform.ANDROID)
             .setCap(MobileCapabilityType.DEVICE_NAME, "ZY22398GL7")

@@ -13,6 +13,7 @@
 
 package com.atanas.kanchev.testframework.sikuli.tests;
 
+import com.atanas.kanchev.testframework.sikuli.handlers.Direction;
 import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.junit.After;
@@ -24,8 +25,8 @@ import org.sikuli.script.Key;
 
 public class SikuliXFactoryTest {
 
+    private WebDriver driver;
     private SikuliXFactory sikuliXFactory = new SikuliXFactory();
-    WebDriver driver;
 
     @Before public void setUp() throws Exception {
 
@@ -52,11 +53,11 @@ public class SikuliXFactoryTest {
 
     @Test public void click1() throws Exception {
         sikuliXFactory.findImage("search-button.png");
-        sikuliXFactory.click(SikuliXFactory.Directions.ABOVE, 1);
-        sikuliXFactory.click(SikuliXFactory.Directions.BELOW, 333);
-        sikuliXFactory.click(SikuliXFactory.Directions.CENTER, 0);
-        sikuliXFactory.click(SikuliXFactory.Directions.LEFT, 2);
-        sikuliXFactory.click(SikuliXFactory.Directions.RIGHT, 999);
+        sikuliXFactory.click(Direction.ABOVE, 1);
+        sikuliXFactory.click(Direction.BELOW, 333);
+        sikuliXFactory.click(Direction.CENTER, 0);
+        sikuliXFactory.click(Direction.LEFT, 2);
+        sikuliXFactory.click(Direction.RIGHT, 999);
 
     }
 
@@ -69,21 +70,21 @@ public class SikuliXFactoryTest {
     @Test public void doubleClick1() throws Exception {
 
         sikuliXFactory.findImage("search-button.png");
-        sikuliXFactory.doubleClick(SikuliXFactory.Directions.ABOVE, 1);
-        sikuliXFactory.doubleClick(SikuliXFactory.Directions.BELOW, 333);
-        sikuliXFactory.doubleClick(SikuliXFactory.Directions.CENTER, 0);
-        sikuliXFactory.doubleClick(SikuliXFactory.Directions.LEFT, 2);
-        sikuliXFactory.doubleClick(SikuliXFactory.Directions.RIGHT, 999);
+        sikuliXFactory.doubleClick(Direction.ABOVE, 1);
+        sikuliXFactory.doubleClick(Direction.BELOW, 333);
+        sikuliXFactory.doubleClick(Direction.CENTER, 0);
+        sikuliXFactory.doubleClick(Direction.LEFT, 2);
+        sikuliXFactory.doubleClick(Direction.RIGHT, 999);
 
     }
 
     @Test public void captureImage() throws Exception {
 
-        sikuliXFactory.captureImage("image1", 101, SikuliXFactory.Directions.ABOVE);
-        sikuliXFactory.captureImage("image2", 999, SikuliXFactory.Directions.BELOW);
-        sikuliXFactory.captureImage("image3", 0, SikuliXFactory.Directions.CENTER);
-        sikuliXFactory.captureImage("image4", 22, SikuliXFactory.Directions.LEFT);
-        sikuliXFactory.captureImage("image5", 1, SikuliXFactory.Directions.RIGHT);
+        sikuliXFactory.captureImage("image1", 101, Direction.ABOVE);
+        sikuliXFactory.captureImage("image2", 999, Direction.BELOW);
+        sikuliXFactory.captureImage("image3", 0, Direction.CENTER);
+        sikuliXFactory.captureImage("image4", 22, Direction.LEFT);
+        sikuliXFactory.captureImage("image5", 1, Direction.RIGHT);
 
     }
 
@@ -95,8 +96,7 @@ public class SikuliXFactoryTest {
 
     @Test public void type1() throws Exception {
 
-        sikuliXFactory.findImage("search-field.png")
-            .type("text", 5, SikuliXFactory.Directions.RIGHT);
+        sikuliXFactory.findImage("search-field.png").type("text", 5, Direction.RIGHT);
     }
 
     @Test public void swipeBetweenImages() throws Exception {
@@ -108,7 +108,7 @@ public class SikuliXFactoryTest {
     @Test public void findImageByScrolling() throws Exception {
 
         driver.get("https://www.rightmove.co.uk");
-        sikuliXFactory.findImageByScrolling("rm-select.png", 15, SikuliXFactory.Directions.BELOW);
+        sikuliXFactory.findImageByScrolling("rm-select.png", 15, Direction.BELOW);
 
     }
 

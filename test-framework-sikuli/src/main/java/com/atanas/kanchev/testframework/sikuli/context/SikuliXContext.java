@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SikuliXContext extends SeleniumContext {
 
-    private static final Logger logger = LoggerFactory.getLogger(SikuliXContext.class);
+    private static final Logger logger = LoggerFactory.getLogger(SikuliXContext.class.getName());
 
     //holds the result of the getImageFilePath operation
     private Match match;
@@ -72,10 +72,7 @@ public class SikuliXContext extends SeleniumContext {
         logger.warn(toString() + ":  nothing to tear down");
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override public String toString() {
-        return getClass().getSimpleName();
+        return "SikuliXContext{" + "match=" + match + "} ";
     }
 }

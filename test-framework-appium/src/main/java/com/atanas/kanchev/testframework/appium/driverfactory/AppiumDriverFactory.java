@@ -74,7 +74,7 @@ public class AppiumDriverFactory extends AppiumLocalServiceBuilder {
         AndroidDriver<AndroidElement> driver = null;
         try {
             context().getCurrentContext();
-        } catch (CustomExceptions.Common.NullArgumentException e) {
+        } catch (CustomExceptions.Common.NullReferenceException e) {
             driver = new AndroidDriver<>(service, this.caps);
             AppiumContext<AndroidDriver> context = new AppiumContext<>(driver);
             context().addContext(context);
