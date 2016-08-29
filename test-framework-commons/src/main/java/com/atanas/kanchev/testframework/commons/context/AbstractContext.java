@@ -19,11 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import static java.lang.Thread.currentThread;
 
-/**
- * <p>AbstractContext class.</p>
- *
- * @author Atanas Kanchev
- */
 public abstract class AbstractContext<T> {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractContext.class);
@@ -31,11 +26,6 @@ public abstract class AbstractContext<T> {
     private boolean isContextReusable;
     private T driver;
 
-    /**
-     * <p>Constructor for AbstractContext.</p>
-     *
-     * @param contextName a {@link java.lang.String} object.
-     */
     public AbstractContext(String contextName) {
         this.contextName = contextName + currentThread().getId();
         logger.debug("Creating " + toString());
@@ -77,7 +67,7 @@ public abstract class AbstractContext<T> {
         isContextReusable = contextReusable;
     }
 
-    public abstract void tearDownContext(AbstractContext<T> context);
+    public abstract void tearDownContext();
 
     @Override public String toString() {
         return "contextName='" + contextName + '\'' + ", isContextReusable=" + isContextReusable

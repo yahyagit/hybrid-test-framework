@@ -16,9 +16,9 @@ package com.atanas.kanchev.testframework.commons.context;
 /**
  * @author Atanas Kanchev
  */
-public class ContextKey<T> {
+public final class ContextKey<T> {
 
-    final String contextIdentifier;
+    private final String contextIdentifier;
     final Class<T> contextType;
 
     public ContextKey(String contextIdentifier, Class<T> contextType) {

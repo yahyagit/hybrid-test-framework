@@ -23,12 +23,11 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Atanas Kanchev
  */
-public final class ConcurrentContextContainer implements ContextContainer {
+public final class ConcurrentContextContainer implements IContextContainer {
 
     private static final Logger logger = LoggerFactory.getLogger(ConcurrentContextContainer.class);
-
-    public static final Map<String, AbstractContext> CONTEXT_MAP = new ConcurrentHashMap<>(4);
-    private String currentContextName;
+    private static final Map<ContextKey<?>, Object> typesafeHeterogeneousContextContainer =
+        new ConcurrentHashMap<>(5);
 
     public ConcurrentContextContainer() {
         Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -38,67 +37,65 @@ public final class ConcurrentContextContainer implements ContextContainer {
         });
     }
 
-    @Override public <T extends AbstractContext> ContextContainer addContext(T context) {
+    @Override
+    public <T extends AbstractContext> ContextKey<T> addContext(ContextKey<T> key, T context) {
 
-        if (context == null)
-            throw new CustomExceptions.Common.NullArgumentException("Null method argument context");
-
-        if (CONTEXT_MAP.containsKey(context.getContextName())) {
-            context.setContextName(context.getContextName() + CONTEXT_MAP.size());
-            logger.warn("Duplicated key, renaming to " + context.getContextName());
-        }
-
+        if (key == null || context == null)
+            throw new CustomExceptions.Common.NullArgumentException("Null method argument");
         logger.debug("Adding " + context.toString());
-        this.currentContextName = context.getContextName();
-        CONTEXT_MAP.put(context.getContextName(), context);
+        typesafeHeterogeneousContextContainer.put(key, context);
 
-        return this;
+        return key;
     }
 
-    @Override public <T extends AbstractContext> ContextContainer removeContext(T context) {
+    @Override public <T extends AbstractContext> T getContext(ContextKey<T> key) {
 
-        if (context == null)
-            throw new CustomExceptions.Common.NullArgumentException("Null method argument context");
+        if (key == null)
+            throw new CustomExceptions.Common.NullArgumentException("Null method argument");
 
-        if (CONTEXT_MAP.containsValue(context)) {
-            CONTEXT_MAP.remove(context.getContextName());
-            logger.debug(
-                "Removing " + context.toString() + " from ConcurrentContextContainer.CONTEXT_MAP");
+        return key.contextType.cast(typesafeHeterogeneousContextContainer.get(key));
+    }
+
+    @Override
+    public <T extends AbstractContext> IContextContainer removeContext(ContextKey<T> key) {
+
+        if (key == null)
+            throw new CustomExceptions.Common.NullArgumentException("Null method argument");
+
+        if (typesafeHeterogeneousContextContainer.containsKey(key)) {
+            typesafeHeterogeneousContextContainer.remove(key);
+            logger.debug("Removing " + key.toString() + " from map");
         } else {
-            throw new RuntimeException(
-                "ConcurrentContextContainer.CONTEXT_MAP doesn't contain a key " + context
-                    .toString());
+            throw new RuntimeException("The map doesn't contain a key " + key.toString());
         }
 
         return this;
     }
 
-    @Override public <T extends AbstractContext> T getCurrentContext() {
+    @Override public <T extends AbstractContext> T switchContext(ContextKey<T> key) {
 
-        if (currentContextName == null) {
-            logger.error("The current context is null");
-            throw new CustomExceptions.Common.NullReferenceException("The current context is null");
-        } else
-            return (T) CONTEXT_MAP.get(currentContextName);
+        if (key == null)
+            throw new CustomExceptions.Common.NullArgumentException("Null method argument");
+
+        return getContext(key);
+
     }
 
-    @Override public <T extends AbstractContext> ContextContainer tearDownContext(T context) {
+    @Override
+    public <T extends AbstractContext> IContextContainer tearDownContext(ContextKey<T> key) {
 
-        logger.debug("Tearing down context " + context.toString());
-        context.tearDownContext(context);
-        removeContext(context);
-        if (currentContextName != null && currentContextName.equals(context.getContextName()))
-            currentContextName = null;
+        getContext(key).tearDownContext();
+        removeContext(key);
 
         return this;
     }
 
-    @Override public ContextContainer tearDownContexts() {
+    @Override public IContextContainer tearDownContexts() {
 
-        logger.debug("Tearing down " + CONTEXT_MAP.size() + " contexts");
-        for (Map.Entry<String, AbstractContext> context : CONTEXT_MAP.entrySet()) {
-            logger.debug("Tearing down context of type " + context.toString());
-            tearDownContext(context.getValue());
+        logger.debug("Tearing down " + typesafeHeterogeneousContextContainer.size() + " contexts");
+        for (Map.Entry<ContextKey<?>, Object> context : typesafeHeterogeneousContextContainer
+            .entrySet()) {
+            ((AbstractContext) context).tearDownContext();
         }
 
         return this;

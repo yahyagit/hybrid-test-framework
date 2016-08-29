@@ -16,16 +16,18 @@ package com.atanas.kanchev.testframework.commons.context;
 /**
  * @author Atanas Kanchev
  */
-public interface ContextContainer {
+public interface IContextContainer {
 
-    <T extends AbstractContext> ContextContainer addContext(T context);
+    <T extends AbstractContext> ContextKey<T> addContext(ContextKey<T> key, T context);
 
-    <T extends AbstractContext> ContextContainer removeContext(T context);
+    <T extends AbstractContext> T getContext(ContextKey<T> key);
 
-    <T extends AbstractContext> T getCurrentContext();
+    <T extends AbstractContext> IContextContainer removeContext(ContextKey<T> key);
 
-    <T extends AbstractContext> ContextContainer tearDownContext(T context);
+    <T extends AbstractContext> T switchContext(ContextKey<T> key);
 
-    ContextContainer tearDownContexts();
+    <T extends AbstractContext> IContextContainer tearDownContext(ContextKey<T> key);
+
+    IContextContainer tearDownContexts();
 
 }
