@@ -22,7 +22,7 @@ public class ProbesTest {
 
     @Before
     public void setUp() throws Exception {
-        $selenium().driverSetup()
+        $selenium().conf()
                 .setBrowser("chrome");
     }
 

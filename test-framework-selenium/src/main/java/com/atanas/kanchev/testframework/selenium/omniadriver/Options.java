@@ -13,7 +13,6 @@
 
 package com.atanas.kanchev.testframework.selenium.omniadriver;
 
-import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.Logs;
@@ -21,6 +20,7 @@ import org.openqa.selenium.logging.Logs;
 import java.util.Set;
 
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 /**
  * Created by atanas on 22/08/16.
@@ -28,27 +28,27 @@ import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccesso
 public class Options<T extends WebDriver> implements WebDriver.Options {
 
     @Override public void addCookie(Cookie cookie) {
-        context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().addCookie(cookie);
+        context().getContext(currentContextKey).getDriver().manage().addCookie(cookie);
     }
 
     @Override public void deleteCookieNamed(String s) {
-        context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().deleteCookieNamed(s);
+        context().getContext(currentContextKey).getDriver().manage().deleteCookieNamed(s);
     }
 
     @Override public void deleteCookie(Cookie cookie) {
-        context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().deleteCookie(cookie);
+        context().getContext(currentContextKey).getDriver().manage().deleteCookie(cookie);
     }
 
     @Override public void deleteAllCookies() {
-        context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().deleteAllCookies();
+        context().getContext(currentContextKey).getDriver().manage().deleteAllCookies();
     }
 
     @Override public Set<Cookie> getCookies() {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().getCookies();
+        return context().getContext(currentContextKey).getDriver().manage().getCookies();
     }
 
     @Override public Cookie getCookieNamed(String s) {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().manage()
+        return context().getContext(currentContextKey).getDriver().manage()
             .getCookieNamed(s);
     }
 

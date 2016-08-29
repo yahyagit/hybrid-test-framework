@@ -14,7 +14,6 @@
 package com.atanas.kanchev.testframework.selenium.interactions;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
-import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -23,6 +22,7 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 /**
  * @author Atanas Kanchev
@@ -35,7 +35,7 @@ public abstract class AbstractInteraction {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected AbstractInteraction() {
-        this.element = context().<SeleniumContext>getCurrentContext().getCurrentElement();
+        this.element = context().getContext(currentContextKey).getCurrentElement();
         if (this.element != null)
             logger.debug(executorMarker, String
                 .format("Executing command [%s] on element located by [%s",
@@ -43,7 +43,7 @@ public abstract class AbstractInteraction {
         else
             throw new CustomExceptions.Common.NullReferenceException(
                 "Unable to interact with null element");
-        this.driver = context().<SeleniumContext<WebDriver>>getCurrentContext().getDriver();
+        this.driver = context().getContext(currentContextKey).getDriver();
         if (this.driver == null)
             throw new CustomExceptions.Common.NullReferenceException(
                 "Null driver in the current context");

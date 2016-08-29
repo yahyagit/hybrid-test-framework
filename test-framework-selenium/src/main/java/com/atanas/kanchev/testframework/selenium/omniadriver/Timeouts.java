@@ -13,12 +13,12 @@
 
 package com.atanas.kanchev.testframework.selenium.omniadriver;
 
-import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
 
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 /**
  * Created by atanas on 22/08/16.
@@ -26,17 +26,17 @@ import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccesso
 public class Timeouts<T extends WebDriver> implements WebDriver.Timeouts {
 
     @Override public WebDriver.Timeouts implicitlyWait(long l, TimeUnit timeUnit) {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().timeouts()
+        return context().getContext(currentContextKey).getDriver().manage().timeouts()
             .implicitlyWait(l, timeUnit);
     }
 
     @Override public WebDriver.Timeouts setScriptTimeout(long l, TimeUnit timeUnit) {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().timeouts()
+        return context().getContext(currentContextKey).getDriver().manage().timeouts()
             .setScriptTimeout(l, timeUnit);
     }
 
     @Override public WebDriver.Timeouts pageLoadTimeout(long l, TimeUnit timeUnit) {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().timeouts()
+        return context().getContext(currentContextKey).getDriver().manage().timeouts()
             .pageLoadTimeout(l, timeUnit);
     }
 }

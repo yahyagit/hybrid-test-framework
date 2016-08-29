@@ -13,8 +13,6 @@
 
 package com.atanas.kanchev.testframework.appium.driverfactory;
 
-import com.atanas.kanchev.testframework.appium.context.AppiumContext;
-import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
@@ -22,8 +20,6 @@ import io.appium.java_client.ios.IOSElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.URL;
-
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
 /**
  * <p>AppiumDriverFactory class.</p>
@@ -70,16 +66,7 @@ public class AppiumDriverFactory extends AppiumLocalServiceBuilder {
      * @return a {@link io.appium.java_client.android.AndroidDriver} object.
      */
     public AndroidDriver<AndroidElement> getAndroidDriver() {
-
-        AndroidDriver<AndroidElement> driver = null;
-        try {
-            context().getCurrentContext();
-        } catch (CustomExceptions.Common.NullReferenceException e) {
-            driver = new AndroidDriver<>(service, this.caps);
-            AppiumContext<AndroidDriver> context = new AppiumContext<>(driver);
-            context().addContext(context);
-        }
-        return driver;
+        return new AndroidDriver<>(service, this.caps);
     }
 
     /**

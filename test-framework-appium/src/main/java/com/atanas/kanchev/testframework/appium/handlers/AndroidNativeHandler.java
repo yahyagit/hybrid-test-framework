@@ -13,12 +13,12 @@
 
 package com.atanas.kanchev.testframework.appium.handlers;
 
-import com.atanas.kanchev.testframework.appium.context.AppiumContext;
 import com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor;
-import io.appium.java_client.*;
+import io.appium.java_client.FindsByAccessibilityId;
+import io.appium.java_client.FindsByAndroidUIAutomator;
+import io.appium.java_client.MultiTouchAction;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDeviceActionShortcuts;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.android.Connection;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessorsSingleton.currentContextKey;
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
 /**
@@ -160,19 +161,19 @@ public class AndroidNativeHandler {
         @Override
         public void startActivity(String appPackage, String appActivity, String appWaitPackage,
             String appWaitActivity, boolean stopApp) {
-            ((AndroidDriver) context().getCurrentContext().getDriver())
+            context().getContext(currentContextKey).getDriver()
                 .startActivity(appPackage, appActivity, appWaitPackage, appWaitActivity, stopApp);
         }
 
         @Override
         public void startActivity(String appPackage, String appActivity, String appWaitPackage,
             String appWaitActivity) {
-            ((AndroidDriver) context().getCurrentContext().getDriver())
+            context().getContext(currentContextKey).getDriver()
                 .startActivity(appPackage, appActivity, appWaitPackage, appWaitActivity);
         }
 
         @Override public void startActivity(String appPackage, String appActivity) {
-            ((AndroidDriver) context().getCurrentContext().getDriver())
+            context().getContext(currentContextKey).getDriver()
                 .startActivity(appPackage, appActivity);
         }
 
@@ -180,7 +181,7 @@ public class AndroidNativeHandler {
         public void startActivity(String appPackage, String appActivity, String appWaitPackage,
             String appWaitActivity, String intentAction, String intentCategory, String intentFlags,
             String intentOptionalArgs) {
-            ((AndroidDriver) context().getCurrentContext().getDriver())
+            context().getContext(currentContextKey).getDriver()
                 .startActivity(appPackage, appActivity, appWaitPackage, appWaitActivity,
                     intentAction, intentCategory, intentFlags, intentOptionalArgs);
         }
@@ -189,7 +190,7 @@ public class AndroidNativeHandler {
         public void startActivity(String appPackage, String appActivity, String appWaitPackage,
             String appWaitActivity, String intentAction, String intentCategory, String intentFlags,
             String optionalIntentArguments, boolean stopApp) {
-            ((AndroidDriver) context().getCurrentContext().getDriver())
+            context().getContext(currentContextKey).getDriver()
                 .startActivity(appPackage, appActivity, appWaitPackage, appWaitActivity,
                     intentAction, intentCategory, intentFlags, optionalIntentArguments, stopApp);
         }
@@ -199,20 +200,19 @@ public class AndroidNativeHandler {
     public class PushesFiles implements io.appium.java_client.android.PushesFiles {
 
         @Override public void pushFile(String remotePath, byte[] base64Data) {
-            ((AndroidDriver) context().getCurrentContext().getDriver())
-                .pushFile(remotePath, base64Data);
+            context().getContext(currentContextKey).getDriver().pushFile(remotePath, base64Data);
         }
 
         @Override public void pushFile(String remotePath, File file) throws IOException {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).pushFile(remotePath, file);
+            context().getContext(currentContextKey).getDriver().pushFile(remotePath, file);
         }
 
         @Override public byte[] pullFile(String remotePath) {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).pullFile(remotePath);
+            return context().getContext(currentContextKey).getDriver().pullFile(remotePath);
         }
 
         @Override public byte[] pullFolder(String remotePath) {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).pullFile(remotePath);
+            return context().getContext(currentContextKey).getDriver().pullFile(remotePath);
         }
     }
 
@@ -220,29 +220,27 @@ public class AndroidNativeHandler {
     public class ActionShortcuts implements AndroidDeviceActionShortcuts {
 
         @Override public void pressKeyCode(int key) {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).pressKeyCode(key);
+            context().getContext(currentContextKey).getDriver().pressKeyCode(key);
         }
 
         @Override public void pressKeyCode(int key, Integer metastate) {
-            ((AndroidDriver) context().getCurrentContext().getDriver())
-                .pressKeyCode(key, metastate);
+            context().getContext(currentContextKey).getDriver().pressKeyCode(key, metastate);
         }
 
         @Override public void longPressKeyCode(int key) {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).longPressKeyCode(key);
+            context().getContext(currentContextKey).getDriver().longPressKeyCode(key);
         }
 
         @Override public void longPressKeyCode(int key, Integer metastate) {
-            ((AndroidDriver) context().getCurrentContext().getDriver())
-                .longPressKeyCode(key, metastate);
+            context().getContext(currentContextKey).getDriver().longPressKeyCode(key, metastate);
         }
 
         @Override public void hideKeyboard() {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).hideKeyboard();
+            context().getContext(currentContextKey).getDriver().hideKeyboard();
         }
 
         @Override public String getDeviceTime() {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).getDeviceTime();
+            return context().getContext(currentContextKey).getDriver().getDeviceTime();
         }
     }
 
@@ -250,79 +248,73 @@ public class AndroidNativeHandler {
     public class TouchShortcuts implements io.appium.java_client.TouchShortcuts {
 
         @Override public void zoom(int x, int y) {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).zoom(x, y);
+            context().getContext(currentContextKey).getDriver().zoom(x, y);
         }
 
         @Override public void zoom(WebElement el) {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).zoom(el);
+            context().getContext(currentContextKey).getDriver().zoom(el);
         }
 
         @Override public void tap(int fingers, int x, int y, int duration) {
-            ((AndroidDriver) context().getCurrentContext().getDriver())
-                .tap(fingers, x, y, duration);
+            context().getContext(currentContextKey).getDriver().tap(fingers, x, y, duration);
         }
 
         @Override public void tap(int fingers, WebElement element, int duration) {
-            ((AndroidDriver) context().getCurrentContext().getDriver())
-                .tap(fingers, element, duration);
+            context().getContext(currentContextKey).getDriver().tap(fingers, element, duration);
         }
 
         @Override public void swipe(int startx, int starty, int endx, int endy, int duration) {
-            ((AndroidDriver) context().getCurrentContext().getDriver())
+            context().getContext(currentContextKey).getDriver()
                 .swipe(startx, starty, endx, endy, duration);
         }
 
         @Override public void pinch(int x, int y) {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).pinch(x, y);
+            context().getContext(currentContextKey).getDriver().pinch(x, y);
         }
 
         @Override public void pinch(WebElement el) {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).pinch(el);
+            context().getContext(currentContextKey).getDriver().pinch(el);
         }
     }
 
 
     public class Finds implements FindsByAccessibilityId, FindsByAndroidUIAutomator, SearchContext {
 
-        @Override public AndroidElement findElementByAccessibilityId(String using) {
-            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver())
+        @Override public WebElement findElementByAccessibilityId(String using) {
+            return context().getContext(currentContextKey).getDriver()
                 .findElementByAccessibilityId(using);
         }
 
         @Override public List findElementsByAccessibilityId(String using) {
-            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver())
+            return context().getContext(currentContextKey).getDriver()
                 .findElementsByAccessibilityId(using);
         }
 
-        @Override public AndroidElement findElementByAndroidUIAutomator(String using) {
-            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver())
+        @Override public WebElement findElementByAndroidUIAutomator(String using) {
+            return context().getContext(currentContextKey).getDriver()
                 .findElementByAndroidUIAutomator(using);
         }
 
         @Override public List findElementsByAndroidUIAutomator(String using) {
-            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver())
+            return context().getContext(currentContextKey).getDriver()
                 .findElementsByAndroidUIAutomator(using);
         }
 
         @Override public List findElements(By by) {
-            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver())
-                .findElements(by);
+            return context().getContext(currentContextKey).getDriver().findElements(by);
         }
 
-        @Override public AndroidElement findElement(By by) {
-            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver())
-                .findElement(by);
+        @Override public WebElement findElement(By by) {
+            return context().getContext(currentContextKey).getDriver().findElement(by);
         }
 
         //TODO Override MobileDriver class after it's been implemented in 5.0.0
-        public AndroidElement findElementById(String id) {
-            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver())
-                .findElementById(id);
+        public WebElement findElementById(String id) {
+            return context().getContext(currentContextKey).getDriver().findElementById(id);
         }
 
         public List findElementsById(String id) {
-            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver())
-                .findElementsById(id);
+            return context().getContext(currentContextKey).getDriver().findElementsById(id);
         }
 
 
@@ -332,17 +324,15 @@ public class AndroidNativeHandler {
     public class HasAppStrings implements io.appium.java_client.HasAppStrings {
 
         @Override public Map<String, String> getAppStringMap() {
-            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver())
-                .getAppStringMap();
+            return context().getContext(currentContextKey).getDriver().getAppStringMap();
         }
 
         @Override public Map<String, String> getAppStringMap(String language) {
-            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver())
-                .getAppStringMap(language);
+            return context().getContext(currentContextKey).getDriver().getAppStringMap(language);
         }
 
         @Override public Map<String, String> getAppStringMap(String language, String stringFile) {
-            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver())
+            return context().getContext(currentContextKey).getDriver()
                 .getAppStringMap(language, stringFile);
         }
 
@@ -352,32 +342,31 @@ public class AndroidNativeHandler {
     public class InteractsWithApps implements io.appium.java_client.InteractsWithApps {
 
         @Override public void launchApp() {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).launchApp();
+            context().getContext(currentContextKey).getDriver().launchApp();
         }
 
         @Override public void installApp(String appPath) {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).installApp(appPath);
+            context().getContext(currentContextKey).getDriver().installApp(appPath);
         }
 
         @Override public boolean isAppInstalled(String bundleId) {
-            return ((AndroidDriver) context().getCurrentContext().getDriver())
-                .isAppInstalled(bundleId);
+            return context().getContext(currentContextKey).getDriver().isAppInstalled(bundleId);
         }
 
         @Override public void resetApp() {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).resetApp();
+            context().getContext(currentContextKey).getDriver().resetApp();
         }
 
         @Override public void runAppInBackground(int seconds) {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).runAppInBackground(seconds);
+            context().getContext(currentContextKey).getDriver().runAppInBackground(seconds);
         }
 
         @Override public void removeApp(String bundleId) {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).resetApp();
+            context().getContext(currentContextKey).getDriver().resetApp();
         }
 
         @Override public void closeApp() {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).closeApp();
+            context().getContext(currentContextKey).getDriver().closeApp();
         }
     }
 
@@ -385,11 +374,11 @@ public class AndroidNativeHandler {
     public class LocationContext implements org.openqa.selenium.html5.LocationContext {
 
         @Override public Location location() {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).location();
+            return context().getContext(currentContextKey).getDriver().location();
         }
 
         @Override public void setLocation(Location location) {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).setLocation(location);
+            context().getContext(currentContextKey).getDriver().setLocation(location);
         }
     }
 
@@ -397,11 +386,11 @@ public class AndroidNativeHandler {
     public class Rotatable implements org.openqa.selenium.Rotatable {
 
         @Override public void rotate(ScreenOrientation orientation) {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).rotate(orientation);
+            context().getContext(currentContextKey).getDriver().rotate(orientation);
         }
 
         @Override public ScreenOrientation getOrientation() {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).getOrientation();
+            return context().getContext(currentContextKey).getDriver().getOrientation();
         }
 
         @Override public void rotate(DeviceRotation deviceRotation) {
@@ -418,20 +407,17 @@ public class AndroidNativeHandler {
     public class ContextAware implements org.openqa.selenium.ContextAware {
 
         @Override public WebDriver context(String name) {
-            return ContextsAccessor
-                .context().<AppiumContext<AppiumDriver>>getCurrentContext().getDriver()
+            return ContextsAccessor.context().getContext(currentContextKey).getDriver()
                 .context(name);
         }
 
         @Override public Set<String> getContextHandles() {
-            return ContextsAccessor
-                .context().<AppiumContext<AndroidDriver<AndroidElement>>>getCurrentContext()
-                .getDriver().getContextHandles();
+            return ContextsAccessor.context().getContext(currentContextKey).getDriver()
+                .getContextHandles();
         }
 
         @Override public String getContext() {
-            return ContextsAccessor
-                .context().<AppiumContext<AppiumDriver>>getCurrentContext().getDriver()
+            return ContextsAccessor.context().getContext(currentContextKey).getDriver()
                 .getContext();
         }
     }
@@ -440,12 +426,12 @@ public class AndroidNativeHandler {
     public class HasNetworkConnection
         implements io.appium.java_client.android.HasNetworkConnection {
 
-        @Override public void setConnection(Connection connection) {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).setConnection(connection);
+        @Override public Connection getConnection() {
+            return context().getContext(currentContextKey).getDriver().getConnection();
         }
 
-        @Override public Connection getConnection() {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).getConnection();
+        @Override public void setConnection(Connection connection) {
+            context().getContext(currentContextKey).getDriver().setConnection(connection);
         }
     }
 
@@ -453,42 +439,39 @@ public class AndroidNativeHandler {
     public class AppiumDriverMethods {
 
         public boolean isLocked() {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).isLocked();
+            return context().getContext(currentContextKey).getDriver().isLocked();
         }
 
         public void lockDevice() {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).lockDevice();
+            context().getContext(currentContextKey).getDriver().lockDevice();
         }
 
         public void unlockDevice() {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).unlockDevice();
+            context().getContext(currentContextKey).getDriver().unlockDevice();
         }
 
         public void toggleLocationServices() {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).toggleLocationServices();
+            context().getContext(currentContextKey).getDriver().toggleLocationServices();
         }
 
         public void openNotifications() {
-            ((AndroidDriver) context().getCurrentContext().getDriver()).openNotifications();
+            context().getContext(currentContextKey).getDriver().openNotifications();
         }
 
         public String currentActivity() {
-            return ((AndroidDriver) context().getCurrentContext().getDriver()).currentActivity();
+            return context().getContext(currentContextKey).getDriver().currentActivity();
         }
 
         public void ignoreUnimportantViews(boolean compress) {
-            ((AndroidDriver) context().getCurrentContext().getDriver())
-                .ignoreUnimportantViews(compress);
+            context().getContext(currentContextKey).getDriver().ignoreUnimportantViews(compress);
         }
 
         public void endTestCoverage(String intent, String path) {
-            ((AndroidDriver) context().getCurrentContext().getDriver())
-                .endTestCoverage(intent, path);
+            context().getContext(currentContextKey).getDriver().endTestCoverage(intent, path);
         }
 
         public Map<String, Object> getSessionDetails() {
-            return ((AndroidDriver<AndroidElement>) context().getCurrentContext().getDriver())
-                .getSessionDetails();
+            return context().getContext(currentContextKey).getDriver().getSessionDetails();
         }
     }
 
@@ -496,12 +479,12 @@ public class AndroidNativeHandler {
     public class PerformsTouchActions implements io.appium.java_client.PerformsTouchActions {
 
         @Override public TouchAction performTouchAction(TouchAction touchAction) {
-            return ((AndroidDriver) context().getCurrentContext().getDriver())
+            return context().getContext(currentContextKey).getDriver()
                 .performTouchAction(touchAction);
         }
 
         @Override public void performMultiTouchAction(MultiTouchAction multiAction) {
-            ((AndroidDriver) context().getCurrentContext().getDriver())
+            context().getContext(currentContextKey).getDriver()
                 .performMultiTouchAction(multiAction);
         }
     }

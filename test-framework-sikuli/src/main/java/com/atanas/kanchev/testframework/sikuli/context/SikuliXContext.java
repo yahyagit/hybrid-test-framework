@@ -14,65 +14,46 @@
 package com.atanas.kanchev.testframework.sikuli.context;
 
 import com.atanas.kanchev.testframework.commons.context.AbstractContext;
-import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
+import com.atanas.kanchev.testframework.commons.context.ContextKey;
 import org.sikuli.script.Match;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * <p>SikuliXContext class.</p>
- *
- * @author Atanas Kanchev
- */
-public class SikuliXContext extends SeleniumContext {
+public class SikuliXContext extends AbstractContext {
 
     private static final Logger logger = LoggerFactory.getLogger(SikuliXContext.class.getName());
 
     //holds the result of the getImageFilePath operation
     private Match match;
 
-    /**
-     * <p>Constructor for SikuliXContext.</p>
-     */
     public SikuliXContext() {
         this("sikuliXCtx_");
     }
 
-    /**
-     * <p>Constructor for SikuliXContext.</p>
-     *
-     * @param contextName a {@link java.lang.String} object.
-     */
     public SikuliXContext(String contextName) {
         super(contextName);
-
     }
 
-    /**
-     * Gets match.
-     *
-     * @return a {@link SikuliXContext#match} object.
-     */
     public Match getMatch() {
         if (match == null)
             logger.warn("The current match is null");
         return match;
     }
 
-    /**
-     * Sets match.
-     *
-     * @param match {@link Match} object
-     */
     public void setMatch(Match match) {
         this.match = match;
     }
 
-    @Override public void tearDownContext(AbstractContext context) {
-        logger.warn(toString() + ":  nothing to tear down");
+    @Override public ContextKey<SikuliXContext> getContextKey() {
+        return new ContextKey<>(getContextName(), SikuliXContext.class);
+    }
+
+    @Override public void tearDownContext() {
+        logger.warn("Nothing to tear down"+toString());
     }
 
     @Override public String toString() {
-        return "SikuliXContext{" + "match=" + match + "} ";
+        return "SikuliXContext{" + "match=" + match + ", contextKey=" + getContextKey() + "} "
+            + super.toString();
     }
 }

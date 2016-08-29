@@ -34,9 +34,9 @@ public class AndroidContextTest {
             "src/test/java/com/atanas/kanchev/testframework/appium/tests/android/native_app_tests");
         File app = new File(appDir, "ApiDemos-debug.apk");
 
-        $appium().init().buildDefaultService().startServer();
+        $appium().conf().buildDefaultService().startServer();
 
-        $appium().init().setCap(MobileCapabilityType.BROWSER_NAME, "")
+        $appium().conf().setCap(MobileCapabilityType.BROWSER_NAME, "")
             .setCap(MobileCapabilityType.APP, app.getAbsoluteFile())
             .setCap(MobileCapabilityType.DEVICE_NAME, "8adea98f")
             .setCap(MobileCapabilityType.PLATFORM_VERSION, "6.0.1")
@@ -56,7 +56,7 @@ public class AndroidContextTest {
     }
 
     @AfterClass public static void tearDown() throws Exception {
-        $appium().init().stopServer();
+        $appium().conf().stopServer();
         //        CONTEXT_FACTORY.tearDownContexts();
 
     }

@@ -11,20 +11,18 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.commons.accessors;
+package com.atanas.kanchev.testframework.commons.context;
 
-import com.atanas.kanchev.testframework.commons.context.ConcurrentContextContainer;
+import java.util.List;
 
-/**
- * @author Atanas Kanchev
- */
-public class ContextsAccessor {
+public interface IElement<T> {
 
-    private static final ConcurrentContextContainer contextThreadLocalContainer =
-        new ConcurrentContextContainer();
+    T getCurrentElement();
 
-    public static ConcurrentContextContainer context() {
-        return contextThreadLocalContainer;
-    }
+    void setCurrentElement(T currentElement);
+
+    List<T> getWebElementsList();
+
+    void setWebElementsList(List<T> webElementsList);
 
 }

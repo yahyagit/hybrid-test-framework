@@ -14,7 +14,6 @@
 package com.atanas.kanchev.testframework.appium.tests.android.native_app_tests;
 
 import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileElement;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -54,13 +53,13 @@ public class AndroidSearchingTest extends BaseTest {
         assertEquals($appium().android().find().findElements(By.xpath(byXPath)).size(), 1);
     }
 
-    @Test
-    public void findScrollable() {
-        $appium().android().find().findElementByAccessibilityId("Views").click();
-        MobileElement radioGroup = $appium().android().find()
-                .findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()"
-                        + ".resourceId(\"android:id/list\")).scrollIntoView("
-                        + "new UiSelector().text(\"Radio Group\"));");
-        assertNotNull(radioGroup.getLocation());
-    }
+//    @Test
+//    public void findScrollable() {
+//        $appium().android().find().findElementByAccessibilityId("Views").click();
+//        MobileElement radioGroup = $appium().android().find()
+//                .findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()"
+//                        + ".resourceId(\"android:id/list\")).scrollIntoView("
+//                        + "new UiSelector().text(\"Radio Group\"));");
+//        assertNotNull(radioGroup.getLocation());
+//    }
 }

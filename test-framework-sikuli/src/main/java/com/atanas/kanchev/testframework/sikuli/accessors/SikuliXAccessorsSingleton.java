@@ -13,7 +13,11 @@
 
 package com.atanas.kanchev.testframework.sikuli.accessors;
 
+import com.atanas.kanchev.testframework.commons.context.ContextKey;
+import com.atanas.kanchev.testframework.sikuli.context.SikuliXContext;
 import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
+
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
 /**
  * @author Atanas Kanchev
@@ -21,6 +25,7 @@ import com.atanas.kanchev.testframework.sikuli.handlers.SikuliXFactory;
 public class SikuliXAccessorsSingleton {
 
     private static SikuliXAccessorsSingleton instance = null;
+    public static ContextKey<SikuliXContext> currentContextKey;
 
     private SikuliXAccessorsSingleton() {}
 
@@ -32,10 +37,14 @@ public class SikuliXAccessorsSingleton {
     }
 
     public SikuliXFactory sikulix(final String image) {
+        SikuliXContext c = new SikuliXContext();
+        currentContextKey = context().addContext(c.getContextKey(), c);
         return new SikuliXFactory(image);
     }
 
     public SikuliXFactory sikulix() {
+        SikuliXContext c = new SikuliXContext();
+        currentContextKey = context().addContext(c.getContextKey(), c);
         return new SikuliXFactory();
     }
 

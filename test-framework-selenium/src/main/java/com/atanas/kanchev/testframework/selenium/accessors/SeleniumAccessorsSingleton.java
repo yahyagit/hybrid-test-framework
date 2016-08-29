@@ -13,22 +13,28 @@
 
 package com.atanas.kanchev.testframework.selenium.accessors;
 
+import com.atanas.kanchev.testframework.commons.context.ContextKey;
+import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
-import com.atanas.kanchev.testframework.selenium.handlers.Finds;
+import com.atanas.kanchev.testframework.selenium.handlers.Finder;
 import com.atanas.kanchev.testframework.selenium.handlers.Navigates;
 import com.atanas.kanchev.testframework.selenium.handlers.Probes;
 import com.atanas.kanchev.testframework.selenium.interactions.element.OmniaElement;
 import com.atanas.kanchev.testframework.selenium.interactions.wait.Waiting;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
 /**
  * @author Atanas Kanchev
  */
 public class SeleniumAccessorsSingleton {
 
-    private static SeleniumAccessorsSingleton instance = null;
     private static final DriverFactory driverFactory = new DriverFactory();
+    public static ContextKey<SeleniumContext> currentContextKey;
+    private static SeleniumAccessorsSingleton instance = null;
 
     private SeleniumAccessorsSingleton() {
     }
@@ -40,25 +46,26 @@ public class SeleniumAccessorsSingleton {
         return instance;
     }
 
-    public DriverFactory driverSetup() {
+    public DriverFactory conf() {
         return driverFactory;
     }
 
     public Navigates goTo(final String url) {
-
+        SeleniumContext<WebDriver> c = new SeleniumContext<>(conf().getDriver());
+        currentContextKey = context().addContext(c.getContextKey(), c);
         return new Navigates().getPage(url);
     }
 
-    public Finds find() {
-        return new Finds();
+    public Finder find() {
+        return new Finder();
     }
 
-    public Finds find(WebElement e) {
-        return new Finds(e);
+    public Finder find(WebElement e) {
+        return new Finder(e);
     }
 
-    public Finds find(Class<?> clasz) {
-        return new Finds(clasz);
+    public Finder find(Class<?> clasz) {
+        return new Finder(clasz);
     }
 
     public Probes probe(By locator) {

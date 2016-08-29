@@ -29,10 +29,10 @@ public class ChromeTest {
 
     @Test public void androidChromeTest() throws Exception {
 
-        $appium().init().buildDefaultService();
-        $appium().init().startServer();
+        $appium().conf().buildDefaultService();
+        $appium().conf().startServer();
 
-        $appium().init()
+        $appium().conf()
             .setCap(MobileCapabilityType.BROWSER_NAME, MobileBrowserType.CHROME)
             .setCap(MobileCapabilityType.PLATFORM, Platform.ANDROID)
             .setCap(MobileCapabilityType.DEVICE_NAME, "ZY22398GL7")
@@ -43,7 +43,7 @@ public class ChromeTest {
             .setCap(AndroidMobileCapabilityType.ANDROID_DEVICE_READY_TIMEOUT, 60)
             .setCap(AndroidMobileCapabilityType.ENABLE_PERFORMANCE_LOGGING, true);
 
-        $appium().init().getAndroidDriver();
+        $appium().conf().getAndroidDriver();
 
         $selenium().goTo("https://bbc.co.uk");
 

@@ -13,6 +13,7 @@
 
 package com.atanas.kanchev.testframework.dataservices.accessors;
 
+import com.atanas.kanchev.testframework.commons.context.ContextKey;
 import com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Resource;
 import com.atanas.kanchev.testframework.dataservices.context.APIResourceContext;
 import com.atanas.kanchev.testframework.dataservices.dataprovider.csv.CSVParser;
@@ -26,6 +27,7 @@ import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccesso
 public class DataServicesAccessorsSingleton {
 
     private static DataServicesAccessorsSingleton instance = null;
+    ContextKey<APIResourceContext> key;
 
     private DataServicesAccessorsSingleton() {
     }
@@ -38,12 +40,11 @@ public class DataServicesAccessorsSingleton {
     }
 
     public Resource apiResource(Resource resource) {
-        return ((APIResourceContext) context().getCurrentContext()).setResource(resource)
-            .getResource();
+        return context().getContext(key).setResource(resource).getResource();
     }
 
     public Resource apiResource() {
-        return ((APIResourceContext) context().getCurrentContext()).getResource();
+        return context().getContext(key).getResource();
     }
 
     public ExcelParser excel(String filePath) {

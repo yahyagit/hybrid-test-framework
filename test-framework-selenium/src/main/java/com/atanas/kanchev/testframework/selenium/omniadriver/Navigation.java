@@ -15,7 +15,6 @@ package com.atanas.kanchev.testframework.selenium.omniadriver;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.dataservices.dataprovider.file.FileFinder;
-import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -27,6 +26,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 public class Navigation<T extends WebDriver> implements WebDriver.Navigation {
 
@@ -34,12 +34,12 @@ public class Navigation<T extends WebDriver> implements WebDriver.Navigation {
 
     @Override public void back() {
         logger.debug("Navigating back");
-        context().<SeleniumContext<T>>getCurrentContext().getDriver().navigate().back();
+        context().getContext(currentContextKey).getDriver().navigate().back();
     }
 
     @Override public void forward() {
         logger.debug("Navigating forward");
-        context().<SeleniumContext<T>>getCurrentContext().getDriver().navigate().forward();
+        context().getContext(currentContextKey).getDriver().navigate().forward();
     }
 
     @Override public void to(String s) {
@@ -52,7 +52,7 @@ public class Navigation<T extends WebDriver> implements WebDriver.Navigation {
 
     @Override public void refresh() {
         logger.debug("Refreshing page");
-        context().<SeleniumContext<T>>getCurrentContext().getDriver().navigate().refresh();
+        context().getContext(currentContextKey).getDriver().navigate().refresh();
     }
 
     private void goTo(String uri) {
@@ -62,7 +62,7 @@ public class Navigation<T extends WebDriver> implements WebDriver.Navigation {
 
             if (uri.startsWith("http:") || uri.startsWith("https:")) {
                 try {
-                    context().<SeleniumContext<T>>getCurrentContext().getDriver().navigate()
+                    context().getContext(currentContextKey).getDriver().navigate()
                         .to(new URL(uri));
                 } catch (MalformedURLException e) {
                     logger.error("Invalid URL " + e.getMessage());
@@ -70,7 +70,7 @@ public class Navigation<T extends WebDriver> implements WebDriver.Navigation {
             } else {
                 try {
                     File file = new FileFinder(uri).getFile();
-                    context().<SeleniumContext<T>>getCurrentContext().getDriver()
+                    context().getContext(currentContextKey).getDriver()
                         .get("file://" + file.getAbsolutePath());
                 } catch (IOException | TimeoutException e) {
                     throw new RuntimeException(e.getCause());

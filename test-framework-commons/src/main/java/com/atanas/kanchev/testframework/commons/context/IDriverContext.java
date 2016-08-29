@@ -11,20 +11,15 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.commons.accessors;
-
-import com.atanas.kanchev.testframework.commons.context.ConcurrentContextContainer;
+package com.atanas.kanchev.testframework.commons.context;
 
 /**
  * @author Atanas Kanchev
  */
-public class ContextsAccessor {
+public interface IDriverContext<T> {
 
-    private static final ConcurrentContextContainer contextThreadLocalContainer =
-        new ConcurrentContextContainer();
+    T getDriver();
 
-    public static ConcurrentContextContainer context() {
-        return contextThreadLocalContainer;
-    }
+    void setDriver(T driver);
 
 }

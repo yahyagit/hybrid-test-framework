@@ -13,7 +13,7 @@
 
 package com.atanas.kanchev.testframework.selenium.interactions.element;
 
-import com.atanas.kanchev.testframework.selenium.handlers.Finds;
+import com.atanas.kanchev.testframework.selenium.handlers.Finder;
 import com.atanas.kanchev.testframework.selenium.interactions.element.interactions.Alert;
 import com.atanas.kanchev.testframework.selenium.interactions.element.interactions.*;
 import com.atanas.kanchev.testframework.selenium.interactions.wait.Waiting;
@@ -133,16 +133,16 @@ public class OmniaElement implements IOmniaElement {
         return this;
     }
 
-    @Override public Finds find() {
-        return new Finds();
+    @Override public Finder find() {
+        return new Finder();
     }
 
-    @Override public Finds find(WebElement element) {
-        return new Finds(element);
+    @Override public Finder find(WebElement element) {
+        return new Finder(element);
     }
 
-    @Override public Finds find(Class<?> clazz) {
-        return new Finds(clazz);
+    @Override public Finder find(Class<?> clazz) {
+        return new Finder(clazz);
     }
 
     @Override public Waiting waitFor() {

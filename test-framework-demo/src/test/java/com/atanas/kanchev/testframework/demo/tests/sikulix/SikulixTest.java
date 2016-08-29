@@ -14,10 +14,12 @@
 package com.atanas.kanchev.testframework.demo.tests.sikulix;
 
 import com.atanas.kanchev.testframework.sikuli.handlers.Direction;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.sikuli.script.Key;
 
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.$selenium;
 import static com.atanas.kanchev.testframework.sikuli.accessors.SikuliXAccessors.$sikuli;
 
@@ -26,8 +28,13 @@ public class SikulixTest {
 
     @Before public void setUp() throws Exception {
 
-        $selenium().driverSetup().setReuseBrowser(true);
+//        $selenium().driverSetup().setReuseBrowser(true);
         $selenium().goTo("https://www.google.co.uk");
+
+    }
+
+    @After public void tearDown() throws Exception {
+        context().tearDownContexts();
 
     }
 

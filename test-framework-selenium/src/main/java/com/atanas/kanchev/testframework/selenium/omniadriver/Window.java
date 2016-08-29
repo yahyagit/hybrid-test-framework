@@ -13,12 +13,12 @@
 
 package com.atanas.kanchev.testframework.selenium.omniadriver;
 
-import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 /**
  * Created by atanas on 22/08/16.
@@ -26,30 +26,30 @@ import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccesso
 public class Window<T extends WebDriver> implements WebDriver.Window {
 
     @Override public void setSize(Dimension dimension) {
-        context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().window()
+        context().getContext(currentContextKey).getDriver().manage().window()
             .setSize(dimension);
     }
 
     @Override public void setPosition(Point point) {
-        context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().window()
+        context().getContext(currentContextKey).getDriver().manage().window()
             .setPosition(point);
     }
 
     @Override public Dimension getSize() {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().window()
+        return context().getContext(currentContextKey).getDriver().manage().window()
             .getSize();
     }
 
     @Override public Point getPosition() {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().window()
+        return context().getContext(currentContextKey).getDriver().manage().window()
             .getPosition();
     }
 
     @Override public void maximize() {
-        context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().window().maximize();
+        context().getContext(currentContextKey).getDriver().manage().window().maximize();
     }
 
     @Override public void fullscreen() {
-        context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().window().maximize();
+        context().getContext(currentContextKey).getDriver().manage().window().maximize();
     }
 }

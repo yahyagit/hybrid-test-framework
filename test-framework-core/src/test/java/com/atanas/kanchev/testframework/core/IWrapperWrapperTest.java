@@ -36,7 +36,7 @@ public class IWrapperWrapperTest {
         @Before
         public void setUp() throws Exception {
             $().$appium();
-            $selenium().driverSetup()
+            $selenium().conf()
                     .setBrowser("chrome")
                     .setStartMaximized(true)
 //                    .setReuseBrowser(true)

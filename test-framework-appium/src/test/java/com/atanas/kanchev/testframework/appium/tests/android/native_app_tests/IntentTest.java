@@ -33,16 +33,16 @@ public class IntentTest {
             "src/test/java/com/atanas/kanchev/testframework/appium/tests/android/native_app_tests");
         File app = new File(appDir, "IntentExample.apk");
 
-        $appium().init().buildDefaultService().startServer();
+        $appium().conf().buildDefaultService().startServer();
 
-        $appium().init().setCap(MobileCapabilityType.APP, app.getAbsoluteFile())
+        $appium().conf().setCap(MobileCapabilityType.APP, app.getAbsoluteFile())
             .setCap(MobileCapabilityType.DEVICE_NAME, "8adea98f")
             .setCap(MobileCapabilityType.PLATFORM, Platform.ANDROID);
     }
 
     @AfterClass public static void tearDown() throws Exception {
 
-        $appium().init().stopServer();
+        $appium().conf().stopServer();
         //        CONTEXT_FACTORY.tearDownContexts();
 
     }

@@ -13,6 +13,7 @@
 
 package com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory;
 
+import com.atanas.kanchev.testframework.commons.context.ContextKey;
 import com.atanas.kanchev.testframework.dataservices.api.rest.executor.ResourceExecutor;
 import com.atanas.kanchev.testframework.dataservices.context.APIResourceContext;
 import com.mashape.unirest.http.HttpMethod;
@@ -30,7 +31,7 @@ import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccesso
  *
  * @author Atanas Kanchev
  */
-public class Resource  {
+public class Resource {
 
     private static final Logger logger = LoggerFactory.getLogger(Resource.class);
 
@@ -48,7 +49,10 @@ public class Resource  {
         this.request = new Request();
         this.response = new Response();
         APIResourceContext apiResourceContext = new APIResourceContext(this);
-        context().addContext(apiResourceContext);
+        ContextKey<APIResourceContext> key =
+            new ContextKey<>(apiResourceContext.getContextName(), APIResourceContext.class);
+
+        context().addContext(key, apiResourceContext);
 
     }
 
@@ -91,6 +95,17 @@ public class Resource  {
     }
 
     /**
+     * <p>Setter for the field <code>request</code>.</p>
+     *
+     * @param request a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Request} object.
+     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Resource} object.
+     */
+    public Resource setRequest(Request request) {
+        this.request = request;
+        return this;
+    }
+
+    /**
      * <p>Getter for the field <code>response</code>.</p>
      *
      * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Response} object.
@@ -98,6 +113,19 @@ public class Resource  {
     public Response getResponse() {
 
         return this.response;
+    }
+
+    private void setResponse(HttpResponse<String> response) {
+        // set response status code
+        this.response.setStatusCode(response.getStatus());
+        this.response.setReason(response.getStatusText());
+        logger.debug("> Response status and text: " + "{" + response.getStatus() + "," + response
+            .getStatusText() + "}");
+
+        logger.debug("> Response body: " + response.getBody());
+
+        setRespMessage(response);
+
     }
 
     /**
@@ -108,6 +136,8 @@ public class Resource  {
     public String getEndpoint() {
         return endpoint.toString();
     }
+
+    // SETTERS //
 
     /**
      * <p>Getter for the field <code>url</code>.</p>
@@ -133,19 +163,6 @@ public class Resource  {
      */
     public HttpMethod getHttpMethod() {
         return httpMethod;
-    }
-
-    // SETTERS //
-
-    /**
-     * <p>Setter for the field <code>request</code>.</p>
-     *
-     * @param request a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Request} object.
-     * @return a {@link com.atanas.kanchev.testframework.dataservices.api.rest.requetsfactory.Resource} object.
-     */
-    public Resource setRequest(Request request) {
-        this.request = request;
-        return this;
     }
 
     /**
@@ -195,36 +212,17 @@ public class Resource  {
         return this;
     }
 
-    private void setResponse(HttpResponse<String> response) {
-        // set response status code
-        this.response.setStatusCode(response.getStatus());
-        this.response.setReason(response.getStatusText());
-        logger.debug("> Response status and text: " + "{" + response.getStatus() + "," + response
-                .getStatusText() + "}");
-
-        logger.debug("> Response body: " + response.getBody());
-
-        setRespMessage(response);
-
-    }
-
     private void setRespMessage(HttpResponse<String> response) {
 
         if (response.getHeaders().getFirst("Content-Type") != null && response.getHeaders()
-                .getFirst("Content-Type").contains("application/json")) {
+            .getFirst("Content-Type").contains("application/json")) {
             this.response.setPayload(response.getBody());
         }
         logger.debug("> Response body: " + this.response.getPayload());
     }
 
-    @Override
-    public String toString() {
-        return "Resource{" +
-                "endpoint=" + endpoint +
-                ", url=" + url +
-                ", request=" + request.toString() +
-                ", response=" + response.toString() +
-                ", httpMethod=" + httpMethod +
-                '}';
+    @Override public String toString() {
+        return "Resource{" + "endpoint=" + endpoint + ", url=" + url + ", request=" + request
+            .toString() + ", response=" + response.toString() + ", httpMethod=" + httpMethod + '}';
     }
 }

@@ -13,12 +13,12 @@
 
 package com.atanas.kanchev.testframework.selenium.omniadriver;
 
-import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 /**
  * Created by atanas on 22/08/16.
@@ -26,38 +26,38 @@ import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccesso
 public class TargetLocator<T extends WebDriver> implements WebDriver.TargetLocator {
 
     @Override public WebDriver frame(int i) {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().switchTo().frame(i);
+        return context().getContext(currentContextKey).getDriver().switchTo().frame(i);
     }
 
     @Override public WebDriver frame(String s) {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().switchTo().frame(s);
+        return context().getContext(currentContextKey).getDriver().switchTo().frame(s);
     }
 
     @Override public WebDriver frame(WebElement webElement) {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().switchTo()
+        return context().getContext(currentContextKey).getDriver().switchTo()
             .frame(webElement);
     }
 
     @Override public WebDriver parentFrame() {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().switchTo()
+        return context().getContext(currentContextKey).getDriver().switchTo()
             .parentFrame();
     }
 
     @Override public WebDriver window(String s) {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().switchTo().window(s);
+        return context().getContext(currentContextKey).getDriver().switchTo().window(s);
     }
 
     @Override public WebDriver defaultContent() {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().switchTo()
+        return context().getContext(currentContextKey).getDriver().switchTo()
             .defaultContent();
     }
 
     @Override public WebElement activeElement() {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().switchTo()
+        return context().getContext(currentContextKey).getDriver().switchTo()
             .activeElement();
     }
 
     @Override public Alert alert() {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().switchTo().alert();
+        return context().getContext(currentContextKey).getDriver().switchTo().alert();
     }
 }

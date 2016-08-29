@@ -13,7 +13,7 @@
 
 package com.atanas.kanchev.testframework.core.tests.handlers;
 
-import com.atanas.kanchev.testframework.selenium.handlers.Finds;
+import com.atanas.kanchev.testframework.selenium.handlers.Finder;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -27,12 +27,12 @@ import java.net.URL;
 import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.$selenium;
 
 
-public class FindsTest {
+public class FinderTest {
 
-    @Mock Finds ifind;
+    @Mock Finder ifind;
 
     private static URL url;
-    private static final Logger logger = LoggerFactory.getLogger(FindsTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(FinderTest.class);
 
     @Before
     public void setUp() throws Exception {
@@ -41,7 +41,7 @@ public class FindsTest {
         } catch (MalformedURLException e) {
 
         }
-       $selenium(). driverSetup().setBrowser("chrome");
+       $selenium().conf().setBrowser("chrome");
     }
 
     @Test

@@ -31,7 +31,7 @@ import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccess
 public class ProbesTest  {
 
     @Before public void setUp() throws Exception {
-        $selenium().driverSetup().setBrowser("chrome")
+        $selenium().conf().setBrowser("chrome")
         //            .setReuseBrowser(true)
        /* .setCustomCapabilities(DesiredCapabilities.android())*/;
     }
@@ -43,7 +43,7 @@ public class ProbesTest  {
 
     @Test public void exist() throws Exception {
 
-        $selenium().driverSetup().setBrowser("chrome");
+        $selenium().conf().setBrowser("chrome");
         $selenium().goTo("");
         $selenium().goTo("https://www.google.co.uk");
         $selenium().element(By.name("q")).click();

@@ -13,9 +13,11 @@
 
 package com.atanas.kanchev.testframework.appium.accessors;
 
+import com.atanas.kanchev.testframework.appium.context.AppiumContext;
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDriverFactory;
 import com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler;
-import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
+import com.atanas.kanchev.testframework.commons.context.ContextKey;
+import io.appium.java_client.android.AndroidDriver;
 
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
@@ -24,10 +26,13 @@ import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccesso
  */
 public class AppiumAccessorsSingleton {
 
-    private static AppiumAccessorsSingleton instance = null;
     private static final AppiumDriverFactory APPIUM_DRIVER_FACTORY = new AppiumDriverFactory();
+    private static AppiumAccessorsSingleton instance = null;
+    public static ContextKey<AppiumContext> currentContextKey;
 
     private AppiumAccessorsSingleton() {
+        AppiumContext<AndroidDriver> c = new AppiumContext<>(conf().getAndroidDriver());
+        context().addContext(c.getContextKey(), c);
     }
 
     static AppiumAccessorsSingleton getInstance() {
@@ -37,17 +42,14 @@ public class AppiumAccessorsSingleton {
         return instance;
     }
 
-    public AppiumDriverFactory init() {
+    public AppiumDriverFactory conf() {
         return APPIUM_DRIVER_FACTORY;
     }
 
     public AndroidNativeHandler android() {
 
-        try {
-            context().getCurrentContext();
-        } catch (CustomExceptions.Common.NullReferenceException exception) {
-            init().getAndroidDriver();
-        }
+        AppiumContext<AndroidDriver> context = new AppiumContext<>(conf().getAndroidDriver());
+        currentContextKey = context().addContext(context.getContextKey(), context);
 
         return new AndroidNativeHandler();
     }

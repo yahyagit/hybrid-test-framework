@@ -14,7 +14,6 @@
 package com.atanas.kanchev.testframework.appium.tests.android.native_app_tests;
 
 import io.appium.java_client.AppiumSetting;
-import io.appium.java_client.android.AndroidDriver;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
@@ -25,6 +24,7 @@ import java.io.File;
 import java.util.Map;
 
 import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessors.$appium;
+import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessorsSingleton.currentContextKey;
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 import static org.junit.Assert.*;
 
@@ -80,22 +80,22 @@ public class AndroidDriverTest extends BaseTest {
     @Test public void ignoreUnimportantViews() {
         $appium().android().appiumDriverMethods().ignoreUnimportantViews(true);
         boolean ignoreViews =
-            ((AndroidDriver) context().getCurrentContext().getDriver()).getSettings()
+            context().getContext(currentContextKey).getDriver().getSettings()
                 .get(AppiumSetting.IGNORE_UNIMPORTANT_VIEWS.toString()).getAsBoolean();
         assertTrue(ignoreViews);
-        ((AndroidDriver) context().getCurrentContext().getDriver()).ignoreUnimportantViews(false);
-        ignoreViews = ((AndroidDriver) context().getCurrentContext().getDriver()).getSettings()
+        context().getContext(currentContextKey).getDriver().ignoreUnimportantViews(false);
+        ignoreViews = context().getContext(currentContextKey).getDriver().getSettings()
             .get(AppiumSetting.IGNORE_UNIMPORTANT_VIEWS.toString()).getAsBoolean();
         assertFalse(ignoreViews);
     }
 
     @Test public void toggleLocationServicesTest() {
-        ((AndroidDriver) context().getCurrentContext().getDriver()).toggleLocationServices();
+        context().getContext(currentContextKey).getDriver().toggleLocationServices();
     }
 
     @Test public void geolocationTest() {
         Location location = new Location(45, 45, 100);
-        ((AndroidDriver) context().getCurrentContext().getDriver()).setLocation(location);
+        context().getContext(currentContextKey).getDriver().setLocation(location);
     }
 
     @Test public void orientationTest() {
@@ -106,10 +106,10 @@ public class AndroidDriverTest extends BaseTest {
     }
 
     @Test public void lockTest() {
-        ((AndroidDriver) context().getCurrentContext().getDriver()).lockDevice();
-        assertEquals(true, ((AndroidDriver) context().getCurrentContext().getDriver()).isLocked());
-        ((AndroidDriver) context().getCurrentContext().getDriver()).unlockDevice();
-        assertEquals(false, ((AndroidDriver) context().getCurrentContext().getDriver()).isLocked());
+        context().getContext(currentContextKey).getDriver().lockDevice();
+        assertEquals(true, context().getContext(currentContextKey).getDriver().isLocked());
+        context().getContext(currentContextKey).getDriver().unlockDevice();
+        assertEquals(false, context().getContext(currentContextKey).getDriver().isLocked());
     }
 
     @Test public void runAppInBackgroundTest() {

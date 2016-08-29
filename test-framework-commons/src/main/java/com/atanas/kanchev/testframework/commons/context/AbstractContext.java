@@ -19,32 +19,15 @@ import org.slf4j.LoggerFactory;
 
 import static java.lang.Thread.currentThread;
 
-public abstract class AbstractContext<T> {
+public abstract class AbstractContext {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractContext.class);
     private String contextName;
     private boolean isContextReusable;
-    private T driver;
 
     public AbstractContext(String contextName) {
         this.contextName = contextName + currentThread().getId();
         logger.debug("Creating " + toString());
-    }
-
-    public T getDriver() {
-        if (this.driver == null)
-            throw new CustomExceptions.Common.NullReferenceException(
-                "Null driver object AbstractContext#driver");
-        else
-            return this.driver;
-    }
-
-    public void setDriver(T driver) {
-        if (driver != null)
-            this.driver = driver;
-        else
-            throw new CustomExceptions.Common.NullArgumentException(
-                "Null driver instance passed as method argument");
     }
 
     public String getContextName() {
@@ -67,10 +50,12 @@ public abstract class AbstractContext<T> {
         isContextReusable = contextReusable;
     }
 
+    public abstract ContextKey<?> getContextKey();
+
     public abstract void tearDownContext();
 
     @Override public String toString() {
         return "contextName='" + contextName + '\'' + ", isContextReusable=" + isContextReusable
-            + ", driver=" + driver + ", contextReusable=" + isContextReusable();
+            + ", contextReusable=" + isContextReusable();
     }
 }

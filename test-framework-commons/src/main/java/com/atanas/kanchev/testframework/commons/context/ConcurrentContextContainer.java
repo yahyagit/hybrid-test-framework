@@ -93,9 +93,8 @@ public final class ConcurrentContextContainer implements IContextContainer {
     @Override public IContextContainer tearDownContexts() {
 
         logger.debug("Tearing down " + typesafeHeterogeneousContextContainer.size() + " contexts");
-        for (Map.Entry<ContextKey<?>, Object> context : typesafeHeterogeneousContextContainer
-            .entrySet()) {
-            ((AbstractContext) context).tearDownContext();
+        for (ContextKey key : typesafeHeterogeneousContextContainer.keySet()) {
+            tearDownContext(key);
         }
 
         return this;

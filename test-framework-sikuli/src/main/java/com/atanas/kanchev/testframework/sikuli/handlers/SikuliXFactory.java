@@ -15,7 +15,6 @@ package com.atanas.kanchev.testframework.sikuli.handlers;
 
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.dataservices.dataprovider.file.FileFinder;
-import com.atanas.kanchev.testframework.sikuli.context.SikuliXContext;
 import org.sikuli.basics.Settings;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Key;
@@ -28,6 +27,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.sikuli.accessors.SikuliXAccessorsSingleton.currentContextKey;
 
 /**
  * <p>SikuliXFactory class.</p>
@@ -107,14 +107,14 @@ public final class SikuliXFactory {
 
         switch (direction) {
             case ABOVE:
-                if (context().<SikuliXContext>getCurrentContext().getMatch().above(px).click() == 1)
+                if (context().getContext(currentContextKey).getMatch().above(px).click() == 1)
                     logger.debug("Successfully clicked " + px + " " + direction);
                 else
                     throw new CustomExceptions.Sikuli.UnableToInteractException(
                         "Unable to perform click");
                 break;
             case LEFT:
-                if (context().<SikuliXContext>getCurrentContext().getMatch().left(px).click() == 1)
+                if (context().getContext(currentContextKey).getMatch().left(px).click() == 1)
                     logger.debug("Successfully clicked " + px + " " + direction);
                 else
                     throw new CustomExceptions.Sikuli.UnableToInteractException(
@@ -122,7 +122,7 @@ public final class SikuliXFactory {
                 break;
             case CENTER:
                 try {
-                    context().<SikuliXContext>getCurrentContext().getMatch().getCenter().click();
+                    context().getContext(currentContextKey).getMatch().getCenter().click();
                     logger.debug("Successfully clicked " + px + " " + direction);
                 } catch (Exception e) {
                     throw new CustomExceptions.Sikuli.UnableToInteractException(
@@ -130,14 +130,14 @@ public final class SikuliXFactory {
                 }
                 break;
             case RIGHT:
-                if (context().<SikuliXContext>getCurrentContext().getMatch().right(px).click() == 1)
+                if (context().getContext(currentContextKey).getMatch().right(px).click() == 1)
                     logger.debug("Successfully clicked " + px + " " + direction);
                 else
                     throw new CustomExceptions.Sikuli.UnableToInteractException(
                         "Unable to perform click");
                 break;
             case BELOW:
-                if (context().<SikuliXContext>getCurrentContext().getMatch().below(px).click() == 1)
+                if (context().getContext(currentContextKey).getMatch().below(px).click() == 1)
                     logger.debug("Successfully clicked " + px + " " + direction);
                 else
                     throw new CustomExceptions.Sikuli.UnableToInteractException(
@@ -179,39 +179,35 @@ public final class SikuliXFactory {
 
         switch (direction) {
             case ABOVE:
-                if (context().<SikuliXContext>getCurrentContext().getMatch().above(px).doubleClick()
-                    == 1)
+                if (context().getContext(currentContextKey).getMatch().above(px).doubleClick() == 1)
                     logger.debug("Successfully clicked " + px + " " + direction);
                 else
                     throw new CustomExceptions.Sikuli.UnableToInteractException(
                         "Unable to perform click");
                 break;
             case LEFT:
-                if (context().<SikuliXContext>getCurrentContext().getMatch().left(px).doubleClick()
-                    == 1)
+                if (context().getContext(currentContextKey).getMatch().left(px).doubleClick() == 1)
                     logger.debug("Successfully clicked " + px + " " + direction);
                 else
                     throw new CustomExceptions.Sikuli.UnableToInteractException(
                         "Unable to perform click");
                 break;
             case CENTER:
-                if (context().<SikuliXContext>getCurrentContext().getMatch().doubleClick() == 1)
+                if (context().getContext(currentContextKey).getMatch().doubleClick() == 1)
                     logger.debug("Successfully clicked " + px + " " + direction);
                 else
                     throw new CustomExceptions.Sikuli.UnableToInteractException(
                         "Unable to perform click");
                 break;
             case RIGHT:
-                if (context().<SikuliXContext>getCurrentContext().getMatch().right(px).doubleClick()
-                    == 1)
+                if (context().getContext(currentContextKey).getMatch().right(px).doubleClick() == 1)
                     logger.debug("Successfully clicked " + px + " " + direction);
                 else
                     throw new CustomExceptions.Sikuli.UnableToInteractException(
                         "Unable to perform click");
                 break;
             case BELOW:
-                if (context().<SikuliXContext>getCurrentContext().getMatch().below(px).doubleClick()
-                    == 1)
+                if (context().getContext(currentContextKey).getMatch().below(px).doubleClick() == 1)
                     logger.debug("Successfully clicked " + px + " " + direction);
                 else
                     throw new CustomExceptions.Sikuli.UnableToInteractException(
@@ -241,25 +237,25 @@ public final class SikuliXFactory {
             switch (direction) {
                 case ABOVE:
                     image = screen.capture(
-                        context().<SikuliXContext>getCurrentContext().getMatch().right(pixelSize))
+                        context().getContext(currentContextKey).getMatch().right(pixelSize))
                         .getImage();
                     break;
                 case BELOW:
                     image = screen.capture(
-                        context().<SikuliXContext>getCurrentContext().getMatch().below(pixelSize))
+                        context().getContext(currentContextKey).getMatch().below(pixelSize))
                         .getImage();
                     break;
                 case CENTER:
-                    image = screen.capture(context().<SikuliXContext>getCurrentContext().getMatch())
+                    image = screen.capture(context().getContext(currentContextKey).getMatch())
                         .getImage();
                 case LEFT:
-                    image = screen.capture(
-                        context().<SikuliXContext>getCurrentContext().getMatch().left(pixelSize))
+                    image = screen
+                        .capture(context().getContext(currentContextKey).getMatch().left(pixelSize))
                         .getImage();
                     break;
                 case RIGHT:
                     image = screen.capture(
-                        context().<SikuliXContext>getCurrentContext().getMatch().right(pixelSize))
+                        context().getContext(currentContextKey).getMatch().right(pixelSize))
                         .getImage();
                     break;
                 default:
@@ -286,7 +282,7 @@ public final class SikuliXFactory {
     public SikuliXFactory type(String text) {
 
         try {
-            if (screen.type(context().<SikuliXContext>getCurrentContext().getMatch(), text, 0) == 1)
+            if (screen.type(context().getContext(currentContextKey).getMatch(), text, 0) == 1)
                 logger.debug("Successfully typed " + text);
         } catch (FindFailed findFailed) {
             logger.error("Unable to type in ", findFailed);
@@ -309,22 +305,19 @@ public final class SikuliXFactory {
 
         switch (direction) {
             case RIGHT:
-                context().<SikuliXContext>getCurrentContext().getMatch().right(pixelSize)
-                    .type(text);
+                context().getContext(currentContextKey).getMatch().right(pixelSize).type(text);
                 break;
             case LEFT:
-                context().<SikuliXContext>getCurrentContext().getMatch().left(pixelSize).type(text);
+                context().getContext(currentContextKey).getMatch().left(pixelSize).type(text);
                 break;
             case CENTER:
-                context().<SikuliXContext>getCurrentContext().getMatch().type(text);
+                context().getContext(currentContextKey).getMatch().type(text);
                 break;
             case BELOW:
-                context().<SikuliXContext>getCurrentContext().getMatch().below(pixelSize)
-                    .type(text);
+                context().getContext(currentContextKey).getMatch().below(pixelSize).type(text);
                 break;
             case ABOVE:
-                context().<SikuliXContext>getCurrentContext().getMatch().above(pixelSize)
-                    .type(text);
+                context().getContext(currentContextKey).getMatch().above(pixelSize).type(text);
                 break;
 
         }
@@ -364,7 +357,7 @@ public final class SikuliXFactory {
         boolean imageFound = false;
         do {
             findImage(fileName);
-            if (context().<SikuliXContext>getCurrentContext().getMatch() != null) {
+            if (context().getContext(currentContextKey).getMatch() != null) {
                 imageFound = true;
                 break;
             }
@@ -414,11 +407,11 @@ public final class SikuliXFactory {
     public SikuliXFactory sendKey(final String specialKey) {
 
         if (screen.type(String.valueOf(specialKey)) == 1) {
-            logger.debug("Special key successfully sent");
+            logger.debug("Special getContextKey successfully sent");
         } else {
-            logger.error("Unable to send special key " + specialKey);
+            logger.error("Unable to send special getContextKey " + specialKey);
             throw new CustomExceptions.Sikuli.UnableToInteractException(
-                "Unable to send special key " + specialKey);
+                "Unable to send special getContextKey " + specialKey);
         }
 
         return this;
@@ -447,15 +440,15 @@ public final class SikuliXFactory {
     private Match match(final String imageFileName) {
 
         try {
-            context().<SikuliXContext>getCurrentContext()
+            context().getContext(currentContextKey)
                 .setMatch(screen.find(getImageFilePath(imageFileName)));
-            context().<SikuliXContext>getCurrentContext().getMatch().hover();
-            logger.debug("Match found for image " + imageFileName + " in location "
-                + context().<SikuliXContext>getCurrentContext().getMatch().getTarget());
+            context().getContext(currentContextKey).getMatch().hover();
+            logger.debug("Match found for image " + imageFileName + " in location " + context()
+                .getContext(currentContextKey).getMatch().getTarget());
         } catch (FindFailed ffe) {
             logger.error("Unable getImageFilePath a match for image");
         }
-        return context().<SikuliXContext>getCurrentContext().getMatch();
+        return context().getContext(currentContextKey).getMatch();
     }
 
     private String getImageFilePath(final String imageFileName) {

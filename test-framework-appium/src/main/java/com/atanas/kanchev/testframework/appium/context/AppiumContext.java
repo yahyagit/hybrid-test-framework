@@ -14,72 +14,120 @@
 package com.atanas.kanchev.testframework.appium.context;
 
 import com.atanas.kanchev.testframework.commons.context.AbstractContext;
-import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
+import com.atanas.kanchev.testframework.commons.context.ContextKey;
+import com.atanas.kanchev.testframework.commons.context.IDriverContext;
+import com.atanas.kanchev.testframework.commons.context.IElement;
+import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
+import com.atanas.kanchev.testframework.selenium.driverfactory.DriverManager;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.ios.IOSDriver;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * <p>Appium Context class.</p>
- *
- * @author Atanas Kanchev
- */
-public final class AppiumContext<T extends WebDriver> extends SeleniumContext<T> {
+import java.util.Arrays;
+import java.util.List;
 
-    // the logger
-    private static final Logger logger = LoggerFactory.getLogger(AppiumContext.class);
+public final class AppiumContext<T extends AndroidDriver> extends AbstractContext
+    implements IElement<MobileElement>, IDriverContext<T> {
 
-    /**
-     * <p>Constructor for Appium Context.</p>
-     *
-     * @param driver a T object.
-     */
+    private static final Logger logger = LoggerFactory.getLogger(AppiumContext.class.getName());
+
+    private T driver;
+    private MobileElement currentElement;
+    private List<MobileElement> webElementsList;
+
+    public AppiumContext() {
+        this("appiumCtx_");
+    }
+
+    public AppiumContext(String contextName) {
+        super(contextName);
+    }
+
     public AppiumContext(T driver) {
         this(driver, "appiumCtx_");
     }
 
-    /**
-     * <p>Constructor for Appium Context.</p>
-     *
-     * @param driver      a T object.
-     * @param contextName a {@link java.lang.String} object.
-     */
     public AppiumContext(T driver, String contextName) {
-        super(driver, contextName);
+        super(contextName);
+        this.setDriver(driver);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override public void tearDownContext(AbstractContext<T> context) {
+    @Override public T getDriver() {
+        if (this.driver == null)
+            throw new CustomExceptions.Common.NullReferenceException(
+                "Null driver object AbstractContext#driver");
+        else
+            return this.driver;
+    }
 
-        logger.debug("Tearing down context " + context.getContextName());
+    @Override public void setDriver(T driver) {
+        if (driver != null)
+            this.driver = driver;
+        else
+            throw new CustomExceptions.Common.NullArgumentException(
+                "Null driver instance passed as method argument");
+    }
 
-        if (context instanceof AppiumContext) {
+    @Override public MobileElement getCurrentElement() {
 
-            if (((AppiumContext<AndroidDriver>) context).getDriver() != null) {
+        if (this.currentElement == null)
+            throw new CustomExceptions.Common.NullReferenceException(
+                "Null SeleniumContext#currentElement");
+        else
+            return currentElement;
+    }
 
-                if (context.getDriver() instanceof AndroidDriver)
-                    try {
-                        ((AppiumContext<AndroidDriver>) context).getDriver().closeApp();
-                        ((AppiumContext<AndroidDriver>) context).getDriver().quit();
-                    } catch (Exception e) {
-                        logger.error(e.getMessage());
-                    }
+    @Override public void setCurrentElement(MobileElement currentElement) {
+        if (currentElement != null) {
+            logger.debug(
+                "Setting current element to " + ((RemoteWebElement) currentElement).toString());
+            this.currentElement = currentElement;
+        } else
+            throw new CustomExceptions.Common.NullArgumentException(
+                "Null WebElement passed as method argument");
 
-                if (context.getDriver() instanceof IOSDriver)
-                    ((AppiumContext<IOSDriver>) context).getDriver().quit();
+    }
+
+    @Override public List<MobileElement> getWebElementsList() {
+
+        if (this.webElementsList == null)
+            throw new CustomExceptions.Common.NullReferenceException(
+                "Null SeleniumContext#webElementsList");
+        else
+            return webElementsList;
+    }
+
+    @Override public void setWebElementsList(List<MobileElement> webElementsList) {
+
+        if (webElementsList != null) {
+            this.webElementsList = webElementsList;
+            logger.debug(
+                "Setting current element list to \n" + Arrays.toString(webElementsList.toArray()));
+        } else
+            throw new CustomExceptions.Common.NullArgumentException(
+                "Null WebElement passed as method argument");
+
+    }
+
+    @Override public ContextKey<AppiumContext> getContextKey() {
+        return new ContextKey<>(getContextName(), AppiumContext.class);
+    }
+
+    @Override public void tearDownContext() {
+
+        logger.debug("Tearing down context " + getContextName());
+        if (getDriver() != null) {
+            if (DriverManager.isBrowserStillOpen(getDriver())) {
+                DriverManager.quitDriver(getDriver());
             }
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override public String toString() {
-        return getClass().getSimpleName();
+        return "AppiumContext{" + "driver=" + driver + ", currentElement=" + currentElement
+            + ", webElementsList=" + webElementsList + ", contextKey=" + getContextKey() + "} "
+            + super.toString();
     }
-
 }

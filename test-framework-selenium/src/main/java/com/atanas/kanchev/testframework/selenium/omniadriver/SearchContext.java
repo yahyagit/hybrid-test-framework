@@ -13,7 +13,6 @@
 
 package com.atanas.kanchev.testframework.selenium.omniadriver;
 
-import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +20,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 /**
  * Created by atanas on 22/08/16.
@@ -28,10 +28,10 @@ import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccesso
 public class SearchContext<T extends WebDriver> implements org.openqa.selenium.SearchContext {
 
     @Override public List<WebElement> findElements(By by) {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().findElements(by);
+        return context().getContext(currentContextKey).getDriver().findElements(by);
     }
 
     @Override public WebElement findElement(By by) {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().findElement(by);
+        return context().getContext(currentContextKey).getDriver().findElement(by);
     }
 }

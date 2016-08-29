@@ -13,12 +13,12 @@
 
 package com.atanas.kanchev.testframework.selenium.omniadriver;
 
-import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 /**
  * Created by atanas on 22/08/16.
@@ -26,26 +26,23 @@ import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccesso
 public class ImeHandler<T extends WebDriver> implements WebDriver.ImeHandler {
 
     @Override public List<String> getAvailableEngines() {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().ime()
+        return context().getContext(currentContextKey).getDriver().manage().ime()
             .getAvailableEngines();
     }
 
     @Override public String getActiveEngine() {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().ime()
-            .getActiveEngine();
+        return context().getContext(currentContextKey).getDriver().manage().ime().getActiveEngine();
     }
 
     @Override public boolean isActivated() {
-        return context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().ime()
-            .isActivated();
+        return context().getContext(currentContextKey).getDriver().manage().ime().isActivated();
     }
 
     @Override public void deactivate() {
-        context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().ime().deactivate();
+        context().getContext(currentContextKey).getDriver().manage().ime().deactivate();
     }
 
     @Override public void activateEngine(String s) {
-        context().<SeleniumContext<T>>getCurrentContext().getDriver().manage().ime()
-            .activateEngine(s);
+        context().getContext(currentContextKey).getDriver().manage().ime().activateEngine(s);
     }
 }

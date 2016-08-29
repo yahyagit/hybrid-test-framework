@@ -13,28 +13,9 @@
 
 package com.atanas.kanchev.testframework.core.tests.context;
 
-import com.atanas.kanchev.testframework.commons.context.AbstractContext;
-import org.openqa.selenium.WebDriver;
+public class AbstractContextTest  {
 
-public class AbstractContextTest extends AbstractContext<WebDriver> {
-    /**
-     * <p>Constructor for AbstractContext.</p>
-     *
-     * @param contextName a {@link String} object.
-     */
-    public AbstractContextTest(String contextName) {
-        super(contextName);
-    }
 
-    /**
-     * <p>tearDownContext.</p>
-     *
-     * @param context a U object.
-     */
-    @Override
-    public void tearDownContext(AbstractContext<WebDriver> context) {
-
-    }
 //    public AbstractContextTest(String contextName) {
 //        super(contextName);
 //    }
