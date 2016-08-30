@@ -22,8 +22,8 @@ public class OpenNotificationsTest extends BaseTest {
 
     @Test
     public void openNotification() throws Exception {
-        $appium().android().appiumDriverMethods().openNotifications();
-        assertNotEquals(0, $appium().android().find().findElementsById("com.android.systemui:id/time_view").size());
-        $appium().android().appiumDriverMethods().openNotifications();
+        $appium().$androidNative().appiumDriverMethods().openNotifications();
+        assertNotEquals(0, $appium().$androidNative().find().findElementsById("com.$androidNative.systemui:id/time_view").size());
+        $appium().$androidNative().appiumDriverMethods().openNotifications();
     }
 }

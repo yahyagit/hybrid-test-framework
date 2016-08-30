@@ -59,47 +59,47 @@ public class IWrapperWrapperTest {
         }
 //    @Caps
 //    public void goToURLTest() throws Exception {
-//        goTo(url);
+//        $browser(url);
 //    }
 //
 //    @Caps
 //    public void refreshTest() throws Exception {
-//        goTo(url).
+//        $browser(url).
 //                refresh();
 //    }
 //
 //    @Caps
 //    public void methodChainingTest() throws Exception {
-//        goTo(url).refresh();
+//        $browser(url).refresh();
 //    }
 //
 //    @Caps
 //    public void loc() throws Exception {
-//        goTo(url).findElement().elementBy(Locator.XPATH, "//*[@id=\"tsf\"]/div[2]/div[3]/center/input[1]");
+//        $browser(url).findElement().elementBy(Locator.XPATH, "//*[@id=\"tsf\"]/div[2]/div[3]/center/input[1]");
 //    }
 //
 //    @Caps
 //    public void locs() throws Exception {
-//        goTo(url).findElement().elementBy(Locator.TAG_NAME, "tr");
+//        $browser(url).findElement().elementBy(Locator.TAG_NAME, "tr");
 //    }
 //
 //    @Caps
 //    public void multiple() throws Exception {
-//        goTo(url);
-//        goTo("HTTPS://BBC.CO.UK");
+//        $browser(url);
+//        $browser("HTTPS://BBC.CO.UK");
 //    }
 //
 //
 //    @Caps
 //    public void findElementByNameTest() throws Exception {
-//        goTo(url).
+//        $browser(url).
 //                findElement().elementBy(Locator.XPATH, "w");
 //    }
 //
 //    @Caps
 //    public void waitingTest() throws Exception {
 //
-//        goTo(url)
+//        $browser(url)
 //                .findElement().elementBy(Locator.NAME, "x");
 //        waitFor(5L)
 //                .isElementPresent(Locator.NAME, "lst-ib");
@@ -110,7 +110,7 @@ public class IWrapperWrapperTest {
 //    public void probeEl() throws Exception {
 //
 //        Assert.assertTrue(
-//                goTo(url)
+//                $browser(url)
 //                        .probe(Locator.XPATH, "//*[@id=\"tsf\"]/div[2]/div[3]/center/input[1]")
 //                        .exist());
 //
@@ -121,7 +121,7 @@ public class IWrapperWrapperTest {
 //        DriverFactory driverFactory = setupSelenium().configureBrowser();
 //        //driverFactory.setSelectedBrowser(BrowserConfig.CHROME);
 //        setupSelenium().configureContext(driverFactory);
-//        goTo(url);
+//        $browser(url);
 //    }
 //
 //    @Caps
@@ -139,7 +139,7 @@ public class IWrapperWrapperTest {
 //    }
 //
 //    @Caps
-//    public void conf() throws Exception {
+//    public void $conf() throws Exception {
 //
 //
 //    }

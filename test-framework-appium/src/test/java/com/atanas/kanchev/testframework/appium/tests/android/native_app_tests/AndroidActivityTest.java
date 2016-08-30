@@ -23,54 +23,54 @@ import static org.junit.Assert.assertEquals;
 public class AndroidActivityTest extends BaseTest {
 
     @Before public void setUp() throws Exception {
-        $appium().android().activity().startActivity("io.appium.android.apis", ".ApiDemos");
+        $appium().$androidNative().activity().startActivity("io.appium.$androidNative.apis", ".ApiDemos");
     }
 
     @Test public void startActivityInThisAppTestCase() {
 
-        $appium().android().activity().startActivity("io.appium.android.apis",
+        $appium().$androidNative().activity().startActivity("io.appium.$androidNative.apis",
             ".accessibility.AccessibilityNodeProviderActivity");
-        assertEquals($appium().android().appiumDriverMethods().currentActivity(),
+        assertEquals($appium().$androidNative().appiumDriverMethods().currentActivity(),
             ".accessibility.AccessibilityNodeProviderActivity");
-        $appium().android().interactsWithApps().closeApp();
+        $appium().$androidNative().interactsWithApps().closeApp();
     }
 
     @Test public void startActivityWithWaitingAppTestCase() {
 
-        $appium().android().activity().startActivity("io.appium.android.apis",
-            ".accessibility.AccessibilityNodeProviderActivity", "io.appium.android.apis",
+        $appium().$androidNative().activity().startActivity("io.appium.$androidNative.apis",
+            ".accessibility.AccessibilityNodeProviderActivity", "io.appium.$androidNative.apis",
             ".accessibility.AccessibilityNodeProviderActivity");
-        assertEquals($appium().android().appiumDriverMethods().currentActivity(),
+        assertEquals($appium().$androidNative().appiumDriverMethods().currentActivity(),
             ".accessibility.AccessibilityNodeProviderActivity");
     }
 
     @Test public void startActivityInNewAppTestCase() {
 
-        $appium().android().
-            activity().startActivity("com.android.contacts", ".ContactsListActivity");
-        assertEquals($appium().android().appiumDriverMethods().currentActivity(),
+        $appium().$androidNative().
+            activity().startActivity("com.$androidNative.contacts", ".ContactsListActivity");
+        assertEquals($appium().$androidNative().appiumDriverMethods().currentActivity(),
             ".ContactsListActivity");
-        $appium().android().actionShortcuts().pressKeyCode(AndroidKeyCode.BACK);
-        assertEquals($appium().android().appiumDriverMethods().currentActivity(),
+        $appium().$androidNative().actionShortcuts().pressKeyCode(AndroidKeyCode.BACK);
+        assertEquals($appium().$androidNative().appiumDriverMethods().currentActivity(),
             ".ContactsListActivity");
     }
 
     @Test public void startActivityInNewAppTestCaseWithoutClosingApp() {
-        $appium().android().
-            activity().startActivity("io.appium.android.apis",
+        $appium().$androidNative().
+            activity().startActivity("io.appium.$androidNative.apis",
             ".accessibility.AccessibilityNodeProviderActivity");
-        assertEquals($appium().android().
+        assertEquals($appium().$androidNative().
                 appiumDriverMethods().currentActivity(),
             ".accessibility.AccessibilityNodeProviderActivity");
-        $appium().android().
+        $appium().$androidNative().
             activity()
-            .startActivity("com.android.contacts", ".ContactsListActivity", "com.android.contacts",
+            .startActivity("com.$androidNative.contacts", ".ContactsListActivity", "com.$androidNative.contacts",
                 ".ContactsListActivity", false);
-        assertEquals($appium().android().
+        assertEquals($appium().$androidNative().
             appiumDriverMethods().currentActivity(), ".ContactsListActivity");
-        $appium().android().
+        $appium().$androidNative().
             actionShortcuts().pressKeyCode(AndroidKeyCode.BACK);
-        assertEquals($appium().android().
+        assertEquals($appium().$androidNative().
                 appiumDriverMethods().currentActivity(),
             ".accessibility.AccessibilityNodeProviderActivity");
     }

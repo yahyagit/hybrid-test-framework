@@ -25,40 +25,40 @@ public class AndroidSearchingTest extends BaseTest {
 
     @Before
     public void before() throws Exception {
-        $appium().android()
+        $appium().$androidNative()
                 .activity()
-                .startActivity("io.appium.android.apis", ".ApiDemos");
+                .startActivity("io.appium.$androidNative.apis", ".ApiDemos");
     }
 
     @Test
     public void findByAccessibilityIdTest() {
-        assertNotEquals($appium().android().find().findElement(MobileBy.AccessibilityId("Graphics")).getText(), null);
-        assertEquals($appium().android().find().findElements(MobileBy.AccessibilityId("Graphics")).size(), 1);
+        assertNotEquals($appium().$androidNative().find().findElement(MobileBy.AccessibilityId("Graphics")).getText(), null);
+        assertEquals($appium().$androidNative().find().findElements(MobileBy.AccessibilityId("Graphics")).size(), 1);
     }
 
     @Test
     public void findByAndroidUIAutomatorTest() {
-        assertNotEquals($appium().android().find()
+        assertNotEquals($appium().$androidNative().find()
                 .findElement(MobileBy.AndroidUIAutomator("new UiSelector().clickable(true)")).getText(), null);
-        assertNotEquals($appium().android().find()
+        assertNotEquals($appium().$androidNative().find()
                 .findElements(MobileBy.AndroidUIAutomator("new UiSelector().clickable(true)")).size(), 0);
-        assertNotEquals($appium().android().find()
+        assertNotEquals($appium().$androidNative().find()
                 .findElements(MobileBy.AndroidUIAutomator("new UiSelector().clickable(true)")).size(), 1);
     }
 
     @Test
     public void findByXPathTest() {
-        String byXPath = "//android.widget.TextView[contains(@text, 'Animat')]";
-        assertNotNull($appium().android().find().findElement(By.xpath(byXPath)).getText());
-        assertEquals($appium().android().find().findElements(By.xpath(byXPath)).size(), 1);
+        String byXPath = "//$androidNative.widget.TextView[contains(@text, 'Animat')]";
+        assertNotNull($appium().$androidNative().find().findElement(By.xpath(byXPath)).getText());
+        assertEquals($appium().$androidNative().find().findElements(By.xpath(byXPath)).size(), 1);
     }
 
 //    @Test
 //    public void findScrollable() {
-//        $appium().android().find().findElementByAccessibilityId("Views").click();
-//        MobileElement radioGroup = $appium().android().find()
+//        $appium().$androidNative().find().findElementByAccessibilityId("Views").click();
+//        MobileElement radioGroup = $appium().$androidNative().find()
 //                .findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()"
-//                        + ".resourceId(\"android:id/list\")).scrollIntoView("
+//                        + ".resourceId(\"$androidNative:id/list\")).scrollIntoView("
 //                        + "new UiSelector().text(\"Radio Group\"));");
 //        assertNotNull(radioGroup.getLocation());
 //    }

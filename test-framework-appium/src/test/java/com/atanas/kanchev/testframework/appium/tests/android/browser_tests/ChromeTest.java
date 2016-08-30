@@ -22,17 +22,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 
 import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessors.$appium;
-import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.$selenium;
 
 public class ChromeTest {
 
     @Test public void androidChromeTest() throws Exception {
 
-        $appium().conf().buildDefaultService();
-        $appium().conf().startServer();
+        $appium().$conf().buildDefaultService();
+        $appium().$conf().startServer();
 
-        $appium().conf()
-            .setCap(MobileCapabilityType.BROWSER_NAME, MobileBrowserType.CHROME)
+        $appium().$conf().setCap(MobileCapabilityType.BROWSER_NAME, MobileBrowserType.CHROME)
             .setCap(MobileCapabilityType.PLATFORM, Platform.ANDROID)
             .setCap(MobileCapabilityType.DEVICE_NAME, "ZY22398GL7")
             .setCap(MobileCapabilityType.PLATFORM_VERSION, "6.0.1")
@@ -42,13 +40,13 @@ public class ChromeTest {
             .setCap(AndroidMobileCapabilityType.ANDROID_DEVICE_READY_TIMEOUT, 60)
             .setCap(AndroidMobileCapabilityType.ENABLE_PERFORMANCE_LOGGING, true);
 
-//        $appium().conf().getAndroidDriver();
+        //        $appium().$conf().getAndroidDriver();
 
-        $appium().goTo("https://bbc.co.uk");
+        $appium().$browser().goTo("https://bbc.co.uk");
 
-        $selenium().find().elementBy(By.id("idcta-link"));
-//
-//        $appium().android().orientation().rotate(ScreenOrientation.LANDSCAPE);
+        $appium().$browser().find().elementBy(By.id("idcta-link"));
+        //
+        //        $appium().$androidNative().orientation().rotate(ScreenOrientation.LANDSCAPE);
 
     }
 }

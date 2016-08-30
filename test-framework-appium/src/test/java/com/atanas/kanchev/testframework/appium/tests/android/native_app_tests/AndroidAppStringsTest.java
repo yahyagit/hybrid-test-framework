@@ -22,14 +22,14 @@ public class AndroidAppStringsTest extends BaseTest {
 
     @Test
     public void getAppStrings() {
-        assertNotEquals(0, $appium().android()
+        assertNotEquals(0, $appium().$androidNative()
                 .appStrings()
                 .getAppStringMap().size());
     }
 
     @Test
     public void getGetAppStringsUsingLang() {
-        assertNotEquals(0, $appium().android()
+        assertNotEquals(0, $appium().$androidNative()
                 .appStrings()
                 .getAppStringMap("en").size());
     }

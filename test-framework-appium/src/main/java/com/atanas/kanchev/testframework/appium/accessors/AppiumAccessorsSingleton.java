@@ -15,9 +15,9 @@ package com.atanas.kanchev.testframework.appium.accessors;
 
 import com.atanas.kanchev.testframework.appium.driverfactory.AppiumDriverFactory;
 import com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler;
+import com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors;
 import com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
-import com.atanas.kanchev.testframework.selenium.handlers.Navigates;
 import io.appium.java_client.android.AndroidDriver;
 
 import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessors.$appium;
@@ -28,8 +28,8 @@ import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccesso
  */
 public class AppiumAccessorsSingleton {
 
-    private static final AppiumDriverFactory APPIUM_DRIVER_FACTORY = new AppiumDriverFactory();
     private static AppiumAccessorsSingleton instance = null;
+    private AppiumDriverFactory appiumDriverFactory= new AppiumDriverFactory();
 
     private AppiumAccessorsSingleton() {
     }
@@ -41,19 +41,21 @@ public class AppiumAccessorsSingleton {
         return instance;
     }
 
-    public AppiumDriverFactory conf() {
-        return APPIUM_DRIVER_FACTORY;
+    public AppiumDriverFactory $conf() {
+        return appiumDriverFactory;
     }
 
-    public Navigates goTo(final String url) {
-        SeleniumContext<AndroidDriver> c = new SeleniumContext<>($appium().conf().getAndroidDriver());
-        SeleniumAccessorsSingleton.currentContextKey = context().addContext(c.getContextKey(), c);
+    public SeleniumAccessorsSingleton $browser() {
+        if (SeleniumAccessorsSingleton.currentContextKey == null) {
+            SeleniumContext<AndroidDriver> c =
+                new SeleniumContext<>($appium().$conf().getAndroidDriver());
+            SeleniumAccessorsSingleton.currentContextKey = context().addContext(c.getContextKey(), c);
+        }
 
-
-        return new Navigates().getPage(url);
+        return SeleniumAccessors.$selenium();
     }
 
-    public AndroidNativeHandler android() {
+    public AndroidNativeHandler $androidNative() {
         return new AndroidNativeHandler();
     }
 

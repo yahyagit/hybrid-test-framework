@@ -30,9 +30,9 @@ public class BaseTest  {
             "src/test/java/com/atanas/kanchev/testframework/appium/tests/android/native_app_tests");
         File app = new File(appDir, "ApiDemos-debug.apk");
 
-        $appium().conf().buildDefaultService().startServer();
+        $appium().$conf().buildDefaultService().startServer();
 
-        $appium().conf().setCap(MobileCapabilityType.APP, app.getAbsolutePath())
+        $appium().$conf().setCap(MobileCapabilityType.APP, app.getAbsolutePath())
             .setCap(MobileCapabilityType.DEVICE_NAME, "8adea98f")
             .setCap(MobileCapabilityType.PLATFORM_VERSION, "6.0.1")
             .setCap(MobileCapabilityType.PLATFORM, Platform.ANDROID)
@@ -47,6 +47,6 @@ public class BaseTest  {
 
     @AfterClass public static void tearDown() throws Exception {
         //        CONTEXT_FACTORY.tearDownContexts();
-        $appium().conf().stopServer();
+        $appium().$conf().stopServer();
     }
 }

@@ -30,28 +30,28 @@ public class IntentTest {
     @BeforeClass public static void beforeClass() throws Exception {
 
         File appDir = new File(
-            "src/test/java/com/atanas/kanchev/testframework/appium/tests/android/native_app_tests");
+            "src/test/java/com/atanas/kanchev/testframework/appium/tests/$androidNative/native_app_tests");
         File app = new File(appDir, "IntentExample.apk");
 
-        $appium().conf().buildDefaultService().startServer();
+        $appium().$conf().buildDefaultService().startServer();
 
-        $appium().conf().setCap(MobileCapabilityType.APP, app.getAbsoluteFile())
+        $appium().$conf().setCap(MobileCapabilityType.APP, app.getAbsoluteFile())
             .setCap(MobileCapabilityType.DEVICE_NAME, "8adea98f")
             .setCap(MobileCapabilityType.PLATFORM, Platform.ANDROID);
     }
 
     @AfterClass public static void tearDown() throws Exception {
 
-        $appium().conf().stopServer();
+        $appium().$conf().stopServer();
         //        CONTEXT_FACTORY.tearDownContexts();
 
     }
 
     @Test public void startActivityWithIntent() {
 
-        $appium().android().activity()
-            .startActivity("com.android.mms", ".ui.ComposeMessageActivity", null, null,
-                "android.intent.action.SEND", "android.intent.category.DEFAULT", "0x4000000",
+        $appium().$androidNative().activity()
+            .startActivity("com.$androidNative.mms", ".ui.ComposeMessageActivity", null, null,
+                "$androidNative.intent.action.SEND", "$androidNative.intent.category.DEFAULT", "0x4000000",
                 "-d \"TestIntent\" -t \"text/plain\"");
         try {
             Thread.sleep(5000);
@@ -62,11 +62,11 @@ public class IntentTest {
 
     @Test public void startActivityWithDefaultIntentAndDefaultCategoryWithOptionalArgs() {
 
-        $appium().android().activity()
-            .startActivity("com.prgguru.android", ".GreetingActivity", null, null,
-                "android.intent.action.MAIN", "android.intent.category.DEFAULT", "0x4000000",
+        $appium().$androidNative().activity()
+            .startActivity("com.prgguru.$androidNative", ".GreetingActivity", null, null,
+                "$androidNative.intent.action.MAIN", "$androidNative.intent.category.DEFAULT", "0x4000000",
                 "--es \"USERNAME\" \"AppiumIntentTest\" -t \"text/plain\"");
-        assertEquals($appium().android().find().findElementById("com.prgguru.android:id/textView1")
+        assertEquals($appium().$androidNative().find().findElementById("com.prgguru.$androidNative:id/textView1")
             .getText(), "Welcome AppiumIntentTest");
     }
 }

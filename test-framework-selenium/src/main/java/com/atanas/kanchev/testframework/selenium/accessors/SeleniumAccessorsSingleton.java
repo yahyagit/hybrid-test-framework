@@ -36,8 +36,7 @@ public class SeleniumAccessorsSingleton {
     public static ContextKey<SeleniumContext> currentContextKey;
     private static SeleniumAccessorsSingleton instance = null;
 
-    private SeleniumAccessorsSingleton() {
-    }
+    private SeleniumAccessorsSingleton() {}
 
     static SeleniumAccessorsSingleton getInstance() {
         if (instance == null) {
@@ -51,8 +50,12 @@ public class SeleniumAccessorsSingleton {
     }
 
     public Navigates goTo(final String url) {
-        SeleniumContext<WebDriver> c = new SeleniumContext<>(conf().getDriver());
-        currentContextKey = context().addContext(c.getContextKey(), c);
+
+        if (currentContextKey == null) {
+            SeleniumContext<WebDriver> c = new SeleniumContext<>(conf().getDriver());
+            currentContextKey = context().addContext(c.getContextKey(), c);
+        }
+
         return new Navigates().getPage(url);
     }
 

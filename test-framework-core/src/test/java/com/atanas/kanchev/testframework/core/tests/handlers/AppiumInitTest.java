@@ -53,7 +53,7 @@ public class AppiumInitTest  {
 
         Thread.sleep(10000);
 
-        $appium().android().orientation().rotate(ScreenOrientation.PORTRAIT);
+        $appium().$androidNative().orientation().rotate(ScreenOrientation.PORTRAIT);
 
 
     }
@@ -78,8 +78,8 @@ public class AppiumInitTest  {
 //
 //
 //        setupAndroidDriver()
-//                //.setAppPackage("com.example.android.contactmanager")
-//                .setAppPackage("com.android.chrome")
+//                //.setAppPackage("com.example.$androidNative.contactmanager")
+//                .setAppPackage("com.$androidNative.chrome")
 //                .setAndroidDeviceReadyTimeout(60)
 //                .setEnablePerformanceLogging(true);
 //

@@ -22,19 +22,19 @@ import static org.junit.Assert.assertEquals;
 public class AndroidConnectionTest extends BaseTest {
 
     @Test public void setWiFi() {
-        $appium().android().networkConnection().setConnection(Connection.WIFI);
-        assertEquals(Connection.WIFI, $appium().android().networkConnection().getConnection());
+        $appium().$androidNative().networkConnection().setConnection(Connection.WIFI);
+        assertEquals(Connection.WIFI, $appium().$androidNative().networkConnection().getConnection());
     }
 
     @Test public void setNoneAndAirplane() {
-        $appium().android().networkConnection().setConnection(Connection.NONE);
-        assertEquals(Connection.NONE, $appium().android().networkConnection().getConnection());
-        $appium().android().networkConnection().setConnection(Connection.AIRPLANE);
-        assertEquals(Connection.AIRPLANE, $appium().android().networkConnection().getConnection());
+        $appium().$androidNative().networkConnection().setConnection(Connection.NONE);
+        assertEquals(Connection.NONE, $appium().$androidNative().networkConnection().getConnection());
+        $appium().$androidNative().networkConnection().setConnection(Connection.AIRPLANE);
+        assertEquals(Connection.AIRPLANE, $appium().$androidNative().networkConnection().getConnection());
     }
 
     @Test public void setAll() {
-        $appium().android().networkConnection().setConnection(Connection.ALL);
-        assertEquals(Connection.ALL, $appium().android().networkConnection().getConnection());
+        $appium().$androidNative().networkConnection().setConnection(Connection.ALL);
+        assertEquals(Connection.ALL, $appium().$androidNative().networkConnection().getConnection());
     }
 }

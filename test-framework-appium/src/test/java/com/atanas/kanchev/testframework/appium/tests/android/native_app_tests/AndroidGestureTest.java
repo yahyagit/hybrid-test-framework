@@ -29,37 +29,37 @@ import static org.junit.Assert.assertNotEquals;
 public class AndroidGestureTest extends BaseTest {
 
     @Test public void singleTapTest() throws Exception {
-        $appium().android().activity().startActivity("io.appium.android.apis", ".view.Buttons1");
+        $appium().$androidNative().activity().startActivity("io.appium.$androidNative.apis", ".view.Buttons1");
         Point point =
-            $appium().android().find().findElementById("io.appium.android.apis:id/button_toggle")
+            $appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/button_toggle")
                 .getLocation();
-        $appium().android().touchShortcuts().tap(1, point.x + 20, point.y + 30, 1000);
+        $appium().$androidNative().touchShortcuts().tap(1, point.x + 20, point.y + 30, 1000);
         assertEquals("ON",
-            $appium().android().find().findElementById("io.appium.android.apis:id/button_toggle")
+            $appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/button_toggle")
                 .getText());
     }
 
     @Test public void singleElementTapTest() throws Exception {
-        $appium().android().activity().startActivity("io.appium.android.apis", ".view.Buttons1");
-        $appium().android().touchShortcuts().tap(1,
-            $appium().android().find().findElementById("io.appium.android.apis:id/button_toggle"),
+        $appium().$androidNative().activity().startActivity("io.appium.$androidNative.apis", ".view.Buttons1");
+        $appium().$androidNative().touchShortcuts().tap(1,
+            $appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/button_toggle"),
             1000);
         assertEquals("ON",
-            $appium().android().find().findElementById("io.appium.android.apis:id/button_toggle")
+            $appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/button_toggle")
                 .getText());
     }
 
     @Test public void multiTapActionTest() throws Exception {
-        $appium().android().
-            activity().startActivity("io.appium.android.apis", ".view.ChronometerDemo");
+        $appium().$androidNative().
+            activity().startActivity("io.appium.$androidNative.apis", ".view.ChronometerDemo");
         WebElement chronometer =
-            $appium().android().find().findElementById("io.appium.android.apis:id/chronometer");
+            $appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/chronometer");
 
         TouchAction startStop =
             new TouchAction(context().getContext(currentContextKey).getDriver())
-                .tap($appium().android().find().findElementById("io.appium.android.apis:id/start"))
+                .tap($appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/start"))
                 .waitAction(2000)
-                .tap($appium().android().find().findElementById("io.appium.android.apis:id/stop"));
+                .tap($appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/stop"));
 
         MultiTouchAction m1 =
             new MultiTouchAction(context().getContext(currentContextKey).getDriver())
@@ -73,7 +73,7 @@ public class AndroidGestureTest extends BaseTest {
 
         TouchAction reset =
             new TouchAction(context().getContext(currentContextKey).getDriver())
-                .tap($appium().android().find().findElementById("io.appium.android.apis:id/reset"));
+                .tap($appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/reset"));
         MultiTouchAction m2 =
             new MultiTouchAction(context().getContext(currentContextKey).getDriver())
                 .add(startStop).add(reset);
@@ -83,15 +83,15 @@ public class AndroidGestureTest extends BaseTest {
     }
 
     @Test public void dragNDropTest() throws Exception {
-        $appium().android().activity()
-            .startActivity("io.appium.android.apis", ".view.DragAndDropDemo");
+        $appium().$androidNative().activity()
+            .startActivity("io.appium.$androidNative.apis", ".view.DragAndDropDemo");
         WebElement dragDot1 =
-            $appium().android().find().findElement(By.id("io.appium.android.apis:id/drag_dot_1"));
+            $appium().$androidNative().find().findElement(By.id("io.appium.$androidNative.apis:id/drag_dot_1"));
         WebElement dragDot3 =
-            $appium().android().find().findElement(By.id("io.appium.android.apis:id/drag_dot_3"));
+            $appium().$androidNative().find().findElement(By.id("io.appium.$androidNative.apis:id/drag_dot_3"));
 
         WebElement dragText =
-            $appium().android().find().findElement(By.id("io.appium.android.apis:id/drag_text"));
+            $appium().$androidNative().find().findElement(By.id("io.appium.$androidNative.apis:id/drag_text"));
         assertEquals("Drag text not empty", "", dragText.getText());
 
         TouchAction dragNDrop =
@@ -103,35 +103,35 @@ public class AndroidGestureTest extends BaseTest {
     }
 
 //    @Test public void zoomAndPinchTest() throws Exception {
-//        $appium().android().activity().startActivity("io.appium.android.apis", ".ApiDemos");
-//        MobileElement e = $appium().android().find().findElement(MobileBy.AccessibilityId("App"));
+//        $appium().$androidNative().activity().startActivity("io.appium.$androidNative.apis", ".ApiDemos");
+//        MobileElement e = $appium().$androidNative().find().findElement(MobileBy.AccessibilityId("App"));
 //        e.zoom();
 //        e.pinch();
 //    }
 
 //    @Test public void reusableTapTest() throws Exception {
-//        $appium().android().activity().startActivity("io.appium.android.apis", ".view.Buttons1");
+//        $appium().$androidNative().activity().startActivity("io.appium.$androidNative.apis", ".view.Buttons1");
 //        AndroidElement element =
-//            $appium().android().find().findElementById("io.appium.android.apis:id/button_toggle");
+//            $appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/button_toggle");
 //        TouchAction tap =
 //            new TouchAction(context().getContext(currentContextKey).getDriver()).tap(element);
 //
-//        $appium().android().touchActions().performTouchAction(tap);
+//        $appium().$androidNative().touchActions().performTouchAction(tap);
 //        assertEquals("ON",
-//            $appium().android().find().findElementById("io.appium.android.apis:id/button_toggle")
+//            $appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/button_toggle")
 //                .getText());
 //
-//        $appium().android().touchActions().performTouchAction(tap);
+//        $appium().$androidNative().touchActions().performTouchAction(tap);
 //        assertEquals("OFF",
-//            $appium().android().find().findElementById("io.appium.android.apis:id/button_toggle")
+//            $appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/button_toggle")
 //                .getText());
 //    }
 //
 //    @Test public void verticalSwipingTest() throws Exception {
-//        $appium().android().find().findElementByAccessibilityId("Views").click();
+//        $appium().$androidNative().find().findElementByAccessibilityId("Views").click();
 //        AndroidElement listView =
-//            $appium().android().find().findElement(By.className("android.widget.ListView"));
-//        MobileElement textView = $appium().android().find().findElementById("android:id/text1");
+//            $appium().$androidNative().find().findElement(By.className("$androidNative.widget.ListView"));
+//        MobileElement textView = $appium().$androidNative().find().findElementById("$androidNative:id/text1");
 //
 //        String originalText = textView.getText();
 //
@@ -143,18 +143,18 @@ public class AndroidGestureTest extends BaseTest {
 //    }
 //
 //    @Test public void horizontalSwipingTest() throws Exception {
-//        $appium().android().activity().startActivity("io.appium.android.apis", ".view.Gallery1");
+//        $appium().$androidNative().activity().startActivity("io.appium.$androidNative.apis", ".view.Gallery1");
 //
 //        AndroidElement gallery =
-//            $appium().android().find().findElementById("io.appium.android.apis:id/gallery");
-//        int originalImageCount = gallery.findElementsByClassName("android.widget.ImageView").size();
+//            $appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/gallery");
+//        int originalImageCount = gallery.findElementsByClassName("$androidNative.widget.ImageView").size();
 //
 //        gallery.swipe(SwipeElementDirection.LEFT, 5, 5, 2000);
 //        assertNotEquals(originalImageCount,
-//            gallery.findElementsByClassName("android.widget.ImageView").size());
+//            gallery.findElementsByClassName("$androidNative.widget.ImageView").size());
 //
 //        gallery.swipe(SwipeElementDirection.RIGHT, 5, 5, 2000);
 //        assertEquals(originalImageCount,
-//            gallery.findElementsByClassName("android.widget.ImageView").size());
+//            gallery.findElementsByClassName("$androidNative.widget.ImageView").size());
 //    }
 }

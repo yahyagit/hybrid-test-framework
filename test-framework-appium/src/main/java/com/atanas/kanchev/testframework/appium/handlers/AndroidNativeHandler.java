@@ -42,7 +42,7 @@ public class AndroidNativeHandler {
 
     public AndroidNativeHandler() {
         AppiumContext context =
-            new AppiumContext<>($appium().conf().getAndroidDriver());
+            new AppiumContext<>($appium().$conf().getAndroidDriver());
         currentContextKey = context().addContext(context.getContextKey(), context);
     }
 

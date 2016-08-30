@@ -26,21 +26,21 @@ public class AndroidElementTest extends BaseTest {
     @Before
     public void setup() throws Exception {
 
-        $appium().android().activity().startActivity("io.appium.android.apis", ".ApiDemos");
+        $appium().$androidNative().activity().startActivity("io.appium.$androidNative.apis", ".ApiDemos");
 
     }
 
     @Test
     public void findByAccessibilityIdTest() {
 
-        assertNotEquals($appium().android()
+        assertNotEquals($appium().$androidNative()
                 .find()
-                .findElementById("android:id/content")
+                .findElementById("$androidNative:id/content")
                 .findElement(MobileBy.AccessibilityId("Graphics"))
                 .getText(), null);
-        assertEquals($appium().android()
+        assertEquals($appium().$androidNative()
                 .find()
-                .findElementById("android:id/content")
+                .findElementById("$androidNative:id/content")
                 .findElements(MobileBy.AccessibilityId("Graphics"))
                 .size(), 1);
     }
@@ -48,16 +48,16 @@ public class AndroidElementTest extends BaseTest {
     @Test
     public void findByAndroidUIAutomatorTest() {
 
-        assertNotEquals($appium().android()
+        assertNotEquals($appium().$androidNative()
                 .find()
-                .findElementById("android:id/content")
+                .findElementById("$androidNative:id/content")
                 .findElement(MobileBy.AndroidUIAutomator("new UiSelector().clickable(true)")).getText(), null);
-        assertNotEquals($appium().android()
+        assertNotEquals($appium().$androidNative()
                 .find()
-                .findElementById("android:id/content")
+                .findElementById("$androidNative:id/content")
                 .findElements(MobileBy.AndroidUIAutomator("new UiSelector().clickable(true)")).size(), 0);
-        assertNotEquals($appium().android()
-                .find().findElementById("android:id/content")
+        assertNotEquals($appium().$androidNative()
+                .find().findElementById("$androidNative:id/content")
                 .findElements(MobileBy.AndroidUIAutomator("new UiSelector().clickable(true)")).size(), 1);
     }
 
@@ -66,13 +66,13 @@ public class AndroidElementTest extends BaseTest {
 //
 //        String originalValue = "original value";
 //
-//        $appium().android()
+//        $appium().$androidNative()
 //                .activity()
-//                .startActivity("io.appium.android.apis", ".view.Controls1");
+//                .startActivity("io.appium.$androidNative.apis", ".view.Controls1");
 //        AndroidElement editElement =
-//                $appium().android()
+//                $appium().$androidNative()
 //                        .find()
-//                        .findElementByAndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")");
+//                        .findElementByAndroidUIAutomator("resourceId(\"io.appium.$androidNative.apis:id/edit\")");
 //        editElement.sendKeys(originalValue);
 //        assertEquals(originalValue, editElement.getText());
 //        String replacedValue = "replaced value";
@@ -83,12 +83,12 @@ public class AndroidElementTest extends BaseTest {
 //    @Test
 //    public void scrollingToSubElement() {
 //
-//        $appium().android()
+//        $appium().$androidNative()
 //                .find()
 //                .findElementByAccessibilityId("Views").click();
-//        AndroidElement list = $appium().android()
+//        AndroidElement list = $appium().$androidNative()
 //                .find()
-//                .findElement(By.id("android:id/list"));
+//                .findElement(By.id("$androidNative:id/list"));
 //        MobileElement radioGroup = list
 //                .findElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView("
 //                        + "new UiSelector().text(\"Radio Group\"));"));
@@ -100,9 +100,9 @@ public class AndroidElementTest extends BaseTest {
 //
 //        String value = "new value";
 //
-//        $appium().android().activity().startActivity("io.appium.android.apis", ".view.Controls1");
-//        AndroidElement editElement = $appium().android().find()
-//                .findElementByAndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")");
+//        $appium().$androidNative().activity().startActivity("io.appium.$androidNative.apis", ".view.Controls1");
+//        AndroidElement editElement = $appium().$androidNative().find()
+//                .findElementByAndroidUIAutomator("resourceId(\"io.appium.$androidNative.apis:id/edit\")");
 //        editElement.setValue(value);
 //        assertEquals(value, editElement.getText());
 //    }

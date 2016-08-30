@@ -24,35 +24,35 @@ public class KeyCodeTest extends BaseTest {
 
     @Before
     public void before() throws Exception {
-        $appium().android()
+        $appium().$androidNative()
                 .interactsWithApps()
                 .resetApp();
     }
 
     @Test
     public void pressKeyCodeTest() {
-        $appium().android()
+        $appium().$androidNative()
                 .actionShortcuts()
                 .pressKeyCode(AndroidKeyCode.HOME);
     }
 
     @Test
     public void pressKeyCodeWithMetastateTest() {
-        $appium().android()
+        $appium().$androidNative()
                 .actionShortcuts()
                 .pressKeyCode(AndroidKeyCode.SPACE, AndroidKeyMetastate.META_SHIFT_ON);
     }
 
     @Test
     public void longPressKeyCodeTest() {
-        $appium().android()
+        $appium().$androidNative()
                 .actionShortcuts()
                 .longPressKeyCode(AndroidKeyCode.HOME);
     }
 
     @Test
     public void longPressKeyCodeWithMetastateTest() {
-        $appium().android()
+        $appium().$androidNative()
                 .actionShortcuts()
                 .longPressKeyCode(AndroidKeyCode.HOME, AndroidKeyMetastate.META_SHIFT_ON);
     }

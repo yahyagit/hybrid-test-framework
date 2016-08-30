@@ -56,7 +56,7 @@ public class FinderTest {
     @Test
     public void test() throws Exception {
 
-//        goTo("https://bbc.co.uk").waitFor(5L).elementToBeClickable(By.id("orb-modules"));
+//        $browser("https://bbc.co.uk").waitFor(5L).elementToBeClickable(By.id("orb-modules"));
 
     }
 }
