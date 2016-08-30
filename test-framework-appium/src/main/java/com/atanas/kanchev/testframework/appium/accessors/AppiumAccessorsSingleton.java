@@ -30,10 +30,7 @@ public class AppiumAccessorsSingleton {
     private static AppiumAccessorsSingleton instance = null;
     public static ContextKey<AppiumContext> currentContextKey;
 
-    private AppiumAccessorsSingleton() {
-        AppiumContext<AndroidDriver> c = new AppiumContext<>(conf().getAndroidDriver());
-        context().addContext(c.getContextKey(), c);
-    }
+    private AppiumAccessorsSingleton() {}
 
     static AppiumAccessorsSingleton getInstance() {
         if (instance == null) {
