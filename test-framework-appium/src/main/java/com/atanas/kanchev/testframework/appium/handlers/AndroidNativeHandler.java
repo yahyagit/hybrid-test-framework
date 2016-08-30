@@ -13,12 +13,16 @@
 
 package com.atanas.kanchev.testframework.appium.handlers;
 
+import com.atanas.kanchev.testframework.appium.context.AppiumContext;
 import com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor;
+import com.atanas.kanchev.testframework.commons.context.ContextKey;
 import io.appium.java_client.FindsByAccessibilityId;
 import io.appium.java_client.FindsByAndroidUIAutomator;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDeviceActionShortcuts;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.android.Connection;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
@@ -29,129 +33,67 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessorsSingleton.currentContextKey;
+import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessors.$appium;
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 
-/**
- * <p>AndroidNativeHandler class.</p>
- *
- * @author Atanas Kanchev
- */
 public class AndroidNativeHandler {
 
-    /**
-     * <p>activity.</p>
-     *
-     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.StartsActivity} object.
-     */
+    public static ContextKey<AppiumContext<AndroidDriver<AndroidElement>>> currentContextKey;
+
+    public AndroidNativeHandler() {
+        AppiumContext context =
+            new AppiumContext<>($appium().conf().getAndroidDriver());
+        currentContextKey = context().addContext(context.getContextKey(), context);
+    }
+
     public StartsActivity activity() {
         return new StartsActivity();
     }
 
-    /**
-     * <p>orientation.</p>
-     *
-     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.Rotatable} object.
-     */
     public Rotatable orientation() {
         return new Rotatable();
     }
 
-    /**
-     * <p>pushFiles.</p>
-     *
-     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.PushesFiles} object.
-     */
     public PushesFiles pushFiles() {
         return new PushesFiles();
     }
 
-    /**
-     * <p>actionShortcuts.</p>
-     *
-     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.ActionShortcuts} object.
-     */
     public ActionShortcuts actionShortcuts() {
         return new ActionShortcuts();
     }
 
-    /**
-     * <p>touchShortcuts.</p>
-     *
-     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.TouchShortcuts} object.
-     */
     public TouchShortcuts touchShortcuts() {
         return new TouchShortcuts();
     }
 
-    /**
-     * <p>find.</p>
-     *
-     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.Finds} object.
-     */
     public Finds find() {
         return new Finds();
     }
 
-    /**
-     * <p>appStrings.</p>
-     *
-     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.HasAppStrings} object.
-     */
     public HasAppStrings appStrings() {
         return new HasAppStrings();
     }
 
-    /**
-     * <p>interactsWithApps.</p>
-     *
-     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.InteractsWithApps} object.
-     */
     public InteractsWithApps interactsWithApps() {
         return new InteractsWithApps();
     }
 
-    /**
-     * <p>locationContext.</p>
-     *
-     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.LocationContext} object.
-     */
     public LocationContext locationContext() {
         return new LocationContext();
     }
 
-    /**
-     * <p>contextAware.</p>
-     *
-     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.ContextAware} object.
-     */
     public ContextAware contextAware() {
         return new ContextAware();
     }
 
-    /**
-     * <p>appiumDriverMethods.</p>
-     *
-     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.AppiumDriverMethods} object.
-     */
     public AppiumDriverMethods appiumDriverMethods() {
         return new AppiumDriverMethods();
     }
 
-    /**
-     * <p>touchActions.</p>
-     *
-     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.PerformsTouchActions} object.
-     */
     public PerformsTouchActions touchActions() {
         return new PerformsTouchActions();
     }
 
-    /**
-     * <p>networkConnection.</p>
-     *
-     * @return a {@link com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.HasNetworkConnection} object.
-     */
     public HasNetworkConnection networkConnection() {
         return new HasNetworkConnection();
     }

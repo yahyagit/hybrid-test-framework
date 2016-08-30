@@ -20,7 +20,7 @@ import com.atanas.kanchev.testframework.commons.context.IElement;
 import com.atanas.kanchev.testframework.commons.exceptions.CustomExceptions;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverManager;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.List;
 
-public final class AppiumContext<T extends AndroidDriver> extends AbstractContext
+public final class AppiumContext<T> extends AbstractContext
     implements IElement<MobileElement>, IDriverContext<T> {
 
     private static final Logger logger = LoggerFactory.getLogger(AppiumContext.class.getName());
@@ -119,8 +119,8 @@ public final class AppiumContext<T extends AndroidDriver> extends AbstractContex
 
         logger.debug("Tearing down context " + getContextName());
         if (getDriver() != null) {
-            if (DriverManager.isBrowserStillOpen(getDriver())) {
-                DriverManager.quitDriver(getDriver());
+            if (DriverManager.isBrowserStillOpen((WebDriver) getDriver())) {
+                DriverManager.quitDriver((WebDriver) getDriver());
             }
         }
     }

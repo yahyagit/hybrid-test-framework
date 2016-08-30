@@ -24,7 +24,8 @@ import java.io.File;
 import java.util.Map;
 
 import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessors.$appium;
-import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessorsSingleton.currentContextKey;
+
+import static com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.currentContextKey;
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
 import static org.junit.Assert.*;
 
