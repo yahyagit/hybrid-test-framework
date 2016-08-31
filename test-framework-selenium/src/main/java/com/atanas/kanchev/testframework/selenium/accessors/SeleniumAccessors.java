@@ -25,4 +25,9 @@ public class SeleniumAccessors {
         return seleniumAccessorsSingleton;
     }
 
+    public static SeleniumAccessorsSingleton $selenium(String url) {
+        seleniumAccessorsSingleton.goTo(url);
+        return seleniumAccessorsSingleton;
+    }
+
 }
