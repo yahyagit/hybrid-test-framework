@@ -16,10 +16,9 @@ package com.atanas.kanchev.testframework.selenium.accessors;
 import com.atanas.kanchev.testframework.commons.context.ContextKey;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
-import com.atanas.kanchev.testframework.selenium.handlers.Finder;
 import com.atanas.kanchev.testframework.selenium.handlers.Navigates;
 import com.atanas.kanchev.testframework.selenium.handlers.Probes;
-import com.atanas.kanchev.testframework.selenium.interactions.element.OmniaElement;
+import com.atanas.kanchev.testframework.selenium.interactions.find.Finder;
 import com.atanas.kanchev.testframework.selenium.interactions.wait.Waiting;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -36,7 +35,8 @@ public class SeleniumAccessorsSingleton {
     public static ContextKey<SeleniumContext> currentContextKey;
     private static SeleniumAccessorsSingleton instance = null;
 
-    private SeleniumAccessorsSingleton() {}
+    private SeleniumAccessorsSingleton() {
+    }
 
     static SeleniumAccessorsSingleton getInstance() {
         if (instance == null) {
@@ -63,6 +63,10 @@ public class SeleniumAccessorsSingleton {
         return new Finder();
     }
 
+    public Finder find(By locator) {
+        return new Finder(locator);
+    }
+
     public Finder find(WebElement e) {
         return new Finder(e);
     }
@@ -79,13 +83,5 @@ public class SeleniumAccessorsSingleton {
         return new Waiting();
     }
 
-    public OmniaElement element() {
-        return new OmniaElement();
-    }
-
-    public OmniaElement element(By by) {
-
-        return new OmniaElement(by);
-    }
 
 }
