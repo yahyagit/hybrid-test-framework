@@ -46,8 +46,8 @@ public class ProbesTest  {
         $selenium().conf().setBrowser("chrome");
         $selenium().goTo("");
         $selenium().goTo("https://www.google.co.uk");
-        $selenium().element(By.name("q")).click();
-        $selenium().element().sendKeys("hello");
+        $selenium().find(By.name("q"))/*.click()*/;
+//        $selenium().element().sendKeys("hello");
         //        setupSelenium().setBrowser("firefox");
         $selenium().goTo("https://www.bbc.co.uk");
         //        find().elementBy(By.name("btnK"));

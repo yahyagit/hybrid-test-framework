@@ -43,6 +43,11 @@ public final class Finder implements IFinder {
             context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver(), clazz);
     }
 
+    public Finder(By locator) {
+        this();
+        context().getContext(currentContextKey).setCurrentElement(findElement(locator));
+    }
+
     public Finder(WebElement element) {
         this();
         context().getContext(currentContextKey).setCurrentElement(element);
