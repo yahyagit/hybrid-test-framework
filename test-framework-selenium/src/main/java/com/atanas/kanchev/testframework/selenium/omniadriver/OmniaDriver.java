@@ -20,7 +20,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 import java.util.Set;
 
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 /**
@@ -34,15 +34,15 @@ public final class OmniaDriver implements WebDriver {
     }
 
     @Override public void get(String s) {
-        context().getContext(currentContextKey).getDriver().get(s);
+        $context().getContext(currentContextKey).getDriver().get(s);
     }
 
     @Override public String getCurrentUrl() {
-        return context().getContext(currentContextKey).getDriver().getCurrentUrl();
+        return $context().getContext(currentContextKey).getDriver().getCurrentUrl();
     }
 
     @Override public String getTitle() {
-        return context().getContext(currentContextKey).getDriver().getTitle();
+        return $context().getContext(currentContextKey).getDriver().getTitle();
     }
 
     @Override public List<WebElement> findElements(By by) {
@@ -54,23 +54,23 @@ public final class OmniaDriver implements WebDriver {
     }
 
     @Override public String getPageSource() {
-        return context().getContext(currentContextKey).getDriver().getPageSource();
+        return $context().getContext(currentContextKey).getDriver().getPageSource();
     }
 
     @Override public void close() {
-        context().getContext(currentContextKey).getDriver().close();
+        $context().getContext(currentContextKey).getDriver().close();
     }
 
     @Override public void quit() {
-        context().getContext(currentContextKey).getDriver().quit();
+        $context().getContext(currentContextKey).getDriver().quit();
     }
 
     @Override public Set<String> getWindowHandles() {
-        return context().getContext(currentContextKey).getDriver().getWindowHandles();
+        return $context().getContext(currentContextKey).getDriver().getWindowHandles();
     }
 
     @Override public String getWindowHandle() {
-        return context().getContext(currentContextKey).getDriver().getWindowHandle();
+        return $context().getContext(currentContextKey).getDriver().getWindowHandle();
     }
 
     @Override public TargetLocator switchTo() {

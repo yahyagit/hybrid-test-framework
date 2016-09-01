@@ -11,20 +11,12 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.commons.accessors;
+package com.atanas.kanchev.testframework.selenium.proxy.omnia;
 
-import com.atanas.kanchev.testframework.commons.context.ConcurrentContextContainer;
+import org.openqa.selenium.SearchContext;
 
 /**
  * @author Atanas Kanchev
  */
-public class ContextsAccessor {
-
-    private static final ConcurrentContextContainer contextThreadLocalContainer =
-        new ConcurrentContextContainer();
-
-    public static ConcurrentContextContainer $context() {
-        return contextThreadLocalContainer;
-    }
-
+public interface IElementFinder extends SearchContext {
 }

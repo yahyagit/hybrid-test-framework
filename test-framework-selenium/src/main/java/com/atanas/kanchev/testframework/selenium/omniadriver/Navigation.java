@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 public class Navigation<T extends WebDriver> implements WebDriver.Navigation {
@@ -34,12 +34,12 @@ public class Navigation<T extends WebDriver> implements WebDriver.Navigation {
 
     @Override public void back() {
         logger.debug("Navigating back");
-        context().getContext(currentContextKey).getDriver().navigate().back();
+        $context().getContext(currentContextKey).getDriver().navigate().back();
     }
 
     @Override public void forward() {
         logger.debug("Navigating forward");
-        context().getContext(currentContextKey).getDriver().navigate().forward();
+        $context().getContext(currentContextKey).getDriver().navigate().forward();
     }
 
     @Override public void to(String s) {
@@ -52,7 +52,7 @@ public class Navigation<T extends WebDriver> implements WebDriver.Navigation {
 
     @Override public void refresh() {
         logger.debug("Refreshing page");
-        context().getContext(currentContextKey).getDriver().navigate().refresh();
+        $context().getContext(currentContextKey).getDriver().navigate().refresh();
     }
 
     private void goTo(String uri) {
@@ -62,7 +62,7 @@ public class Navigation<T extends WebDriver> implements WebDriver.Navigation {
 
             if (uri.startsWith("http:") || uri.startsWith("https:")) {
                 try {
-                    context().getContext(currentContextKey).getDriver().navigate()
+                    $context().getContext(currentContextKey).getDriver().navigate()
                         .to(new URL(uri));
                 } catch (MalformedURLException e) {
                     logger.error("Invalid URL " + e.getMessage());
@@ -70,7 +70,7 @@ public class Navigation<T extends WebDriver> implements WebDriver.Navigation {
             } else {
                 try {
                     File file = new FileFinder(uri).getFile();
-                    context().getContext(currentContextKey).getDriver()
+                    $context().getContext(currentContextKey).getDriver()
                         .get("file://" + file.getAbsolutePath());
                 } catch (IOException | TimeoutException e) {
                     throw new RuntimeException(e.getCause());

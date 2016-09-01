@@ -19,7 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sikuli.script.Key;
 
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.$selenium;
 import static com.atanas.kanchev.testframework.sikuli.accessors.SikuliXAccessors.$sikuli;
 
@@ -34,7 +34,7 @@ public class SikulixTest {
     }
 
     @After public void tearDown() throws Exception {
-        context().tearDownContexts();
+        $context().tearDownContexts();
 
     }
 

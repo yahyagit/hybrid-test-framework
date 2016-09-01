@@ -24,7 +24,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 
 /**
  * @author Atanas Kanchev
@@ -53,7 +53,7 @@ public class SeleniumAccessorsSingleton {
 
         if (currentContextKey == null) {
             SeleniumContext<WebDriver> c = new SeleniumContext<>(conf().getDriver());
-            currentContextKey = context().addContext(c.getContextKey(), c);
+            currentContextKey = $context().addContext(c.getContextKey(), c);
         }
 
         return new Navigates().getPage(url);

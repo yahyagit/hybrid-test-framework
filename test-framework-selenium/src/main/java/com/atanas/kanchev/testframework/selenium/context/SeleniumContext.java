@@ -117,7 +117,7 @@ public class SeleniumContext<T extends WebDriver> extends AbstractContext
 
     @Override public void tearDownContext() {
 
-        logger.debug("Tearing down context " + getContextName());
+        logger.debug("Tearing down $context " + getContextName());
         if (getDriver() != null) {
             if (DriverManager.isBrowserStillOpen(getDriver())) {
                 DriverManager.quitDriver(getDriver());

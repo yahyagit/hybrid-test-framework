@@ -17,7 +17,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 /**
@@ -26,17 +26,17 @@ import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccess
 public class Timeouts<T extends WebDriver> implements WebDriver.Timeouts {
 
     @Override public WebDriver.Timeouts implicitlyWait(long l, TimeUnit timeUnit) {
-        return context().getContext(currentContextKey).getDriver().manage().timeouts()
+        return $context().getContext(currentContextKey).getDriver().manage().timeouts()
             .implicitlyWait(l, timeUnit);
     }
 
     @Override public WebDriver.Timeouts setScriptTimeout(long l, TimeUnit timeUnit) {
-        return context().getContext(currentContextKey).getDriver().manage().timeouts()
+        return $context().getContext(currentContextKey).getDriver().manage().timeouts()
             .setScriptTimeout(l, timeUnit);
     }
 
     @Override public WebDriver.Timeouts pageLoadTimeout(long l, TimeUnit timeUnit) {
-        return context().getContext(currentContextKey).getDriver().manage().timeouts()
+        return $context().getContext(currentContextKey).getDriver().manage().timeouts()
             .pageLoadTimeout(l, timeUnit);
     }
 }

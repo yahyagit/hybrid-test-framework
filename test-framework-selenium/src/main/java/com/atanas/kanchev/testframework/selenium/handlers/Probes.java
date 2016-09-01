@@ -27,7 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.$selenium;
 
 interface IProbe {
@@ -658,7 +658,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
      */
     @Override public boolean exist() {
         try {
-            return context().getContext(SeleniumAccessorsSingleton.currentContextKey)
+            return $context().getContext(SeleniumAccessorsSingleton.currentContextKey)
                 .getCurrentElement() != null;
         } catch (CustomExceptions.Common.NullReferenceException e) {
             return false;
@@ -671,7 +671,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean hasAnyText() {
 
         boolean hasAnyText =
-            !context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement()
+            !$context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement()
                 .getText().isEmpty();
         logger.debug("Has any text: " + hasAnyText);
         return hasAnyText;
@@ -685,7 +685,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         String... textElements) {
 
         String elText =
-            context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement().getText();
+            $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement().getText();
 
         boolean matchFound = false;
 
@@ -741,7 +741,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean hasAttribute(String attributeName, String attributeText,
         boolean preciseMatch) {
 
-        String attrValue = context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement()
+        String attrValue = $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement()
             .getAttribute(attributeName);
 
         if (attrValue == null) {
@@ -776,7 +776,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean isOfTagType(String tag) {
 
         String tagName =
-            context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement().getTagName();
+            $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement().getTagName();
         logger.debug("Current element tag name: " + tagName);
 
         return tagName.equals(tag);
@@ -786,21 +786,21 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
      * {@inheritDoc}
      */
     @Override public boolean isEnabled() {
-        return context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement().isEnabled();
+        return $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement().isEnabled();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override public boolean isSelected() {
-        return context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement().isSelected();
+        return $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement().isSelected();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override public boolean isActive() {
-        return context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement()
+        return $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement()
             .getAttribute("class").contains("active");
     }
 
@@ -808,7 +808,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
      * {@inheritDoc}
      */
     @Override public boolean isDisplayed() {
-        return context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement().isDisplayed();
+        return $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement().isDisplayed();
     }
 
     /**
@@ -830,13 +830,13 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         switch (css) {
             case CSS_BACKGROUND_COLOUR:
                 Color backgroundColor = Color.fromString(
-                    context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement().getCssValue(
+                    $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement().getCssValue(
                         CommonPageDefinitions.CSS.CSS_BACKGROUND_COLOUR.getDefinition()));
                 logger.debug("Actual color: " + backgroundColor.asHex());
                 return expColor.asHex().equals(backgroundColor.asHex());
             case CSS_TEXT_COLOUR:
                 Color textColor = Color.fromString(
-                    context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement()
+                    $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement()
                         .getCssValue(CommonPageDefinitions.CSS.CSS_TEXT_COLOUR.getDefinition()));
                 logger.debug("Actual color: " + textColor.asHex());
                 return expColor.asHex().equals(textColor.asHex());
@@ -850,11 +850,11 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
      */
     @Override public boolean hasPartialImagePath(String imagePath) {
         boolean contains = false;
-        if (!context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement().getTagName()
+        if (!$context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement().getTagName()
             .equals(CommonPageDefinitions.HTML.IMAGE.getDefinition())) {
             logger.error("hasImage : Current element is not image container");
         } else {
-            contains = context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement()
+            contains = $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getCurrentElement()
                 .getAttribute("src").contains(imagePath);
         }
         return contains;
@@ -865,10 +865,10 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
 //     */
 //    @Override public boolean hasLinkToURL(String url) {
 //        boolean hasAnchorAndHref = false;
-//        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
-//            context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver().findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
+//        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
+//            $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver().findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
 //
-//        for (WebElement anchor : context().getContext(SeleniumAccessorsSingleton.currentContextKey).getWebElementsList()) {
+//        for (WebElement anchor : $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getWebElementsList()) {
 //            if (anchor.getAttribute("href") != null && anchor.getAttribute("href").contains(url)) {
 //                hasAnchorAndHref = true;
 //                break;
@@ -884,7 +884,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
 //    @Override public boolean followLinkToURL(String link) {
 //        boolean canFollow = false;
 //        if (hasLinkToURL(link)) {
-//            context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver().navigate()
+//            $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver().navigate()
 //                .to(link);
 //            canFollow = true;
 //        }
@@ -898,21 +898,21 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
 
         try {
 
-            if (context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver().manage()
+            if ($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver().manage()
                 .getCookieNamed(cookieName).getValue().contains(cookieValue)) {
                 return true;
             }
         } catch (NullPointerException e) {
             logger.error("Cookie: " + cookieName + " does not exist");
             logger.debug("Cookie Names:");
-            for (Cookie cookie : context().getContext(SeleniumAccessorsSingleton.currentContextKey)
+            for (Cookie cookie : $context().getContext(SeleniumAccessorsSingleton.currentContextKey)
                 .getDriver().manage().getCookies()) {
                 logger.debug(cookie.getName());
             }
             return false;
         }
         logger.error("Cookie does not contain the value: " + cookieValue + ", actual value: "
-            + (context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver().manage()
+            + ($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver().manage()
             .getCookieNamed(cookieName).getValue()));
         return false;
 
@@ -921,7 +921,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean titleIs(String title) {
         logger.debug("Probing " + ExpectedConditions.titleIs(title).toString());
         return ExpectedConditions.titleIs(title)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -930,7 +930,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean titleContains(String title) {
         logger.debug("Probing " + ExpectedConditions.titleContains(title).toString());
         return ExpectedConditions.titleContains(title)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -939,7 +939,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean urlToBe(String url) {
         logger.debug("Probing " + ExpectedConditions.urlToBe(url).toString());
         return ExpectedConditions.urlToBe(url)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -948,7 +948,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean urlContains(String fraction) {
         logger.debug("Probing " + ExpectedConditions.urlContains(fraction).toString());
         return ExpectedConditions.urlContains(fraction)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -957,7 +957,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean urlMatches(String regex) {
         logger.debug("Probing " + ExpectedConditions.urlMatches(regex).toString());
         return ExpectedConditions.urlMatches(regex)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -965,9 +965,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
      */
     @Override public IProbeExpectedConditions presenceOfElementLocated(By locator) {
         logger.debug("Probing " + ExpectedConditions.presenceOfElementLocated(locator).toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setCurrentElement(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setCurrentElement(
             ExpectedConditions.presenceOfElementLocated(locator)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -977,9 +977,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public IProbeExpectedConditions visibilityOfElementLocated(By locator) {
         logger
             .debug("Probing " + ExpectedConditions.visibilityOfElementLocated(locator).toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setCurrentElement(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setCurrentElement(
             ExpectedConditions.visibilityOfElementLocated(locator)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -989,9 +989,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public IProbeExpectedConditions visibilityOfAllElementsLocatedBy(By locator) {
         logger.debug(
             "Probing " + ExpectedConditions.visibilityOfAllElementsLocatedBy(locator).toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
             ExpectedConditions.visibilityOfAllElementsLocatedBy(locator)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -1000,9 +1000,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
      */
     @Override public IProbeExpectedConditions visibilityOfAllElements(List<WebElement> elements) {
         logger.debug("Probing " + ExpectedConditions.visibilityOfAllElements(elements).toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
             ExpectedConditions.visibilityOfAllElements(elements)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -1011,9 +1011,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
      */
     @Override public IProbeExpectedConditions visibilityOf(WebElement element) {
         logger.debug("Probing " + ExpectedConditions.visibilityOf(element).toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setCurrentElement(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setCurrentElement(
             ExpectedConditions.visibilityOf(element)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -1023,9 +1023,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public IProbeExpectedConditions presenceOfAllElementsLocatedBy(By locator) {
         logger.debug(
             "Probing " + ExpectedConditions.presenceOfAllElementsLocatedBy(locator).toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
             ExpectedConditions.presenceOfAllElementsLocatedBy(locator)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -1036,7 +1036,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug(
             "Probing " + ExpectedConditions.textToBePresentInElement(element, text).toString());
         return ExpectedConditions.textToBePresentInElement(element, text)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1046,7 +1046,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug("Probing " + ExpectedConditions.textToBePresentInElementLocated(locator, text)
             .toString());
         return ExpectedConditions.textToBePresentInElementLocated(locator, text)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1057,7 +1057,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug("Probing " + ExpectedConditions.textToBePresentInElementValue(element, text)
             .toString());
         ExpectedConditions.textToBePresentInElementValue(element, text)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
         return this;
     }
 
@@ -1068,7 +1068,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug("Probing " + ExpectedConditions.textToBePresentInElementValue(locator, text)
             .toString());
         return ExpectedConditions.textToBePresentInElementValue(locator, text)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1078,7 +1078,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug("Probing " + ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator)
             .toString());
         ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
         return this;
     }
 
@@ -1089,7 +1089,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug(
             "Probing " + ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator).toString());
         ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
         return this;
     }
 
@@ -1100,7 +1100,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug("Probing " + ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator)
             .toString());
         ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
         return this;
     }
 
@@ -1112,7 +1112,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug("Probing " + ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator)
             .toString());
         ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
         return this;
     }
 
@@ -1123,7 +1123,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug(
             "Probing " + ExpectedConditions.invisibilityOfElementLocated(locator).toString());
         return ExpectedConditions.invisibilityOfElementLocated(locator)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1133,7 +1133,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug("Probing " + ExpectedConditions.invisibilityOfElementWithText(locator, text)
             .toString());
         return ExpectedConditions.invisibilityOfElementWithText(locator, text)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1141,9 +1141,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
      */
     @Override public IProbeExpectedConditions elementToBeClickable(By locator) {
         logger.debug("Probing " + ExpectedConditions.elementToBeClickable(locator).toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setCurrentElement(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setCurrentElement(
             ExpectedConditions.elementToBeClickable(locator)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -1152,9 +1152,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
      */
     @Override public IProbeExpectedConditions elementToBeClickable(WebElement element) {
         logger.debug("Probing " + ExpectedConditions.elementToBeClickable(element).toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setCurrentElement(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setCurrentElement(
             ExpectedConditions.elementToBeClickable(element)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -1164,7 +1164,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean stalenessOf(WebElement element) {
         logger.debug("Probing " + ExpectedConditions.stalenessOf(element).toString());
         return ExpectedConditions.stalenessOf(element)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1173,7 +1173,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public <U> IProbeExpectedConditions refreshed(ExpectedCondition<U> condition) {
         logger.debug("Probing " + ExpectedConditions.refreshed(condition).toString());
         ExpectedConditions.refreshed(condition)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
         return this;
     }
 
@@ -1183,7 +1183,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean elementToBeSelected(WebElement element) {
         logger.debug("Probing " + ExpectedConditions.elementToBeSelected(element).toString());
         return ExpectedConditions.elementToBeSelected(element)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1193,7 +1193,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug("Probing " + ExpectedConditions.elementSelectionStateToBe(element, selected)
             .toString());
         return ExpectedConditions.elementSelectionStateToBe(element, selected)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1202,7 +1202,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean elementToBeSelected(By locator) {
         logger.debug("Probing " + ExpectedConditions.elementToBeSelected(locator).toString());
         return ExpectedConditions.elementToBeSelected(locator)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1212,7 +1212,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug("Probing " + ExpectedConditions.elementSelectionStateToBe(locator, selected)
             .toString());
         return ExpectedConditions.elementSelectionStateToBe(locator, selected)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1222,7 +1222,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         //TODO
         logger.debug("Probing " + ExpectedConditions.alertIsPresent().toString());
         ExpectedConditions.alertIsPresent()
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
         return this;
     }
 
@@ -1233,7 +1233,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug("Probing " + ExpectedConditions.numberOfWindowsToBe(expectedNumberOfWindows)
             .toString());
         return ExpectedConditions.numberOfWindowsToBe(expectedNumberOfWindows)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1242,7 +1242,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean not(ExpectedCondition<?> condition) {
         logger.debug("Probing " + ExpectedConditions.not(condition).toString());
         return ExpectedConditions.not(condition)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1252,7 +1252,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug(
             "Probing " + ExpectedConditions.attributeToBe(locator, attribute, value).toString());
         return ExpectedConditions.attributeToBe(locator, attribute, value)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1261,7 +1261,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean textToBe(By locator, String value) {
         logger.debug("Probing " + ExpectedConditions.textToBe(locator, value).toString());
         return ExpectedConditions.textToBe(locator, value)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1270,7 +1270,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean textMatches(By locator, Pattern pattern) {
         logger.debug("Probing " + ExpectedConditions.textMatches(locator, pattern).toString());
         return ExpectedConditions.textMatches(locator, pattern)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1280,9 +1280,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         Integer number) {
         logger.debug("Probing " + ExpectedConditions.numberOfElementsToBeMoreThan(locator, number)
             .toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
             ExpectedConditions.numberOfElementsToBeMoreThan(locator, number)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -1293,9 +1293,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         Integer number) {
         logger.debug("Probing " + ExpectedConditions.numberOfElementsToBeLessThan(locator, number)
             .toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
             ExpectedConditions.numberOfElementsToBeLessThan(locator, number)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -1305,9 +1305,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public IProbeExpectedConditions numberOfElementsToBe(By locator, Integer number) {
         logger.debug(
             "Probing " + ExpectedConditions.numberOfElementsToBe(locator, number).toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
             ExpectedConditions.numberOfElementsToBe(locator, number)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -1318,7 +1318,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug(
             "Probing " + ExpectedConditions.attributeToBe(element, attribute, value).toString());
         return ExpectedConditions.attributeToBe(element, attribute, value)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1328,7 +1328,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug("Probing " + ExpectedConditions.attributeContains(element, attribute, value)
             .toString());
         return ExpectedConditions.attributeContains(element, attribute, value)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1338,7 +1338,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug("Probing " + ExpectedConditions.attributeContains(locator, attribute, value)
             .toString());
         return ExpectedConditions.attributeContains(locator, attribute, value)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1348,7 +1348,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug(
             "Probing " + ExpectedConditions.attributeToBeNotEmpty(element, attribute).toString());
         return ExpectedConditions.attributeToBeNotEmpty(element, attribute)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1358,9 +1358,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         By sub_locator) {
         logger.debug("Probing " + ExpectedConditions
             .visibilityOfNestedElementsLocatedBy(locator, sub_locator).toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
             ExpectedConditions.visibilityOfNestedElementsLocatedBy(locator, sub_locator)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -1371,9 +1371,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         WebElement element, By sub_locator) {
         logger.debug("Probing " + ExpectedConditions
             .visibilityOfNestedElementsLocatedBy(element, sub_locator).toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
             ExpectedConditions.visibilityOfNestedElementsLocatedBy(element, sub_locator)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -1385,9 +1385,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug(
             "Probing " + ExpectedConditions.presenceOfNestedElementLocatedBy(locator, sub_locator)
                 .toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setCurrentElement(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setCurrentElement(
             ExpectedConditions.presenceOfNestedElementLocatedBy(locator, sub_locator)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -1399,9 +1399,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug(
             "Probing " + ExpectedConditions.presenceOfNestedElementLocatedBy(element, sub_locator)
                 .toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setCurrentElement(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setCurrentElement(
             ExpectedConditions.presenceOfNestedElementLocatedBy(element, sub_locator)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -1413,9 +1413,9 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug(
             "Probing " + ExpectedConditions.presenceOfNestedElementsLocatedBy(locator, sub_locator)
                 .toString());
-        context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
+        $context().getContext(SeleniumAccessorsSingleton.currentContextKey).setWebElementsList(
             ExpectedConditions.presenceOfNestedElementsLocatedBy(locator, sub_locator)
-                .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
+                .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver()));
         return this;
     }
 
@@ -1426,7 +1426,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger
             .debug("Probing " + ExpectedConditions.invisibilityOfAllElements(elements).toString());
         return ExpectedConditions.invisibilityOfAllElements(elements)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1435,7 +1435,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean or(ExpectedCondition<?>... conditions) {
         logger.debug("Probing " + ExpectedConditions.or(conditions).toString());
         return ExpectedConditions.or(conditions)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1444,7 +1444,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public boolean and(ExpectedCondition<?>... conditions) {
         logger.debug("Probing " + ExpectedConditions.and(conditions).toString());
         return ExpectedConditions.and(conditions).
-            apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1454,7 +1454,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
         logger.debug(
             "Probing " + ExpectedConditions.javaScriptThrowsNoExceptions(javaScript).toString());
         return ExpectedConditions.javaScriptThrowsNoExceptions(javaScript)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
     /**
@@ -1463,7 +1463,7 @@ public final class Probes implements IProbe, IProbeExpectedConditions {
     @Override public Object jsReturnsValue(String javaScript) {
         logger.debug("Probing " + ExpectedConditions.jsReturnsValue(javaScript).toString());
         return ExpectedConditions.jsReturnsValue(javaScript)
-            .apply(context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
+            .apply($context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver());
     }
 
 }

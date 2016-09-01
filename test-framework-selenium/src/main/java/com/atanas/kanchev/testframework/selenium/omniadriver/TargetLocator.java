@@ -17,7 +17,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 /**
@@ -26,38 +26,38 @@ import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccess
 public class TargetLocator<T extends WebDriver> implements WebDriver.TargetLocator {
 
     @Override public WebDriver frame(int i) {
-        return context().getContext(currentContextKey).getDriver().switchTo().frame(i);
+        return $context().getContext(currentContextKey).getDriver().switchTo().frame(i);
     }
 
     @Override public WebDriver frame(String s) {
-        return context().getContext(currentContextKey).getDriver().switchTo().frame(s);
+        return $context().getContext(currentContextKey).getDriver().switchTo().frame(s);
     }
 
     @Override public WebDriver frame(WebElement webElement) {
-        return context().getContext(currentContextKey).getDriver().switchTo()
+        return $context().getContext(currentContextKey).getDriver().switchTo()
             .frame(webElement);
     }
 
     @Override public WebDriver parentFrame() {
-        return context().getContext(currentContextKey).getDriver().switchTo()
+        return $context().getContext(currentContextKey).getDriver().switchTo()
             .parentFrame();
     }
 
     @Override public WebDriver window(String s) {
-        return context().getContext(currentContextKey).getDriver().switchTo().window(s);
+        return $context().getContext(currentContextKey).getDriver().switchTo().window(s);
     }
 
     @Override public WebDriver defaultContent() {
-        return context().getContext(currentContextKey).getDriver().switchTo()
+        return $context().getContext(currentContextKey).getDriver().switchTo()
             .defaultContent();
     }
 
     @Override public WebElement activeElement() {
-        return context().getContext(currentContextKey).getDriver().switchTo()
+        return $context().getContext(currentContextKey).getDriver().switchTo()
             .activeElement();
     }
 
     @Override public Alert alert() {
-        return context().getContext(currentContextKey).getDriver().switchTo().alert();
+        return $context().getContext(currentContextKey).getDriver().switchTo().alert();
     }
 }

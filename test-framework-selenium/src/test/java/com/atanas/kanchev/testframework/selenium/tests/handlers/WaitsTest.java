@@ -44,7 +44,7 @@ public class WaitsTest{
 //    }
 //
 //    @After public void tearDown() throws Exception {
-//        context().tearDownContexts();
+//        $context().tearDownContexts();
 //    }
 //
 //    @Test public void titleIs() throws Exception {
@@ -75,7 +75,7 @@ public class WaitsTest{
 //    @Test public void presenceOfElementLocated() throws Exception {
 //        goTo("https://www.google.co.uk");
 //        waits.presenceOfElementLocated(By.name("btnK"));
-//        ((SeleniumContext) context().getCurrentContext()).getCurrentElement().click();
+//        ((SeleniumContext) $context().getCurrentContext()).getCurrentElement().click();
 //    }
 //
 //    @Test public void visibilityOfElementLocated() throws Exception {
@@ -92,14 +92,14 @@ public class WaitsTest{
 //        goTo("https://www.google.co.uk");
 //        List<WebElement> elements = new ArrayList<>();
 //        elements.add(
-//            ((WebDriver) context().getCurrentContext().getDriver()).findElement(By.name("btnK")));
+//            ((WebDriver) $context().getCurrentContext().getDriver()).findElement(By.name("btnK")));
 //        waits.visibilityOfAllElements(elements);
 //    }
 //
 //    @Test public void visibilityOf() throws Exception {
 //        goTo("https://www.google.co.uk");
 //        waits.visibilityOf(
-//            ((WebDriver) context().getCurrentContext().getDriver()).findElement(By.name("btnK")));
+//            ((WebDriver) $context().getCurrentContext().getDriver()).findElement(By.name("btnK")));
 //    }
 //
 //    @Test public void presenceOfAllElementsLocatedBy() throws Exception {
@@ -109,7 +109,7 @@ public class WaitsTest{
 //
 //    @Test public void textToBePresentInElement() throws Exception {
 //        goTo("https://www.google.co.uk");
-//        waits.textToBePresentInElement(((WebDriver) context().getCurrentContext().getDriver())
+//        waits.textToBePresentInElement(((WebDriver) $context().getCurrentContext().getDriver())
 //            .findElement(By.className("gb_P")), "Gmail");
 //    }
 //
@@ -126,7 +126,7 @@ public class WaitsTest{
 //    @Test public void textToBePresentInElementValue1() throws Exception {
 //        goTo("https://www.google.co.uk");
 //        waits.textToBePresentInElementValue(
-//            ((WebDriver) context().getCurrentContext().getDriver()).findElement(By.name("btnK")),
+//            ((WebDriver) $context().getCurrentContext().getDriver()).findElement(By.name("btnK")),
 //            "Google Search");
 //    }
 //
@@ -148,13 +148,13 @@ public class WaitsTest{
 //    @Test public void frameToBeAvailableAndSwitchToIt3() throws Exception {
 //        goTo("https://www.w3.org/WAI/UA/TS/html401/cp0101/0101-FRAME-TEST.html");
 //        waits.frameToBeAvailableAndSwitchToIt(
-//            ((WebDriver) context().getCurrentContext().getDriver())
+//            ((WebDriver) $context().getCurrentContext().getDriver())
 //                .findElement(By.name("target2")));
 //    }
 //
 //    @Test public void invisibilityOfElementLocated() throws Exception {
 //        goTo("https://www.google.co.uk");
-//        ((WebDriver) context().getCurrentContext().getDriver()).findElement(By.className("gb_P"))
+//        ((WebDriver) $context().getCurrentContext().getDriver()).findElement(By.className("gb_P"))
 //            .click();
 //        waits.invisibilityOfElementLocated(By.name("btnK"));
 //
@@ -162,7 +162,7 @@ public class WaitsTest{
 //
 //    @Test public void invisibilityOfElementWithText() throws Exception {
 //        goTo("https://www.google.co.uk");
-//        ((WebDriver) context().getCurrentContext().getDriver()).findElement(By.className("gb_P"))
+//        ((WebDriver) $context().getCurrentContext().getDriver()).findElement(By.className("gb_P"))
 //            .click();
 //        waits.invisibilityOfElementWithText(By.name("btnK"), "Gmail");
 //    }
@@ -174,19 +174,19 @@ public class WaitsTest{
 //
 //    @Test public void elementToBeClickable1() throws Exception {
 //        goTo("https://www.google.co.uk");
-//        waits.elementToBeClickable(((WebDriver) context().getCurrentContext().getDriver())
+//        waits.elementToBeClickable(((WebDriver) $context().getCurrentContext().getDriver())
 //            .findElement(By.className("gb_P")));
 //    }
 //
 //    @Test public void stalenessOf() throws Exception {
 //        goTo("https://www.google.co.uk");
 //        waits.stalenessOf(
-//            ((WebDriver) context().getCurrentContext().getDriver()).findElement(By.name("btnK")));
+//            ((WebDriver) $context().getCurrentContext().getDriver()).findElement(By.name("btnK")));
 //    }
 //
 //    @Test public void refreshed() throws Exception {
 //        goTo("https://www.google.co.uk");
-//        ((WebDriver) context().getCurrentContext().getDriver()).findElement(By.className("gb_P"))
+//        ((WebDriver) $context().getCurrentContext().getDriver()).findElement(By.className("gb_P"))
 //            .click();
 //        waits.refreshed(ExpectedConditions.invisibilityOfElementLocated(By.name("btnK")));
 //    }

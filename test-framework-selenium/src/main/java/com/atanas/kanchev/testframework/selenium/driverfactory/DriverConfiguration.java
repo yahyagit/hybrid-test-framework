@@ -195,11 +195,11 @@ public class DriverConfiguration extends Defaults {
      */
     private static boolean proxyEnabled = Boolean.getBoolean("proxyEnabled");
     /**
-     * Proxy host name
+     * ProxyF host name
      */
     private static String proxyHostname = System.getProperty("proxyHost");
     /**
-     * Proxy host port
+     * ProxyF host port
      */
     private static Integer proxyPort = Integer.getInteger("proxyPort");
     public DriverConfiguration() {

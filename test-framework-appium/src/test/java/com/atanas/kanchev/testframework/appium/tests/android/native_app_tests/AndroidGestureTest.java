@@ -22,7 +22,7 @@ import org.openqa.selenium.WebElement;
 
 import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessors.$appium;
 import static com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler.currentContextKey;
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -56,13 +56,13 @@ public class AndroidGestureTest extends BaseTest {
             $appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/chronometer");
 
         TouchAction startStop =
-            new TouchAction(context().getContext(currentContextKey).getDriver())
+            new TouchAction($context().getContext(currentContextKey).getDriver())
                 .tap($appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/start"))
                 .waitAction(2000)
                 .tap($appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/stop"));
 
         MultiTouchAction m1 =
-            new MultiTouchAction(context().getContext(currentContextKey).getDriver())
+            new MultiTouchAction($context().getContext(currentContextKey).getDriver())
                 .add(startStop);
         m1.perform();
 
@@ -72,10 +72,10 @@ public class AndroidGestureTest extends BaseTest {
         assertEquals(time, chronometer.getText());
 
         TouchAction reset =
-            new TouchAction(context().getContext(currentContextKey).getDriver())
+            new TouchAction($context().getContext(currentContextKey).getDriver())
                 .tap($appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/reset"));
         MultiTouchAction m2 =
-            new MultiTouchAction(context().getContext(currentContextKey).getDriver())
+            new MultiTouchAction($context().getContext(currentContextKey).getDriver())
                 .add(startStop).add(reset);
         m2.perform();
 
@@ -95,7 +95,7 @@ public class AndroidGestureTest extends BaseTest {
         assertEquals("Drag text not empty", "", dragText.getText());
 
         TouchAction dragNDrop =
-            new TouchAction(context().getContext(currentContextKey).getDriver())
+            new TouchAction($context().getContext(currentContextKey).getDriver())
                 .longPress(dragDot1).moveTo(dragDot3).release();
         dragNDrop.perform();
 
@@ -114,7 +114,7 @@ public class AndroidGestureTest extends BaseTest {
 //        AndroidElement element =
 //            $appium().$androidNative().find().findElementById("io.appium.$androidNative.apis:id/button_toggle");
 //        TouchAction tap =
-//            new TouchAction(context().getContext(currentContextKey).getDriver()).tap(element);
+//            new TouchAction($context().getContext(currentContextKey).getDriver()).tap(element);
 //
 //        $appium().$androidNative().touchActions().performTouchAction(tap);
 //        assertEquals("ON",

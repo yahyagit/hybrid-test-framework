@@ -11,20 +11,13 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.commons.accessors;
+package com.atanas.kanchev.testframework.selenium.proxy;
 
-import com.atanas.kanchev.testframework.commons.context.ConcurrentContextContainer;
-
-/**
- * @author Atanas Kanchev
- */
-public class ContextsAccessor {
-
-    private static final ConcurrentContextContainer contextThreadLocalContainer =
-        new ConcurrentContextContainer();
-
-    public static ConcurrentContextContainer $context() {
-        return contextThreadLocalContainer;
-    }
-
+public class Find implements Command<SelenideElement> {
+  @Override
+  public SelenideElement execute(SelenideElement proxy, WebElementSource locator, Object... args) {
+    return args.length == 1 ?
+        locator.find(proxy, args[0], 0) :
+        locator.find(proxy, args[0], (Integer) args[1]);
+  }
 }

@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 /**
@@ -150,7 +150,7 @@ public final class Waits implements IWaitsExpectedCondition {
     @Override public IWaitsExpectedCondition presenceOfElementLocated(By locator) {
         logger.debug("Waiting " + ExpectedConditions.presenceOfElementLocated(locator).toString());
         try {
-            context().getContext(currentContextKey).setCurrentElement(
+            $context().getContext(currentContextKey).setCurrentElement(
                 waiting(duration).until(ExpectedConditions.presenceOfElementLocated(locator)));
         } catch (TimeoutException e) {
             logger.error(e.getMessage());
@@ -166,7 +166,7 @@ public final class Waits implements IWaitsExpectedCondition {
         logger
             .debug("Waiting " + ExpectedConditions.visibilityOfElementLocated(locator).toString());
         try {
-            context().getContext(currentContextKey).setCurrentElement(
+            $context().getContext(currentContextKey).setCurrentElement(
                 waiting(duration).until(ExpectedConditions.visibilityOfElementLocated(locator)));
         } catch (TimeoutException e) {
             logger.error(e.getMessage());
@@ -182,7 +182,7 @@ public final class Waits implements IWaitsExpectedCondition {
         logger.debug(
             "Waiting " + ExpectedConditions.visibilityOfAllElementsLocatedBy(locator).toString());
         try {
-            context().getContext(currentContextKey).setWebElementsList(waiting(duration)
+            $context().getContext(currentContextKey).setWebElementsList(waiting(duration)
                 .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator)));
         } catch (TimeoutException e) {
             logger.error(e.getMessage());
@@ -197,7 +197,7 @@ public final class Waits implements IWaitsExpectedCondition {
     @Override public IWaitsExpectedCondition visibilityOfAllElements(List<WebElement> elements) {
         logger.debug("Waiting " + ExpectedConditions.visibilityOfAllElements(elements).toString());
         try {
-            context().getContext(currentContextKey).setWebElementsList(
+            $context().getContext(currentContextKey).setWebElementsList(
                 waiting(duration).until(ExpectedConditions.visibilityOfAllElements(elements)));
         } catch (TimeoutException e) {
             logger.error(e.getMessage());
@@ -212,7 +212,7 @@ public final class Waits implements IWaitsExpectedCondition {
     @Override public IWaitsExpectedCondition visibilityOf(WebElement element) {
         logger.debug("Waiting " + ExpectedConditions.visibilityOf(element).toString());
         try {
-            context().getContext(currentContextKey).setCurrentElement(
+            $context().getContext(currentContextKey).setCurrentElement(
                 waiting(duration).until(ExpectedConditions.visibilityOf(element)));
         } catch (TimeoutException e) {
             logger.error(e.getMessage());
@@ -228,7 +228,7 @@ public final class Waits implements IWaitsExpectedCondition {
         logger.debug(
             "Waiting " + ExpectedConditions.presenceOfAllElementsLocatedBy(locator).toString());
         try {
-            context().getContext(currentContextKey).setWebElementsList(waiting(duration)
+            $context().getContext(currentContextKey).setWebElementsList(waiting(duration)
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator)));
         } catch (TimeoutException e) {
             logger.error(e.getMessage());
@@ -406,7 +406,7 @@ public final class Waits implements IWaitsExpectedCondition {
     @Override public IWaitsExpectedCondition elementToBeClickable(By locator) {
         logger.debug("Waiting " + ExpectedConditions.elementToBeClickable(locator).toString());
         try {
-            context().getContext(currentContextKey).setCurrentElement(
+            $context().getContext(currentContextKey).setCurrentElement(
                 waiting(duration).until(ExpectedConditions.elementToBeClickable(locator)));
         } catch (TimeoutException e) {
             logger.error(e.getMessage());
@@ -421,7 +421,7 @@ public final class Waits implements IWaitsExpectedCondition {
     @Override public IWaitsExpectedCondition elementToBeClickable(WebElement element) {
         logger.debug("Waiting " + ExpectedConditions.elementToBeClickable(element).toString());
         try {
-            context().getContext(currentContextKey).setCurrentElement(
+            $context().getContext(currentContextKey).setCurrentElement(
                 waiting(duration).until(ExpectedConditions.elementToBeClickable(element)));
         } catch (TimeoutException e) {
             logger.error(e.getMessage());
@@ -616,7 +616,7 @@ public final class Waits implements IWaitsExpectedCondition {
         logger.debug("Waiting " + ExpectedConditions.numberOfElementsToBeMoreThan(locator, number)
             .toString());
         try {
-            context().getContext(currentContextKey).setWebElementsList(waiting(duration)
+            $context().getContext(currentContextKey).setWebElementsList(waiting(duration)
                 .until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, number)));
         } catch (TimeoutException e) {
             logger.error(e.getMessage());
@@ -633,7 +633,7 @@ public final class Waits implements IWaitsExpectedCondition {
         logger.debug("Waiting " + ExpectedConditions.numberOfElementsToBeLessThan(locator, number)
             .toString());
         try {
-            context().getContext(currentContextKey).setWebElementsList(waiting(duration)
+            $context().getContext(currentContextKey).setWebElementsList(waiting(duration)
                 .until(ExpectedConditions.numberOfElementsToBeLessThan(locator, number)));
         } catch (TimeoutException e) {
             logger.error(e.getMessage());
@@ -649,7 +649,7 @@ public final class Waits implements IWaitsExpectedCondition {
         logger.debug(
             "Waiting " + ExpectedConditions.numberOfElementsToBe(locator, number).toString());
         try {
-            context().getContext(currentContextKey).setWebElementsList(
+            $context().getContext(currentContextKey).setWebElementsList(
                 waiting(duration).until(ExpectedConditions.numberOfElementsToBe(locator, number)));
         } catch (TimeoutException e) {
             logger.error(e.getMessage());
@@ -732,7 +732,7 @@ public final class Waits implements IWaitsExpectedCondition {
         logger.debug("Waiting " + ExpectedConditions
             .visibilityOfNestedElementsLocatedBy(locator, sub_locator).toString());
         try {
-            context().getContext(currentContextKey).setWebElementsList(waiting(duration)
+            $context().getContext(currentContextKey).setWebElementsList(waiting(duration)
                 .until(
                     ExpectedConditions.visibilityOfNestedElementsLocatedBy(locator, sub_locator)));
         } catch (TimeoutException e) {
@@ -750,7 +750,7 @@ public final class Waits implements IWaitsExpectedCondition {
         logger.debug("Waiting " + ExpectedConditions
             .visibilityOfNestedElementsLocatedBy(element, sub_locator).toString());
         try {
-            context().getContext(currentContextKey).setWebElementsList(waiting(duration)
+            $context().getContext(currentContextKey).setWebElementsList(waiting(duration)
                 .until(
                     ExpectedConditions.visibilityOfNestedElementsLocatedBy(element, sub_locator)));
         } catch (TimeoutException e) {
@@ -769,7 +769,7 @@ public final class Waits implements IWaitsExpectedCondition {
             "Waiting " + ExpectedConditions.presenceOfNestedElementLocatedBy(locator, sub_locator)
                 .toString());
         try {
-            context().getContext(currentContextKey).setCurrentElement(waiting(duration)
+            $context().getContext(currentContextKey).setCurrentElement(waiting(duration)
                 .until(ExpectedConditions.presenceOfNestedElementLocatedBy(locator, sub_locator)));
         } catch (TimeoutException e) {
             logger.error(e.getMessage());
@@ -787,7 +787,7 @@ public final class Waits implements IWaitsExpectedCondition {
             "Waiting " + ExpectedConditions.presenceOfNestedElementLocatedBy(element, sub_locator)
                 .toString());
         try {
-            context().getContext(currentContextKey).setCurrentElement(waiting(duration)
+            $context().getContext(currentContextKey).setCurrentElement(waiting(duration)
                 .until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, sub_locator)));
         } catch (TimeoutException e) {
             logger.error(e.getMessage());
@@ -805,7 +805,7 @@ public final class Waits implements IWaitsExpectedCondition {
             "Waiting " + ExpectedConditions.presenceOfNestedElementsLocatedBy(locator, sub_locator)
                 .toString());
         try {
-            context().getContext(currentContextKey).setWebElementsList(waiting(duration)
+            $context().getContext(currentContextKey).setWebElementsList(waiting(duration)
                 .until(ExpectedConditions.presenceOfNestedElementsLocatedBy(locator, sub_locator)));
         } catch (TimeoutException e) {
             logger.error(e.getMessage());
@@ -899,7 +899,7 @@ public final class Waits implements IWaitsExpectedCondition {
 
     private Wait<WebDriver> waiting(long duration) {
         return new FluentWait<>(
-            context().getContext(currentContextKey).getDriver())
+            $context().getContext(currentContextKey).getDriver())
             .withTimeout(duration, unit).pollingEvery(polling, unit)
             .ignoring(NoSuchElementException.class).ignoring(NoSuchFrameException.class)
             .ignoring(StaleElementReferenceException.class)

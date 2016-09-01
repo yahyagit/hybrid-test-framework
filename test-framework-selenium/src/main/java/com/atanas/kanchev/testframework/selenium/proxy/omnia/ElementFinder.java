@@ -11,27 +11,35 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.selenium.omniadriver;
+package com.atanas.kanchev.testframework.selenium.proxy.omnia;
 
+import com.atanas.kanchev.testframework.commons.context.ContextKey;
+import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
-import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 /**
- * Created by atanas on 22/08/16.
+ * @author Atanas Kanchev
  */
-public class SearchContext<T extends WebDriver> implements org.openqa.selenium.SearchContext {
+public class ElementFinder implements IElementFinder {
+
+    public ContextKey<SeleniumContext> currentContextKey;
+
+    public ElementFinder(ContextKey<SeleniumContext> currentContextKey) {
+        this.currentContextKey = currentContextKey;
+    }
 
     @Override public List<WebElement> findElements(By by) {
-        return $context().getContext(currentContextKey).getDriver().findElements(by);
+        return null;
     }
 
     @Override public WebElement findElement(By by) {
-        return $context().getContext(currentContextKey).getDriver().findElement(by);
+        $context().getContext(currentContextKey).setCurrentElement(
+            $context().getContext(currentContextKey).getDriver().findElement(by));
+        return $context().getContext(currentContextKey).getCurrentElement();
     }
 }

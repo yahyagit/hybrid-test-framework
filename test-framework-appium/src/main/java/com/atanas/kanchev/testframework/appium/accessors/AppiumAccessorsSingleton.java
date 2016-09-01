@@ -21,7 +21,7 @@ import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import io.appium.java_client.android.AndroidDriver;
 
 import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessors.$appium;
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 
 /**
  * @author Atanas Kanchev
@@ -49,7 +49,7 @@ public class AppiumAccessorsSingleton {
         if (SeleniumAccessorsSingleton.currentContextKey == null) {
             SeleniumContext<AndroidDriver> c =
                 new SeleniumContext<>($appium().$conf().getAndroidDriver());
-            SeleniumAccessorsSingleton.currentContextKey = context().addContext(c.getContextKey(), c);
+            SeleniumAccessorsSingleton.currentContextKey = $context().addContext(c.getContextKey(), c);
         }
 
         return SeleniumAccessors.$selenium();

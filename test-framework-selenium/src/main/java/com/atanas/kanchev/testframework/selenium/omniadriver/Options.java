@@ -19,7 +19,7 @@ import org.openqa.selenium.logging.Logs;
 
 import java.util.Set;
 
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 /**
@@ -28,27 +28,27 @@ import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccess
 public class Options<T extends WebDriver> implements WebDriver.Options {
 
     @Override public void addCookie(Cookie cookie) {
-        context().getContext(currentContextKey).getDriver().manage().addCookie(cookie);
+        $context().getContext(currentContextKey).getDriver().manage().addCookie(cookie);
     }
 
     @Override public void deleteCookieNamed(String s) {
-        context().getContext(currentContextKey).getDriver().manage().deleteCookieNamed(s);
+        $context().getContext(currentContextKey).getDriver().manage().deleteCookieNamed(s);
     }
 
     @Override public void deleteCookie(Cookie cookie) {
-        context().getContext(currentContextKey).getDriver().manage().deleteCookie(cookie);
+        $context().getContext(currentContextKey).getDriver().manage().deleteCookie(cookie);
     }
 
     @Override public void deleteAllCookies() {
-        context().getContext(currentContextKey).getDriver().manage().deleteAllCookies();
+        $context().getContext(currentContextKey).getDriver().manage().deleteAllCookies();
     }
 
     @Override public Set<Cookie> getCookies() {
-        return context().getContext(currentContextKey).getDriver().manage().getCookies();
+        return $context().getContext(currentContextKey).getDriver().manage().getCookies();
     }
 
     @Override public Cookie getCookieNamed(String s) {
-        return context().getContext(currentContextKey).getDriver().manage()
+        return $context().getContext(currentContextKey).getDriver().manage()
             .getCookieNamed(s);
     }
 

@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 
 /**
  * <p>Resource class.</p>
@@ -52,7 +52,7 @@ public class Resource {
         ContextKey<APIResourceContext> key =
             new ContextKey<>(apiResourceContext.getContextName(), APIResourceContext.class);
 
-        context().addContext(key, apiResourceContext);
+        $context().addContext(key, apiResourceContext);
 
     }
 

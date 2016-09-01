@@ -11,20 +11,20 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.commons.accessors;
-
-import com.atanas.kanchev.testframework.commons.context.ConcurrentContextContainer;
+package com.atanas.kanchev.testframework.selenium.proxy;
 
 /**
  * @author Atanas Kanchev
  */
-public class ContextsAccessor {
+public class DefaultInventoryService implements InventoryService{
 
-    private static final ConcurrentContextContainer contextThreadLocalContainer =
-        new ConcurrentContextContainer();
+    public void ododo(){}
 
-    public static ConcurrentContextContainer $context() {
-        return contextThreadLocalContainer;
+    @Override public boolean delete(Long id) {
+        return false;
     }
 
+    @Override public boolean add(Long id) {
+        return false;
+    }
 }

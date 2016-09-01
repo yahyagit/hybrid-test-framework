@@ -19,7 +19,7 @@ import com.atanas.kanchev.testframework.dataservices.context.APIResourceContext;
 import com.atanas.kanchev.testframework.dataservices.dataprovider.csv.CSVParser;
 import com.atanas.kanchev.testframework.dataservices.dataprovider.excel.ExcelParser;
 
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 
 /**
  * @author Atanas Kanchev
@@ -40,11 +40,11 @@ public class DataServicesAccessorsSingleton {
     }
 
     public Resource apiResource(Resource resource) {
-        return context().getContext(key).setResource(resource).getResource();
+        return $context().getContext(key).setResource(resource).getResource();
     }
 
     public Resource apiResource() {
-        return context().getContext(key).getResource();
+        return $context().getContext(key).getResource();
     }
 
     public ExcelParser excel(String filePath) {

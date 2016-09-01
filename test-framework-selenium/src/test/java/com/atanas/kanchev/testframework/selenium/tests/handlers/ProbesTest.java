@@ -21,7 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.$selenium;
 
 
@@ -37,7 +37,7 @@ public class ProbesTest  {
     }
 
     @After public void tearDown() throws Exception {
-        context().tearDownContexts();
+        $context().tearDownContexts();
 
     }
 
@@ -58,7 +58,7 @@ public class ProbesTest  {
         //        waitFor().hardWait(10000);
         //        waitFor().titleIs("X");
         //        waitFor().titleContains("X");
-        //        FluentWait<WebDriver> fait =new FluentWait<>((WebDriver)context().getCurrentContext().getDriver())
+        //        FluentWait<WebDriver> fait =new FluentWait<>((WebDriver)$context().getCurrentContext().getDriver())
         //            .withTimeout(30, TimeUnit.SECONDS)
         //            .pollingEvery(1, TimeUnit.SECONDS)
         //            .ignoring(NoSuchElementException.class)

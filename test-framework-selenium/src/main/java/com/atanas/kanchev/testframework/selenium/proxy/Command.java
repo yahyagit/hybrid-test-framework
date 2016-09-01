@@ -11,20 +11,12 @@
  * limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.commons.accessors;
+package com.atanas.kanchev.testframework.selenium.proxy;
 
-import com.atanas.kanchev.testframework.commons.context.ConcurrentContextContainer;
+import java.io.IOException;
 
-/**
- * @author Atanas Kanchev
- */
-public class ContextsAccessor {
-
-    private static final ConcurrentContextContainer contextThreadLocalContainer =
-        new ConcurrentContextContainer();
-
-    public static ConcurrentContextContainer $context() {
-        return contextThreadLocalContainer;
-    }
-
+public interface Command<T> {
+  Object[] NO_ARGS = new Object[0];
+  
+  T execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException;
 }

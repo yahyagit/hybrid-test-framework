@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.context;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton.currentContextKey;
 
 public final class Finder implements IFinder {
@@ -40,24 +40,24 @@ public final class Finder implements IFinder {
     public Finder(Class<?> clazz) {
         this();
         PageFactory.initElements(
-            context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver(), clazz);
+            $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver(), clazz);
     }
 
     public Finder(By locator) {
         this();
-        context().getContext(currentContextKey).setCurrentElement(findElement(locator));
+        $context().getContext(currentContextKey).setCurrentElement(findElement(locator));
     }
 
     public Finder(WebElement element) {
         this();
-        context().getContext(currentContextKey).setCurrentElement(element);
+        $context().getContext(currentContextKey).setCurrentElement(element);
     }
 
     @Override public Finder elementBy(final By locator) {
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            context().getContext(currentContextKey).setCurrentElement(findElement(locator));
+            $context().getContext(currentContextKey).setCurrentElement(findElement(locator));
         return this;
     }
 
@@ -66,7 +66,7 @@ public final class Finder implements IFinder {
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            context().getContext(currentContextKey).setWebElementsList(findElements(locator));
+            $context().getContext(currentContextKey).setWebElementsList(findElements(locator));
         return this;
 
     }
@@ -77,7 +77,7 @@ public final class Finder implements IFinder {
             throw new CustomExceptions.Common.NullArgumentException(
                 "Null method argument: WebElement element");
         else
-            context().getContext(currentContextKey).setCurrentElement(element);
+            $context().getContext(currentContextKey).setCurrentElement(element);
 
         return this;
     }
@@ -87,7 +87,7 @@ public final class Finder implements IFinder {
         if (text == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            context().getContext(currentContextKey).setCurrentElement(findElement(By.xpath(
+            $context().getContext(currentContextKey).setCurrentElement(findElement(By.xpath(
                 ".//*/text()[contains(normalize-space(.), " + Quotes.escape(text)
                     + ")]/parent::*")));
         return this;
@@ -99,7 +99,7 @@ public final class Finder implements IFinder {
         if (text == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            context().getContext(currentContextKey).setCurrentElement(findElement(By.xpath(
+            $context().getContext(currentContextKey).setCurrentElement(findElement(By.xpath(
                 ".//*/text()[normalize-space(.) = " + Quotes.escape(text) + "]/parent::*")));
         return this;
 
@@ -110,35 +110,35 @@ public final class Finder implements IFinder {
         if (locator == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else {
-            context().getContext(currentContextKey).setCurrentElement(findElement(locator));
+            $context().getContext(currentContextKey).setCurrentElement(findElement(locator));
             new JSExecutor().executeScript(
-                context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver(),
+                $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver(),
                 "arguments[0].scrollIntoView(true);",
-                context().getContext(currentContextKey).getCurrentElement());
+                $context().getContext(currentContextKey).getCurrentElement());
         }
         return this;
     }
 
     @Override public Finder byScrollingByAttribute(String attribute, String value) {
 
-        context().getContext(currentContextKey).setCurrentElement(
+        $context().getContext(currentContextKey).setCurrentElement(
             findElement(By.xpath("//*[contains(@" + attribute + ", '" + value + "')]")));
         new JSExecutor().executeScript(
-            context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver(),
+            $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver(),
             "arguments[0].scrollIntoView(true);",
-            context().getContext(currentContextKey).getCurrentElement());
+            $context().getContext(currentContextKey).getCurrentElement());
 
         return this;
     }
 
     @Override public Finder byScrollingByTag(String tag, String value) {
 
-        context().getContext(currentContextKey).setCurrentElement(
+        $context().getContext(currentContextKey).setCurrentElement(
             findElement(By.xpath("//*[contains(" + tag + ", '" + value + "')]")));
         new JSExecutor().executeScript(
-            context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver(),
+            $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver(),
             "arguments[0].scrollIntoView(true);",
-            context().getContext(currentContextKey).getCurrentElement());
+            $context().getContext(currentContextKey).getCurrentElement());
 
         return this;
     }
@@ -146,16 +146,16 @@ public final class Finder implements IFinder {
     @Override public Finder byScrollingByText(String text, boolean isExactMatch) {
 
         if (isExactMatch)
-            context().getContext(currentContextKey)
+            $context().getContext(currentContextKey)
                 .setCurrentElement(findElement(By.xpath("//*[.=\"" + text + "\"]")));
         else
-            context().getContext(currentContextKey).setCurrentElement(
+            $context().getContext(currentContextKey).setCurrentElement(
                 findElement(By.xpath("//*[contains(text(), \"" + text + "\")]")));
 
         new JSExecutor().executeScript(
-            context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver(),
+            $context().getContext(SeleniumAccessorsSingleton.currentContextKey).getDriver(),
             "arguments[0].scrollIntoView(true);",
-            context().getContext(currentContextKey).getCurrentElement());
+            $context().getContext(currentContextKey).getCurrentElement());
 
         return this;
     }
@@ -165,7 +165,7 @@ public final class Finder implements IFinder {
         if (attribute == null || value == null)
             throw new CustomExceptions.Common.NullArgumentException();
         else
-            context().getContext(currentContextKey).setCurrentElement(
+            $context().getContext(currentContextKey).setCurrentElement(
                 findElement(By.cssSelector("[" + attribute + "='" + value + "']")));
 
         return this;
@@ -177,12 +177,12 @@ public final class Finder implements IFinder {
     //    @Override public Finder byLabelForId(String id) {
     //
     //        boolean labelFound = false;
-    //        context().getContext(currentContextKey).setWebElementsList(findElements(By.tagName(CommonPageDefinitions.HTML.LABEL.getDefinition())));
-    //        if (!context().getContext(currentContextKey).getWebElementsList().isEmpty()) {
-    //            for (WebElement labelElement : context().getContext(currentContextKey).getWebElementsList()) {
+    //        $context().getContext(currentContextKey).setWebElementsList(findElements(By.tagName(CommonPageDefinitions.HTML.LABEL.getDefinition())));
+    //        if (!$context().getContext(currentContextKey).getWebElementsList().isEmpty()) {
+    //            for (WebElement labelElement : $context().getContext(currentContextKey).getWebElementsList()) {
     //                String s = labelElement.getAttribute(CommonPageDefinitions.HTML.ATTRIBUTE_FOR.getDefinition());
     //                if (s.equals(id)) {
-    //                    context().getContext(currentContextKey).setCurrentElement(labelElement);
+    //                    $context().getContext(currentContextKey).setCurrentElement(labelElement);
     //                    labelFound = true;
     //                    break;
     //                }
@@ -199,12 +199,12 @@ public final class Finder implements IFinder {
     //    @Override public Finder byHref(String href) {
     //
     //        boolean navigated = false;
-    //        context().getContext(currentContextKey).setWebElementsList(
+    //        $context().getContext(currentContextKey).setWebElementsList(
     //            findElements(By.tagName(CommonPageDefinitions.HTML.ANCHOR.getDefinition())));
-    //        if (!context().getContext(currentContextKey).getWebElementsList().isEmpty()) {
-    //            for (WebElement anchor : context().getContext(currentContextKey).getWebElementsList()) {
+    //        if (!$context().getContext(currentContextKey).getWebElementsList().isEmpty()) {
+    //            for (WebElement anchor : $context().getContext(currentContextKey).getWebElementsList()) {
     //                if (anchor.getAttribute("href").equals(href)) {
-    //                    context().getContext(currentContextKey).setCurrentElement(anchor);
+    //                    $context().getContext(currentContextKey).setCurrentElement(anchor);
     //                    navigated = true;
     //                    break;
     //                }
@@ -219,7 +219,7 @@ public final class Finder implements IFinder {
     @Override public Finder goToRootElement() {
 
         try {
-            context().getContext(currentContextKey)
+            $context().getContext(currentContextKey)
                 .setCurrentElement(findElement(By.xpath("/html/body")));
         } catch (NoSuchElementException nsee) {
             logger.error("Unable to return to Root Element - Body");
@@ -231,7 +231,7 @@ public final class Finder implements IFinder {
     @Override public Finder goToChild() {
 
         // Step into child element
-        context().getContext(currentContextKey).setCurrentElement(findElement(By.xpath("./*[1]")));
+        $context().getContext(currentContextKey).setCurrentElement(findElement(By.xpath("./*[1]")));
 
         return this;
 
@@ -240,14 +240,14 @@ public final class Finder implements IFinder {
     @Override public Finder goToParent() {
 
         // Step up to parent element
-        context().getContext(currentContextKey).setCurrentElement(findElement(By.xpath("..")));
+        $context().getContext(currentContextKey).setCurrentElement(findElement(By.xpath("..")));
         return this;
     }
 
     private WebElement findElement(By locator) {
         logger.debug("Locating element using " + locator.toString());
         try {
-            return context().getContext(currentContextKey).getDriver().findElement(locator);
+            return $context().getContext(currentContextKey).getDriver().findElement(locator);
         } catch (NoSuchElementException nsee) {
             throw new NoSuchElementException("Unable to locate element using " + locator.toString(),
                 nsee);
@@ -258,7 +258,7 @@ public final class Finder implements IFinder {
         logger.debug("Locating elements using " + locator.toString());
         try {
             List<WebElement> e =
-                context().getContext(currentContextKey).getDriver().findElements(locator);
+                $context().getContext(currentContextKey).getDriver().findElements(locator);
             int numberOfElementsFound = e.size();
             if (numberOfElementsFound == 0)
                 throw new NoSuchElementException("Elements found: " + numberOfElementsFound);
