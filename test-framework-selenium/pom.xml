@@ -39,7 +39,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -61,6 +60,7 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
         </dependency>
+        <!--Internal dependencies-->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
