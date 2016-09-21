@@ -49,36 +49,61 @@
 
     <properties>
         <!--maven-->
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
         <maven.compiler.version>3.5.1</maven.compiler.version>
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
         <maven.source.plugin>3.0.1</maven.source.plugin>
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
         <maven.javadoc.plugin>2.10.4</maven.javadoc.plugin>
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.surefire/surefire-api -->
         <maven.surefire.version>2.19.1</maven.surefire.version>
+        <!-- https://mvnrepository.com/artifact/org.sonatype.plugins/nexus-staging-maven-plugin -->
         <nexus.staging.maven.plugin.version>1.6.7</nexus.staging.maven.plugin.version>
         <!--apache-->
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <apache.commons.io.version>2.5</apache.commons.io.version>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
         <apache.http.client.version>4.5.2</apache.http.client.version>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpasyncclient -->
         <apache.httpasyncclient.version>4.1.2</apache.httpasyncclient.version>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime -->
         <apache.httpmime.version>4.5.2</apache.httpmime.version>
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
         <apache.poi.version>3.14</apache.poi.version>
         <!--logging-->
+        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
         <logback.version>1.1.7</logback.version>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <slf4j.version>1.7.21</slf4j.version>
         <!--testing-->
-        <selenium.version>3.0.0-beta2</selenium.version>
-        <webdrivermanager.version>1.4.8</webdrivermanager.version>
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+        <selenium.version>3.0.0-beta3</selenium.version>
+        <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+        <webdrivermanager.version>1.4.9</webdrivermanager.version>
+        <!-- https://mvnrepository.com/artifact/com.codeborne/phantomjsdriver -->
         <phantomjsdriver.version>1.3.0</phantomjsdriver.version>
         <sikulix.version>1.1.1-SNAPSHOT</sikulix.version>
+        <!-- https://mvnrepository.com/artifact/io.appium/java-client -->
         <io.appium.java.version>4.1.2</io.appium.java.version>
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
         <junit.version>4.12</junit.version>
+        <!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-library -->
         <hamcrest.version>1.3</hamcrest.version>
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
         <mockito.version>1.10.19</mockito.version>
+        <!-- https://mvnrepository.com/artifact/net.sf.opencsv/opencsv -->
         <open.csv.version>2.3</open.csv.version>
         <!--api-->
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
         <json.version>20160810</json.version>
+        <!-- https://mvnrepository.com/artifact/org.jglue.fluent-json/fluent-json -->
         <fluent.json.version>2.0.3</fluent.json.version>
+        <!-- https://mvnrepository.com/artifact/com.mashape.unirest/unirest-java -->
         <unirest.version>1.4.9</unirest.version>
-        <jackson.version>2.8.1</jackson.version>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+        <jackson.version>2.8.3</jackson.version>
         <!--Other-->
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <guava.version>19.0</guava.version>
     </properties>
 
@@ -255,7 +280,6 @@
                 <artifactId>poi-ooxml</artifactId>
                 <version>${apache.poi.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
