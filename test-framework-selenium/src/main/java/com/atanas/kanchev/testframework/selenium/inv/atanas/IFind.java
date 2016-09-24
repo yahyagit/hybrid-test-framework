@@ -13,11 +13,12 @@
 
 package com.atanas.kanchev.testframework.selenium.inv.atanas;
 
+import org.openqa.selenium.By;
+
 /**
- * Created by atanas on 23/09/16.
+ * @author Atanas Kanchev
  */
-public interface IElement extends IClick, IFind{
+public interface IFind {
 
-
+    void find(By by);
 }
-

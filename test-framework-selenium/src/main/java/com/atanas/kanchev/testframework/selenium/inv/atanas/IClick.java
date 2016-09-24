@@ -13,11 +13,16 @@
 
 package com.atanas.kanchev.testframework.selenium.inv.atanas;
 
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
+
 /**
- * Created by atanas on 23/09/16.
+ * @author Atanas Kanchev
  */
-public interface IElement extends IClick, IFind{
+public interface IClick {
 
+    default void click() {
 
+        System.out.println("clicking");
+        $context().getContext(Test.currentContextKey).getCurrentElement().click();
+    }
 }
-
