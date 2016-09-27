@@ -14,33 +14,30 @@
  *    limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.selenium.inv.atanas;
+package com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.commands;
 
+import com.atanas.kanchev.testframework.commons.context.ContextKey;
+import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.exceptions.ElementEx;
-import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.internal.Coordinates;
-import org.openqa.selenium.internal.Locatable;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
-import org.slf4j.MarkerFactory;
 
-import java.util.List;
+import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 
 /**
- * Created by atanas on 23/09/16.
+ * Created by atanas on 27/09/16.
  */
-public class ElementImpl implements IElement {
-
+public abstract class AbstractCommand {
+    protected final WebElement element;
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
-    protected static final Marker executorMarker = MarkerFactory.getMarker("INTERACTIONS_EXECUTOR");
-
-    protected void throwEx(Throwable throwable) throws RuntimeException {
-        logger.error(executorMarker, "Unable to execute " + throwable.toString());
-        throw new ElementEx(throwable);
+    public AbstractCommand(ContextKey<SeleniumContext> currentContextKey) {
+        this.element = $context().getContext(currentContextKey).getCurrentElement();
     }
 
-
+    protected void throwEx(Throwable throwable) throws RuntimeException {
+        logger.error("Unable to execute " + throwable.toString());
+        throw new ElementEx(throwable);
+    }
 }

@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.selenium.inv.atanas;
+package com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.element;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.internal.Coordinates;

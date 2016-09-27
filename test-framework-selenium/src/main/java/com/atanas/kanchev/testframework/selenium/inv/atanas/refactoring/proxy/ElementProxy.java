@@ -20,9 +20,10 @@ import com.atanas.kanchev.testframework.commons.context.ContextKey;
 import com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton;
 import com.atanas.kanchev.testframework.selenium.classenum.ClassEnumerator;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
-import com.atanas.kanchev.testframework.selenium.inv.atanas.ElementImpl;
-import com.atanas.kanchev.testframework.selenium.inv.atanas.IElement;
+
+import com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.element.IElement;
 import com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.commands.Click;
+import com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.wrap.Wrapper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -45,7 +46,7 @@ public class ElementProxy implements InvocationHandler {
     static ContextKey<SeleniumContext> currentContextKey;
     Object object;
 
-    private ElementProxy(Object object) {
+    public ElementProxy(Object object) {
         this.object = object;
     }
 
@@ -64,14 +65,16 @@ public class ElementProxy implements InvocationHandler {
         $selenium().goTo("https://www.google.co.uk");
 //        $selenium().find(By.className("gsfi"));
 
-        IElement iElement = (IElement) newInstance(
-            new ElementImpl());
+       IElement wrapper = Wrapper.wrap(IElement.class, null, null, 0);
 
-        iElement.findElement(By.className("gsfi"));
+//        IElement iElement = (IElement) newInstance(
+//            new ElementImpl());
 
-        System.out.println(iElement.isDisplayed());
-        iElement.click();
-        iElement.sendKeys("hello");
+        wrapper.findElement(By.className("gsfi"));
+
+        System.out.println(wrapper.isDisplayed());
+        wrapper.click();
+        wrapper.sendKeys("hello");
 
         try {
             Thread.sleep(89999999);

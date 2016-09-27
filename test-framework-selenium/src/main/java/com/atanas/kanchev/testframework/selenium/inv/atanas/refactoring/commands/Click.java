@@ -18,11 +18,8 @@ package com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.command
 
 import com.atanas.kanchev.testframework.commons.context.ContextKey;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
-import com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.AbstractCommand;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.StaleElementReferenceException;
-
-import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 
 /**
  * Created by atanas on 27/09/16.
