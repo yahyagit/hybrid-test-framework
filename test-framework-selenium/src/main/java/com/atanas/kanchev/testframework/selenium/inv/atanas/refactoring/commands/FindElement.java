@@ -21,6 +21,8 @@ import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 
 /**
@@ -35,9 +37,18 @@ public class FindElement {
     }
 
     public WebElement findElement(By by) {
+
         $context().getContext(currentContextKey).setCurrentElement(
             $context().getContext(currentContextKey).getDriver().findElement(by));
 
         return $context().getContext(currentContextKey).getCurrentElement();
+    }
+
+    public List<WebElement> findElements(By by) {
+
+        $context().getContext(currentContextKey).setWebElementsList(
+            $context().getContext(currentContextKey).getDriver().findElements(by));
+
+        return $context().getContext(currentContextKey).getWebElementsList();
     }
 }

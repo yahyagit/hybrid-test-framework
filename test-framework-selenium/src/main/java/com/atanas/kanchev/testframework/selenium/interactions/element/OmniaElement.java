@@ -14,7 +14,7 @@
 package com.atanas.kanchev.testframework.selenium.interactions.element;
 
 import com.atanas.kanchev.testframework.selenium.handlers.Finder;
-import com.atanas.kanchev.testframework.selenium.interactions.element.interactions.Alert;
+
 import com.atanas.kanchev.testframework.selenium.interactions.element.interactions.*;
 import com.atanas.kanchev.testframework.selenium.interactions.wait.Waiting;
 import org.openqa.selenium.*;
@@ -24,133 +24,133 @@ import java.util.List;
 /**
  * @author Atanas Kanchev
  */
-public class OmniaElement implements IOmniaElement {
+public class OmniaElement /*implements IOmniaElement*/ {
 
-    public static OmniaElement omniaElement = new OmniaElement();
-
-    public OmniaElement(By by) {
-        find().elementBy(by);
-    }
-
-    public OmniaElement() {
-    }
-
-    @Override public void click() {
-        new Click().click().execute();
-    }
-
-    @Override public void submit() {
-        new Submit().submit().execute();
-    }
-
-    @Override public void sendKeys(CharSequence... keysToSend) {
-        new SendKeys().sendKeys(keysToSend).execute();
-    }
-
-    @Override public void clear() {
-        new Clear().clear().execute();
-    }
-
-    @Override public String getTagName() {
-        return new GetTagName().getTagName().execute();
-    }
-
-    @Override public String getAttribute(String name) {
-        return new GetAttribute().getAttribute(name).execute();
-    }
-
-    @Override public boolean isSelected() {
-        return new IsSelected().isSelected().execute();
-    }
-
-    @Override public boolean isEnabled() {
-        return new IsEnabled().isEnabled().execute();
-    }
-
-    @Override public String getText() {
-        return new GetText().getText().execute();
-    }
-
-    @Override public List<WebElement> findElements(By by) {
-        find().elementsBy(by);
-        return null;
-    }
-
-    @Override public WebElement findElement(By by) {
-        return null;
-    }
-
-    @Override public boolean isDisplayed() {
-        return new IsDisplayed().isDisplayed().execute();
-    }
-
-    @Override public Point getLocation() {
-        return new GetLocation().getLocation().execute();
-    }
-
-    @Override public Dimension getSize() {
-        return new GetSize().getSize().execute();
-    }
-
-    @Override public Rectangle getRect() {
-        return new GetRect().getRect().execute();
-    }
-
-    @Override public String getCssValue(String propertyName) {
-        return new GetCssValue().getCssValue(propertyName).execute();
-    }
-
-    @Override public void clickAndHold(int duration) {
-        new ClickAndHold().clickAndHold(duration).execute();
-    }
-
-    @Override public void doubleClick() {
-        new DoubleClick().doubleClick().execute();
-    }
-
-    @Override public void contextClick() {
-        new ContextClick().contextClick().execute();
-    }
-
-    @Override public IOmniaElement hover() {
-        return new Hover().hover().execute();
-    }
-
-    @Override public IOmniaElement selectAll() {
-        return new CopyPaste().command("a").execute();
-    }
-
-    @Override public IOmniaElement copy() {
-        return new CopyPaste().command("c").execute();
-    }
-
-    @Override public IOmniaElement paste() {
-        return new CopyPaste().command("v").execute();
-    }
-
-    @Override public IOmniaElement handleAlert(boolean accept) {
-        new Alert().handleAlert(accept).execute();
-        return this;
-    }
-
-    @Override public Finder find() {
-        return new Finder();
-    }
-
-    @Override public Finder find(WebElement element) {
-        return new Finder(element);
-    }
-
-    @Override public Finder find(Class<?> clazz) {
-        return new Finder(clazz);
-    }
-
-    @Override public Waiting waitFor() {
-        return new Waiting();
-    }
-
-    @Override public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
-        return null;
-    }
+//    public static OmniaElement omniaElement = new OmniaElement();
+//
+//    public OmniaElement(By by) {
+//        find().elementBy(by);
+//    }
+//
+//    public OmniaElement() {
+//    }
+//
+//    @Override public void click() {
+//        new Click().click().execute();
+//    }
+//
+//    @Override public void submit() {
+//        new Submit().submit().execute();
+//    }
+//
+//    @Override public void sendKeys(CharSequence... keysToSend) {
+//        new SendKeys().sendKeys(keysToSend).execute();
+//    }
+//
+//    @Override public void clear() {
+//        new Clear().clear().execute();
+//    }
+//
+//    @Override public String getTagName() {
+//        return new GetTagName().getTagName().execute();
+//    }
+//
+//    @Override public String getAttribute(String name) {
+//        return new GetAttribute().getAttribute(name).execute();
+//    }
+//
+//    @Override public boolean isSelected() {
+//        return new IsSelected().isSelected().execute();
+//    }
+//
+//    @Override public boolean isEnabled() {
+//        return new IsEnabled().isEnabled().execute();
+//    }
+//
+//    @Override public String getText() {
+//        return new GetText().getText().execute();
+//    }
+//
+//    @Override public List<WebElement> findElements(By by) {
+//        find().elementsBy(by);
+//        return null;
+//    }
+//
+//    @Override public WebElement findElement(By by) {
+//        return null;
+//    }
+//
+//    @Override public boolean isDisplayed() {
+//        return new IsDisplayed().isDisplayed().execute();
+//    }
+//
+//    @Override public Point getLocation() {
+//        return new GetLocation().getLocation().execute();
+//    }
+//
+//    @Override public Dimension getSize() {
+//        return new GetSize().getSize().execute();
+//    }
+//
+//    @Override public Rectangle getRect() {
+//        return new GetRect().getRect().execute();
+//    }
+//
+//    @Override public String getCssValue(String propertyName) {
+//        return new GetCssValue().getCssValue(propertyName).execute();
+//    }
+//
+//    @Override public void clickAndHold(int duration) {
+//        new ClickAndHold().clickAndHold(duration).execute();
+//    }
+//
+//    @Override public void doubleClick() {
+//        new DoubleClick().doubleClick().execute();
+//    }
+//
+//    @Override public void contextClick() {
+//        new ContextClick().contextClick().execute();
+//    }
+//
+//    @Override public IOmniaElement hover() {
+//        return new Hover().hover().execute();
+//    }
+//
+//    @Override public IOmniaElement selectAll() {
+//        return new CopyPaste().command("a").execute();
+//    }
+//
+//    @Override public IOmniaElement copy() {
+//        return new CopyPaste().command("c").execute();
+//    }
+//
+//    @Override public IOmniaElement paste() {
+//        return new CopyPaste().command("v").execute();
+//    }
+//
+//    @Override public IOmniaElement handleAlert(boolean accept) {
+//        new Alert().handleAlert(accept).execute();
+//        return this;
+//    }
+//
+//    @Override public Finder find() {
+//        return new Finder();
+//    }
+//
+//    @Override public Finder find(WebElement element) {
+//        return new Finder(element);
+//    }
+//
+//    @Override public Finder find(Class<?> clazz) {
+//        return new Finder(clazz);
+//    }
+//
+//    @Override public Waiting waitFor() {
+//        return new Waiting();
+//    }
+//
+//    @Override public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
+//        return null;
+//    }
 
 }

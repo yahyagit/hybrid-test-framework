@@ -20,6 +20,7 @@ import com.atanas.kanchev.testframework.commons.context.ContextKey;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
 import com.atanas.kanchev.testframework.selenium.exceptions.ElementEx;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,15 +30,27 @@ import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccesso
  * Created by atanas on 27/09/16.
  */
 public abstract class AbstractCommand {
+
+    protected final ContextKey<SeleniumContext> currentContextKey;
     protected final WebElement element;
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected Actions actions;
 
     public AbstractCommand(ContextKey<SeleniumContext> currentContextKey) {
         this.element = $context().getContext(currentContextKey).getCurrentElement();
+        this.currentContextKey = currentContextKey;
     }
 
     protected void throwEx(Throwable throwable) throws RuntimeException {
         logger.error("Unable to execute " + throwable.toString());
         throw new ElementEx(throwable);
     }
+
+    protected Actions getActions() {
+        if (actions == null)
+            return this.actions = new Actions($context().getContext(currentContextKey).getDriver());
+        else
+            return this.actions;
+    }
+
 }

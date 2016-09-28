@@ -30,9 +30,8 @@ public class Click extends AbstractCommand {
         super(currentContextKey);
     }
 
-    public void click(){
+    public void click() {
         try {
-            logger.debug("!!!!!!!!!!!!!!!!CLIKING!!!!!");
             element.click();
         } catch (StaleElementReferenceException e) {
             logger.error("Stale element");
@@ -43,17 +42,37 @@ public class Click extends AbstractCommand {
         }
     }
 
-    public void click(String arg){
-        System.out.println(arg);
+    public void doubleClick() {
         try {
-            logger.debug("!!!!!!!!!!!!!!!!CLIKING WITH argds!!!!!" + arg);
-            element.click();
-        } catch (StaleElementReferenceException e) {
-            logger.error("Stale element");
-            throwEx(e);
-        } catch (ElementNotVisibleException e) {
-            logger.error("Element is Not visible");
+            getActions().doubleClick(element).perform();
+        } catch (Exception e) {
             throwEx(e);
         }
     }
+
+    public void clickAndHold(long duration) {
+
+        logger.debug("Click and Hold Element");
+        try {
+            getActions().clickAndHold(element).perform();
+            Thread.sleep(duration);
+            getActions().release(element).perform();
+        } catch (Exception e) {
+            throwEx(e);
+        }
+
+    }
+
+    public void contextClick() {
+
+        logger.debug("Click and Hold Element");
+        try {
+            getActions().contextClick(element).perform();
+        } catch (Exception e) {
+            throwEx(e);
+        }
+
+    }
+
+
 }

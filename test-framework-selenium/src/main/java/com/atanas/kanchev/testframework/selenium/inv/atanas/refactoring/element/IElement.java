@@ -16,6 +16,9 @@
 
 package com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.element;
 
+import com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.ImplementedBy;
+import com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.commands.Alert;
+import com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.commands.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
@@ -28,84 +31,55 @@ import java.util.List;
  */
 public interface IElement extends WebElement, WrapsElement, Locatable {
 
-    public default void click(String arg){}
+    @ImplementedBy(Hover.class) IElement hover();
 
-    @Override default void click() {
+    @ImplementedBy(CopyPaste.class) CopyPaste copyPaste(String command);
 
-        System.out.println("click in interface");
+    @ImplementedBy(Alert.class) Alert handleAlert(boolean accept);
 
-    }
+    @ImplementedBy(Click.class) IElement clickAndHold(long duration);
 
-    @Override default void submit() {
+    @ImplementedBy(Click.class) IElement contextClick();
 
-    }
+    @ImplementedBy(Click.class) IElement doubleClick();
 
-    @Override default void sendKeys(CharSequence... keysToSend) {
-        System.out.println("sendKeys in interface");
-    }
+    @ImplementedBy(Click.class) @Override void click();
 
-    @Override default void clear() {
+    @ImplementedBy(Submit.class) @Override void submit();
 
-    }
+    @ImplementedBy(SendKeys.class) @Override void sendKeys(CharSequence... keysToSend);
 
-    @Override default String getTagName() {
-        return null;
-    }
+    @ImplementedBy(Clear.class) @Override void clear();
 
-    @Override default String getAttribute(String name) {
-        return null;
-    }
+    @ImplementedBy(GetTagName.class) @Override String getTagName();
 
-    @Override default boolean isSelected() {
-        return false;
-    }
+    @ImplementedBy(GetAttribute.class) @Override String getAttribute(String name);
 
-    @Override default boolean isEnabled() {
-        return false;
-    }
+    @ImplementedBy(IsSelected.class) @Override boolean isSelected();
 
-    @Override default String getText() {
-        return null;
-    }
+    @ImplementedBy(IsEnabled.class) @Override boolean isEnabled();
 
-    @Override default List<WebElement> findElements(By by) {
-        return null;
-    }
+    @ImplementedBy(GetText.class) @Override String getText();
 
-    @Override default WebElement findElement(By by) {
-        return null;
-    }
+    @ImplementedBy(FindElement.class) @Override List<WebElement> findElements(By by);
 
-    @Override default boolean isDisplayed() {
-        return false;
-    }
+    @ImplementedBy(FindElement.class) @Override WebElement findElement(By by);
 
-    @Override default Point getLocation() {
-        return null;
-    }
+    @ImplementedBy(IsDisplayed.class) @Override boolean isDisplayed();
 
-    @Override default Dimension getSize() {
-        return null;
-    }
+    @ImplementedBy(GetLocation.class) @Override Point getLocation();
 
-    @Override default Rectangle getRect() {
-        return null;
-    }
+    @ImplementedBy(GetSize.class) @Override Dimension getSize();
 
-    @Override default String getCssValue(String propertyName) {
-        return null;
-    }
+    @ImplementedBy(GetRect.class) @Override Rectangle getRect();
 
-    @Override default <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
-        return null;
-    }
+    @ImplementedBy(GetCssValue.class) @Override String getCssValue(String propertyName);
 
-    @Override default Coordinates getCoordinates() {
-        return null;
-    }
+    @ImplementedBy(Click.class) @Override <X> X getScreenshotAs(OutputType<X> target)
+        throws WebDriverException;
 
-    @Override default WebElement getWrappedElement() {
-        return null;
-    }
+    @ImplementedBy(GetCoordinates.class) @Override Coordinates getCoordinates();
+
+    @ImplementedBy(GetWrappedElement.class) @Override WebElement getWrappedElement();
 }
 

@@ -18,11 +18,9 @@ package com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.proxy;
 
 import com.atanas.kanchev.testframework.commons.context.ContextKey;
 import com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton;
-import com.atanas.kanchev.testframework.selenium.classenum.ClassEnumerator;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
-
+import com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.ImplementedBy;
 import com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.element.IElement;
-import com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.commands.Click;
 import com.atanas.kanchev.testframework.selenium.inv.atanas.refactoring.wrap.Wrapper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -31,7 +29,6 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.*;
 import java.util.Arrays;
-import java.util.List;
 
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.$selenium;
@@ -63,24 +60,25 @@ public class ElementProxy implements InvocationHandler {
         currentContextKey = $context().addContext(c.getContextKey(), c);
         SeleniumAccessorsSingleton.currentContextKey = currentContextKey;
         $selenium().goTo("https://www.google.co.uk");
-//        $selenium().find(By.className("gsfi"));
+        //        $selenium().find(By.className("gsfi"));
 
-       IElement wrapper = Wrapper.wrap(IElement.class, null, null, 0);
+        IElement wrapper = Wrapper.wrap(IElement.class, null, null, 0);
 
-//        IElement iElement = (IElement) newInstance(
-//            new ElementImpl());
+        //        IElement iElement = (IElement) newInstance(
+        //            new ElementImpl());
 
         wrapper.findElement(By.className("gsfi"));
 
-        System.out.println(wrapper.isDisplayed());
+        //        System.out.println(wrapper.isDisplayed());
         wrapper.click();
-        wrapper.sendKeys("hello");
+        wrapper.doubleClick();
+        //        wrapper.sendKeys("hello");
 
-        try {
-            Thread.sleep(89999999);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        //        try {
+        //            Thread.sleep(89999999);
+        //        } catch (InterruptedException e) {
+        //            e.printStackTrace();
+        //        }
 
 
     }
@@ -89,40 +87,77 @@ public class ElementProxy implements InvocationHandler {
 
         Object result = null;
 
-        List<Class<?>> classes = ClassEnumerator.getClassesForPackage(Click.class.getPackage());
-        logger.debug("Commands found: " + classes.size());
-        logger.debug("Commands: " + Arrays.toString(classes.toArray()));
+        logger.debug("Before method " + method.getName());
+        long start = System.nanoTime();
 
-        for (Class<?> clazz : classes) {
+        try {
+            Class<?> implementingClazz = method.getAnnotation(ImplementedBy.class).value();
+            logger.debug("Implemented in " + implementingClazz);
 
-            if (clazz.getSimpleName().toLowerCase().equals(method.getName().toLowerCase())) {
+            Constructor<?> constructor = implementingClazz.getConstructor(ContextKey.class);
+            Object thing = constructor.newInstance(currentContextKey);
 
-                try {
-                    Constructor<?> constructor = clazz.getConstructor(ContextKey.class);
-                    Object thing = constructor.newInstance(currentContextKey);
+            Method[] allMethods = implementingClazz.getDeclaredMethods();
+            logger.debug("Methods in implementing class " + Arrays.toString(allMethods));
 
-                    Method[] allMethods = clazz.getDeclaredMethods();
-                    System.out.println("All methods "  +Arrays.toString(allMethods));
-
-                    if (args == null) {
-                        Method m = clazz.getMethod(method.getName());
-                        logger.debug("Invoking method " + m);
-                        result = m.invoke(thing);
-                    } else {
-                        Class<?>[] c = method.getParameterTypes();
-                        System.out.println(c[0]);
-                        Method m = clazz.getMethod(method.getName(),  c[0]);
-                        logger.debug("Invoking method " + m.getName());
-                        result = m.invoke(thing, args);
-                    }
-
-                } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
-
-                break;
+            if (args == null) {
+                Method m = implementingClazz.getMethod(method.getName());
+                logger.debug("Invoking method " + m);
+                result = m.invoke(thing);
+            } else {
+                Class<?>[] c = method.getParameterTypes();
+                Method m = implementingClazz.getMethod(method.getName(), c[0]);
+                logger.debug(
+                    "Invoking method " + m.getName() + " with params " + Arrays.toString(args));
+                result = m.invoke(thing, args);
             }
+
+            long end = System.nanoTime();
+            logger.debug(String.format("%s took %d ns", method.getName(), (end - start)));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
         }
+
+        //        for (Class<?> clazz : classes) {
+        //
+        //            if (clazz.getSimpleName().toLowerCase().equals(method.getName().toLowerCase())) {
+        //
+        //                try {
+        //                    Constructor<?> constructor = clazz.getConstructor(ContextKey.class);
+        //                    Object thing = constructor.newInstance(currentContextKey);
+        //
+        //                    Method[] allMethods = clazz.getDeclaredMethods();
+        //                    System.out.println("All methods "  +Arrays.toString(allMethods));
+        //
+        //                    if (args == null) {
+        //                        Method m = clazz.getMethod(method.getName());
+        //                        logger.debug("Invoking method " + m);
+        //                        result = m.invoke(thing);
+        //                    } else {
+        //                        Class<?>[] c = method.getParameterTypes();
+        //                        System.out.println(c[0]);
+        //                        Method m = clazz.getMethod(method.getName(),  c[0]);
+        //                        logger.debug("Invoking method " + m.getName());
+        //                        result = m.invoke(thing, args);
+        //                    }
+        //
+        //                } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        //                    e.printStackTrace();
+        //                }
+        //
+        //                break;
+        //            }
+        //        }
 
         //        Object result;
         //        try {
@@ -142,22 +177,5 @@ public class ElementProxy implements InvocationHandler {
 
         return result;
     }
-
-    //    private Class<?> getClazz(Class<?> clazz) {
-    //        try {
-    //            try {
-    //                Constructor constructor = clazz.getConstructor(ContextKey.class);
-    //                return (Class<?>) constructor.newInstance(currentContextKey);
-    //            } catch (NoSuchMethodException e) {
-    //                return (Class<?>) clazz.newInstance();
-    //            }
-    //        } catch (InstantiationException e) {
-    //            throw new RuntimeException(e);
-    //        } catch (IllegalAccessException e) {
-    //            throw new RuntimeException(e);
-    //        } catch (InvocationTargetException e) {
-    //            throw new RuntimeException(e);
-    //        }
-    //    }
 
 }
