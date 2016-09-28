@@ -335,14 +335,7 @@ public class AndroidNativeHandler {
             return $context().getContext(currentContextKey).getDriver().getOrientation();
         }
 
-        @Override public void rotate(DeviceRotation deviceRotation) {
-            //TODO Implement me!
-        }
 
-        @Override public DeviceRotation rotation() {
-            //TODO Implement me!
-            return null;
-        }
     }
 
 
