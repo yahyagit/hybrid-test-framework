@@ -32,14 +32,14 @@ import static java.lang.Thread.currentThread;
 /**
  * Created by atanas on 23/09/16.
  */
-public final class ElementProxy implements InvocationHandler {
+public final class WaitProxy implements InvocationHandler {
 
-    protected static final Marker marker = MarkerFactory.getMarker("INTERACTIONS_EXECUTOR");
-    private static final Logger logger = LoggerFactory.getLogger(ElementProxy.class.getName());
+    protected static final Marker marker = MarkerFactory.getMarker("WAIT_EXECUTOR");
+    private static final Logger logger = LoggerFactory.getLogger(WaitProxy.class.getName());
 
     private final ContextKey<SeleniumContext> currentContextKey;
 
-    private ElementProxy(ContextKey<SeleniumContext> currentContextKey) {
+    private WaitProxy(ContextKey<SeleniumContext> currentContextKey) {
         this.currentContextKey = currentContextKey;
     }
 
@@ -47,7 +47,7 @@ public final class ElementProxy implements InvocationHandler {
         ContextKey<SeleniumContext> currentContextKey) {
         return (T) Proxy
             .newProxyInstance(currentThread().getContextClassLoader(), new Class<?>[] {clazz},
-                new ElementProxy(currentContextKey));
+                new WaitProxy(currentContextKey));
     }
 
     @Override public Object invoke(Object proxy, Method method, Object... args) throws Throwable {
@@ -56,7 +56,6 @@ public final class ElementProxy implements InvocationHandler {
         logger.debug(marker, String
             .format("Invoking method: {%s}, param type(s): {%s}, arg(s): {%s}", method.getName(),
                 Arrays.deepToString(method.getParameterTypes()), Arrays.deepToString(args)));
-
         long start = System.currentTimeMillis();
 
         try {
@@ -97,6 +96,5 @@ public final class ElementProxy implements InvocationHandler {
 
         return result;
     }
-
 
 }
