@@ -16,7 +16,7 @@ package com.atanas.kanchev.testframework.selenium.element.proxy;
 import com.atanas.kanchev.testframework.commons.context.ContextKey;
 import com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
-import com.atanas.kanchev.testframework.selenium.element.element.IElement;
+import com.atanas.kanchev.testframework.selenium.element.OmniaWebElement;
 import com.atanas.kanchev.testframework.selenium.element.wrap.Wrapper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -58,24 +58,24 @@ public class ElementProxy implements InvocationHandler {
         $selenium().goTo("https://www.google.co.uk");
         //        $selenium().find(By.className("gsfi"));
 
-        IElement wrapper = Wrapper.wrap(IElement.class, null, null, 0);
+        OmniaWebElement wrapper = Wrapper.wrap(OmniaWebElement.class, null, null, 0);
 
-        //        IElement iElement = (IElement) newInstance(
+        //        OmniaWebElement iElement = (OmniaWebElement) newInstance(
         //            new ElementImpl());
 
         wrapper.findElement(By.className("gsfi"));
 
         //        System.out.println(wrapper.isDisplayed());
-        wrapper.click();
-        wrapper.doubleClick();
-        wrapper.waits().titleContains("google");
-        //        wrapper.sendKeys("hello");
+//        wrapper.click();
+//        wrapper.doubleClick();
+//        wrapper.waits().titleContains("google");
+                wrapper.sendKeys("hello");
 
-        //        try {
-        //            Thread.sleep(89999999);
-        //        } catch (InterruptedException e) {
-        //            e.printStackTrace();
-        //        }
+                try {
+                    Thread.sleep(89999999);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
 
     }
@@ -89,7 +89,7 @@ public class ElementProxy implements InvocationHandler {
 
         try {
             Class<?> implementingClazz = method.getAnnotation(ImplementedBy.class).value();
-            logger.debug("Implemented in " + implementingClazz);
+            logger.debug("Implementing class " + implementingClazz);
 
             Constructor<?> constructor = implementingClazz.getConstructor(ContextKey.class);
             Object thing = constructor.newInstance(currentContextKey);
@@ -99,11 +99,12 @@ public class ElementProxy implements InvocationHandler {
 
             if (args == null) {
                 Method m = implementingClazz.getMethod(method.getName());
-                logger.debug("Invoking method " + m);
+                logger.debug("Invoking method " + m.getName());
                 result = m.invoke(thing);
             } else {
                 Class<?>[] c = method.getParameterTypes();
-                Method m = implementingClazz.getMethod(method.getName(), c[0]);
+                logger.debug("Method param type " + c);
+                Method m = implementingClazz.getDeclaredMethod(method.getName(), c);
                 logger.debug(
                     "Invoking method " + m.getName() + " with params " + Arrays.toString(args));
                 result = m.invoke(thing, args);

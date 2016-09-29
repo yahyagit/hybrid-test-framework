@@ -1,17 +1,20 @@
 /*
  * Copyright 2016 Atanas Stoychev Kanchev
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.selenium.element.element;
+package com.atanas.kanchev.testframework.selenium.element;
 
 import com.atanas.kanchev.testframework.selenium.element.proxy.ImplementedBy;
 import com.atanas.kanchev.testframework.selenium.element.interactions.element.Alert;
@@ -27,21 +30,21 @@ import java.util.List;
 /**
  * Created by atanas on 23/09/16.
  */
-public interface IElement extends WebElement, WrapsElement, Locatable {
+public interface OmniaWebElement extends WebElement, WrapsElement, Locatable {
 
     @ImplementedBy(Waits.class) Waits waits();
 
-    @ImplementedBy(Hover.class) IElement hover();
+    @ImplementedBy(Hover.class) OmniaWebElement hover();
 
     @ImplementedBy(CopyPaste.class) CopyPaste copyPaste(String command);
 
     @ImplementedBy(Alert.class) Alert handleAlert(boolean accept);
 
-    @ImplementedBy(Click.class) IElement clickAndHold(long duration);
+    @ImplementedBy(Click.class) OmniaWebElement clickAndHold(long duration);
 
-    @ImplementedBy(Click.class) IElement contextClick();
+    @ImplementedBy(Click.class) OmniaWebElement contextClick();
 
-    @ImplementedBy(Click.class) IElement doubleClick();
+    @ImplementedBy(Click.class) OmniaWebElement doubleClick();
 
     @ImplementedBy(Click.class) @Override void click();
 

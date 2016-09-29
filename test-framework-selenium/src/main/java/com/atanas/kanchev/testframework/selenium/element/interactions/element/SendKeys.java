@@ -29,7 +29,7 @@ public class SendKeys extends AbstractElementInteraction {
         super(currentContextKey);
     }
 
-    void sendKeys(CharSequence... keysToSend) {
+    public void sendKeys(CharSequence... keysToSend) {
         String tag = element.getTagName();
         if (tag.equals(CommonPageDefinitions.HTML.INPUT.getDefinition()) || tag
             .equals(CommonPageDefinitions.HTML.TEXTAREA.getDefinition()) || tag
@@ -43,4 +43,5 @@ public class SendKeys extends AbstractElementInteraction {
             throwEx(new WebDriverException("Cannot type in this element"));
         }
     }
+
 }

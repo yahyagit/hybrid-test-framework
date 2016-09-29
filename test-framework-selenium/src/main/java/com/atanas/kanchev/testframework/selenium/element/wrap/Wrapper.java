@@ -13,7 +13,7 @@
 
 package com.atanas.kanchev.testframework.selenium.element.wrap;
 
-import com.atanas.kanchev.testframework.selenium.element.element.IElement;
+import com.atanas.kanchev.testframework.selenium.element.OmniaWebElement;
 import com.atanas.kanchev.testframework.selenium.element.proxy.ElementProxy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
@@ -28,7 +28,7 @@ import static java.lang.Thread.currentThread;
 public class Wrapper {
 
     @SuppressWarnings("unchecked")
-    public static <T extends IElement> T wrap(Class<T> clazz, SearchContext parent, By criteria, int index) {
+    public static <T extends OmniaWebElement> T wrap(Class<T> clazz, SearchContext parent, By criteria, int index) {
         return (T) Proxy.newProxyInstance(
             currentThread().getContextClassLoader(),
             new Class<?>[]{clazz},
