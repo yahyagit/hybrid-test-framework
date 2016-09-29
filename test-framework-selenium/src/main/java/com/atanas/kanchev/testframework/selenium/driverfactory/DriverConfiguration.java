@@ -148,7 +148,7 @@ public class DriverConfiguration extends Defaults {
      * - `eager`: return after DOMContentLoaded fires;
      * - `none`: return immediately (it's the framework default).
      * <p>
-     * It seems that `none` is the best option for because all its commands wait until
+     * It seems that `none` is the best option for because all its interactions wait until
      * corresponding condition becomes true.
      * Thought, we left default value `normal` because we afraid to break users' existing tests.
      * <p>

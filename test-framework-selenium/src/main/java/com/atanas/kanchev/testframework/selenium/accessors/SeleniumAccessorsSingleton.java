@@ -19,7 +19,6 @@ import com.atanas.kanchev.testframework.selenium.driverfactory.DriverFactory;
 import com.atanas.kanchev.testframework.selenium.handlers.Finder;
 import com.atanas.kanchev.testframework.selenium.handlers.Navigates;
 import com.atanas.kanchev.testframework.selenium.handlers.Probes;
-import com.atanas.kanchev.testframework.selenium.interactions.wait.Waiting;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -79,9 +78,9 @@ public class SeleniumAccessorsSingleton {
         return new Probes(locator);
     }
 
-    public Waiting waitFor() {
-        return new Waiting();
-    }
+//    public Waiting waitFor() {
+//        return new Waiting();
+//    }
 
 
 }
