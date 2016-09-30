@@ -16,14 +16,16 @@
 
 package com.atanas.kanchev.testframework.selenium.element;
 
-import com.atanas.kanchev.testframework.selenium.element.proxy.ImplementedBy;
 import com.atanas.kanchev.testframework.selenium.element.interactions.element.Alert;
 import com.atanas.kanchev.testframework.selenium.element.interactions.element.*;
+import com.atanas.kanchev.testframework.selenium.element.interactions.finds.FindElement;
 import com.atanas.kanchev.testframework.selenium.element.interactions.wait.Waits;
+import com.atanas.kanchev.testframework.selenium.element.proxy.ImplementedBy;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.internal.WrapsElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 
 import java.util.List;
 
@@ -33,6 +35,12 @@ import java.util.List;
 public interface OmniaWebElement extends WebElement, WrapsElement, Locatable {
 
     @ImplementedBy(Waits.class) Waits waits();
+
+    @ImplementedBy(Waits.class) <T> OmniaWebElement waitUntil(ExpectedCondition<T> condition);
+
+    @ImplementedBy(Waits.class) <T> OmniaWebElement waitUntil(ExpectedCondition<T> condition, long duration);
+
+    @ImplementedBy(Waits.class) <T> OmniaWebElement waitUntil(ExpectedCondition<T> condition, long duration, long polling);
 
     @ImplementedBy(Hover.class) OmniaWebElement hover();
 

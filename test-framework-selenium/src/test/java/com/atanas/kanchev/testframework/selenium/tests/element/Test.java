@@ -45,5 +45,6 @@ public class Test {
 
         $selenium().x().findElement(By.className("gsfi")).click();
         $selenium().x().sendKeys("hello");
+        $selenium().x().waits().titleContains("goole");
     }
 }
