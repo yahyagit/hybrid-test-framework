@@ -1,14 +1,17 @@
 /*
  * Copyright 2016 Atanas Stoychev Kanchev
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 
 package com.atanas.kanchev.testframework.appium.accessors;
@@ -18,9 +21,9 @@ import com.atanas.kanchev.testframework.appium.handlers.AndroidNativeHandler;
 import com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors;
 import com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessorsSingleton;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
+import com.atanas.kanchev.testframework.selenium.element.OmniaWebElement;
 import io.appium.java_client.android.AndroidDriver;
 
-import static com.atanas.kanchev.testframework.appium.accessors.AppiumAccessors.$appium;
 import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccessor.$context;
 
 /**
@@ -29,7 +32,7 @@ import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccesso
 public class AppiumAccessorsSingleton {
 
     private static AppiumAccessorsSingleton instance = null;
-    private AppiumDriverFactory appiumDriverFactory= new AppiumDriverFactory();
+    private AppiumDriverFactory appiumDriverFactory = new AppiumDriverFactory();
 
     private AppiumAccessorsSingleton() {
     }
@@ -45,14 +48,26 @@ public class AppiumAccessorsSingleton {
         return appiumDriverFactory;
     }
 
-    public SeleniumAccessorsSingleton $browser() {
+    public OmniaWebElement $browser() {
         if (SeleniumAccessorsSingleton.currentContextKey == null) {
             SeleniumContext<AndroidDriver> c =
-                new SeleniumContext<>($appium().$conf().getAndroidDriver());
-            SeleniumAccessorsSingleton.currentContextKey = $context().addContext(c.getContextKey(), c);
+                new SeleniumContext<>(appiumDriverFactory.getAndroidDriver());
+            SeleniumAccessorsSingleton.currentContextKey =
+                $context().addContext(c.getContextKey(), c);
         }
 
         return SeleniumAccessors.$selenium();
+    }
+
+    public OmniaWebElement $browser(String url) {
+        if (SeleniumAccessorsSingleton.currentContextKey == null) {
+            SeleniumContext<AndroidDriver> c =
+                new SeleniumContext<>(appiumDriverFactory.getAndroidDriver());
+            SeleniumAccessorsSingleton.currentContextKey =
+                $context().addContext(c.getContextKey(), c);
+        }
+
+        return SeleniumAccessors.$selenium(url);
     }
 
     public AndroidNativeHandler $androidNative() {

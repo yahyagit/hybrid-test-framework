@@ -18,13 +18,12 @@ package com.atanas.kanchev.testframework.selenium.element;
 
 import com.atanas.kanchev.testframework.selenium.element.interactions.element.Alert;
 import com.atanas.kanchev.testframework.selenium.element.interactions.element.*;
-import com.atanas.kanchev.testframework.selenium.element.interactions.finds.FindElement;
+import com.atanas.kanchev.testframework.selenium.element.interactions.find.FindElement;
 import com.atanas.kanchev.testframework.selenium.element.interactions.wait.Waits;
 import com.atanas.kanchev.testframework.selenium.element.proxy.ImplementedBy;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.internal.Coordinates;
-import org.openqa.selenium.internal.Locatable;
-import org.openqa.selenium.internal.WrapsElement;
+import org.openqa.selenium.internal.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
 import java.util.List;
@@ -32,7 +31,9 @@ import java.util.List;
 /**
  * Created by atanas on 23/09/16.
  */
-public interface OmniaWebElement extends WebElement, WrapsElement, Locatable {
+public interface OmniaWebElement extends WebElement, FindsByLinkText, FindsById, FindsByName,
+    FindsByTagName, FindsByClassName, FindsByCssSelector,
+    FindsByXPath, WrapsDriver, WrapsElement, Locatable {
 
     @ImplementedBy(Waits.class) Waits waits();
 
@@ -74,7 +75,9 @@ public interface OmniaWebElement extends WebElement, WrapsElement, Locatable {
 
     @ImplementedBy(FindElement.class) @Override List<WebElement> findElements(By by);
 
-    @ImplementedBy(FindElement.class) @Override WebElement findElement(By by);
+//    @ImplementedBy(FindElement.class) @Override WebElement findElement(By by);
+
+    @ImplementedBy(FindElement.class) OmniaWebElement findElement(By by);
 
     @ImplementedBy(IsDisplayed.class) @Override boolean isDisplayed();
 

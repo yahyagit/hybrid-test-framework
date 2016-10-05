@@ -19,6 +19,7 @@ package com.atanas.kanchev.testframework.selenium.tests.element;
 import org.openqa.selenium.By;
 
 import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.$selenium;
+import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.conf;
 
 /**
  * Created by atanas on 29/09/16.
@@ -28,14 +29,18 @@ public class Test {
 //    static ContextKey<SeleniumContext> currentContextKey;
 
     public static void main(String[] args) {
-
-        $selenium().conf().setBrowser("chrome");
+        conf().setBrowser("chrome");
+//        $selenium().conf().setBrowser("chrome");
 //        SeleniumContext<WebDriver> c = new SeleniumContext<>($selenium().conf().getDriver());
 //        currentContextKey = $context().addContext(c.getContextKey(), c);
 //        SeleniumAccessorsSingleton.currentContextKey = currentContextKey;
-        $selenium().goTo("https://www.google.co.uk");
+//        $selenium().goTo("https://www.google.co.uk");
 
-//        OmniaWebElement wrapper = ElementProxy.wrap(OmniaWebElement.class, currentContextKey);
+//        $selenium().goTo("https://www.google.co.uk");
+
+        $selenium("https://www.google.co.uk").findElement(By.className("gsfi")).click();
+
+//        OmniaWebElement wrapper = ElementProxy.wrapElement(OmniaWebElement.class, currentContextKey);
 //        wrapper.findElement(By.className("gsfi"));
 //        System.out.println(wrapper.isDisplayed());
 //        wrapper.click();
@@ -43,8 +48,15 @@ public class Test {
 //        //        wrapper.waits().titleContains("google");
 //        wrapper.sendKeys("hello");
 
-        $selenium().x().findElement(By.className("gsfi")).click();
-        $selenium().x().sendKeys("hello");
-        $selenium().x().waits().titleContains("goole");
+//        $selenium().findElement(By.className("gsfi")).click();
+//        $selenium().x().findElement(By.className("gsfi")).click();
+        $selenium().sendKeys("hello");
+//        $selenium().x().waits().titleContains("goole");
+
+        try {
+            Thread.sleep(8888888);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

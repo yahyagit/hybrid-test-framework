@@ -46,6 +46,7 @@ public class SeleniumAccessorsSingleton {
         if (instance == null) {
             instance = new SeleniumAccessorsSingleton();
         }
+
         return instance;
     }
 
@@ -54,26 +55,35 @@ public class SeleniumAccessorsSingleton {
     }
 
     public Navigates goTo(final String url) {
-
         if (currentContextKey == null) {
-            SeleniumContext<WebDriver> c = new SeleniumContext<>(conf().getDriver());
+            SeleniumContext<WebDriver> c = new SeleniumContext<>(driverFactory.getDriver());
             currentContextKey = $context().addContext(c.getContextKey(), c);
         }
-
         return new Navigates().getPage(url);
     }
+
+
+    public static OmniaWebElement find(By locator) {
+        return ElementProxy.wrapElement(OmniaWebElement.class, currentContextKey)
+            .findElement(locator);
+    }
+
+    public OmniaWebElement find(WebElement e) {
+        return ElementProxy.wrapElement(OmniaWebElement.class, currentContextKey);
+    }
+
 
     public Finder find() {
         return new Finder();
     }
 
-    public Finder find(By locator) {
-        return new Finder(locator);
-    }
+    //    public Finder find(By locator) {
+    //        return new Finder(locator);
+    //    }
 
-    public Finder find(WebElement e) {
-        return new Finder(e);
-    }
+    //    public Finder find(WebElement e) {
+    //        return new Finder(e);
+    //    }
 
     public Finder find(Class<?> clasz) {
         return new Finder(clasz);
@@ -83,12 +93,12 @@ public class SeleniumAccessorsSingleton {
         return new Probes(locator);
     }
 
-//    public Waiting waitFor() {
-//        return new Waiting();
-//    }
+    //    public Waiting waitFor() {
+    //        return new Waiting();
+    //    }
 
-    public OmniaWebElement x(){
-        return ElementProxy.wrap(OmniaWebElement.class, currentContextKey);
+    public OmniaWebElement wrap() {
+        return ElementProxy.wrapElement(OmniaWebElement.class, currentContextKey);
     }
 
 

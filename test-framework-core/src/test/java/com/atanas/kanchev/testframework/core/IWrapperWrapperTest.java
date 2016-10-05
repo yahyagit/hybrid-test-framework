@@ -1,28 +1,25 @@
 /*
  * Copyright 2016 Atanas Stoychev Kanchev
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 
 package com.atanas.kanchev.testframework.core;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.atanas.kanchev.testframework.core.accessors.OmniaAccessors.$;
-import static com.atanas.kanchev.testframework.selenium.accessors.SeleniumAccessors.$selenium;
 
 
 @RunWith(Enclosed.class)
@@ -33,30 +30,30 @@ public class IWrapperWrapperTest {
 
     public static class SetupBrowserTest  {
 
-        @Before
-        public void setUp() throws Exception {
-            $().$appium();
-            $selenium().conf()
-                    .setBrowser("chrome")
-                    .setStartMaximized(true)
-//                    .setReuseBrowser(true)
-                    .setCustomCapabilities(DesiredCapabilities.ipad());
-
-        }
-
-
-
-        @Test
-        public void setupBrowserTest() throws Exception {
-            $selenium().goTo(url);
-        }
-
-
-        @Test
-        public void name() throws Exception {
-            $selenium().goTo("https://bbc.co.uk");
-
-        }
+//        @Before
+//        public void setUp() throws Exception {
+//            $().$appium();
+//            $selenium().conf()
+//                    .setBrowser("chrome")
+//                    .setStartMaximized(true)
+////                    .setReuseBrowser(true)
+//                    .setCustomCapabilities(DesiredCapabilities.ipad());
+//
+//        }
+//
+//
+//
+//        @Test
+//        public void setupBrowserTest() throws Exception {
+//            $selenium().goTo(url);
+//        }
+//
+//
+//        @Test
+//        public void name() throws Exception {
+//            $selenium().goTo("https://bbc.co.uk");
+//
+//        }
 //    @Caps
 //    public void goToURLTest() throws Exception {
 //        $browser(url);

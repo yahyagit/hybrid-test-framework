@@ -26,6 +26,7 @@ import org.slf4j.MarkerFactory;
 
 import java.lang.reflect.*;
 import java.util.Arrays;
+import java.util.List;
 
 import static java.lang.Thread.currentThread;
 
@@ -43,9 +44,16 @@ public final class ElementProxy implements InvocationHandler {
         this.currentContextKey = currentContextKey;
     }
 
-    @SuppressWarnings("unchecked") public static <T extends OmniaWebElement> T wrap(Class<T> clazz,
+    @SuppressWarnings("unchecked") public static <T extends OmniaWebElement> T wrapElement(Class<T> clazz,
         ContextKey<SeleniumContext> currentContextKey) {
         return (T) Proxy
+            .newProxyInstance(currentThread().getContextClassLoader(), new Class<?>[] {clazz},
+                new ElementProxy(currentContextKey));
+    }
+
+    @SuppressWarnings("unchecked") public static <T> List<OmniaWebElement> wrapElementList(Class<T> clazz,
+        ContextKey<SeleniumContext> currentContextKey) {
+        return (List<OmniaWebElement>) Proxy
             .newProxyInstance(currentThread().getContextClassLoader(), new Class<?>[] {clazz},
                 new ElementProxy(currentContextKey));
     }

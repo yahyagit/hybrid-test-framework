@@ -14,12 +14,13 @@
  *    limitations under the License.
  */
 
-package com.atanas.kanchev.testframework.selenium.element.interactions.finds;
+package com.atanas.kanchev.testframework.selenium.element.interactions.find;
 
 import com.atanas.kanchev.testframework.commons.context.ContextKey;
 import com.atanas.kanchev.testframework.selenium.context.SeleniumContext;
+import com.atanas.kanchev.testframework.selenium.element.OmniaWebElement;
+import com.atanas.kanchev.testframework.selenium.element.proxy.ElementProxy;
 import org.openqa.selenium.By;
-import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -29,7 +30,7 @@ import static com.atanas.kanchev.testframework.commons.accessors.ContextsAccesso
 /**
  * Created by atanas on 27/09/16.
  */
-public class FindElement implements SearchContext {
+public class FindElement {
 
     ContextKey<SeleniumContext> currentContextKey;
 
@@ -37,18 +38,18 @@ public class FindElement implements SearchContext {
         this.currentContextKey = currentContextKey;
     }
 
-    @Override public List<WebElement> findElements(By by) {
+    public List<OmniaWebElement> findElements(By by) {
         $context().getContext(currentContextKey).setWebElementsList(
             $context().getContext(currentContextKey).getDriver().findElements(by));
 
-        return $context().getContext(currentContextKey).getWebElementsList();
+        return ElementProxy.wrapElementList(OmniaWebElement.class, currentContextKey);
     }
 
-    @Override public WebElement findElement(By by) {
+    public WebElement findElement(By by) {
         $context().getContext(currentContextKey).setCurrentElement(
             $context().getContext(currentContextKey).getDriver().findElement(by));
 
-        return $context().getContext(currentContextKey).getCurrentElement();
+        return ElementProxy.wrapElement(OmniaWebElement.class, currentContextKey);
     }
 
 }
